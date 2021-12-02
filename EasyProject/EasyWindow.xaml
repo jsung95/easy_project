@@ -6,5 +6,6 @@
         xmlns:local="clr-namespace:EasyProject"
         mc:Ignorable="d"
         Title="재고 관리 프로그램" Height="600" Width="1300">
-    
+    <Border BorderBrush="Black" BorderThickness="1"/>
+
 </Window>
