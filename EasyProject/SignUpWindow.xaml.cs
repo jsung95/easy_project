@@ -24,6 +24,7 @@ namespace EasyProject
         {
             InitializeComponent();
             backButton.Click += backBtn_Click;
+            name.TextChanged += textChangedEventHandler;
         }
         private void backBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -31,6 +32,10 @@ namespace EasyProject
                 (
                 new Uri("/TabWindow.xaml", UriKind.Relative) //회원가입화면
                 );
+        }
+        private void textChangedEventHandler(object sender, TextChangedEventArgs args)
+        {
+            MessageBox.Show(sender.ToString());//수정 예정
         }
     }
 }

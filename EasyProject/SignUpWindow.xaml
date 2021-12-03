@@ -44,7 +44,7 @@
 
                 <Label Content="아이디" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
-                <TextBox x:Name="user_id" Grid.Column="1" HorizontalContentAlignment="Left" 
+                <TextBox x:Name="user_id" Style="{DynamicResource WatermarkTextBox}" Tag ="아이디" Grid.Column="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" />
             </Grid>
             <Grid Grid.Row="3" Background="White">
@@ -55,7 +55,7 @@
 
                 <Label Content="비밀번호" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
-                <TextBox x:Name="user_password" Grid.Column="1" HorizontalContentAlignment="Left" 
+                <PasswordBox x:Name="user_password" Grid.Column="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" />
             </Grid>
             <Grid Grid.Row="4" Background="White">
@@ -66,7 +66,7 @@
 
                 <Label Content="비밀번호 재입력" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
-                <TextBox x:Name="re_user_password" Grid.Column="1" HorizontalContentAlignment="Left" 
+                <PasswordBox x:Name="re_user_password" Grid.Column="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" />
             </Grid>
             <Grid Grid.Row="5" Background="White">
