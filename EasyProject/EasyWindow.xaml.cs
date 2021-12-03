@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace EasyProject
-{
+{//....
     public partial class EasyWindow : Window
     {
         public EasyWindow()
