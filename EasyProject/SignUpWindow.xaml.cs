@@ -23,8 +23,9 @@ namespace EasyProject
         public SignUpWindow()
         {
             InitializeComponent();
-            backButton.Click += backBtn_Click;
-            name.TextChanged += textChangedEventHandler;
+            backBtn.Click += backBtn_Click;
+            rewriteBtn.Click += rewriteBtn_Click;
+            signUpBtn.Click += signUpBtn_Click;
         }
         private void backBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -33,9 +34,24 @@ namespace EasyProject
                 new Uri("/TabWindow.xaml", UriKind.Relative) //회원가입화면
                 );
         }
-        private void textChangedEventHandler(object sender, TextChangedEventArgs args)
+        private void rewriteBtn_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(sender.ToString());//수정 예정
+            name.Text = "";
+            user_id.Text = "";
+            user_password.Password = "";
+            re_user_password.Password = "";
+        }
+        private void signUpBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if(user_password.Password == re_user_password.Password)
+            {
+                MessageBox.Show(name.Text + " " + user_id.Text + " " + user_password.Password);
+            }
+            else
+            {
+                MessageBox.Show("비밀번호가 맞지 않습니다.");
+            }
+
         }
     }
 }
