@@ -37,7 +37,7 @@ namespace EasyProject
         private void signUpBtn_Click(object sender, RoutedEventArgs e) //회원가입 버튼 클릭 시
         {
             //throw new NotImplementedException();
-            //회원가입 창 연결
+            //회원가입 창 연결.
             MessageBox.Show("ID/PW 찾기 버튼 누르셨습니다.");
 
         }
