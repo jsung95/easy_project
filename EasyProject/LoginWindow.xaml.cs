@@ -38,14 +38,17 @@ namespace EasyProject
         {
             //throw new NotImplementedException();
             //회원가입 창 연결.
-            MessageBox.Show("ID/PW 찾기 버튼 누르셨습니다.");
+            NavigationService.Navigate
+                (
+                new Uri("/SignUpWindow.xaml", UriKind.Relative) //회원가입화면
+                );
 
         }
         private void LoginBtn_Click(object sender, RoutedEventArgs e) //로그인 버튼 클릭 시
         {
             //throw new NotImplementedException();
             //DB 연결해서 있는 회원인지 아닌지 확인 후 없으면 MessageBox 없다고, 있으면 메인화면 연결
-            MessageBox.Show("ID/PW 찾기 버튼 누르셨습니다.");
+            MessageBox.Show(txt_ID.Text + " " + pwb_PW.Password);
 
         }
     }
