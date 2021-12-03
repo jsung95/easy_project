@@ -23,13 +23,23 @@ namespace EasyProject
         public TabWindow()
         {
             InitializeComponent();
-            
+            signUpBtn.Click += signUpBtn_Click;
+            loginBtn.Click += loginBtn_Click;
+
         }
-        private void signUpButton_Click(object sender, RoutedEventArgs e)
+        private void signUpBtn_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate
                 (
                 new Uri("/SignUpWindow.xaml", UriKind.Relative)
+                );
+        }
+
+        private void loginBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate
+                (
+                new Uri("/LoginWindow.xaml", UriKind.Relative)
                 );
         }
     }

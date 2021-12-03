@@ -18,8 +18,14 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="0.8*"/>
                 </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
 
-                <Button x:Name="signUpButton" Click="signUpButton_Click" Content="회원가입하기" Grid.Column="3" Background="Red" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
+                <Button x:Name="signUpBtn" Content="회원가입하기" Grid.Column="0" Background="Red" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
+                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" />
+                <Button x:Name="loginBtn" Content="로그인하기" Grid.Column="1" Background="Blue" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" />
             </Grid>
         </TabItem>
