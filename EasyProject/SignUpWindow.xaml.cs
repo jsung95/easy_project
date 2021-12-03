@@ -23,6 +23,14 @@ namespace EasyProject
         public SignUpWindow()
         {
             InitializeComponent();
+            backButton.Click += backBtn_Click;
+        }
+        private void backBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate
+                (
+                new Uri("/TabWindow.xaml", UriKind.Relative) //회원가입화면
+                );
         }
     }
 }
