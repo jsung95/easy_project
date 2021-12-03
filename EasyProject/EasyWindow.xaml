@@ -6,6 +6,21 @@
         xmlns:local="clr-namespace:EasyProject"
         mc:Ignorable="d"
         Title="재고 관리 프로그램" Height="600" Width="1300">
-    <Border BorderBrush="Black" BorderThickness="1"/>
-
+    <TabControl>
+        <TabItem Header="재고 현황">
+            <Grid Background="#FFE5E5E5"/>
+        </TabItem>
+        <TabItem Header="재고 입력">
+            <Grid Background="#FFE5E5E5"/>
+        </TabItem>
+        <TabItem Header="입출고 현황">
+            <Grid Background="#FFE5E5E5"/>
+        </TabItem>
+        <TabItem Header="발주 신청">
+            <Grid Background="#FFE5E5E5"/>
+        </TabItem>
+        <TabItem Header="권한부여">
+            <Grid Background="#FFE5E5E5"/>
+        </TabItem>
+    </TabControl>
 </Window>
