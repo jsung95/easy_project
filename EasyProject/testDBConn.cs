@@ -1,5 +1,6 @@
 ﻿using System;
 using Oracle.ManagedDataAccess.Client;
+using System.Collections.Generic;
 
 namespace EasyProject
 {
@@ -33,8 +34,9 @@ namespace EasyProject
         
         }//ConnectingDB()
 
-        public static EmpDTO SelectQuery(string sql, params object[] param)
+        public static List<EmpDTO> SelectQuery(string sql, params object[] param)
         {
+            List<EmpDTO> list = new List<EmpDTO>();
             try
             {
                 ConnectingDB();
@@ -58,19 +60,24 @@ namespace EasyProject
 
                 while (reader.Read())
                 {
-                    
 
-                    string ename = reader["ENAME"] as string;
-                    string empno = reader["EMPNO"] as string;
+                    //Console.WriteLine(reader.GetInt32(0) + " + " + reader.GetString(1) + " + " + reader.GetString(2) );
+                    /*string ename = reader["ENAME"] as string;
+                    string empno = reader["SAL"] as string;
                     string job = reader["JOB"] as string;
+                    Console.WriteLine(empno);*/
+
+                    Int32 empno = reader.GetInt32(0);
+                    string ename = reader.GetString(1);
+                    string job = reader.GetString(2);
 
                     EmpDTO emp = new EmpDTO()
                     {
                         ename = ename,
                         empno = empno,
                         job = job
-                        
                     };
+                    list.Add(emp);
                 }//while
                 
                 
@@ -84,8 +91,8 @@ namespace EasyProject
                 Console.WriteLine(e.Message);
                 conn.Close();
             }//catch
-            
 
+            return list;
         }//SelectQuery(string sql)
 
         public static void InsertQuery(string sql, params object[] param)
