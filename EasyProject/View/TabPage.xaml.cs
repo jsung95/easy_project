@@ -30,7 +30,7 @@ namespace EasyProject
         {
             NavigationService.Navigate
                 (
-                new Uri("/SignupPage.xaml", UriKind.Relative) //회원가입화면
+                new Uri("/View/SignupPage.xaml", UriKind.Relative) //회원가입화면
                 );
         }
 
@@ -38,7 +38,7 @@ namespace EasyProject
         {
             NavigationService.Navigate
                 (
-                new Uri("/LoginPage.xaml", UriKind.Relative) //로그인화면
+                new Uri("/View/LoginPage.xaml", UriKind.Relative) //로그인화면
                 );
         }
     }

@@ -47,7 +47,7 @@ namespace EasyProject
             //회원가입 창 연결.
             NavigationService.Navigate
                 (
-                new Uri("/SignupPage.xaml", UriKind.Relative) //회원가입화면
+                new Uri("/View/SignupPage.xaml", UriKind.Relative) //회원가입화면
                 );
 
         }

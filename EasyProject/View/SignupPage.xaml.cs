@@ -31,7 +31,7 @@ namespace EasyProject
         {
             NavigationService.Navigate
                 (
-                new Uri("/TabPage.xaml", UriKind.Relative) //회원가입화면
+                new Uri("/View/TabPage.xaml", UriKind.Relative) //회원가입화면
                 );
         }
         private void rewriteBtn_Click(object sender, RoutedEventArgs e)
