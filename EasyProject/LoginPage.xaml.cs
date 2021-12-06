@@ -33,6 +33,7 @@ namespace EasyProject
             //throw new NotImplementedException();
             //ID/PW 찾기 페이지 연결
             MessageBox.Show("ID/PW 찾기 버튼 누르셨습니다.");
+            dbConn.SelectQuery("SELECT * FROM emp WHERE empno >= :num AND job LIKE :job", 5000, "CLERK");
         }
         private void signUpBtn_Click(object sender, RoutedEventArgs e) //회원가입 버튼 클릭 시
         {
