@@ -37,15 +37,16 @@ namespace EasyProject
         public static List<EmpDTO> SelectQuery(string sql, params object[] param)
         {
             List<EmpDTO> list = new List<EmpDTO>();
+            
             try
             {
                 ConnectingDB();
                 cmd.Connection = conn;
 
                 cmd.CommandText = sql;
-                cmd.BindByName = false;
+                //cmd.BindByName = false;
 
-                if(param.Length != 0)
+                if (param.Length != 0)
                 {
                     cmd.Parameters.Add(new OracleParameter("num", param[0]));
                     cmd.Parameters.Add(new OracleParameter("job", param[1]));
@@ -55,7 +56,7 @@ namespace EasyProject
                         cmd.Parameters.Add(new OracleParameter("job", o));
                     }//foreach*/
                 }//if
-                
+
                 OracleDataReader reader = cmd.ExecuteReader();
 
                 while (reader.Read())
@@ -70,13 +71,24 @@ namespace EasyProject
                     Int32 empno = reader.GetInt32(0);
                     string ename = reader.GetString(1);
                     string job = reader.GetString(2);
+                    Int32 mgr = reader.GetInt32(3);
+                    DateTime hiredate = reader.GetDateTime(4);
+                    Int32 sal = reader.GetInt32(5);
+                    Int32 comm = reader.GetInt32(6);
+                    Int32 deptno = reader.GetInt32(7);
 
                     EmpDTO emp = new EmpDTO()
                     {
                         ename = ename,
                         empno = empno,
-                        job = job
-                    };
+                        job = job,
+                        mgr = mgr,
+                        hiredate = hiredate,
+                        sal = sal,
+                        comm = comm,
+                        deptno = deptno
+
+                };
                     list.Add(emp);
                 }//while
                 
@@ -103,12 +115,12 @@ namespace EasyProject
                 cmd.Connection = conn;
 
                 cmd.CommandText = sql;
+                cmd.ExecuteNonQuery();
 
-
-                foreach(object o in param)
-                {
-                    cmd.Parameters.Add(new OracleParameter());
-                }//foreach
+                //foreach(object o in param)
+                //{
+                //    cmd.Parameters.Add(new OracleParameter());
+                //}//foreach
             }//try
             catch(Exception e)
             {
