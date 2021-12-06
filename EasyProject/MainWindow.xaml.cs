@@ -19,46 +19,37 @@ namespace EasyProject
     /// <summary>
     /// MainWindow.xaml에 대한 상호 작용 논리
     /// </summary>
+
     public partial class MainWindow : Window
     {
-        public MainWindow()
-        {
+        double orginalWidth, originalHeight;
+        ScaleTransform scale = new ScaleTransform();
+
+        public MainWindow(){
             InitializeComponent();
-            dbConnection();
-          
+            this.Loaded += new RoutedEventHandler(Window1_Loaded);
         }
-        private void dbConnection()
-        {
-            // Oracle 접속 변수 설정
-            var user = "ADMIN";
-            var password = "Oracle12345!";
-            var ds = "db202112031025_high";
+        
+        void Window1_SizeChanged(object sender, SizeChangedEventArgs e){
+            ChangeSize(e.NewSize.Width, e.NewSize.Height);
+        }
 
-            var connectionString = $"User Id={user};Password={password};Data Source={ds};";
+        void Window1_Loaded(object sender, RoutedEventArgs e){
+            orginalWidth = this.Width;
+            originalHeight = this.Height;
 
-            // Oracle 접속
-            OracleConnection conn = new OracleConnection(connectionString);
-
-            Console.WriteLine("DB 연결 시작");
-            conn.Open();
-
-            OracleCommand cmd = new OracleCommand();
-            cmd.Connection = conn;
-            cmd.CommandText = "SELECT * FROM emp WHERE empno >= :num";
-            cmd.Parameters.Add(new OracleParameter("num", 5000));
-
-            OracleDataReader rdr = cmd.ExecuteReader();
-
-            while (rdr.Read())
-            {
-                string ename = rdr["ENAME"] as string;
-
-                Console.WriteLine($"{ename}");
+            if (this.WindowState == WindowState.Maximized){
+                ChangeSize(this.ActualWidth, this.ActualHeight);
             }
+            this.SizeChanged += new SizeChangedEventHandler(Window1_SizeChanged);
+        }
 
-            Console.WriteLine("DB 연결 해제");
-            conn.Close();
+        private void ChangeSize(double width, double height){
+            scale.ScaleX = width / orginalWidth;
+            scale.ScaleY = height / originalHeight;
 
+            FrameworkElement rootElement = this.Content as FrameworkElement;
+            rootElement.LayoutTransform = scale;
         }
     }
 }
