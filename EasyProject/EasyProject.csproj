@@ -67,6 +67,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="EasyOracleConnection.cs" />
+    <Compile Include="NurseDTO.cs" />
     <Compile Include="EmpDTO.cs" />
     <Compile Include="View\TabItemPage\AuthorityPage.xaml.cs">
       <DependentUpon>AuthorityPage.xaml</DependentUpon>
