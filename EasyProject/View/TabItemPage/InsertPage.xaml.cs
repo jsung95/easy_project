@@ -23,6 +23,16 @@ namespace EasyProject.View
         public InsertPage()
         {
             InitializeComponent();
+            formBtn.Click += formBtn_Click;
+            excelBtn.Click += excelBtn_Click;
+        }
+        private void formBtn_Click(object sender, RoutedEventArgs e)
+        {
+            InsertPageFrame.Source = new Uri("InsertPage_Form.xaml", UriKind.Relative);
+        }
+        private void excelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            InsertPageFrame.Source = new Uri("InsertPage_Excel.xaml", UriKind.Relative);
         }
     }
 }
