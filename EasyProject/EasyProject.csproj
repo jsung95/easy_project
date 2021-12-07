@@ -68,8 +68,20 @@
     </ApplicationDefinition>
     <Compile Include="EasyOracleConnection.cs" />
     <Compile Include="EmpDTO.cs" />
+    <Compile Include="View\TabItemPage\AuthorityPage.xaml.cs">
+      <DependentUpon>AuthorityPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TabItemPage\IncomingOutgoingPage.xaml.cs">
+      <DependentUpon>IncomingOutgoingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TabItemPage\InsertPage.xaml.cs">
+      <DependentUpon>InsertPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TabItemPage\OrderPage.xaml.cs">
+      <DependentUpon>OrderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SignupPage.xaml.cs">
       <DependentUpon>SignupPage.xaml</DependentUpon>
@@ -78,6 +90,18 @@
       <DependentUpon>TabPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="testDBConn.cs" />
+    <Page Include="View\TabItemPage\AuthorityPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabItemPage\IncomingOutgoingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabItemPage\InsertPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -94,6 +118,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\TabItemPage\OrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\SignupPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

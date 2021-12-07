@@ -30,16 +30,24 @@
             </Grid>
         </TabItem>
         <TabItem Header="재고 입력">
-            <Grid Background="#FFE5E5E5"/>
+            <Grid Background="#FFE5E5E5">
+                <Frame Source="TabItemPage/InsertPage.xaml"/>
+            </Grid>
         </TabItem>
         <TabItem Header="입출고 현황">
-            <Grid Background="#FFE5E5E5"/>
+            <Grid Background="#FFE5E5E5">
+                <Frame Source="TabItemPage/IncomingOutgoingPage.xaml"/>
+            </Grid>
         </TabItem>
         <TabItem Header="발주 신청">
-            <Grid Background="#FFE5E5E5"/>
+            <Grid Background="#FFE5E5E5">
+                <Frame Source="TabItemPage/OrderPage.xaml"/>
+            </Grid>
         </TabItem>
         <TabItem Header="권한부여">
-            <Grid Background="#FFE5E5E5"/>
+            <Grid Background="#FFE5E5E5">
+                <Frame Source="TabItemPage/AuthorityPage.xaml"/>
+            </Grid>
         </TabItem>
     </TabControl>
 </Page>
