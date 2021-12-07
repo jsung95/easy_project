@@ -75,6 +75,9 @@
     <Compile Include="View\TabItemPage\IncomingOutgoingPage.xaml.cs">
       <DependentUpon>IncomingOutgoingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TabItemPage\InsertListPage.xaml.cs">
+      <DependentUpon>InsertListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TabItemPage\InsertPage.xaml.cs">
       <DependentUpon>InsertPage.xaml</DependentUpon>
     </Compile>
@@ -102,6 +105,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TabItemPage\IncomingOutgoingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabItemPage\InsertListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

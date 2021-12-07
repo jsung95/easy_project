@@ -42,7 +42,7 @@
 
                 <Button Height="23" HorizontalAlignment="Left" Grid.Column ="3" 
                  Name="btnNext" VerticalAlignment="Bottom" Width="40" Margin="10"
-                 Content="&gt;" Click="btnNext_Click" Opacity="0.75"/>
+                 Content="&gt;" Click="btnNext_Click" Opacity="0.75" Cursor="Hand"/>
 
                 <Button Height="23" HorizontalAlignment="Left"  Grid.Column ="4"
             VerticalAlignment="Bottom" Width="40" Name="btnLast" Margin="10"
