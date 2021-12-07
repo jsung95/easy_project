@@ -16,7 +16,7 @@
                 <RowDefinition Height="0.3*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock  FontSize="30" TextAlignment="Center" Background="Blue" >
+            <TextBlock  FontSize="20" TextAlignment="Center" Background="#4472C4" >
                 <Run Foreground="White" Text="입출고 현황" IsEnabled="False"/>
             </TextBlock>
             <Grid Grid.Row="2">
@@ -28,11 +28,11 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Button Height="23" HorizontalAlignment="Right"  Grid.Column ="0" 
-                 Name="btnFirst" VerticalAlignment="Bottom" Width="40" 
-                 Content="&lt;&lt;" Click="btnFirst_Click" Opacity="0.75" Margin="10"/>
+                 Name="btnFirst" VerticalAlignment="Bottom" Width="40" Foreground="White" Background="#4472C4"
+                 Content="&lt;&lt;" Click="btnFirst_Click" Opacity="0.75" Margin="10" />
 
                 <Button Height="23" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column ="1"  
-                 Name="btnPrev" Width="40" Click="btnPrev_Click" Margin="10"
+                 Name="btnPrev" Width="40" Click="btnPrev_Click" Margin="10" Foreground="White" Background="#4472C4"
                  Opacity="0.75" Content="&lt;"/>
 
                 <Label x:Name="lblpageInformation" HorizontalContentAlignment="Center" 
@@ -40,11 +40,11 @@
                  HorizontalAlignment="Center" Height="30" Width="100" 
                  VerticalContentAlignment="Center" VerticalAlignment="Bottom"/>
 
-                <Button Height="23" HorizontalAlignment="Left" Grid.Column ="3" 
+                <Button Height="23" HorizontalAlignment="Left" Grid.Column ="3" Foreground="White" Background="#4472C4"
                  Name="btnNext" VerticalAlignment="Bottom" Width="40" Margin="10"
-                 Content="&gt;" Click="btnNext_Click" Opacity="0.75" Cursor="Hand"/>
+                 Content="&gt;" Click="btnNext_Click" Opacity="0.75"/>
 
-                <Button Height="23" HorizontalAlignment="Left"  Grid.Column ="4"
+                <Button Height="23" HorizontalAlignment="Left"  Grid.Column ="4" Foreground="White" Background="#4472C4"
             VerticalAlignment="Bottom" Width="40" Name="btnLast" Margin="10"
             Click="btnLast_Click" Opacity="0.75" Content="&gt;&gt;"/>
 
