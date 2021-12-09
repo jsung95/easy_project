@@ -3,7 +3,7 @@
 
 namespace EasyProject
 {
-    public class NurseDTO
+    public class NurseModel : Notifier
     {
         //
         public Int32 nurseno { get; set; }
