@@ -1,4 +1,5 @@
 ﻿using EasyProject.Model;
+using EasyProject.Util;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -44,5 +45,38 @@ namespace EasyProject.Dao
             return list; // DeptModel 객체들이 담긴 list 리턴
 
         } // GetDeptModels
+
+        public void SignUp(string sql, NurseModel nurse_dto, DeptModel dept_dto)
+        {
+            try
+            {
+                ConnectingDB();
+                cmd.Connection = conn;
+
+                cmd.CommandText = sql;
+
+                cmd.ExecuteNonQuery();
+
+                // INSERT INTO NURSE VALUES(:no, :name, :auth, :pw, :dept_id)
+                //파라미터 값 바인딩
+                cmd.Parameters.Add(new OracleParameter("no", nurse_dto.nurse_no));
+                cmd.Parameters.Add(new OracleParameter("name", nurse_dto.nurse_name));
+                cmd.Parameters.Add(new OracleParameter("auth", nurse_dto.nurse_auth));
+                cmd.Parameters.Add(new OracleParameter("pw", SHA256Hash.StringToHash(nurse_dto.nurse_pw))); //비밀번호 암호화
+                
+                switch (dept_dto.Dept_name)
+                {
+                    case "응급실":
+                        cmd.Parameters.Add(new OracleParameter("dept_id", 2));
+                        break;
+                }
+
+            }//try
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+        }//SignUp(string sql)
+
     } // SignupDao
 } // namespace
