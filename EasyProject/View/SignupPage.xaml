@@ -6,6 +6,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:local="clr-namespace:EasyProject"
+      xmlns:w="clr-namespace:EasyProject.Util"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SignupPage">
@@ -69,7 +70,8 @@
                 <Label Content="비밀번호" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
                 <PasswordBox x:Name="password_PwBox" Grid.Column="1" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" />
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
+                             w:PasswordBoxAssistant.BindPassword="True" w:PasswordBoxAssistant.BoundPassword="{Binding nurse_pw}"/>
             </Grid>
             <Grid Grid.Row="4" Background="White">
                 <Grid.ColumnDefinitions>

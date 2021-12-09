@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace EasyProject
+namespace EasyProject.Model
 {
     public class NurseModel : Notifier
     {

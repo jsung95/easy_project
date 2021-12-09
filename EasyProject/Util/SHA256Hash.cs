@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace EasyProject
+namespace EasyProject.Util
 {
     //회원 - 비밀번호 암호화 알고리즘
     public static class SHA256Hash

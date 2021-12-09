@@ -13,11 +13,11 @@ namespace EasyProject.ViewModel
     {
         SignupDao dao = new Dao.SignupDao();
 
-        private ObservableCollection<DeptModel> dept; // depts = DeptModel 객체가 담긴 리스트
+        private ObservableCollection<DeptModel> depts; // depts = DeptModel 객체가 담긴 리스트
         public ObservableCollection<DeptModel> Depts 
         {
-            get { return dept; }
-            set { dept = value; }
+            get { return depts; }
+            set { depts = value; }
         }
 
         public SignupViewModel()
