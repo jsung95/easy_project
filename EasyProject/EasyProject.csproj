@@ -72,13 +72,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Dao\CommonDBConn.cs" />
     <Compile Include="Dao\ISignupDao.cs" />
     <Compile Include="Dao\SignupDao.cs" />
-    <Compile Include="EasyOracleConnection.cs" />
     <Compile Include="Model\DeptModel.cs" />
     <Compile Include="Model\NurseModel.cs" />
-    <Compile Include="Model\EmpModel.cs" />
     <Compile Include="Notifier.cs" />
+    <Compile Include="Util\SHA256Hash.cs" />
     <Compile Include="ViewModel\SignupViewModel.cs" />
     <Compile Include="View\TabItemPage\AuthorityPage.xaml.cs">
       <DependentUpon>AuthorityPage.xaml</DependentUpon>
@@ -110,7 +110,6 @@
     <Compile Include="View\TabPage.xaml.cs">
       <DependentUpon>TabPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="testDBConn.cs" />
     <Page Include="View\TabItemPage\AuthorityPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

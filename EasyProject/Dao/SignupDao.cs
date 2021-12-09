@@ -2,38 +2,11 @@
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyProject.Dao
 {
-    public class SignupDao : ISignupDao
+    public class SignupDao : CommonDBConn, ISignupDao //DB연결 Class 및 인터페이스 상속
     {
-
-        // DB 연결 정보
-        private static string user = "ADMIN";
-        private static string password = "Oracle12345!";
-        private static string ds = "db202112031025_high";
-        private static string connectionString = $"User Id={user};Password={password};Data Source={ds};";
-
-        static OracleConnection conn = new OracleConnection(connectionString);
-        static OracleCommand cmd = new OracleCommand();
-
-        public static void ConnectingDB()
-        {
-            try
-            {
-                //DB 연결
-                conn.Open();
-            }//try
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                conn.Close();
-            }//catch
-
-        }//ConnectingDB()
 
         public List<DeptModel> GetDeptModels(string sql)
         {

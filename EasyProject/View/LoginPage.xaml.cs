@@ -28,19 +28,6 @@ namespace EasyProject
             searchBtn.Click += searchBtn_Click;
             //체크박스 클릭 시 --> 아이디 다음번에 왔을 때 기억하는거 어떻게 할지  정해야함.
         }
-        //private void searchBtn_Click(object sender, RoutedEventArgs e) //ID/PW 찾기 버튼 클릭 시
-        //{
-        //    //throw new NotImplementedException();
-        //    //ID/PW 찾기 페이지 연결
-        //    MessageBox.Show("ID/PW 찾기 버튼 누르셨습니다.");
-
-        //    //dbConn.SelectQuery("SELECT empno, ename, job FROM emp WHERE empno >= :num AND job LIKE :job", 5000, "CLERK");
-        //    List<EmpDTO> list = dbConn.SelectQuery("SELECT * FROM emp WHERE empno >= :num AND job LIKE :job", 5000, "CLERK");
-        //    foreach(EmpDTO emp in list)
-        //    {
-        //        Console.WriteLine(emp.empno + " + " + emp.ename + " + " + emp.job);
-        //    }
-        //}
 
         private void searchBtn_Click(object sender, RoutedEventArgs e) //ID/PW 찾기 버튼 클릭 시
         {
@@ -48,25 +35,6 @@ namespace EasyProject
             //ID/PW 찾기 페이지 연결
             MessageBox.Show("ID/PW 찾기 버튼 누르셨습니다.");
 
-            dbConn.SelectQuery("SELECT empno, ename, job FROM emp WHERE empno >= :num AND job LIKE :job", 5000, "CLERK");
-            List<EmpDTO> list = dbConn.SelectQuery("SELECT * FROM emp  WHERE empno >= :num AND job LIKE :job", 5000, "CLERK");
-            foreach (EmpDTO emp in list)
-            {
-                Console.WriteLine(emp.empno + " + " + emp.ename + " + " + emp.job);
-            }
-
-
-            //버튼 누르면 INSERT 해보기
-            //dbConn.SelectQuery("INSERT INTO EMP values(7575,'SON','CLERK',8000,'95/12/02',1200,100,20)");
-
-
-            //emp 전체 내용 출력 test용
-            //List<EmpDTO> list = dbConn.SelectQuery("SELECT * FROM emp  WHERE empno >= :num AND job LIKE :job", 5000, "CLERK");
-            //foreach (EmpDTO emp in list)
-            //{
-            //    Console.WriteLine(emp.empno + " + " + emp.ename + " + " + emp.job + " + " + emp.mgr + " + " + emp.hiredate +
-            //        " + " + emp.sal + " + " + emp.comm + " + " + emp.deptno);
-            //}
         }
         private void signUpBtn_Click(object sender, RoutedEventArgs e) //회원가입 버튼 클릭 시
         {
