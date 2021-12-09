@@ -1,0 +1,45 @@
+﻿<Page x:Class="EasyProject.View.TabItemPage.StatusPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:EasyProject.View.TabItemPage"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="StatusPage">
+    <Grid Height="450" Width="800" Background="LightGray">
+        <Grid Height="400" Width="750" Background="White" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="0.3*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Background="#4472C4">
+                <TextBlock FontWeight="Bold" FontSize="17" TextAlignment="Center" Margin="23,8,0.4,7.2" VerticalAlignment="center">
+                <Run Foreground="White" Text="재고 현황" IsEnabled="False" />
+                </TextBlock>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="68*"/>
+                    <ColumnDefinition Width="120*"/>
+                    <ColumnDefinition Width="300*"/>
+                    <ColumnDefinition Width="68*"/>
+                    <ColumnDefinition Width="120*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="부서명" Foreground="#4472C4" Grid.Column="0" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                       VerticalAlignment="Center" Margin="10"/>
+                <ComboBox x:Name="Part_comboBox" Grid.Column="1" HorizontalAlignment="Center" Margin="10" VerticalAlignment="Center" Width="100"/>
+            </Grid>
+            
+
+            <Grid Grid.Row="1" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.8*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </Grid>
+        
+    </Grid>
+</Page>
