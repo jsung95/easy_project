@@ -9,7 +9,7 @@ namespace EasyProject.Model
     public class DeptModel : Notifier
     {
 
-        public string Dept_id { get; set; }
+        public int? Dept_id { get; set; }
 
         private string dept_name;
         public string Dept_name
@@ -22,7 +22,7 @@ namespace EasyProject.Model
             }
         } // Dept_name
 
-        public Int32 Dept_phone { get; set; }
+        public int? Dept_phone { get; set; }
 
         public string Dept_status { get; set; }
 

@@ -92,7 +92,7 @@ namespace EasyProject.Dao
 
                 cmd.ExecuteNonQuery();
 
-
+                conn.Close();
 
             }//try
             catch(Exception e)
