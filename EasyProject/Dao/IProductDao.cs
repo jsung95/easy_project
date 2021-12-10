@@ -1,9 +1,6 @@
 ﻿using EasyProject.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyProject.Dao
 {
@@ -14,6 +11,9 @@ namespace EasyProject.Dao
 
         // 재고입력 - 제품 입력
         void AddProduct(string sql, ProductModel prod_dto, CategoryModel category_dto);
+
+        // 입고테이블에 추가
+        void StoredProduct(string sql, ProductModel prod_dto, NurseModel nurse_dto);
     }//interface
 
 }//namespace
