@@ -36,11 +36,11 @@
                 <Label Content="이름" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
                 <TextBox x:Name="name_TxtBox" Grid.Column="1" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" />
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Text="{Binding Nurse.Nurse_name}" Cursor="IBeam"/>
                 <Label Content="담당 부서" Grid.Column="2" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
                 <ComboBox x:Name="deptName_ComboBox" Grid.Column="3" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Grid.ColumnSpan="2" 
-                       ItemsSource="{Binding Path=Depts}">
+                       ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -59,7 +59,7 @@
                 <Label Content="아이디" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
                 <TextBox x:Name="id_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="아이디" Grid.Column="1" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" />
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Text="{Binding Nurse.Nurse_no}"/>
             </Grid>
             <Grid Grid.Row="3" Background="White">
                 <Grid.ColumnDefinitions>
@@ -70,8 +70,8 @@
                 <Label Content="비밀번호" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
                 <PasswordBox x:Name="password_PwBox" Grid.Column="1" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
-                             w:PasswordBoxAssistant.BindPassword="True" w:PasswordBoxAssistant.BoundPassword="{Binding nurse_pw}"/>
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Cursor="IBeam"
+                             w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding Nurse.Nurse_pw, Mode=TwoWay}"/>
             </Grid>
             <Grid Grid.Row="4" Background="White">
                 <Grid.ColumnDefinitions>
@@ -93,7 +93,13 @@
                 </Grid.ColumnDefinitions>
 
                 <Button x:Name="signUpBtn" Content="회원가입하기" Grid.Column="3" Background="Red" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
-                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" Cursor="Hand" />
+                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" Cursor="Hand">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding Command}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
                 <Button x:Name="backBtn" Content="메인화면" Grid.Column="0" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" Cursor="Hand" />
                 <Button x:Name="rewriteBtn" Content="다시 작성하기" Grid.Column="2" Background="LightGray" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  

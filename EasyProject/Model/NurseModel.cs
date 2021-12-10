@@ -6,11 +6,11 @@ namespace EasyProject.Model
     public class NurseModel : Notifier
     {
         //
-        public Int32 nurseno { get; set; }
-        public string nurse_name { get; set; }
-        public string nurse_auth { get; set; }
-        public string nurse_pw { get; set; }
-        public Int32 dept_id { get; set; }
+        public int? Nurse_no { get; set; }
+        public string Nurse_name { get; set; }
+        public string Nurse_auth { get; set; }
+        public string Nurse_pw { get; set; }
+        public int? Dept_id { get; set; }
 
     }
 }

@@ -16,25 +16,10 @@ namespace EasyProject.Dao
         /// /////////////////////////////////////////
 
 
-        protected OracleConnection conn = new OracleConnection(connectionString);
-        protected OracleCommand cmd = new OracleCommand();
+        //protected OracleConnection conn = new OracleConnection(connectionString);
+        //protected OracleCommand cmd = new OracleCommand();
 
 
-        public void ConnectingDB()
-        {
-            try
-            {
-                //DB 연결
-                conn.Open();
-            }//try
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                conn.Close();
-            }//catch
-
-
-        }//ConnectingDB()
     }//class
 
 }

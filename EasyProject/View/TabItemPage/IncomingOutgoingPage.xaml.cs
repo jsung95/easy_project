@@ -3,6 +3,8 @@ using System.Windows.Controls;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace EasyProject.View
 {
@@ -49,25 +51,34 @@ namespace EasyProject.View
         {
             myList = GetData();
             dataGrid.ItemsSource = myList.Take(numberOfRecPerPage);
-            int count = myList.Take(numberOfRecPerPage).Count();
-            lblpageInformation.Content = count + " of " + myList.Count;
+            dataGrid.Columns[0].Header = "제품ID";
+            dataGrid.Columns[1].Header = "제품명";
+            dataGrid.Columns[2].Header = "Test";
+            dataGrid.Columns[3].Header = "Test";
+            dataGrid.Columns[4].Header = "Test";
+            dataGrid.Columns[5].Header = "Test";
+            dataGrid.Columns[6].Header = "Test";
+            dataGrid.Columns[7].Header = "Test";
+
+            //int count = myList.Take(numberOfRecPerPage).Count();
+            //lblpageInformation.Content = count + " of " + myList.Count;
         }
         private List<object> GetData()
         {
             List<object> genericList = new List<object>();
             Student studentObj;
-            Random randomObj = new Random();
+            //Random randomObj = new Random();
             for (int i = 0; i < 1000; i++)
             {
                 studentObj = new Student();
-                studentObj.ProductCode = "ProductCode " + i;
-                studentObj.ProductName = "ProductName " + i;
-                studentObj.Category = "Category " + i;
-                studentObj.Total = "Total " + i;
-                studentObj.User = "User " + i;
-                studentObj.ExpirationDate = "ExpirationDate " + i;
-                studentObj.UseDate = "UseDate " + i;
-                studentObj.StateContent = "StateContent " + i;
+                studentObj.ProductCode = "A " + i;
+                studentObj.ProductName = "B " + i;
+                studentObj.Category = "CC " + i;
+                studentObj.Total = "DDD " + i;
+                studentObj.User = "EE " + i;
+                studentObj.ExpirationDate = "FF " + i;
+                studentObj.UseDate = "GGGGGGG " + i;
+                studentObj.StateContent = "HHHHHH " + i;
 
                 //studentObj.Age = (uint)randomObj.Next(1, 100);
 
@@ -75,6 +86,24 @@ namespace EasyProject.View
             }
             return genericList;
         }
+        /*private void txtName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox t = (TextBox)sender;
+            string filter = t.Text;
+            ICollectionView cv = CollectionViewSource.GetDefaultView(dg.ItemsSource);
+            if (filter == "")
+                cv.Filter = null;
+            else
+            {
+                cv.Filter = o =>
+                {
+                    Student p = o as Student;
+                    if (t.Name == "txtId")
+                        return (p.Id == Convert.ToInt32(filter));
+                    return (p.ExpirationDate.ToUpper().StartsWith(filter.ToUpper()));
+                };
+            }
+        }*/
 
         #region Pagination 
         private void btnFirst_Click(object sender, System.EventArgs e)

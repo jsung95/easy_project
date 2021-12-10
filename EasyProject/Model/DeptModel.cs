@@ -8,6 +8,9 @@ namespace EasyProject.Model
 {
     public class DeptModel : Notifier
     {
+
+        public int? Dept_id { get; set; }
+
         private string dept_name;
         public string Dept_name
         {
@@ -18,5 +21,10 @@ namespace EasyProject.Model
                 //OnPropertyChanged("Dept_name");
             }
         } // Dept_name
+
+        public int? Dept_phone { get; set; }
+
+        public string Dept_status { get; set; }
+
     } // DeptModel
 } // namespace
