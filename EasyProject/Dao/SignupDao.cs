@@ -48,6 +48,7 @@ namespace EasyProject.Dao
 
         public void SignUp(string sql, NurseModel nurse_dto, DeptModel dept_dto)
         {
+            
             try
             {
                 ConnectingDB();
@@ -55,21 +56,43 @@ namespace EasyProject.Dao
 
                 cmd.CommandText = sql;
 
-                cmd.ExecuteNonQuery();
 
-                // INSERT INTO NURSE VALUES(:no, :name, :auth, :pw, :dept_id)
+                // INSERT INTO NURSE(NURSE_NO, NURSE_NAME, NURSE_PW, DEPT_ID) VALUES(:no, :name, :pw, :dept_id)
                 //파라미터 값 바인딩
                 cmd.Parameters.Add(new OracleParameter("no", nurse_dto.nurse_no));
                 cmd.Parameters.Add(new OracleParameter("name", nurse_dto.nurse_name));
-                cmd.Parameters.Add(new OracleParameter("auth", nurse_dto.nurse_auth));
+                //cmd.Parameters.Add(new OracleParameter("auth", "ADMIN")); // auth(회원 권한)은 테이블 default 제약에 의해 기본 NORMAL로 설정
                 cmd.Parameters.Add(new OracleParameter("pw", SHA256Hash.StringToHash(nurse_dto.nurse_pw))); //비밀번호 암호화
-                
+
                 switch (dept_dto.Dept_name)
                 {
+                    case "중환자실":
+                        cmd.Parameters.Add(new OracleParameter("dept_id", 1));
+                        break;
                     case "응급실":
                         cmd.Parameters.Add(new OracleParameter("dept_id", 2));
                         break;
+                    case "병동":
+                        cmd.Parameters.Add(new OracleParameter("dept_id", 3));
+                        break;
+                    case "연구직":
+                        cmd.Parameters.Add(new OracleParameter("dept_id", 4));
+                        break;
+                    case "외래":
+                        cmd.Parameters.Add(new OracleParameter("dept_id", 5));
+                        break;
+                    case "검사실":
+                        cmd.Parameters.Add(new OracleParameter("dept_id", 6));
+                        break;
+                    case "수술실":
+                        cmd.Parameters.Add(new OracleParameter("dept_id", 7));
+                        break;
                 }
+
+
+                cmd.ExecuteNonQuery();
+
+
 
             }//try
             catch(Exception e)

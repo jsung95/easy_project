@@ -48,7 +48,8 @@ namespace EasyProject.ViewModel
 
         public void SignupInsert()
         {
-            dao.SignUp("INSERT INTO NURSE VALUES(:no, :name, :auth, :pw, :dept_id)", Nurse, SelectedDept);
+            
+            dao.SignUp("INSERT INTO NURSE(NURSE_NO, NURSE_NAME, NURSE_PW, DEPT_ID) VALUES(:no, :name, :pw, :dept_id)", Nurse, SelectedDept);
         }
 
     } // SignupViewModel
