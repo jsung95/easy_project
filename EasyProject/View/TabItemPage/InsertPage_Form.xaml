@@ -14,9 +14,6 @@
         <vm:ProductViewModel/>
     </Page.DataContext>
 
-    <Page.DataContext>
-        <vm:InsertProductViewModel/>
-    </Page.DataContext>
 
     <Grid>
         <materialDesign:Card Grid.Column="0" Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
