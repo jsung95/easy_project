@@ -25,7 +25,18 @@ namespace EasyProject
             InitializeComponent();
             signUpBtn.Click += signUpBtn_Click;
             loginBtn.Click += loginBtn_Click;
+            statusBtn.Click += StatusBtn_Click;
         }
+
+        private void StatusBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate
+                 (
+                 new Uri("/View/TabItemPage/StatusPage.xaml", UriKind.Relative) //재고현황화면 --테스트
+                 );
+
+        }
+
         private void signUpBtn_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate
@@ -41,5 +52,6 @@ namespace EasyProject
                 new Uri("/View/LoginPage.xaml", UriKind.Relative) //로그인화면
                 );
         }
+
     }
 }

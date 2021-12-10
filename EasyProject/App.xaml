@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:EasyProject"
              xmlns:materialDesign="https://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              StartupUri="/View/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -10,6 +11,17 @@
                 <ResourceDictionary Source="/Dictionary/WaterMarkDictionary.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <!--<Style TargetType="lvc:LineSeries">
+                <Setter Property="StrokeThickness" Value="3"></Setter>
+                <Setter Property="Stroke" Value="White"></Setter>
+                <Setter Property="Fill" Value="#4EFFFFFF"></Setter>
+                <Setter Property="PointGeometrySize" Value="0"></Setter>
+                <Setter Property="LineSmoothness" Value="0"></Setter>
+            </Style>
+            <Style TargetType="lvc:Axis">
+                <Setter Property="ShowLabels" Value="False"></Setter>
+                <Setter Property="IsEnabled" Value="False"></Setter>
+            </Style>-->
         </ResourceDictionary>
     </Application.Resources>
 </Application>

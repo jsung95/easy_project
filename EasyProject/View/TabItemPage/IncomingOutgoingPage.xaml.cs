@@ -28,8 +28,9 @@ namespace EasyProject.View
     {
         int pageIndex = 1;
         private int numberOfRecPerPage;
-        private enum PagingMode
-        { First = 1, Next = 2, Previous = 3, Last = 4, PageCountChange = 5 };
+        private enum PagingMode { 
+            First = 1, Next = 2, Previous = 3, Last = 4, PageCountChange = 5 
+        };
 
         List<object> myList = new List<object>();
 
