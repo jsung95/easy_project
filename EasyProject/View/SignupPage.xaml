@@ -36,7 +36,7 @@
                 <Label Content="이름" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
                 <TextBox x:Name="name_TxtBox" Grid.Column="1" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Text="{Binding Nurse.nurse_name}" Cursor="IBeam"/>
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Text="{Binding Nurse.Nurse_name}" Cursor="IBeam"/>
                 <Label Content="담당 부서" Grid.Column="2" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
                 <ComboBox x:Name="deptName_ComboBox" Grid.Column="3" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Grid.ColumnSpan="2" 
@@ -59,7 +59,7 @@
                 <Label Content="아이디" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
                 <TextBox x:Name="id_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="아이디" Grid.Column="1" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Text="{Binding Nurse.nurse_no}"/>
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Text="{Binding Nurse.Nurse_no}"/>
             </Grid>
             <Grid Grid.Row="3" Background="White">
                 <Grid.ColumnDefinitions>
@@ -71,7 +71,7 @@
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
                 <PasswordBox x:Name="password_PwBox" Grid.Column="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Cursor="IBeam"
-                             w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding Nurse.nurse_pw, Mode=TwoWay}"/>
+                             w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding Nurse.Nurse_pw, Mode=TwoWay}"/>
             </Grid>
             <Grid Grid.Row="4" Background="White">
                 <Grid.ColumnDefinitions>

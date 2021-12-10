@@ -59,10 +59,10 @@ namespace EasyProject.Dao
 
                 // INSERT INTO NURSE(NURSE_NO, NURSE_NAME, NURSE_PW, DEPT_ID) VALUES(:no, :name, :pw, :dept_id)
                 //파라미터 값 바인딩
-                cmd.Parameters.Add(new OracleParameter("no", nurse_dto.nurse_no));
-                cmd.Parameters.Add(new OracleParameter("name", nurse_dto.nurse_name));
-                //cmd.Parameters.Add(new OracleParameter("auth", "ADMIN")); // auth(회원 권한)은 테이블 default 제약에 의해 기본 NORMAL로 설정
-                cmd.Parameters.Add(new OracleParameter("pw", SHA256Hash.StringToHash(nurse_dto.nurse_pw))); //비밀번호 암호화
+                cmd.Parameters.Add(new OracleParameter("no", nurse_dto.Nurse_no));
+                cmd.Parameters.Add(new OracleParameter("name", nurse_dto.Nurse_name));
+                //cmd.Parameters.Add(new OracleParameter("auth", "NORMAL")); // auth(회원 권한)은 테이블 default 제약에 의해 기본 NORMAL로 설정
+                cmd.Parameters.Add(new OracleParameter("pw", SHA256Hash.StringToHash(nurse_dto.Nurse_pw))); //비밀번호 암호화
 
                 switch (dept_dto.Dept_name)
                 {
@@ -98,6 +98,7 @@ namespace EasyProject.Dao
             catch(Exception e)
             {
                 Console.WriteLine(e.Message);
+                conn.Close();
             }//catch
         }//SignUp(string sql)
 
