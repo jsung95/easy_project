@@ -80,9 +80,13 @@
     <Compile Include="Model\Notifier.cs" />
     <Compile Include="Util\PasswordHelper.cs" />
     <Compile Include="Util\SHA256Hash.cs" />
+    <Compile Include="ViewModel\InsertProductViewModel.cs" />
     <Compile Include="ViewModel\SignupViewModel.cs" />
     <Compile Include="View\TabItemPage\AuthorityPage.xaml.cs">
       <DependentUpon>AuthorityPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TabItemPage\FileUploadPageFunction.xaml.cs">
+      <DependentUpon>FileUploadPageFunction.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TabItemPage\IncomingOutgoingPage.xaml.cs">
       <DependentUpon>IncomingOutgoingPage.xaml</DependentUpon>
@@ -112,6 +116,10 @@
       <DependentUpon>TabPage.xaml</DependentUpon>
     </Compile>
     <Page Include="View\TabItemPage\AuthorityPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabItemPage\FileUploadPageFunction.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

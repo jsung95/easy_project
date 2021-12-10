@@ -16,20 +16,20 @@ using System.Windows.Shapes;
 namespace EasyProject.View.TabItemPage
 {
     /// <summary>
-    /// InsertPage_Form.xaml에 대한 상호 작용 논리
+    /// FileUploadPageFunction.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class InsertPage_Form : Page
+    public partial class FileUploadPageFunction : PageFunction<String>
     {
-        public InsertPage_Form()
+        public FileUploadPageFunction(String fileName)
         {
             InitializeComponent();
-            okBtn.Click += OkBtn_Click;
+            fileNameTxtbox.Text = fileName;
+            fileUploadBtn.Click += fileUploadBtn_Click;
         }
 
-        private void OkBtn_Click(object sender, RoutedEventArgs e)
+        private void fileUploadBtn_Click(object sender, RoutedEventArgs e)
         {
-
-
+            OnReturn(new ReturnEventArgs<string>());
         }
     }
 }

@@ -11,6 +11,9 @@
 
     <Grid>
         <materialDesign:Card Grid.Column="0" Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
+            <Grid>
+                <DataGrid x:Name="insertListDataGrid" Margin ="10,10,10,10"></DataGrid>
+            </Grid>
         </materialDesign:Card>
     </Grid>
 </Page>

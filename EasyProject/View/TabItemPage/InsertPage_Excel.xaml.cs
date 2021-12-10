@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+using Microsoft.Win32;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -24,9 +26,10 @@ namespace EasyProject.View.TabItemPage
         {
             InitializeComponent();
 
-            this.AllowDrop = true;
-            this.DragEnter += new DragEventHandler(dragEnterHandler);
-            this.DragLeave += new DragEventHandler(dragDropHandler);
+            fileUploadBtn.Click += fileUploadBtn_Click;
+
+            //this.DragEnter += new DragEventHandler(dragEnterHandler);
+            //this.DragLeave += new DragEventHandler(dragDropHandler);
 
         }
         void dragEnterHandler(object sender, DragEventArgs e){
@@ -36,7 +39,28 @@ namespace EasyProject.View.TabItemPage
 
         void dragDropHandler(object sender, DragEventArgs e){
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            foreach (string file in files) file_TxtBox.Text = file;
+            foreach (string file in files)
+            {
+                FileUploadPageFunction uploadPFunction = new FileUploadPageFunction(file);
+                NavigationService.Navigate(uploadPFunction);
+            }
         }
+
+        private void fileUploadBtn_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "엑셀 파일 (*.xls)|*.xls|엑셀 파일 (*.xlsx)|*.xlsx";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                FileUploadPageFunction uploadPFunction = new FileUploadPageFunction(System.IO.Path.GetFileName(openFileDialog.FileName));
+                NavigationService.Navigate(uploadPFunction);
+            }
+        }
+        private void fileReader()
+        {
+            
+        }
+
     }
 }
