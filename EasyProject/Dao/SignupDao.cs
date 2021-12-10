@@ -3,6 +3,7 @@ using EasyProject.Util;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace EasyProject.Dao
 {
@@ -119,6 +120,47 @@ namespace EasyProject.Dao
             }//catch
 
         }//SignUp(string sql)
+
+        public NurseModel IdCheck(string sql, NurseModel nurse_dto)
+        {
+            
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = sql;
+                        cmd.BindByName = false;
+                        cmd.Parameters.Add(new OracleParameter("no", nurse_dto.Nurse_no));
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.Read() == false)
+                        {
+                            MessageBox.Show("사용가능합니다!");
+                        }
+                        else
+                        {
+                            MessageBox.Show("중복입니다! 다시입력하세요.");
+                            nurse_dto.Nurse_no = null;
+                        }
+                    }//using(cmd)
+                }//using (conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return nurse_dto;
+
+        }//IdCheck
 
     } // SignupDao
 } // namespace

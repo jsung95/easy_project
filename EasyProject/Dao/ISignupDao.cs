@@ -10,5 +10,7 @@ namespace EasyProject.Dao
     {
         List<DeptModel> GetDeptModels(string sql);
         void SignUp(string sql, NurseModel nurse_dto, DeptModel dept_dto);
+
+        NurseModel IdCheck(string sql, NurseModel nurse_dto);
     } // interface 
 } // namespace
