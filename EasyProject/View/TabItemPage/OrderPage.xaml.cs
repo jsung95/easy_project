@@ -34,6 +34,29 @@ namespace EasyProject.View
         {
             
         }
+
+        private void resetBtn_Click(object sender, RoutedEventArgs e)
+        {
+            id_TxtBox.Text = null;
+            deptName_ComboBox = null;
+            phone_TxtBox.Text = null;
+            request_TxtBox.Text = null;
+            capacity_TxtBox.Text = null;
+            amount_TxtBox.Text = null;
+            company_TxtBox.Text = null;
+            memo_TxtBox.Text = null;
+
+        }
+
+        private void printBtn_Click(object sender, RoutedEventArgs e)
+        {
+            PrintDialog printDialog = new PrintDialog();
+            if (printDialog.ShowDialog().GetValueOrDefault(false))
+            {
+                printDialog.PrintVisual(this, this.Title);
+            }
+
+        }
     }
 
 
