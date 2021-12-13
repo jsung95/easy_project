@@ -79,8 +79,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Dao\CommonDBConn.cs" />
+    <Compile Include="Dao\ILoginDao.cs" />
     <Compile Include="Dao\IProductDao.cs" />
     <Compile Include="Dao\ISignupDao.cs" />
+    <Compile Include="Dao\LoginDao.cs" />
     <Compile Include="Dao\ProductDao.cs" />
     <Compile Include="Dao\SignupDao.cs" />
     <Compile Include="Model\CategoryModel.cs" />
@@ -90,6 +92,7 @@
     <Compile Include="Model\ProductModel.cs" />
     <Compile Include="Util\PasswordHelper.cs" />
     <Compile Include="Util\SHA256Hash.cs" />
+    <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\ProductViewModel.cs" />
     <Compile Include="ViewModel\InsertProductViewModel.cs" />
     <Compile Include="ViewModel\SignupViewModel.cs" />
