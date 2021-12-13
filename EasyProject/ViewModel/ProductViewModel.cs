@@ -23,6 +23,9 @@ namespace EasyProject.ViewModel
         //로그인한 간호자(사용자) 정보를 담을 프로퍼티
         public NurseModel Nurse { get; set; }
 
+        //
+        public ObservableCollection<ProductModel> Add_list;
+
         public ProductViewModel()
         {
             Product = new ProductModel()
@@ -31,6 +34,13 @@ namespace EasyProject.ViewModel
             };
             List<CategoryModel> list = dao.GetCategoryModels();
             Categories = new ObservableCollection<CategoryModel>(list); // List타입 객체 list를 OC 타입 Products에 넣음 
+
+            //App.xaml.cs 에 로그인할 때 바인딩 된 로그인 정보 객체
+            Nurse = App.nurse_dto;
+
+
+            //
+            Add_list = new ObservableCollection<ProductModel>();
         }
 
 
@@ -54,7 +64,23 @@ namespace EasyProject.ViewModel
             dao.AddProduct(Product, SelectedCategory);
 
             //입고테이블에 추가
-            //dao.StoredProduct(Product, Nurse);
+            dao.StoredProduct(Product, Nurse);
+
+
+            Add_list.Add(Product);
+
+            foreach(var item in Add_list)
+            {
+                Console.WriteLine("=====================");
+                Console.WriteLine(item);
+                Console.WriteLine(item.Prod_name);
+                Console.WriteLine(item.Prod_code);
+                Console.WriteLine(item.Prod_id);
+                Console.WriteLine(item.Prod_price);
+                Console.WriteLine(item.Prod_total);
+                Console.WriteLine(item.Prod_expire);
+                Console.WriteLine("=====================");
+            }
         }// ProductInsert
 
     }//class

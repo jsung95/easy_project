@@ -142,11 +142,10 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
 
-                        cmd.CommandText = "INSERT INTO PRODUCT_IN(PROD_COUNT, PROD_ID, NURSE_NO, DEPT_ID) VALUES(:count, :prod_id, :nurse_no, :dept_id)";
+                        cmd.CommandText = "INSERT INTO PRODUCT_IN(PROD_IN_COUNT, PROD_ID, NURSE_NO, DEPT_ID) VALUES(:count, PROD_SEQ.CURRVAL, :nurse_no, :dept_id)";
 
                         //파라미터 값 바인딩
                         cmd.Parameters.Add(new OracleParameter("count", prod_dto.Prod_total));
-                        cmd.Parameters.Add(new OracleParameter("prod_id", prod_dto.Prod_id));
                         cmd.Parameters.Add(new OracleParameter("nurse_no", nurse_dto.Nurse_no));
                         cmd.Parameters.Add(new OracleParameter("dept_id", nurse_dto.Dept_id));
 
