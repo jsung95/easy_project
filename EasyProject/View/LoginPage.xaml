@@ -4,10 +4,17 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:EasyProject"
+      xmlns:vm="clr-namespace:EasyProject.ViewModel"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:w="clr-namespace:EasyProject.Util"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="LoginPage">
 
+    <Page.DataContext>
+        <vm:LoginViewModel/>
+    </Page.DataContext>
+    
     <Grid Height="450" Width="800" Background="LightGray"  >
         <Grid Height="400" Width="450" Background="White" >
             <Grid.RowDefinitions>
@@ -27,9 +34,11 @@
                 </Grid.RowDefinitions>
                 <TextBox x:Name="id_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="아이디" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
                          FontSize="20" VerticalAlignment="Bottom" Margin="75,0,75,21" Height="40" Width="300" Background="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" 
-                         SelectionBrush="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                         SelectionBrush="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" 
+                         Text="{Binding Nurse.Nurse_no}"/>
                 <PasswordBox x:Name="password_PwBox" HorizontalAlignment="Stretch" Margin="10" Grid.Row="1" VerticalAlignment="Center" 
-                             HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="25" Height="40" Width="300" Grid.Column="1"/>
+                             HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="25" Height="40" Width="300" Grid.Column="1"
+                             w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding Nurse.Nurse_pw, Mode=TwoWay}"/>
                 <CheckBox x:Name="checkB" VerticalContentAlignment="Top" HorizontalAlignment="Left" Grid.Row="2" Margin="80,21,0,50" Width="16" />
                 <Label Content="아이디 저장" FontSize="15" FontWeight="Black" Grid.Row="2" 
                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="101,12,0,0"/>
@@ -37,7 +46,13 @@
 
             <Grid Grid.Row="2" Background="White">
                 <Button x:Name="loginBtn" Content="로그인" Background="#4472C4" BorderThickness="0" FontSize="20" 
-                   Foreground="White" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Height="40" Margin="10" Width="300" Cursor="Hand"/>
+                   Foreground="White" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Height="40" Margin="10" Width="300" Cursor="Hand">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding Command}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
             </Grid>
 
             <Grid Grid.Row="3" Background="White">
