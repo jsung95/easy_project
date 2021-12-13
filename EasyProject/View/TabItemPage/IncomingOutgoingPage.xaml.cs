@@ -5,6 +5,9 @@ using System;
 using System.Linq;
 using System.ComponentModel;
 using System.Windows.Data;
+using Excel = Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Interop.Excel;
+using Page = Microsoft.Office.Interop.Excel.Page;
 
 namespace EasyProject.View
 {
@@ -87,7 +90,7 @@ namespace EasyProject.View
             }
             return genericList;
         }
-        /*private void txtName_TextChanged(object sender, TextChangedEventArgs e)
+        /*private void txtName                                                                                                                                                                                                                                                                                                                                                                                                                             _TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox t = (TextBox)sender;
             string filter = t.Text;
@@ -163,7 +166,7 @@ namespace EasyProject.View
                             pageIndex++;
                         }
 
-                        lblpageInformation.Content = count + " of " + myList.Count;
+                        //lblpageInformation.Content = count + " of " + myList.Count;
                     }
 
                     else
@@ -184,14 +187,14 @@ namespace EasyProject.View
                         {
                             dataGrid.ItemsSource = myList.Take(numberOfRecPerPage);
                             count = myList.Take(numberOfRecPerPage).Count();
-                            lblpageInformation.Content = count + " of " + myList.Count;
+                            //lblpageInformation.Content = count + " of " + myList.Count;
                         }
                         else
                         {
                             dataGrid.ItemsSource = myList.Skip
                             (pageIndex * numberOfRecPerPage).Take(numberOfRecPerPage);
                             count = Math.Min(pageIndex * numberOfRecPerPage, myList.Count);
-                            lblpageInformation.Content = count + " of " + myList.Count;
+                            //lblpageInformation.Content = count + " of " + myList.Count;
                         }
                     }
                     else
@@ -216,7 +219,7 @@ namespace EasyProject.View
                     dataGrid.ItemsSource = null;
                     dataGrid.ItemsSource = myList.Take(numberOfRecPerPage);
                     count = (myList.Take(numberOfRecPerPage)).Count();
-                    lblpageInformation.Content = count + " of " + myList.Count;
+                    //lblpageInformation.Content = count + " of " + myList.Count;
                     btnNext.IsEnabled = true;
                     btnLast.IsEnabled = true;
                     btnPrev.IsEnabled = true;
@@ -225,5 +228,44 @@ namespace EasyProject.View
             }
         }
         #endregion
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Excel.Application excel = new Excel.Application();
+            excel.Visible = true; //www.yazilimkodlama.com
+            Workbook workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
+            Worksheet sheet1 = (Worksheet)workbook.Sheets[1];
+
+            for (int j = 0; j < dataGrid.Columns.Count; j++) //타이틀용 
+            {
+                Range myRange = (Range)sheet1.Cells[1, j + 1];
+                sheet1.Cells[1, j + 1].Font.Bold = true; //제목을 굵게 표시
+                sheet1.Columns[j + 1].ColumnWidth = 15; //열 너비 설정
+                myRange.Value2 = dataGrid.Columns[j].Header;
+            }
+            for (int i = 0; i < dataGrid.Columns.Count; i++)
+            { //www.yazilimkodlama.com
+                for (int j = 0; j < dataGrid.Items.Count; j++)
+                {
+                    TextBlock b = dataGrid.Columns[i].GetCellContent(dataGrid.Items[j]) as TextBlock;
+                    // 
+                    Microsoft.Office.Interop.Excel.Range myRange = (Microsoft.Office.Interop.Excel.Range)sheet1.Cells[j + 2, i + 1];
+                    myRange.Value2 = b.Text;
+
+                }
+            }
+        }
+
+        HeaderFooter Page.LeftHeader => throw new NotImplementedException();
+
+        HeaderFooter Page.CenterHeader => throw new NotImplementedException();
+
+        HeaderFooter Page.RightHeader => throw new NotImplementedException();
+
+        HeaderFooter Page.LeftFooter => throw new NotImplementedException();
+
+        HeaderFooter Page.CenterFooter => throw new NotImplementedException();
+
+        HeaderFooter Page.RightFooter => throw new NotImplementedException();
     }
 }
