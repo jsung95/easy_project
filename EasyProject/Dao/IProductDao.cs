@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace EasyProject.Dao
 {
-    internal interface IProductDao
+    public interface IProductDao
     {
         // 재고입력 - 제품 카테고리 가져오기
         List<CategoryModel> GetCategoryModels();
