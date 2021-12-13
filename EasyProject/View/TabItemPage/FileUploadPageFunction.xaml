@@ -7,10 +7,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:local="clr-namespace:EasyProject.View.TabItemPage"
+    xmlns:local="clr-namespace:EasyProject.View.TabItemPage" 
+    xmlns:vm="clr-namespace:EasyProject.ViewModel" 
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     mc:Ignorable="d"
     d:DesignHeight="450" d:DesignWidth="800"
     Title="FileUploadPageFunction">
+
+    <Page.DataContext>
+        <vm:ProductViewModel/>
+    </Page.DataContext>
+    
     <Grid>
         <materialDesign:Card Grid.Column="0" Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
             <Grid>
@@ -45,20 +52,27 @@
 
                 <Grid Grid.Row="1" Margin="20,10,20,0" Background="#FFE5E5E5">
                     <DataGrid x:Name="fileUploadDataGrid">
-                        <!--<DataGrid.Columns>
-                            <DataGridTextColumn Header="제품코드" Binding="{Binding ProductCode}" IsReadOnly="True"></DataGridTextColumn>
-                            <DataGridTextColumn Header="제품명" Binding="{Binding ProductName}" IsReadOnly="True"></DataGridTextColumn>
-                            <DataGridTextColumn Header="품목/종류" Binding="{Binding CategoryName}" IsReadOnly="True"></DataGridTextColumn>
-                            <DataGridTextColumn Header="유통기한" Binding="{Binding ExpirationDate, StringFormat= {} {0:yyyy-MM-dd}}" IsReadOnly="True"></DataGridTextColumn>
-                            <DataGridTextColumn Header="가격" Binding="{Binding Price}" IsReadOnly="True"></DataGridTextColumn>
-                        </DataGrid.Columns>-->
-                        
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="제품코드" Binding="{Binding Product.Prod_code}" IsReadOnly="True"></DataGridTextColumn>
+                            <DataGridTextColumn Header="제품명" Binding="{Binding Product.Prod_name}" IsReadOnly="True"></DataGridTextColumn>
+                            <DataGridTextColumn Header="품목/종류" Binding="{Binding Category_name}" IsReadOnly="True"></DataGridTextColumn>
+                            <DataGridTextColumn Header="유통기한" Binding="{Binding Product.Prod_expire}" IsReadOnly="True"></DataGridTextColumn>
+                            <DataGridTextColumn Header="가격" Binding="{Binding Product.Prod_price}" IsReadOnly="True"></DataGridTextColumn>
+                            <DataGridTextColumn Header="수량" Binding="{Binding Product.Prod_total}" IsReadOnly="True"></DataGridTextColumn>
+                        </DataGrid.Columns>
+
                     </DataGrid>
                 </Grid>
 
                 <Grid Grid.Row="2">
                     <Button x:Name="insertBtn" Content="추가하기" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
-                       VerticalAlignment="Center" BorderThickness="0" Height="30" Width="90" Cursor="Hand" />
+                       VerticalAlignment="Center" BorderThickness="0" Height="30" Width="90" Cursor="Hand">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding Command}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
                 </Grid>
             </Grid>
         </materialDesign:Card>

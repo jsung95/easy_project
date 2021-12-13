@@ -54,28 +54,13 @@ namespace EasyProject.View.TabItemPage
 
                 range = xlWorkSheet.UsedRange; // 가져 온 시트의 데이터 범위 값
 
-                for (rCnt = 1; rCnt <= range.Rows.Count; rCnt++)
+                for (rCnt = 2; rCnt <= range.Rows.Count; rCnt++)
                 {
                     for (cCnt = 1; cCnt <= range.Columns.Count; cCnt++)
                     {
-                        if(rCnt == 1)
-                        {
-                            str = (string)(range.Cells[rCnt, cCnt] as Excel.Range).Value2;
-                            var col = new DataGridTextColumn();
-                            col.Header = str;
-                            col.Width = 80;
-                            col.Binding = new Binding(str);
-                            fileUploadDataGrid.Columns.Add(col);
-                        }
-                        else
-                        {
-                            // 열과 행에 해당하는 데이터를 문자열로 반환
-                            //str = (string)(range.Cells[rCnt, cCnt] as Excel.Range).Value2;
-                            str = range.Cells[rCnt, cCnt].Text.ToString();
-                            MessageBox.Show(str);
-                        }
+                        str = range.Cells[rCnt, cCnt].Text.ToString();
+                        MessageBox.Show(str);
                     }
-
                 }
 
                 xlWorkBook.Close(true, null, null);

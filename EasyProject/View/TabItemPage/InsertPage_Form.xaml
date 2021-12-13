@@ -35,7 +35,7 @@
                     <TextBlock Text="제품 코드" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13"></TextBlock>
                     <TextBox x:Name="productCode_TxtBox" Grid.Column="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="0,0,20,0" Height="30" 
-                             Text="{Binding Product.Prod_code}"/>
+                             Text="{Binding Product.Prod_code}" Cursor="IBeam"/>
                 </Grid>
 
                 <Grid Grid.Row="1">
@@ -46,7 +46,7 @@
                     <TextBlock  Text="제품명" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13"></TextBlock>
                     <TextBox x:Name="productName_TxtBox" Grid.Column="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="0,0,20,0" Height="30" 
-                             Text="{Binding Product.Prod_name}"/>
+                             Text="{Binding Product.Prod_name}" Cursor="IBeam"/>
                 </Grid>
 
                 <Grid Grid.Row="2">
@@ -89,7 +89,7 @@
                     <TextBlock Text="가격" Grid.Column="0" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13"></TextBlock>
                     <TextBox x:Name="productPrice_TxtBox" Grid.Column="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="0,0,20,0" Height="30" 
-                             Text="{Binding Product.Prod_price}"/>
+                             Text="{Binding Product.Prod_price}" Cursor="IBeam"/>
                     <TextBlock Text="수량" Grid.Column="2" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13"></TextBlock>
                     <TextBox x:Name="productQuantity_TxtBox" Grid.Column="3" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="0,0,20,0" Height="30" 
@@ -111,7 +111,7 @@
                     <Button x:Name="okBtn" Content="확인" Grid.Column="3" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" Cursor="Hand" />
                     <Button x:Name="signUpBtn" Content="확인" Grid.Column="3" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
-                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" >
+                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" Cursor="Hand" >
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding Command}" />
