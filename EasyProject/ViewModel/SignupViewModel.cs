@@ -35,7 +35,7 @@ namespace EasyProject.ViewModel
         public SignupViewModel()
         {
             Nurse = new NurseModel();
-            List<DeptModel> list = dao.GetDeptModels("SELECT DEPT_NAME FROM DEPT");
+            List<DeptModel> list = dao.GetDeptModels();
             Depts = new ObservableCollection<DeptModel>(list); // List타입 객체 list를 OC 타입 Depts에 넣음 
         }//생성자
 
@@ -55,10 +55,10 @@ namespace EasyProject.ViewModel
 
         public void SignupInsert()
         {
-            Nurse = dao.IdCheck("SELECT nurse_no FROM nurse WHERE nurse_no = :no", Nurse);
+            Nurse = dao.IdCheck(Nurse);
             if(Nurse.Nurse_no != null) // 중복없을시 가입 진행
             {
-                dao.SignUp("INSERT INTO NURSE(NURSE_NO, NURSE_NAME, NURSE_PW, DEPT_ID) VALUES(:no, :name, :pw, :dept_id)", Nurse, SelectedDept);
+                dao.SignUp(Nurse, SelectedDept);
             }
         }
 

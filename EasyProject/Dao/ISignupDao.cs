@@ -8,9 +8,9 @@ namespace EasyProject.Dao
 
     public interface ISignupDao
     {
-        List<DeptModel> GetDeptModels(string sql);
-        void SignUp(string sql, NurseModel nurse_dto, DeptModel dept_dto);
+        List<DeptModel> GetDeptModels();
+        void SignUp(NurseModel nurse_dto, DeptModel dept_dto);
 
-        NurseModel IdCheck(string sql, NurseModel nurse_dto);
+        NurseModel IdCheck(NurseModel nurse_dto);
     } // interface 
 } // namespace

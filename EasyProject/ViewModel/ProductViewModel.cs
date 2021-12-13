@@ -29,7 +29,7 @@ namespace EasyProject.ViewModel
             {
                 Prod_expire = DateTime.Now
             };
-            List<CategoryModel> list = dao.GetCategoryModels("SELECT CATEGORY_NAME FROM CATEGORY");
+            List<CategoryModel> list = dao.GetCategoryModels();
             Categories = new ObservableCollection<CategoryModel>(list); // List타입 객체 list를 OC 타입 Products에 넣음 
         }
 
@@ -51,10 +51,10 @@ namespace EasyProject.ViewModel
         public void ProductInsert()
         {
             //재고입력
-            dao.AddProduct("INSERT INTO PRODUCT(PROD_CODE, PROD_NAME, PROD_PRICE, PROD_TOTAL, PROD_EXPIRE, CATEGORY_ID) VALUES(:code, :name, :price, :total, TO_DATE(:expire, 'YYYYMMDD'), :category_id)", Product, SelectedCategory);
+            dao.AddProduct(Product, SelectedCategory);
 
             //입고테이블에 추가
-            //dao.StoredProduct("INSERT INTO PRODUCT_IN(PROD_COUNT, PROD_ID, NURSE_NO, DEPT_ID) VALUES(:count, :prod_id, :nurse_no, :dept_id)", Product, Nurse);
+            //dao.StoredProduct(Product, Nurse);
         }// ProductInsert
 
     }//class

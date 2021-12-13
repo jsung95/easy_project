@@ -8,7 +8,7 @@ namespace EasyProject.Dao
     public class ProductDao : CommonDBConn, IProductDao //DB연결 Class 및 인터페이스 상속
     {
         
-        public List<CategoryModel> GetCategoryModels(string sql)
+        public List<CategoryModel> GetCategoryModels()
         {
             List<CategoryModel> list = new List<CategoryModel>();
             try
@@ -23,7 +23,7 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
 
-                        cmd.CommandText = sql;
+                        cmd.CommandText = "SELECT CATEGORY_NAME FROM CATEGORY";
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
@@ -54,7 +54,7 @@ namespace EasyProject.Dao
 
 
 
-        public void AddProduct(string sql, ProductModel prod_dto, CategoryModel category_dto)
+        public void AddProduct(ProductModel prod_dto, CategoryModel category_dto)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
 
-                        cmd.CommandText = sql;
+                        cmd.CommandText = "INSERT INTO PRODUCT(PROD_CODE, PROD_NAME, PROD_PRICE, PROD_TOTAL, PROD_EXPIRE, CATEGORY_ID) VALUES(:code, :name, :price, :total, TO_DATE(:expire, 'YYYYMMDD'), :category_id)";
 
 
                         //파라미터 값 바인딩
@@ -128,7 +128,7 @@ namespace EasyProject.Dao
         }//AddProduct
 
 
-        public void StoredProduct(string sql, ProductModel prod_dto, NurseModel nurse_dto)
+        public void StoredProduct(ProductModel prod_dto, NurseModel nurse_dto)
         {
             try
             {
@@ -142,7 +142,7 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
 
-                        cmd.CommandText = sql;
+                        cmd.CommandText = "INSERT INTO PRODUCT_IN(PROD_COUNT, PROD_ID, NURSE_NO, DEPT_ID) VALUES(:count, :prod_id, :nurse_no, :dept_id)";
 
                         //파라미터 값 바인딩
                         cmd.Parameters.Add(new OracleParameter("count", prod_dto.Prod_total));

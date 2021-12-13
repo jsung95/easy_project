@@ -10,7 +10,7 @@ namespace EasyProject.Dao
     public class SignupDao : CommonDBConn, ISignupDao //DB연결 Class 및 인터페이스 상속
     {
 
-        public List<DeptModel> GetDeptModels(string sql)
+        public List<DeptModel> GetDeptModels()
         {
             List<DeptModel> list = new List<DeptModel>();
             try
@@ -26,7 +26,7 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
 
-                        cmd.CommandText = sql;
+                        cmd.CommandText = "SELECT DEPT_NAME FROM DEPT";
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
@@ -57,7 +57,7 @@ namespace EasyProject.Dao
 
         } // GetDeptModels
 
-        public void SignUp(string sql, NurseModel nurse_dto, DeptModel dept_dto)
+        public void SignUp(NurseModel nurse_dto, DeptModel dept_dto)
         {
             
             try
@@ -73,7 +73,7 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
 
-                        cmd.CommandText = sql;
+                        cmd.CommandText = "INSERT INTO NURSE(NURSE_NO, NURSE_NAME, NURSE_PW, DEPT_ID) VALUES(:no, :name, :pw, :dept_id)";
 
                         // INSERT INTO NURSE(NURSE_NO, NURSE_NAME, NURSE_PW, DEPT_ID) VALUES(:no, :name, :pw, :dept_id)
                         //파라미터 값 바인딩
@@ -121,7 +121,7 @@ namespace EasyProject.Dao
 
         }//SignUp(string sql)
 
-        public NurseModel IdCheck(string sql, NurseModel nurse_dto)
+        public NurseModel IdCheck(NurseModel nurse_dto)
         {
             
             try
@@ -135,7 +135,7 @@ namespace EasyProject.Dao
                     using (cmd)
                     {
                         cmd.Connection = conn;
-                        cmd.CommandText = sql;
+                        cmd.CommandText = "SELECT nurse_no FROM nurse WHERE nurse_no = :no";
                         cmd.BindByName = false;
                         cmd.Parameters.Add(new OracleParameter("no", nurse_dto.Nurse_no));
                         OracleDataReader reader = cmd.ExecuteReader();
