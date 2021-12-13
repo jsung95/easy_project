@@ -41,8 +41,8 @@ namespace EasyProject.View.TabItemPage
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             foreach (string file in files)
             {
-                FileUploadPageFunction uploadPFunction = new FileUploadPageFunction(file);
-                NavigationService.Navigate(uploadPFunction);
+                //FileUploadPageFunction uploadPFunction = new FileUploadPageFunction(file);
+                //NavigationService.Navigate(uploadPFunction);
             }
         }
 
@@ -53,7 +53,9 @@ namespace EasyProject.View.TabItemPage
 
             if (openFileDialog.ShowDialog() == true)
             {
-                FileUploadPageFunction uploadPFunction = new FileUploadPageFunction(System.IO.Path.GetFileName(openFileDialog.FileName));
+
+                //MessageBox.Show(System.IO.Path.GetFullPath(openFileDialog.FileName));
+                FileUploadPageFunction uploadPFunction = new FileUploadPageFunction(openFileDialog);
                 NavigationService.Navigate(uploadPFunction);
             }
         }

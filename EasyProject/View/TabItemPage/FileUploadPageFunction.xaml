@@ -44,14 +44,14 @@
                 </Grid>
 
                 <Grid Grid.Row="1" Margin="20,10,20,0" Background="#FFE5E5E5">
-                    <DataGrid x:Name="fileUploadDataGrid" ItemsSource="{Binding ObserList}" CanUserAddRows="False">
-                        <DataGrid.Columns>
+                    <DataGrid x:Name="fileUploadDataGrid">
+                        <!--<DataGrid.Columns>
                             <DataGridTextColumn Header="제품코드" Binding="{Binding ProductCode}" IsReadOnly="True"></DataGridTextColumn>
                             <DataGridTextColumn Header="제품명" Binding="{Binding ProductName}" IsReadOnly="True"></DataGridTextColumn>
                             <DataGridTextColumn Header="품목/종류" Binding="{Binding CategoryName}" IsReadOnly="True"></DataGridTextColumn>
                             <DataGridTextColumn Header="유통기한" Binding="{Binding ExpirationDate, StringFormat= {} {0:yyyy-MM-dd}}" IsReadOnly="True"></DataGridTextColumn>
                             <DataGridTextColumn Header="가격" Binding="{Binding Price}" IsReadOnly="True"></DataGridTextColumn>
-                        </DataGrid.Columns>
+                        </DataGrid.Columns>-->
                         
                     </DataGrid>
                 </Grid>
