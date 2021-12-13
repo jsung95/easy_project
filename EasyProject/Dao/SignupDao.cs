@@ -142,7 +142,7 @@ namespace EasyProject.Dao
 
                         if (reader.Read() == false)
                         {
-                            MessageBox.Show("사용가능합니다!");
+                            MessageBox.Show("회원가입처리를 진행합니다.");
                         }
                         else
                         {
