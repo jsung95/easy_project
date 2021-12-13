@@ -91,6 +91,7 @@
     <Compile Include="Model\DeptModel.cs" />
     <Compile Include="Model\NurseModel.cs" />
     <Compile Include="Model\Notifier.cs" />
+    <Compile Include="Model\ProductForListModel.cs" />
     <Compile Include="Model\ProductModel.cs" />
     <Compile Include="Util\PasswordHelper.cs" />
     <Compile Include="Util\SHA256Hash.cs" />
