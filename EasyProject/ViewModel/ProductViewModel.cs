@@ -58,6 +58,19 @@ namespace EasyProject.ViewModel
 
         }//Command
 
+        public ICommand ExcelImportCommand
+        {
+            get
+            {
+                if (command == null)
+                {
+                    //command = new ActionCommand(ProductInsert);
+                }
+                return command;
+            }//get
+
+        }//Command
+
         public void ProductInsert()
         {
             //재고입력
