@@ -80,6 +80,15 @@
                     HorizontalAlignment="Left" Margin="10"  
                     VerticalAlignment="Top" AutoGenerateColumns="True" 
                     CanUserSortColumns="True" IsReadOnly="True" ColumnWidth="*">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="RowButton_Click">Text</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
                     </DataGrid>
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
