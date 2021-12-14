@@ -55,6 +55,7 @@ namespace EasyProject.View
         {
             myList = GetData();
             dataGrid1.ItemsSource = myList.Take(numberOfRecPerPage);
+            
             dataGrid1.Columns[0].Header = "제품ID";
             dataGrid1.Columns[1].Header = "제품명";
             dataGrid1.Columns[2].Header = "Test";
@@ -82,6 +83,7 @@ namespace EasyProject.View
             List<object> genericList = new List<object>();
             Student studentObj;
             //Random randomObj = new Random();
+            
             for (int i = 0; i < 1000; i++)
             {
                 studentObj = new Student();
@@ -146,33 +148,6 @@ namespace EasyProject.View
         {
             Navigate((int)PagingMode.PageCountChange);
         }
-
-        private void btnFirst_Click2(object sender, System.EventArgs e)
-        {
-            Navigate((int)PagingMode.First);
-        }
-
-        private void btnNext_Click2(object sender, System.EventArgs e)
-        {
-            Navigate((int)PagingMode.Next);
-
-        }
-
-        private void btnPrev_Click2(object sender, System.EventArgs e)
-        {
-            Navigate((int)PagingMode.Previous);
-
-        }
-
-        private void btnLast_Click2(object sender, System.EventArgs e)
-        {
-            Navigate((int)PagingMode.Last);
-        }
-
-        private void cbNumberOfRecords_SelectionChanged2(object sender, SelectionChangedEventArgs e)
-        {
-            Navigate((int)PagingMode.PageCountChange);
-        }
         private void Navigate(int mode)
         {
             int count;
@@ -181,25 +156,13 @@ namespace EasyProject.View
                 case (int)PagingMode.Next:
                     btnPrev.IsEnabled = true;
                     btnFirst.IsEnabled = true;
-
-                    btnPrev2.IsEnabled = true;
-                    btnFirst2.IsEnabled = true;
-
                     if (myList.Count >= (pageIndex * numberOfRecPerPage))
                     {
                         if (myList.Skip(pageIndex *
                         numberOfRecPerPage).Take(numberOfRecPerPage).Count() == 0)
                         {
                             dataGrid1.ItemsSource = null;
-                            dataGrid2.ItemsSource = null;
-
                             dataGrid1.ItemsSource = myList.Skip((pageIndex *
-                            numberOfRecPerPage) - numberOfRecPerPage).Take(numberOfRecPerPage);
-                            count = (pageIndex * numberOfRecPerPage) +
-                            (myList.Skip(pageIndex *
-                            numberOfRecPerPage).Take(numberOfRecPerPage)).Count();
-
-                            dataGrid2.ItemsSource = myList.Skip((pageIndex *
                             numberOfRecPerPage) - numberOfRecPerPage).Take(numberOfRecPerPage);
                             count = (pageIndex * numberOfRecPerPage) +
                             (myList.Skip(pageIndex *
@@ -207,19 +170,11 @@ namespace EasyProject.View
                         }
                         else
                         {
-                            dataGrid1.ItemsSource = null; 
-                            dataGrid2.ItemsSource = null;
-
+                            dataGrid1.ItemsSource = null;
                             dataGrid1.ItemsSource = myList.Skip(pageIndex *
                             numberOfRecPerPage).Take(numberOfRecPerPage);
                             count = (pageIndex * numberOfRecPerPage) +
                             (myList.Skip(pageIndex * numberOfRecPerPage).Take(numberOfRecPerPage)).Count();
-
-                            dataGrid2.ItemsSource = myList.Skip(pageIndex *
-                            numberOfRecPerPage).Take(numberOfRecPerPage);
-                            count = (pageIndex * numberOfRecPerPage) +
-                            (myList.Skip(pageIndex * numberOfRecPerPage).Take(numberOfRecPerPage)).Count();
-
                             pageIndex++;
                         }
 
@@ -230,41 +185,25 @@ namespace EasyProject.View
                     {
                         btnNext.IsEnabled = false;
                         btnLast.IsEnabled = false;
-
-                        btnNext2.IsEnabled = false;
-                        btnLast2.IsEnabled = false;
                     }
 
                     break;
                 case (int)PagingMode.Previous:
                     btnNext.IsEnabled = true;
                     btnLast.IsEnabled = true;
-
-                    btnNext2.IsEnabled = true;
-                    btnLast2.IsEnabled = true;
-
                     if (pageIndex > 1)
                     {
                         pageIndex -= 1;
                         dataGrid1.ItemsSource = null;
-                        dataGrid2.ItemsSource = null;
-
                         if (pageIndex == 1)
                         {
                             dataGrid1.ItemsSource = myList.Take(numberOfRecPerPage);
-                            count = myList.Take(numberOfRecPerPage).Count();
-
-                            dataGrid2.ItemsSource = myList.Take(numberOfRecPerPage);
                             count = myList.Take(numberOfRecPerPage).Count();
                             //lblpageInformation.Content = count + " of " + myList.Count;
                         }
                         else
                         {
                             dataGrid1.ItemsSource = myList.Skip
-                            (pageIndex * numberOfRecPerPage).Take(numberOfRecPerPage);
-                            count = Math.Min(pageIndex * numberOfRecPerPage, myList.Count);
-
-                            dataGrid2.ItemsSource = myList.Skip
                             (pageIndex * numberOfRecPerPage).Take(numberOfRecPerPage);
                             count = Math.Min(pageIndex * numberOfRecPerPage, myList.Count);
                             //lblpageInformation.Content = count + " of " + myList.Count;
@@ -274,9 +213,6 @@ namespace EasyProject.View
                     {
                         btnPrev.IsEnabled = false;
                         btnFirst.IsEnabled = false;
-
-                        btnPrev2.IsEnabled = false;
-                        btnFirst2.IsEnabled = false;
                     }
                     break;
 
@@ -291,22 +227,15 @@ namespace EasyProject.View
 
                 case (int)PagingMode.PageCountChange:
                     pageIndex = 1;
-
                     numberOfRecPerPage = Convert.ToInt32(cbNumberOfRecords.SelectedItem);
-
                     dataGrid1.ItemsSource = null;
                     dataGrid1.ItemsSource = myList.Take(numberOfRecPerPage);
-
-                    dataGrid2.ItemsSource = null;
-                    dataGrid2.ItemsSource = myList.Take(numberOfRecPerPage);
-
                     count = (myList.Take(numberOfRecPerPage)).Count();
-
                     //lblpageInformation.Content = count + " of " + myList.Count;
-                    btnNext2.IsEnabled = true;
-                    btnLast2.IsEnabled = true;
-                    btnPrev2.IsEnabled = true;
-                    btnFirst2.IsEnabled = true;
+                    btnNext.IsEnabled = true;
+                    btnLast.IsEnabled = true;
+                    btnPrev.IsEnabled = true;
+                    btnFirst.IsEnabled = true;
                     break;
             }
         }
