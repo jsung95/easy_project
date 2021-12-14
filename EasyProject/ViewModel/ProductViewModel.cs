@@ -24,7 +24,7 @@ namespace EasyProject.ViewModel
         public NurseModel Nurse { get; set; }
 
         //
-        public ObservableCollection<ProductForListModel> Add_list;
+        public ObservableCollection<ProductForListModel> Add_list { get; set; }
 
         public ProductViewModel()
         {
@@ -97,7 +97,8 @@ namespace EasyProject.ViewModel
             //옵저버블컬렉션 리스트에 추가
             Add_list.Add(dto);
             
-            /*foreach (var item in Add_list)
+            /*
+            foreach (var item in Add_list)
             {
                 Console.WriteLine("=====================");
                 Console.WriteLine(item.Prod_code);
@@ -107,7 +108,8 @@ namespace EasyProject.ViewModel
                 Console.WriteLine(item.Prod_price);
                 Console.WriteLine(item.Prod_total);
                 Console.WriteLine("=====================");
-            }*/
+            }
+            */
             /////////////////////////////////////////////
             
 

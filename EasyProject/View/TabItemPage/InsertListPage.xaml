@@ -5,14 +5,28 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:EasyProject.View.TabItemPage"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:vm="clr-namespace:EasyProject.ViewModel"      
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="InsertListPage">
-
+    <Page.DataContext>
+        <vm:ProductViewModel/>
+    </Page.DataContext>
+    
     <Grid>
         <materialDesign:Card Grid.Column="0" Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
             <Grid>
-                <DataGrid x:Name="insertListDataGrid" Margin ="10,10,10,10"></DataGrid>
+                <DataGrid x:Name="insertListDataGrid" Margin ="10,10,10,10">
+                    <ListView Grid.Row="0" Name="InsertListView" FontSize="15" Margin="3" ItemsSource="{Binding Add_list}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="제품코드" DisplayMemberBinding="{Binding Prod_code}" Width="100"/>
+                                <GridViewColumn Header="제품명" DisplayMemberBinding="{Binding Prod_name}" Width="80"/>
+                                <GridViewColumn Header="가격" DisplayMemberBinding="{Binding Prod_price}" Width="80"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </DataGrid>
             </Grid>
         </materialDesign:Card>
     </Grid>
