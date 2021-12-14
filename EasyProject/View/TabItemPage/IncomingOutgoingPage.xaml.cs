@@ -54,15 +54,25 @@ namespace EasyProject.View
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             myList = GetData();
-            dataGrid.ItemsSource = myList.Take(numberOfRecPerPage);
-            dataGrid.Columns[0].Header = "제품ID";
-            dataGrid.Columns[1].Header = "제품명";
-            dataGrid.Columns[2].Header = "Test";
-            dataGrid.Columns[3].Header = "Test";
-            dataGrid.Columns[4].Header = "Test";
-            dataGrid.Columns[5].Header = "Test";
-            dataGrid.Columns[6].Header = "Test";
-            dataGrid.Columns[7].Header = "Test";
+            dataGrid1.ItemsSource = myList.Take(numberOfRecPerPage);
+            dataGrid1.Columns[0].Header = "제품ID";
+            dataGrid1.Columns[1].Header = "제품명";
+            dataGrid1.Columns[2].Header = "Test";
+            dataGrid1.Columns[3].Header = "Test";
+            dataGrid1.Columns[4].Header = "Test";
+            dataGrid1.Columns[5].Header = "Test";
+            dataGrid1.Columns[6].Header = "Test";
+            dataGrid1.Columns[7].Header = "Test";
+
+            dataGrid2.ItemsSource = myList.Take(numberOfRecPerPage);
+            dataGrid2.Columns[0].Header = "제품ID";
+            dataGrid2.Columns[1].Header = "제품명";
+            dataGrid2.Columns[2].Header = "Test";
+            dataGrid2.Columns[3].Header = "Test";
+            dataGrid2.Columns[4].Header = "Test";
+            dataGrid2.Columns[5].Header = "Test";
+            dataGrid2.Columns[6].Header = "Test";
+            dataGrid2.Columns[7].Header = "Test";
 
             //int count = myList.Take(numberOfRecPerPage).Count();
             //lblpageInformation.Content = count + " of " + myList.Count;
@@ -136,6 +146,33 @@ namespace EasyProject.View
         {
             Navigate((int)PagingMode.PageCountChange);
         }
+
+        private void btnFirst_Click2(object sender, System.EventArgs e)
+        {
+            Navigate((int)PagingMode.First);
+        }
+
+        private void btnNext_Click2(object sender, System.EventArgs e)
+        {
+            Navigate((int)PagingMode.Next);
+
+        }
+
+        private void btnPrev_Click2(object sender, System.EventArgs e)
+        {
+            Navigate((int)PagingMode.Previous);
+
+        }
+
+        private void btnLast_Click2(object sender, System.EventArgs e)
+        {
+            Navigate((int)PagingMode.Last);
+        }
+
+        private void cbNumberOfRecords_SelectionChanged2(object sender, SelectionChangedEventArgs e)
+        {
+            Navigate((int)PagingMode.PageCountChange);
+        }
         private void Navigate(int mode)
         {
             int count;
@@ -144,13 +181,25 @@ namespace EasyProject.View
                 case (int)PagingMode.Next:
                     btnPrev.IsEnabled = true;
                     btnFirst.IsEnabled = true;
+
+                    btnPrev2.IsEnabled = true;
+                    btnFirst2.IsEnabled = true;
+
                     if (myList.Count >= (pageIndex * numberOfRecPerPage))
                     {
                         if (myList.Skip(pageIndex *
                         numberOfRecPerPage).Take(numberOfRecPerPage).Count() == 0)
                         {
-                            dataGrid.ItemsSource = null;
-                            dataGrid.ItemsSource = myList.Skip((pageIndex *
+                            dataGrid1.ItemsSource = null;
+                            dataGrid2.ItemsSource = null;
+
+                            dataGrid1.ItemsSource = myList.Skip((pageIndex *
+                            numberOfRecPerPage) - numberOfRecPerPage).Take(numberOfRecPerPage);
+                            count = (pageIndex * numberOfRecPerPage) +
+                            (myList.Skip(pageIndex *
+                            numberOfRecPerPage).Take(numberOfRecPerPage)).Count();
+
+                            dataGrid2.ItemsSource = myList.Skip((pageIndex *
                             numberOfRecPerPage) - numberOfRecPerPage).Take(numberOfRecPerPage);
                             count = (pageIndex * numberOfRecPerPage) +
                             (myList.Skip(pageIndex *
@@ -158,11 +207,19 @@ namespace EasyProject.View
                         }
                         else
                         {
-                            dataGrid.ItemsSource = null;
-                            dataGrid.ItemsSource = myList.Skip(pageIndex *
+                            dataGrid1.ItemsSource = null; 
+                            dataGrid2.ItemsSource = null;
+
+                            dataGrid1.ItemsSource = myList.Skip(pageIndex *
                             numberOfRecPerPage).Take(numberOfRecPerPage);
                             count = (pageIndex * numberOfRecPerPage) +
                             (myList.Skip(pageIndex * numberOfRecPerPage).Take(numberOfRecPerPage)).Count();
+
+                            dataGrid2.ItemsSource = myList.Skip(pageIndex *
+                            numberOfRecPerPage).Take(numberOfRecPerPage);
+                            count = (pageIndex * numberOfRecPerPage) +
+                            (myList.Skip(pageIndex * numberOfRecPerPage).Take(numberOfRecPerPage)).Count();
+
                             pageIndex++;
                         }
 
@@ -173,25 +230,41 @@ namespace EasyProject.View
                     {
                         btnNext.IsEnabled = false;
                         btnLast.IsEnabled = false;
+
+                        btnNext2.IsEnabled = false;
+                        btnLast2.IsEnabled = false;
                     }
 
                     break;
                 case (int)PagingMode.Previous:
                     btnNext.IsEnabled = true;
                     btnLast.IsEnabled = true;
+
+                    btnNext2.IsEnabled = true;
+                    btnLast2.IsEnabled = true;
+
                     if (pageIndex > 1)
                     {
                         pageIndex -= 1;
-                        dataGrid.ItemsSource = null;
+                        dataGrid1.ItemsSource = null;
+                        dataGrid2.ItemsSource = null;
+
                         if (pageIndex == 1)
                         {
-                            dataGrid.ItemsSource = myList.Take(numberOfRecPerPage);
+                            dataGrid1.ItemsSource = myList.Take(numberOfRecPerPage);
+                            count = myList.Take(numberOfRecPerPage).Count();
+
+                            dataGrid2.ItemsSource = myList.Take(numberOfRecPerPage);
                             count = myList.Take(numberOfRecPerPage).Count();
                             //lblpageInformation.Content = count + " of " + myList.Count;
                         }
                         else
                         {
-                            dataGrid.ItemsSource = myList.Skip
+                            dataGrid1.ItemsSource = myList.Skip
+                            (pageIndex * numberOfRecPerPage).Take(numberOfRecPerPage);
+                            count = Math.Min(pageIndex * numberOfRecPerPage, myList.Count);
+
+                            dataGrid2.ItemsSource = myList.Skip
                             (pageIndex * numberOfRecPerPage).Take(numberOfRecPerPage);
                             count = Math.Min(pageIndex * numberOfRecPerPage, myList.Count);
                             //lblpageInformation.Content = count + " of " + myList.Count;
@@ -201,6 +274,9 @@ namespace EasyProject.View
                     {
                         btnPrev.IsEnabled = false;
                         btnFirst.IsEnabled = false;
+
+                        btnPrev2.IsEnabled = false;
+                        btnFirst2.IsEnabled = false;
                     }
                     break;
 
@@ -215,15 +291,22 @@ namespace EasyProject.View
 
                 case (int)PagingMode.PageCountChange:
                     pageIndex = 1;
+
                     numberOfRecPerPage = Convert.ToInt32(cbNumberOfRecords.SelectedItem);
-                    dataGrid.ItemsSource = null;
-                    dataGrid.ItemsSource = myList.Take(numberOfRecPerPage);
+
+                    dataGrid1.ItemsSource = null;
+                    dataGrid1.ItemsSource = myList.Take(numberOfRecPerPage);
+
+                    dataGrid2.ItemsSource = null;
+                    dataGrid2.ItemsSource = myList.Take(numberOfRecPerPage);
+
                     count = (myList.Take(numberOfRecPerPage)).Count();
+
                     //lblpageInformation.Content = count + " of " + myList.Count;
-                    btnNext.IsEnabled = true;
-                    btnLast.IsEnabled = true;
-                    btnPrev.IsEnabled = true;
-                    btnFirst.IsEnabled = true;
+                    btnNext2.IsEnabled = true;
+                    btnLast2.IsEnabled = true;
+                    btnPrev2.IsEnabled = true;
+                    btnFirst2.IsEnabled = true;
                     break;
             }
         }
@@ -236,18 +319,18 @@ namespace EasyProject.View
             Workbook workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
             Worksheet sheet1 = (Worksheet)workbook.Sheets[1];
 
-            for (int j = 0; j < dataGrid.Columns.Count; j++) //타이틀용 
+            for (int j = 0; j < dataGrid1.Columns.Count; j++) //타이틀용 
             {
                 Range myRange = (Range)sheet1.Cells[1, j + 1];
                 sheet1.Cells[1, j + 1].Font.Bold = true; //제목을 굵게 표시
                 sheet1.Columns[j + 1].ColumnWidth = 15; //열 너비 설정
-                myRange.Value2 = dataGrid.Columns[j].Header;
+                myRange.Value2 = dataGrid1.Columns[j].Header;
             }
-            for (int i = 0; i < dataGrid.Columns.Count; i++)
+            for (int i = 0; i < dataGrid1.Columns.Count; i++)
             { //www.yazilimkodlama.com
-                for (int j = 0; j < dataGrid.Items.Count; j++)
+                for (int j = 0; j < dataGrid1.Items.Count; j++)
                 {
-                    TextBlock b = dataGrid.Columns[i].GetCellContent(dataGrid.Items[j]) as TextBlock;
+                    TextBlock b = dataGrid1.Columns[i].GetCellContent(dataGrid1.Items[j]) as TextBlock;
                     // 
                     Microsoft.Office.Interop.Excel.Range myRange = (Microsoft.Office.Interop.Excel.Range)sheet1.Cells[j + 2, i + 1];
                     myRange.Value2 = b.Text;
