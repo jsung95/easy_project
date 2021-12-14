@@ -23,8 +23,8 @@ namespace EasyProject.ViewModel
         //로그인한 간호자(사용자) 정보를 담을 프로퍼티
         public NurseModel Nurse { get; set; }
 
-        //
-        public ObservableCollection<ProductForListModel> Add_list { get; set; }
+        //입력한 재고 데이터를 담은 객체를 담아줄 옵저버블컬렉션 리스트
+        public ObservableCollection<ProductForListModel> Add_list;
 
         public ProductViewModel()
         {
@@ -58,19 +58,6 @@ namespace EasyProject.ViewModel
 
         }//Command
 
-        public ICommand ExcelImportCommand
-        {
-            get
-            {
-                if (command == null)
-                {
-                    //command = new ActionCommand(ProductInsert);
-                }
-                return command;
-            }//get
-
-        }//Command
-
         public void ProductInsert()
         {
             //재고입력
@@ -97,8 +84,7 @@ namespace EasyProject.ViewModel
             //옵저버블컬렉션 리스트에 추가
             Add_list.Add(dto);
             
-            /*
-            foreach (var item in Add_list)
+            /*foreach (var item in Add_list)
             {
                 Console.WriteLine("=====================");
                 Console.WriteLine(item.Prod_code);
@@ -108,8 +94,7 @@ namespace EasyProject.ViewModel
                 Console.WriteLine(item.Prod_price);
                 Console.WriteLine(item.Prod_total);
                 Console.WriteLine("=====================");
-            }
-            */
+            }*/
             /////////////////////////////////////////////
             
 
