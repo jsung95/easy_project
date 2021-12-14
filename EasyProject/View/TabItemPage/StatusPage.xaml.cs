@@ -7,6 +7,8 @@ using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using System.Windows.Navigation;
+using System.Windows.Media;
+using System.Collections;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -86,6 +88,10 @@ public partial class StatusPage : Page {
                 genericList2.Add(studentObj2);
             }
             return genericList2;
+        }
+        private void RowButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("버튼을 클릭했습니다.");
         }
         #region Pagination 
         private void btnFirst_Click(object sender, System.EventArgs e)
