@@ -28,8 +28,12 @@ namespace EasyProject.Dao
                                           "FROM NURSE N" +
                                           "LEFT OUTER JOIN DEPT D" +
                                           "ON N.dept_id = D.dept_id" +
-                                          "WHERE N.nurse_auth = :auth";
+                                          "WHERE N.nurse_auth in (:auth)";
 
+                        if (auth.Equals("전체"))
+                        {
+                            auth = "'SUPER','ADMIN','NORMAL'";
+                        }//if
                         cmd.Parameters.Add(new OracleParameter("auth", auth));
 
                         OracleDataReader reader = cmd.ExecuteReader();
