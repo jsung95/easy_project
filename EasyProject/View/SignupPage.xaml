@@ -93,12 +93,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Button x:Name="signUpBtn" Content="회원가입하기" Grid.Column="3" Background="Red" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
-                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" Cursor="Hand">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding Command}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
+                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" Cursor="Hand" Command="{Binding Command}">
                 </Button>
                 <Button x:Name="backBtn" Content="메인화면" Grid.Column="0" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" Cursor="Hand" />

@@ -24,7 +24,7 @@ namespace EasyProject.ViewModel
         public NurseModel Nurse { get; set; }
 
         //입력한 재고 데이터를 담은 객체를 담아줄 옵저버블컬렉션 리스트
-        public ObservableCollection<ProductForListModel> Add_list { get; set; }
+        public static ObservableCollection<ProductForListModel> Add_list { get; set; }
 
 
         public ProductViewModel()
