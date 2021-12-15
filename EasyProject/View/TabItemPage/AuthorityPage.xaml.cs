@@ -26,7 +26,7 @@ namespace EasyProject.View
         }
         private void dataGrid_Loaded(object sender, RoutedEventArgs e)
         {
-            DataGrid dataGrid = sender as DataGrid;
+            /*DataGrid dataGrid = sender as DataGrid;
             dataGrid.Items.Add(new Member("테스트1", "SADF1", "내과"));
             dataGrid.Items.Add(new Member("테스트2", "SADF2", "내과"));
             dataGrid.Items.Add(new Member("테스트3", "SADF3", "내과"));
@@ -35,12 +35,12 @@ namespace EasyProject.View
             dataGrid.Items.Add(new Member("테스트6", "SADF6", "내과"));
             dataGrid.Items.Add(new Member("테스트7", "SADF7", "내과"));
             dataGrid.Items.Add(new Member("테스트8", "SADF8", "내과"));
-            dataGrid.Items.Add(new Member("테스트9", "SADF9", "내과"));
+            dataGrid.Items.Add(new Member("테스트9", "SADF9", "내과"));*/
 
         }
         private void dataGrid_Loaded2(object sender, RoutedEventArgs e)
         {
-            DataGrid dataGrid = sender as DataGrid;
+            /*DataGrid dataGrid = sender as DataGrid;
             dataGrid.Items.Add(new Member("테스트10", "SADF10", "내과0"));
             dataGrid.Items.Add(new Member("테스트20", "SADF20", "내과0"));
             dataGrid.Items.Add(new Member("테스트30", "SADF30", "내과0"));
@@ -49,10 +49,10 @@ namespace EasyProject.View
             dataGrid.Items.Add(new Member("테스트60", "SADF60", "내과0"));
             dataGrid.Items.Add(new Member("테스트70", "SADF70", "내과0"));
             dataGrid.Items.Add(new Member("테스트80", "SADF80", "내과0"));
-            dataGrid.Items.Add(new Member("테스트90", "SADF90", "내과0"));
+            dataGrid.Items.Add(new Member("테스트90", "SADF90", "내과0"));*/
 
         }
-        public class Lists
+/*        public class Lists
         {
             public Lists()
             {
@@ -71,7 +71,7 @@ namespace EasyProject.View
                 list.Add(new Member("테스트722", "SADF722", "내과"));
                 return list;
             }
-        }
+        }*/
         private void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 

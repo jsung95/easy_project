@@ -164,6 +164,142 @@ namespace EasyProject.Dao
         }// StoredProduct()
 
 
+        public List<ProductInOutModel> GetProductIn()
+        {
+            List<ProductInOutModel> list = new List<ProductInOutModel>();
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open ();
+
+                    using (cmd)
+                    {
+                        cmd.Connection= conn;
+
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_expire, P.prod_price, I.prod_in_count, N.nurse_name, I.prod_in_date" +
+                                          "FROM PRODUCT_IN I" +
+                                          "INNER JOIN PRODUCT P" +
+                                          "ON I.prod_id = P.prod_id" +
+                                          "INNER JOIN CATEGORY C" +
+                                          "ON P.category_id = C.category_id" +
+                                          "LEFT OUTER JOIN NURSE N" +
+                                          "ON I.nurse_no = N.nurse_no; ";
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string prod_code = reader.GetString(0);
+                            string prod_name = reader.GetString(1);
+                            string category_name = reader.GetString(2);
+                            DateTime prod_expire = reader.GetDateTime(3);
+                            int? prod_price = reader.GetInt32(4);
+                            int? prod_in_count = reader.GetInt32(5);
+                            string nurse_name = reader.GetString(6);
+                            DateTime prod_in_date = reader.GetDateTime(7);
+
+                            ProductInOutModel dto = new ProductInOutModel();
+                            dto.Prod_code = prod_code;
+                            dto.Prod_name = prod_name;
+                            dto.Category_name = category_name;
+                            dto.Prod_expire = prod_expire;
+                            dto.Prod_price = prod_price;
+                            dto.Prod_in_count = prod_in_count;
+                            dto.Nurse_name = nurse_name;
+                            dto.Prod_in_date = prod_in_date;
+
+                            list.Add(dto);
+
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return list;
+
+        }//GetPorductIn
+
+        public List<ProductInOutModel> GetProductOut()
+        {
+            List<ProductInOutModel> list = new List<ProductInOutModel>();
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_expire, P.prod_price, O.prod_out_count, N.nurse_name, O.prod_out_date, O.prod_out_content" +
+                                          "FROM PRODUCT_OUT O" +
+                                          "INNER JOIN PRODUCT P" +
+                                          "ON O.prod_id = P.prod_id" +
+                                          "INNER JOIN CATEGORY C" +
+                                          "ON P.category_id = C.category_id" +
+                                          "LEFT OUTER JOIN NURSE N" +
+                                          "ON O.nurse_no = N.nurse_no";
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string prod_code = reader.GetString(0);
+                            string prod_name = reader.GetString(1);
+                            string category_name = reader.GetString(2);
+                            DateTime prod_expire = reader.GetDateTime(3);
+                            int? prod_price = reader.GetInt32(4);
+                            int? prod_out_count = reader.GetInt32(5);
+                            string nurse_name = reader.GetString(6);
+                            DateTime prod_out_date = reader.GetDateTime(7);
+                            string prod_out_content = reader.GetString(8);
+
+                            ProductInOutModel dto = new ProductInOutModel();
+                            dto.Prod_code = prod_code;
+                            dto.Prod_name = prod_name;
+                            dto.Category_name = category_name;
+                            dto.Prod_expire = prod_expire;
+                            dto.Prod_price = prod_price;
+                            dto.Prod_out_count = prod_out_count;
+                            dto.Nurse_name = nurse_name;
+                            dto.Prod_out_date = prod_out_date;
+                            dto.Prod_out_content = prod_out_content;
+
+                            list.Add(dto);
+
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return list;
+
+        }//GetProductOut
+
     }//class
 
 }//namespace

@@ -6,10 +6,15 @@
       xmlns:local="clr-namespace:EasyProject.View"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="EasyProject.View.AuthorityPage"
       xmlns:y="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+      xmlns:vm="clr-namespace:EasyProject.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AuthorityPage">
 
+    <Page.DataContext>
+        <vm:UserAuthViewModel/>
+    </Page.DataContext>
+    
     <Page.Resources>
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="Template">
@@ -140,7 +145,7 @@
 
 
                     <!--데이터 바인딩-->
-                    <DataGridTextColumn Header=" 이름"  Binding="{Binding Path=memberNum}" IsReadOnly="True" />
+                    <DataGridTextColumn Header=" 이름"  Binding="{Binding Users_before.Nurse_name}" IsReadOnly="True" />
                     <DataGridTextColumn Header=" ID" Binding="{Binding Path=memberName}" IsReadOnly="True"/>
                     <DataGridTextColumn Header=" 부서" Binding="{Binding Path=memberPhoneNum}" IsReadOnly="True"/>
 

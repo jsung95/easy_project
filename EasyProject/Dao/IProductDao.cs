@@ -14,6 +14,12 @@ namespace EasyProject.Dao
 
         // 입고테이블에 추가
         void StoredProduct(ProductModel prod_dto, NurseModel nurse_dto);
+
+        // 입고테이블 조회
+        List<ProductInOutModel> GetProductIn();
+
+        // 출고테이블 조회
+        List<ProductInOutModel> GetProductOut();
     }//interface
 
 }//namespace

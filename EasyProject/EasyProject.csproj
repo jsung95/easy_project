@@ -94,12 +94,14 @@
     <Compile Include="Model\NurseModel.cs" />
     <Compile Include="Model\Notifier.cs" />
     <Compile Include="Model\ProductForListModel.cs" />
+    <Compile Include="Model\ProductInOutModel.cs" />
     <Compile Include="Model\ProductModel.cs" />
     <Compile Include="Model\UserModel.cs" />
     <Compile Include="Util\PasswordHelper.cs" />
     <Compile Include="Util\SHA256Hash.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\OrderViewModel.cs" />
+    <Compile Include="ViewModel\ProductInOutViewModel.cs" />
     <Compile Include="ViewModel\ProductViewModel.cs" />
     <Compile Include="ViewModel\InsertProductViewModel.cs" />
     <Compile Include="ViewModel\SignupViewModel.cs" />

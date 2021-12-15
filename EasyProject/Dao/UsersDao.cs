@@ -31,11 +31,12 @@ namespace EasyProject.Dao
                                           "ON N.dept_id = D.dept_id" +
                                           "WHERE N.nurse_auth in (:auth)";
 
-                        if (auth.Equals("전체"))
+                        /*if (auth.Equals("전체"))
                         {
                             auth = "'SUPER','ADMIN','NORMAL'";
-                        }//if
-                        cmd.Parameters.Add(new OracleParameter("auth", auth));
+                        }//if*/
+                        //cmd.Parameters.Add(new OracleParameter("auth", auth));
+                        cmd.Parameters.Add(new OracleParameter("auth", "ADMIN"));
 
                         OracleDataReader reader = cmd.ExecuteReader();
 

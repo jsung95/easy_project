@@ -59,8 +59,8 @@ namespace EasyProject.ViewModel
 
         public UserAuthViewModel()
         {
-            List<UserModel> list = dao.GetUserInfo(Auth_before);
-            Users_before = new ObservableCollection<UserModel>(list);
+            //List<UserModel> list = dao.GetUserInfo(Auth_before);
+            //Users_before = new ObservableCollection<UserModel>(list);
 
         }//Constructor
 
