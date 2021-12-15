@@ -45,7 +45,7 @@ namespace EasyProject.ViewModel
         {
             
             NurseModel result = dao.LoginUserInfo(Nurse);
-            if (result != null)
+            if (result.Nurse_no != null)
             {
                 App.nurse_dto.Nurse_no = result.Nurse_no;
                 App.nurse_dto.Nurse_name = result.Nurse_name;
