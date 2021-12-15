@@ -61,11 +61,15 @@ namespace EasyProject.ViewModel
 
         public void ProductInsert()
         {
+            
             //재고입력
-            //dao.AddProduct(Product, SelectedCategory);
+            dao.AddProduct(Product, SelectedCategory);
 
             //입고테이블에 추가
-            //dao.StoredProduct(Product, Nurse);
+            dao.StoredProduct(Product, Nurse);
+
+            //IMP_DEPT 테이블에 추가
+            dao.AddImpDept(Product, Nurse);
             
             /////////////////////////////////////////////
             

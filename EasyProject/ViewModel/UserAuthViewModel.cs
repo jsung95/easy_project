@@ -8,7 +8,7 @@ using Microsoft.Expression.Interactivity.Core;
 
 namespace EasyProject.ViewModel
 {
-    public class UserAuthViewModel : Notifier
+    /*public class UserAuthViewModel : Notifier
     {
         UsersDao dao = new UsersDao();
 
@@ -97,6 +97,6 @@ namespace EasyProject.ViewModel
         }
 
 
-    }//class
+    }//class*/
 
 }//namespace

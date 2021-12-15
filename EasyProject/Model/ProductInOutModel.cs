@@ -20,11 +20,17 @@ namespace EasyProject.Model
         //PRODUCT_IN
         public int? Prod_in_count { get; set; }
         public DateTime Prod_in_date { get; set; }
+        public string Prod_in_from { get; set; }
+        public string Prod_in_to { get; set; }
+        public string Prod_in_type { get; set; }
 
         //PRODUCT_OUT
         public int? Prod_out_count { get; set; }
         public DateTime Prod_out_date { get; set; }
         public string Prod_out_content { get; set; }
+        public string Prod_out_from { get; set; }
+        public string Prod_out_to { get; set; }
+        public string Prod_out_type { get; set; }
 
         //NURSE
         public string Nurse_name { get; set; }

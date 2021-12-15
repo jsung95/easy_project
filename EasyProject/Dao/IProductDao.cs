@@ -6,6 +6,9 @@ namespace EasyProject.Dao
 {
     public interface IProductDao
     {
+        // 재고조회
+        List<ProductModel> GetProduct();
+
         // 재고입력 - 제품 카테고리 가져오기
         List<CategoryModel> GetCategoryModels();
 
@@ -20,6 +23,9 @@ namespace EasyProject.Dao
 
         // 출고테이블 조회
         List<ProductInOutModel> GetProductOut();
+
+        // IMP_DEPT 테이블 추가
+        void AddImpDept(ProductModel prod_dto, NurseModel nurse_dto);
     }//interface
 
 }//namespace

@@ -21,10 +21,10 @@ namespace EasyProject.ViewModel
 
         public ProductInOutViewModel()
         {
-            List<ProductInOutModel> in_list = dao.GetProductIn();
+/*            List<ProductInOutModel> in_list = dao.GetProductIn();
             List<ProductInOutModel> out_list = dao.GetProductIn();
             Product_in = new ObservableCollection<ProductInOutModel>(in_list);
-            Product_out = new ObservableCollection<ProductInOutModel>(out_list);
+            Product_out = new ObservableCollection<ProductInOutModel>(out_list);*/
         }//Constructor
 
 
