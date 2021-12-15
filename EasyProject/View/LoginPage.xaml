@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:EasyProject"
       xmlns:vm="clr-namespace:EasyProject.ViewModel"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:w="clr-namespace:EasyProject.Util"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -14,9 +15,10 @@
     <Page.DataContext>
         <vm:LoginViewModel/>
     </Page.DataContext>
-    
-    <Grid Height="450" Width="800" Background="LightGray"  >
-        <Grid Height="400" Width="450" Background="White" >
+
+    <Grid  Background="LightGray"  >
+        <materialDesign:Card Height="400" Width="450" Margin ="10" UniformCornerRadius="20" Background="White">
+        <Grid Height="400" Width="450"  >
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.5*"/>
                 <RowDefinition Height="1.7*"/>
@@ -26,7 +28,7 @@
 
             <Label Content="로그인" FontSize="25" FontWeight="Black" Grid.Row="0" 
                    HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10"/>
-            <Grid Grid.Row="1" Background="White">
+            <Grid Grid.Row="1" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
@@ -44,7 +46,7 @@
                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="101,12,0,0"/>
             </Grid>
 
-            <Grid Grid.Row="2" Background="White">
+            <Grid Grid.Row="2" >
                 <Button x:Name="loginBtn" Content="로그인" Background="#4472C4" BorderThickness="0" FontSize="20" 
                    Foreground="White" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Height="40" Margin="10" Width="300" Cursor="Hand">
                     <i:Interaction.Triggers>
@@ -55,7 +57,7 @@
                 </Button>
             </Grid>
 
-            <Grid Grid.Row="3" Background="White">
+            <Grid Grid.Row="3" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -67,5 +69,6 @@
             </Grid>
 
         </Grid>
+        </materialDesign:Card>
     </Grid>
 </Page>

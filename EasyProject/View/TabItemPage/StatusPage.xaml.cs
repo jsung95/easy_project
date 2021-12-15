@@ -128,6 +128,7 @@ public partial class StatusPage : Page {
                 case (int)PagingMode.Next:
                     btnPrev.IsEnabled = true;
                     btnFirst.IsEnabled = true;
+                    MessageBox.Show(numberOf+"입니다.");
                     if (myLst.Count >= (pIndex * numberOf))
                     {
                         if (myLst.Skip(pIndex *
@@ -143,16 +144,13 @@ public partial class StatusPage : Page {
                         else
                         {
                             dataGrid.ItemsSource = null;
-                            dataGrid.ItemsSource = myLst.Skip(pIndex *
-                            numberOf).Take(numberOf);
-                            count = (pIndex * numberOf) +
-                            (myLst.Skip(pIndex * numberOf).Take(numberOf)).Count();
+                            dataGrid.ItemsSource = myLst.Skip(pIndex * numberOf).Take(numberOf);
+                            count = (pIndex * numberOf) + (myLst.Skip(pIndex * numberOf).Take(numberOf)).Count();
                             pIndex++;
                         }
 
                         lblpageInformation.Content = count + " of " + myLst.Count;
                     }
-
                     else
                     {
                         btnNext.IsEnabled = false;

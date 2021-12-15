@@ -31,7 +31,8 @@
             <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
         </Style>
     </Page.Resources>
-    <Grid Height="450" Width="800" Background="LightGray">
+    <Grid Background="LightGray">
+        <materialDesign:Card  Height="450" Width="800" UniformCornerRadius="20" Background="White">
         <Grid Height="400" Width="750" Background="White" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.2*"/>
@@ -41,7 +42,7 @@
             <Grid Grid.Row="0" Background="#4472C4">
                 <TextBlock FontWeight="Bold" FontSize="17" TextAlignment="Center" Margin="23,8,0.4,7.2" 
                  VerticalAlignment="center">
-                <Run Foreground="White" Text="재고 현황" IsEnabled="False" />
+                <Run Foreground="White" Text="재고 현황" IsEnabled="False"/>
                 </TextBlock>
             </Grid>
             <Grid Grid.Row="1">
@@ -81,13 +82,7 @@
                     VerticalAlignment="Top" AutoGenerateColumns="True" 
                     CanUserSortColumns="True" IsReadOnly="True" ColumnWidth="*">
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn>
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button Click="RowButton_Click">Text</Button>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                          
                         </DataGrid.Columns>
                     </DataGrid>
                     <Grid Grid.Row="1">
@@ -143,6 +138,7 @@
                 </Grid>
             </Grid>
           
-        </Grid>        
+        </Grid>
+      </materialDesign:Card>
     </Grid>
 </Page>

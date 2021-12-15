@@ -4,7 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"            
       xmlns:vm="clr-namespace:EasyProject.ViewModel"
-      xmlns:local="clr-namespace:EasyProject.View" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:EasyProject.View" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -12,9 +13,10 @@
     <Page.DataContext>
         <vm:OrderViewModel/>
     </Page.DataContext>
-    
-    <Grid Height="450" Width="800" Background="LightGray">
-        <Grid Height="400" Width="750" Background="White" >
+
+    <Grid Height="450" Width="800" >
+        <materialDesign:Card  Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
+            <Grid Height="400" Width="750" Background="White" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.2*"/>
                 <RowDefinition Height="0.5*"/>
@@ -70,7 +72,6 @@
                         <ColumnDefinition Width="68*"/>
                         <ColumnDefinition Width="120*"/>
                         <ColumnDefinition Width="68*"/>
-
                     </Grid.ColumnDefinitions>
 
 
@@ -145,22 +146,14 @@
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
 
                     <Grid Grid.Column="7">
-                        
-                   
-                            <TextBox x:Name="company_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="제조사명"  HorizontalContentAlignment="Left" 
+
+
+                        <TextBox x:Name="company_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="제조사명"  HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,21,34.8,21.8" Height="30" />
-                            
 
-
-                    
-
-                        
 
                     </Grid>
                 </Grid>
-
-
-
             </Grid>
 
             <Grid Grid.Row="3">
@@ -177,13 +170,9 @@
                     <TextBox x:Name="memo_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="내용을 입력해주세요"  HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="9" VerticalAlignment="top" Margin="10,0,10,0" Height="65" />
                 </Grid>
-            </Grid>
-            
-
-
-
-
-        </Grid>
+            </Grid>         
+        </Grid>          
+     </materialDesign:Card>
         <Path Stroke="Black" StrokeThickness="1" >
             <Path.Data>
                 <LineGeometry StartPoint="50,148" EndPoint="750,148" />
@@ -195,8 +184,6 @@
                 <LineGeometry StartPoint="50,260" EndPoint="750,260" />
             </Path.Data>
         </Path>
-
-
     </Grid>
 
 </Page>
