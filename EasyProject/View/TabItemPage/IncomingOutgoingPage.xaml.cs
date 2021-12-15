@@ -8,100 +8,92 @@ using System.Windows.Data;
 using Excel = Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Interop.Excel;
 using Page = Microsoft.Office.Interop.Excel.Page;
-
+using System.Data;
 namespace EasyProject.View
 {
     /// <summary>
     /// IncomingOutgoingPage.xaml에 대한 상호 작용 논리
     /// </summary>
-    public class Student
-    {
-        public string ProductCode { get; set; }
-        public string ProductName { get; set; }
-        public string Category { get; set; }
-        public string Total { get; set; }
-        public string User { get; set; }
-        public string ExpirationDate { get; set; }
-        public string UseDate { get; set; }
-        public string StateContent { get; set; }
-        //public uint Age { get; set; }
-
-    }
     public partial class IncomingOutgoingPage : Page
-    {
-        int pageIndex = 1;
-        private int numberOfRecPerPage;
+    {       
         private enum PagingMode { 
             First = 1, Next = 2, Previous = 3, Last = 4, PageCountChange = 5 
         };
 
-        List<object> myList = new List<object>();
+        //List<object> myList = new List<object>();
 
-        public WindowStartupLocation WindowStartupLocation { get; }
+       // public WindowStartupLocation WindowStartupLocation { get; }
 
         public IncomingOutgoingPage()
         {
             InitializeComponent();
+            //DataGridTextColumn col1 = new DataGridTextColumn();
+            //dataGrid1.Columns.Add(col1);
+            //col1.Header = "ID"; //Header = "제품코드"
+
+            //dataGrid1.Items.Add(new MyData
+            //{
+            //    ProductCode = "a",
+            //});
+
+            //col1.Binding = new Binding("ProductCode");
+            // this.table = GetTable();
+
+            // dataGrid1.ItemsSource = this.table.DefaultView;
+            // this.dataGrid1.ItemsSource = this.table.DefaultView;
+
             cbNumberOfRecords.Items.Add("10");
             cbNumberOfRecords.Items.Add("20");
             cbNumberOfRecords.Items.Add("30");
             cbNumberOfRecords.Items.Add("50");
             cbNumberOfRecords.Items.Add("100");
             cbNumberOfRecords.SelectedItem = 10;
-            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
-            this.Loaded += MainWindow_Loaded;
+            //WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+            //this.Loaded += MainWindow_Loaded;
         }
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            myList = GetData();
-            dataGrid1.ItemsSource = myList.Take(numberOfRecPerPage);
-            
-            dataGrid1.Columns[0].Header = "제품ID";
-            dataGrid1.Columns[1].Header = "제품명";
-            dataGrid1.Columns[2].Header = "Test";
-            dataGrid1.Columns[3].Header = "Test";
-            dataGrid1.Columns[4].Header = "Test";
-            dataGrid1.Columns[5].Header = "Test";
-            dataGrid1.Columns[6].Header = "Test";
-            dataGrid1.Columns[7].Header = "Test";
+        //private System.Data.DataTable GetTable()
+        //{             
+           
+        //    //dataGrid1.Columns.Add(col1); ///제품코드 
 
-            dataGrid2.ItemsSource = myList.Take(numberOfRecPerPage);
-            dataGrid2.Columns[0].Header = "제품ID";
-            dataGrid2.Columns[1].Header = "제품명";
-            dataGrid2.Columns[2].Header = "Test";
-            dataGrid2.Columns[3].Header = "Test";
-            dataGrid2.Columns[4].Header = "Test";
-            dataGrid2.Columns[5].Header = "Test";
-            dataGrid2.Columns[6].Header = "Test";
-            dataGrid2.Columns[7].Header = "Test";
+        //    //table.Columns.Add("b"); ///제품명
 
-            //int count = myList.Take(numberOfRecPerPage).Count();
-            //lblpageInformation.Content = count + " of " + myList.Count;
-        }
-        private List<object> GetData()
-        {
-            List<object> genericList = new List<object>();
-            Student studentObj;
-            //Random randomObj = new Random();
-            
-            for (int i = 0; i < 1000; i++)
-            {
-                studentObj = new Student();
-                studentObj.ProductCode = "A " + i;
-                studentObj.ProductName = "B " + i;
-                studentObj.Category = "CC " + i;
-                studentObj.Total = "DDD " + i;
-                studentObj.User = "EE " + i;
-                studentObj.ExpirationDate = "FF " + i;
-                studentObj.UseDate = "GGGGGGG " + i;
-                studentObj.StateContent = "HHHHHH " + i;
+        //    //table.Rows.Add("123");
 
-                //studentObj.Age = (uint)randomObj.Next(1, 100);
+        //    return table;
+        //}
+        //private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //myList = GetData();
+        //dataGrid1.ItemsSource = myList.Take(numberOfRecPerPage);
 
-                genericList.Add(studentObj);
-            }
-            return genericList;
-        }
+        //int count = myList.Take(numberOfRecPerPage).Count();
+        //lblpageInformation.Content = count + " of " + myList.Count;
+        //}
+        //private List<object> GetData()
+        //{
+        //    List<object> genericList = new List<object>();
+        //    Student studentObj;
+        //    //Random randomObj = new Random();
+
+        //    for (int i = 0; i < 1000; i++)
+        //    {
+        //        studentObj = new Student();
+        //        studentObj.ProductCode = "A " + i;
+        //        studentObj.ProductName = "B " + i;
+        //        studentObj.Category = "CC " + i;
+        //        studentObj.Total = "DDD " + i;
+        //        studentObj.User = "EE " + i;
+        //        studentObj.ExpirationDate = "FF " + i;
+        //        studentObj.UseDate = "GGGGGGG " + i;
+        //        studentObj.StateContent = "HHHHHH " + i;
+
+        //        //studentObj.Age = (uint)randomObj.Next(1, 100);
+
+        //        genericList.Add(studentObj);
+        //    }
+        //    return genericList;
+        //}
         /*private void txtName                                                                                                                                                                                                                                                                                                                                                                                                                             _TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox t = (TextBox)sender;
@@ -121,125 +113,124 @@ namespace EasyProject.View
             }
         }*/
 
-        #region Pagination 
+        //#region Pagination 
         private void btnFirst_Click(object sender, System.EventArgs e)
         {
-            Navigate((int)PagingMode.First);
+            //Navigate((int)PagingMode.First);
         }
 
         private void btnNext_Click(object sender, System.EventArgs e)
         {
-            Navigate((int)PagingMode.Next);
+            //Navigate((int)PagingMode.Next);
 
         }
 
         private void btnPrev_Click(object sender, System.EventArgs e)
         {
-            Navigate((int)PagingMode.Previous);
+            //Navigate((int)PagingMode.Previous);
 
         }
 
         private void btnLast_Click(object sender, System.EventArgs e)
         {
-            Navigate((int)PagingMode.Last);
+            //Navigate((int)PagingMode.Last);
         }
-
         private void cbNumberOfRecords_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Navigate((int)PagingMode.PageCountChange);
+            //Navigate((int)PagingMode.PageCountChange);
         }
-        private void Navigate(int mode)
-        {
-            int count;
-            switch (mode)
-            {
-                case (int)PagingMode.Next:
-                    btnPrev.IsEnabled = true;
-                    btnFirst.IsEnabled = true;
-                    if (myList.Count >= (pageIndex * numberOfRecPerPage))
-                    {
-                        if (myList.Skip(pageIndex *
-                        numberOfRecPerPage).Take(numberOfRecPerPage).Count() == 0)
-                        {
-                            dataGrid1.ItemsSource = null;
-                            dataGrid1.ItemsSource = myList.Skip((pageIndex *
-                            numberOfRecPerPage) - numberOfRecPerPage).Take(numberOfRecPerPage);
-                            count = (pageIndex * numberOfRecPerPage) +
-                            (myList.Skip(pageIndex *
-                            numberOfRecPerPage).Take(numberOfRecPerPage)).Count();
-                        }
-                        else
-                        {
-                            dataGrid1.ItemsSource = null;
-                            dataGrid1.ItemsSource = myList.Skip(pageIndex *
-                            numberOfRecPerPage).Take(numberOfRecPerPage);
-                            count = (pageIndex * numberOfRecPerPage) +
-                            (myList.Skip(pageIndex * numberOfRecPerPage).Take(numberOfRecPerPage)).Count();
-                            pageIndex++;
-                        }
+        //private void Navigate(int mode)
+        //{
+        //    int count;
+        //    switch (mode)
+        //    {
+        //        case (int)PagingMode.Next:
+        //            btnPrev.IsEnabled = true;
+        //            btnFirst.IsEnabled = true;
+        //            if (myList.Count >= (pageIndex * numberOfRecPerPage))
+        //            {
+        //                if (myList.Skip(pageIndex *
+        //                numberOfRecPerPage).Take(numberOfRecPerPage).Count() == 0)
+        //                {
+        //                    dataGrid1.ItemsSource = null;
+        //                    dataGrid1.ItemsSource = myList.Skip((pageIndex *
+        //                    numberOfRecPerPage) - numberOfRecPerPage).Take(numberOfRecPerPage);
+        //                    count = (pageIndex * numberOfRecPerPage) +
+        //                    (myList.Skip(pageIndex *
+        //                    numberOfRecPerPage).Take(numberOfRecPerPage)).Count();
+        //                }
+        //                else
+        //                {
+        //                    dataGrid1.ItemsSource = null;
+        //                    dataGrid1.ItemsSource = myList.Skip(pageIndex *
+        //                    numberOfRecPerPage).Take(numberOfRecPerPage);
+        //                    count = (pageIndex * numberOfRecPerPage) +
+        //                    (myList.Skip(pageIndex * numberOfRecPerPage).Take(numberOfRecPerPage)).Count();
+        //                    pageIndex++;
+        //                }
 
-                        //lblpageInformation.Content = count + " of " + myList.Count;
-                    }
+        //                //lblpageInformation.Content = count + " of " + myList.Count;
+        //            }
 
-                    else
-                    {
-                        btnNext.IsEnabled = false;
-                        btnLast.IsEnabled = false;
-                    }
+        //            else
+        //            {
+        //                btnNext.IsEnabled = false;
+        //                btnLast.IsEnabled = false;
+        //            }
 
-                    break;
-                case (int)PagingMode.Previous:
-                    btnNext.IsEnabled = true;
-                    btnLast.IsEnabled = true;
-                    if (pageIndex > 1)
-                    {
-                        pageIndex -= 1;
-                        dataGrid1.ItemsSource = null;
-                        if (pageIndex == 1)
-                        {
-                            dataGrid1.ItemsSource = myList.Take(numberOfRecPerPage);
-                            count = myList.Take(numberOfRecPerPage).Count();
-                            //lblpageInformation.Content = count + " of " + myList.Count;
-                        }
-                        else
-                        {
-                            dataGrid1.ItemsSource = myList.Skip
-                            (pageIndex * numberOfRecPerPage).Take(numberOfRecPerPage);
-                            count = Math.Min(pageIndex * numberOfRecPerPage, myList.Count);
-                            //lblpageInformation.Content = count + " of " + myList.Count;
-                        }
-                    }
-                    else
-                    {
-                        btnPrev.IsEnabled = false;
-                        btnFirst.IsEnabled = false;
-                    }
-                    break;
+        //            break;
+        //        case (int)PagingMode.Previous:
+        //            btnNext.IsEnabled = true;
+        //            btnLast.IsEnabled = true;
+        //            if (pageIndex > 1)
+        //            {
+        //                pageIndex -= 1;
+        //                dataGrid1.ItemsSource = null;
+        //                if (pageIndex == 1)
+        //                {
+        //                    dataGrid1.ItemsSource = myList.Take(numberOfRecPerPage);
+        //                    count = myList.Take(numberOfRecPerPage).Count();
+        //                    //lblpageInformation.Content = count + " of " + myList.Count;
+        //                }
+        //                else
+        //                {
+        //                    dataGrid1.ItemsSource = myList.Skip
+        //                    (pageIndex * numberOfRecPerPage).Take(numberOfRecPerPage);
+        //                    count = Math.Min(pageIndex * numberOfRecPerPage, myList.Count);
+        //                    //lblpageInformation.Content = count + " of " + myList.Count;
+        //                }
+        //            }
+        //            else
+        //            {
+        //                btnPrev.IsEnabled = false;
+        //                btnFirst.IsEnabled = false;
+        //            }
+        //            break;
 
-                case (int)PagingMode.First:
-                    pageIndex = 2;
-                    Navigate((int)PagingMode.Previous);
-                    break;
-                case (int)PagingMode.Last:
-                    pageIndex = (myList.Count / numberOfRecPerPage);
-                    Navigate((int)PagingMode.Next);
-                    break;
+        //        case (int)PagingMode.First:
+        //            pageIndex = 2;
+        //            Navigate((int)PagingMode.Previous);
+        //            break;
+        //        case (int)PagingMode.Last:
+        //            pageIndex = (myList.Count / numberOfRecPerPage);
+        //            Navigate((int)PagingMode.Next);
+        //            break;
 
-                case (int)PagingMode.PageCountChange:
-                    pageIndex = 1;
-                    numberOfRecPerPage = Convert.ToInt32(cbNumberOfRecords.SelectedItem);
-                    dataGrid1.ItemsSource = null;
-                    dataGrid1.ItemsSource = myList.Take(numberOfRecPerPage);
-                    count = (myList.Take(numberOfRecPerPage)).Count();
-                    //lblpageInformation.Content = count + " of " + myList.Count;
-                    btnNext.IsEnabled = true;
-                    btnLast.IsEnabled = true;
-                    btnPrev.IsEnabled = true;
-                    btnFirst.IsEnabled = true;
-                    break;
-            }
-        }
-        #endregion
+        //        case (int)PagingMode.PageCountChange:
+        //            pageIndex = 1;
+        //            numberOfRecPerPage = Convert.ToInt32(cbNumberOfRecords.SelectedItem);
+        //            dataGrid1.ItemsSource = null;
+        //            dataGrid1.ItemsSource = myList.Take(numberOfRecPerPage);
+        //            count = (myList.Take(numberOfRecPerPage)).Count();
+        //            //lblpageInformation.Content = count + " of " + myList.Count;
+        //            btnNext.IsEnabled = true;
+        //            btnLast.IsEnabled = true;
+        //            btnPrev.IsEnabled = true;
+        //            btnFirst.IsEnabled = true;
+        //            break;
+        //    }
+        //}
+        //#endregion
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

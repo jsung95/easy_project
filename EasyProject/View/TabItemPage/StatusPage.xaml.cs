@@ -46,7 +46,7 @@ public partial class StatusPage : Page {
             cbNumberOfRecords.Items.Add("50");
             cbNumberOfRecords.Items.Add("100");
             cbNumberOfRecords.SelectedItem = 10;
-            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+            //WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             this.Loaded += MainWindow_Loaded;
         }
 
