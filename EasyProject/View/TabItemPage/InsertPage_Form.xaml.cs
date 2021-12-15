@@ -31,5 +31,10 @@ namespace EasyProject.View.TabItemPage
 
 
         }
+
+        private void signUpBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.Expression.Interactivity.Core;
 
 namespace EasyProject.ViewModel
 {
-    public class ProductViewModel
+    public class ProductViewModel : Notifier
     {
         ProductDao dao = new ProductDao();
 
@@ -24,7 +24,8 @@ namespace EasyProject.ViewModel
         public NurseModel Nurse { get; set; }
 
         //입력한 재고 데이터를 담은 객체를 담아줄 옵저버블컬렉션 리스트
-        public ObservableCollection<ProductForListModel> Add_list;
+        public ObservableCollection<ProductForListModel> Add_list { get; set; }
+
 
         public ProductViewModel()
         {
@@ -40,7 +41,7 @@ namespace EasyProject.ViewModel
 
 
             //입력한 재고 데이터를 담은 객체를 담아줄 옵저버블컬렉션 리스트
-            Add_list = new ObservableCollection<ProductForListModel>();
+            Add_list = new ObservableCollection<ProductForListModel>();            
         }
 
 
@@ -61,12 +62,10 @@ namespace EasyProject.ViewModel
         public void ProductInsert()
         {
             //재고입력
-            dao.AddProduct(Product, SelectedCategory);
+            //dao.AddProduct(Product, SelectedCategory);
 
             //입고테이블에 추가
-            dao.StoredProduct(Product, Nurse);
-
-
+            //dao.StoredProduct(Product, Nurse);
             
             /////////////////////////////////////////////
             
@@ -84,7 +83,7 @@ namespace EasyProject.ViewModel
             //옵저버블컬렉션 리스트에 추가
             Add_list.Add(dto);
             
-            /*foreach (var item in Add_list)
+            foreach (var item in Add_list)
             {
                 Console.WriteLine("=====================");
                 Console.WriteLine(item.Prod_code);
@@ -94,7 +93,7 @@ namespace EasyProject.ViewModel
                 Console.WriteLine(item.Prod_price);
                 Console.WriteLine(item.Prod_total);
                 Console.WriteLine("=====================");
-            }*/
+            }
             /////////////////////////////////////////////
             
 

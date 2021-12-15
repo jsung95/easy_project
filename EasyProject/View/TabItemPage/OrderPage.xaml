@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"            
       xmlns:vm="clr-namespace:EasyProject.ViewModel"
       xmlns:local="clr-namespace:EasyProject.View" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="OrderPage">
@@ -39,6 +40,11 @@
                     <Button x:Name="resetBtn"  Foreground="white" Background="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                         VerticalAlignment="Center" Margin="625,5,0,2.2" BorderThickness="0" Height="28" Width="58" Cursor="Hand" Click="resetBtn_Click" >
                         <materialDesign:PackIcon Grid.Row="0" Kind="Restore" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding Command}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                     </Button>
                 </StackPanel>
 
