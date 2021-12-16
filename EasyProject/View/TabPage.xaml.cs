@@ -23,37 +23,17 @@ namespace EasyProject
         public TabPage()
         {
             InitializeComponent();
-            signUpBtn.Click += signUpBtn_Click;
-            loginBtn.Click += loginBtn_Click;
-            statusBtn.Click += StatusBtn_Click;
-
-            userNameTxtBox.Text = App.nurse_dto.Nurse_name;
+            
         }
-
-        private void StatusBtn_Click(object sender, RoutedEventArgs e)
+        /*private void StatusBtn_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate
                  (
                  new Uri("/View/TabItemPage/StatusPage.xaml", UriKind.Relative) //재고현황화면 --테스트
                  );
 
-        }
+        }*/
 
-        private void signUpBtn_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate
-                (
-                new Uri("/View/SignupPage.xaml", UriKind.Relative) //회원가입화면
-                );
-        }
-
-        private void loginBtn_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate
-                (
-                new Uri("/View/LoginPage.xaml", UriKind.Relative) //로그인화면
-                );
-        }
         private void btn_close(object sender, RoutedEventArgs e)       //버튼 창닫기
         {
             Window.GetWindow(this).Close();

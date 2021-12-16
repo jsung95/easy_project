@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         Title="재고 관리 프로그램" Height="600" Width="1300" WindowStyle="None"  AllowsTransparency="True">
     <Grid>
-        <Frame NavigationUIVisibility="Hidden" Source="TabPage.xaml"/>
+        <Frame NavigationUIVisibility="Hidden" Source="LoginPage.xaml"/>
     </Grid>
 </Window>
