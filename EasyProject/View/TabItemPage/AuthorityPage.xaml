@@ -161,7 +161,7 @@
             <Label Content="왼쪽으로 이동" Foreground="#4472C4" FontSize="17" HorizontalAlignment="Left" Height="28"  VerticalAlignment="Top" Width="120" Margin="124,15,-33.6,0"  />
             <Label Content="오른쪽으로 이동" Foreground="#4472C4"   FontSize="17" HorizontalAlignment="Left" Height="28"  VerticalAlignment="Top" Width="132" Margin="124,55,0,0"  />
             <!--왼쪽옮기기 버튼-->
-            <Button x:Name="leftBtn"  Foreground="white" Background="#FFE5E5E5" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+            <Button x:Name="leftBtn"   Foreground="white" Background="#FFE5E5E5" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                         VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Click="movelBtn_Click" Margin="68,0,0,201.8" >
                 <materialDesign:PackIcon Background="#4472C4" Grid.Row="0" Kind="ChevronLeftCircle" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="26" />
             </Button>
