@@ -26,8 +26,6 @@ namespace EasyProject
             signUpBtn.Click += signUpBtn_Click;
             loginBtn.Click += loginBtn_Click;
             statusBtn.Click += StatusBtn_Click;
-
-            userNameTextBlock.Text = App.nurse_dto.Nurse_name;
         }
 
         private void StatusBtn_Click(object sender, RoutedEventArgs e)
@@ -53,6 +51,10 @@ namespace EasyProject
                 (
                 new Uri("/View/LoginPage.xaml", UriKind.Relative) //로그인화면
                 );
+        }
+        private void btn_close(object sender, RoutedEventArgs e)       //버튼 창닫기
+        {
+            Window.GetWindow(this).Close();
         }
 
     }

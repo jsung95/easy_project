@@ -25,26 +25,36 @@ namespace EasyProject
         double orginalWidth, originalHeight;
         ScaleTransform scale = new ScaleTransform();
 
-        public MainWindow(){
+        public MainWindow()
+        {
             InitializeComponent();
             this.Loaded += new RoutedEventHandler(Window1_Loaded);
+            this.MouseLeftButtonDown += MainWindow_MouseLeftButtonDown;    //드래그 무브
         }
-        
-        void Window1_SizeChanged(object sender, SizeChangedEventArgs e){
+        void MainWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)       //드래그 무브
+        {
+            this.DragMove();
+        }
+
+        void Window1_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
             ChangeSize(e.NewSize.Width, e.NewSize.Height);
         }
 
-        void Window1_Loaded(object sender, RoutedEventArgs e){
+        void Window1_Loaded(object sender, RoutedEventArgs e)
+        {
             orginalWidth = this.Width;
             originalHeight = this.Height;
 
-            if (this.WindowState == WindowState.Maximized){
+            if (this.WindowState == WindowState.Maximized)
+            {
                 ChangeSize(this.ActualWidth, this.ActualHeight);
             }
             this.SizeChanged += new SizeChangedEventHandler(Window1_SizeChanged);
         }
 
-        private void ChangeSize(double width, double height){
+        private void ChangeSize(double width, double height)
+        {
             scale.ScaleX = width / orginalWidth;
             scale.ScaleY = height / originalHeight;
 
