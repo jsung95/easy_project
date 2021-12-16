@@ -230,14 +230,16 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection= conn;
 
-                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_expire, P.prod_price, I.prod_in_count, N.nurse_name, I.prod_in_date, I.prod_in_from, I.prod_in_to, I.prod_in_type " +
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_expire, P.prod_price, I.prod_in_count, N.nurse_name, I.prod_in_date, I.prod_in_from, I.prod_in_to, I.prod_in_type, D.dept_name " +
                                           "FROM PRODUCT_IN I " +
                                           "INNER JOIN PRODUCT P " +
-                                          "ON I.prod_id = P.prod_id"  +
+                                          "ON I.prod_id = P.prod_id "  +
                                           "INNER JOIN CATEGORY C " +
                                           "ON P.category_id = C.category_id " +
                                           "LEFT OUTER JOIN NURSE N " +
-                                          "ON I.nurse_no = N.nurse_no";
+                                          "ON I.nurse_no = N.nurse_no " +
+                                          "INNER JOIN DEPT D " +
+                                          "ON N.dept_id = D.dept_id";
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
@@ -254,6 +256,7 @@ namespace EasyProject.Dao
                             string prod_in_from = reader.GetString(8);
                             string prod_in_to = reader.GetString(9);
                             string prod_in_type = reader.GetString(10);
+                            string dept_name = reader.GetString(11);
 
                             ProductInOutModel dto = new ProductInOutModel()
                             {
@@ -267,7 +270,8 @@ namespace EasyProject.Dao
                                 Prod_in_date = prod_in_date,
                                 Prod_in_from = prod_in_from,
                                 Prod_in_to = prod_in_to,
-                                Prod_in_type = prod_in_type
+                                Prod_in_type = prod_in_type,
+                                Dept_name = dept_name
                             };
                             
                             list.Add(dto);
@@ -305,14 +309,16 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
 
-                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_expire, P.prod_price, O.prod_out_count, N.nurse_name, O.prod_out_date, O.prod_out_from, O.prod_out_to, O.prod_out_type " +
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_expire, P.prod_price, O.prod_out_count, N.nurse_name, O.prod_out_date, O.prod_out_from, O.prod_out_to, O.prod_out_type, D.dept_name " +
                                           "FROM PRODUCT_OUT O " +
                                           "INNER JOIN PRODUCT P " +
                                           "ON O.prod_id = P.prod_id " +
                                           "INNER JOIN CATEGORY C " +
                                           "ON P.category_id = C.category_id " +
                                           "LEFT OUTER JOIN NURSE N " +
-                                          "ON O.nurse_no = N.nurse_no";
+                                          "ON O.nurse_no = N.nurse_no " +
+                                          "INNER JOIN DEPT D " +
+                                          "ON N.dept_id = D.dept_id";
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
@@ -330,6 +336,7 @@ namespace EasyProject.Dao
                             string prod_out_from = reader.GetString(9);
                             string prod_out_to = reader.GetString(10);
                             string prod_out_type = reader.GetString(11);
+                            string dept_name = reader.GetString(12);
 
                             ProductInOutModel dto = new ProductInOutModel()
                             {
@@ -344,7 +351,8 @@ namespace EasyProject.Dao
                                 Prod_out_content = prod_out_content,
                                 Prod_in_from = prod_out_from,
                                 Prod_in_to = prod_out_to,
-                                Prod_in_type = prod_out_type
+                                Prod_in_type = prod_out_type,
+                                Dept_name = dept_name
                             };
 
                             list.Add(dto);

@@ -6,8 +6,12 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:EasyProject.View"
       xmlns:wookoa="clr-namespace:System;assembly=mscorlib"
+      xmlns:vm="clr-namespace:EasyProject.ViewModel"
       mc:Ignorable="d" 
       Title="IncomingOutgoingPage">
+    <Page.DataContext>
+        <vm:ProductInOutViewModel/>
+    </Page.DataContext>
     <Page.Resources>
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="#EAEAEA"/>
@@ -67,19 +71,20 @@
                             VerticalAlignment="Top"  BorderThickness="0" Height="23" Width="45" Cursor="Hand" Margin="245,6,0,0">
                             <materialDesign:PackIcon Grid.Row="0" Kind="Restore" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
                         </Button>
-                        <DataGrid x:Name="dataGrid1"  HorizontalAlignment="Center"  VerticalAlignment="Top" 
-                                  AutoGenerateColumns="True" CanUserSortColumns="True" IsReadOnly="True" ColumnWidth="*" Margin="0,31,0,0" Grid.RowSpan="2">
-                            <DataGrid.Columns >
-                                <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="55" IsReadOnly="True" />
-                                <DataGridTextColumn Binding="{Binding ProductName}" Header="제품명" Width="55" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Category}" Header="품목/종류" Width="55" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Total}" Header="유통기한" Width="55" IsReadOnly="True"/>
-                                <DataGridTextColumn  Binding="{Binding Price}"  Header="가격" Width="55"  IsReadOnly="True"/>
-                                <DataGridTextColumn  Binding="{Binding ExpirationDate}"  Header="수량" Width="55"  IsReadOnly="True"/>
-                                <DataGridTextColumn  Binding="{Binding State}"  Header="입고일" Width="55"  IsReadOnly="True"/>
-                                <DataGridTextColumn  Binding="{Binding Application}"  Header="입고유형" Width="55"  IsReadOnly="True"/>
-                                <DataGridTextColumn  Binding="{Binding Application}"  Header="부서명" Width="55"  IsReadOnly="True"/>
-                                <DataGridTextColumn  Binding="{Binding Application}"  Header="관리자명" Width="55"  IsReadOnly="True"/>
+                        <DataGrid x:Name="dataGrid1" HorizontalAlignment="Center"  VerticalAlignment="Top" 
+                                  AutoGenerateColumns="False" CanUserSortColumns="True" IsReadOnly="True" ColumnWidth="*" Margin="0,31,0,0" Grid.RowSpan="2"
+                                  ItemsSource="{Binding Product_in}">
+                            <DataGrid.Columns> 
+                                <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="55" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="55" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="55" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_expire}" Header="유통기한" Width="55" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_price}" Header="가격" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_in_count}" Header="수량" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_in_date}" Header="입고일" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_in_type}" Header="입고유형" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Dept_name}" Header="부서명" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Nurse_name}" Header="관리자명" Width="55"  IsReadOnly="True"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
@@ -103,19 +108,18 @@
                         </Button>
 
                         <DataGrid x:Name="dataGrid2"  HorizontalAlignment="Center"  VerticalAlignment="Top" 
-                                  AutoGenerateColumns="True" CanUserSortColumns="True" IsReadOnly="True" ColumnWidth="*" Margin="0,31,0,0" Grid.RowSpan="2">
-                            <DataGrid.Columns >
+                                  AutoGenerateColumns="False" CanUserSortColumns="True" IsReadOnly="True" ColumnWidth="*" Margin="0,31,0,0" Grid.RowSpan="2"
+                                  ItemsSource="{Binding Product_out}">
+                            <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="55" IsReadOnly="True" />
-                                <DataGridTextColumn Binding="{Binding ProductName}" Header="제품명" Width="55" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Category}" Header="품목/종류" Width="55" IsReadOnly="True"/>
-                                
-                                <DataGridTextColumn  Binding="{Binding Price}"  Header="가격" Width="55"  IsReadOnly="True"/>
-                                <DataGridTextColumn  Binding="{Binding ExpirationDate}"  Header="수량" Width="55"  IsReadOnly="True"/>
-                                <DataGridTextColumn  Binding="{Binding State}"  Header="출고일" Width="55"  IsReadOnly="True"/>
-                                <DataGridTextColumn  Binding="{Binding Application}"  Header="출고유형" Width="55"  IsReadOnly="True"/>
-                                <DataGridTextColumn  Binding="{Binding Application}"  Header="부서명" Width="55"  IsReadOnly="True"/>
-                                <DataGridTextColumn  Binding="{Binding Application}"  Header="관리자명" Width="55"  IsReadOnly="True"/>
-
+                                <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="55" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="55" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_price}"  Header="가격" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_out_count}"  Header="수량" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_out_date}"  Header="출고일" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_out_type}"  Header="출고유형" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Dept_name}"  Header="부서명" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Nurse_name}"  Header="관리자명" Width="55"  IsReadOnly="True"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
