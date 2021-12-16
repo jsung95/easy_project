@@ -33,7 +33,7 @@
             </Grid>
 
 
-            <Button HorizontalAlignment="Center" Grid.Column="4" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}">
+            <Button Click="btn_close" HorizontalAlignment="Center" Grid.Column="4" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}">
                 <materialDesign:PackIcon Kind="Power"/>
             </Button>
         </Grid>
