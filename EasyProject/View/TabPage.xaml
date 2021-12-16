@@ -14,19 +14,22 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.2*"></ColumnDefinition>
                 <ColumnDefinition Width="0.5*"></ColumnDefinition>
-                <ColumnDefinition Width="0.1*"></ColumnDefinition>
-                <ColumnDefinition Width="0.1*"></ColumnDefinition>
-                <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                <ColumnDefinition Width="0.08*"></ColumnDefinition>
+                <ColumnDefinition Width="0.08*"></ColumnDefinition>
+                <ColumnDefinition Width="0.08*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
             <TextBlock Text="재고관리 프로그램"  Grid.Column="0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" FontFamily="Champagne &amp; Limousines" Width="191" Margin="10,0,0,0"/>
+            <Button HorizontalAlignment="Right" Grid.Column="2" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}">
+                <materialDesign:PackIcon Kind="BellAlertOutline"/>
+            </Button>
             <Grid Grid.Column="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.5*"></ColumnDefinition>
                     <ColumnDefinition Width="0.5*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Button HorizontalAlignment="Right" Grid.Column="0" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}">
-                    <materialDesign:PackIcon Kind="Account"/>
+                    <materialDesign:PackIcon Kind="AccountOutline"/>
                 </Button>
                 <TextBlock x:Name="userNameTxtBox" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="White"></TextBlock>
             

@@ -120,6 +120,10 @@ public partial class StatusPage : Page {
         {
             Navigate((int)PagingMode.PageCountChange);
         }
+        private void Part_comboBox_Selection (object sender, SelectedCellsChangedEventArgs e)
+        {
+
+        }
         private void Navigate(int mode)
         {
             int count;
