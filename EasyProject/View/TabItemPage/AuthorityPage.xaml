@@ -6,10 +6,10 @@
       xmlns:local="clr-namespace:EasyProject.View"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="EasyProject.View.AuthorityPage"
       xmlns:y="http://schemas.devexpress.com/winfx/2008/xaml/grid"
-      xmlns:vm="clr-namespace:EasyProject.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="AuthorityPage">    
+      Title="AuthorityPage">
+
     <Page.Resources>
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="Template">
@@ -54,31 +54,39 @@
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.4*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.4*"/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Row="0" Content="권한부여 페이지" Background="#4472C4" BorderThickness="0" FontSize="20" 
-                    HorizontalAlignment="Center" VerticalAlignment="Top" Height="40" Margin="246,10,254,0" Width="300" Grid.ColumnSpan="2"/>
+
+        <Grid Grid.Row="0" Grid.Column="1" >
+            <Button  Content="권한부여 페이지" Background="#4472C4" BorderThickness="0" FontSize="20" 
+                    HorizontalAlignment="Center" VerticalAlignment="Top" Height="50"  Width="229" Margin="0,0,-0.2,0"/>
+        </Grid>
 
 
 
+        <Grid Grid.Row="1" Grid.Column="0">
+            <ComboBox  HorizontalAlignment="Left" Background="#FF877B7B" Margin="175,10,0,0" VerticalAlignment="Top" Width="120" Grid.Column="0">
+                <Button Content="Super" Background="#FFF5ECEC"/>
+                <Button Content="Admin" Background="#FFF5ECEC"/>
+                <Button Content="Normal" Background="#FFF5ECEC"/>
+            </ComboBox>
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="2">
+            <ComboBox HorizontalAlignment="Left"  Background="#FF877B7B" Margin="164,10,0,0" VerticalAlignment="Top" Width="120">
+                <Button Content="Super"  Background="#FFF5ECEC"/>
+                <Button Content="Admin" Background="#FFF5ECEC"/>
+                <Button Content="Normal" Background="#FFF5ECEC"/>
+            </ComboBox>
+        </Grid>
 
 
-        <ComboBox  HorizontalAlignment="Left" Background="#FF877B7B" Margin="126,10.4,0,0" VerticalAlignment="Top" Width="120" Grid.Row="1">
-            <Button Content="Super" Background="#FFF5ECEC"/>
-            <Button Content="Admin" Background="#FFF5ECEC"/>
-            <Button Content="Normal" Background="#FFF5ECEC"/>
-        </ComboBox>
-        <ComboBox HorizontalAlignment="Left"  Background="#FF877B7B" Margin="151,10,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.Row="1">
-            <Button Content="Super"  Background="#FFF5ECEC"/>
-            <Button Content="Admin" Background="#FFF5ECEC"/>
-            <Button Content="Normal" Background="#FFF5ECEC"/>
-        </ComboBox>
+        <Grid Grid.Row="2" Grid.Column="0" >
 
-        <Grid Grid.Row="2">
-
-            <TextBox Text="사원의 정보를 입력해주세요." FontSize="17"  DockPanel.Dock="Left" RenderTransformOrigin="-0.128,0.544"  TextChanged="TextBox_TextChanged" Margin="94,30,188,0"/>
-            <Button FontSize="50" Height="Auto" DockPanel.Dock="Right"  Click="Button_Click_1" RenderTransformOrigin="7.132,1.075"  Width="40" Margin="292,30,68,0">
+            <TextBox Text="사원의 정보를 입력해주세요." FontSize="15"  DockPanel.Dock="Left" RenderTransformOrigin="-0.128,0.544"  TextChanged="TextBox_TextChanged" Margin="54,30,10.2,0" />
+            <Button FontSize="50" Height="Auto" DockPanel.Dock="Right"  Click="Button_Click_1" RenderTransformOrigin="7.132,1.075"  Width="40" Margin="334,30,-78.8,0"  >
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -87,8 +95,13 @@
                     <Image Source="C:\Users\user\Desktop\새 폴더 (2)\easy_project\EasyProject\image\검색.png"  RenderTransformOrigin="-0.44,0.475" Margin="-45,-6,-45,-7" Grid.Row="1" />
                 </Grid>
             </Button>
-            <TextBox Text="사원의 정보를 입력해주세요." FontSize="17"  DockPanel.Dock="Left" RenderTransformOrigin="-0.128,0.544"  TextChanged="TextBox_TextChanged" Margin="718,28,-436,0"/>
-            <Button FontSize="50" Height="38" DockPanel.Dock="Right"  Click="Button_Click_1" RenderTransformOrigin="7.132,1.075" Width="40" Margin="921,28,-561,-10" VerticalAlignment="Top">
+
+
+        </Grid>
+
+        <Grid Grid.Row="2" Grid.Column="2">
+            <TextBox Text="사원의 정보를 입력해주세요." FontSize="17"  DockPanel.Dock="Left" RenderTransformOrigin="-0.128,0.544"  TextChanged="TextBox_TextChanged" Margin="10,28,49.4,0"/>
+            <Button FontSize="50" Height="38" DockPanel.Dock="Right"  Click="Button_Click_1" RenderTransformOrigin="7.132,1.075" Width="40" Margin="294,28,-39.6,-10" VerticalAlignment="Top">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -97,26 +110,20 @@
                     <Image Source="C:\Users\user\Desktop\새 폴더 (2)\easy_project\EasyProject\image\검색.png"  RenderTransformOrigin="-0.44,0.475" Margin="-45,-6,-45,-7" Grid.Row="1" Grid.Column="1"/>
                 </Grid>
             </Button>
-            <!--왼쪽옮기기 버튼-->
-            <Button x:Name="leftBtn"  Foreground="white" Background="#FFE5E5E5" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
-                        VerticalAlignment="Center" Margin="514,99,-165,-66" BorderThickness="0" Height="23" Width="51" Cursor="Hand" Click="movelBtn_Click" >
-                <materialDesign:PackIcon Background="#4472C4" Grid.Row="0" Kind="ChevronLeftCircle" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="26" />
-            </Button>
-
-            <!--오른쪽옮기기 버튼-->
-            <Button x:Name="rightBtn"  Foreground="white" Background="#FFE5E5E5" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
-                       VerticalAlignment="Center" Margin="514,164,-165,-131" BorderThickness="0" Height="23" Width="51" Cursor="Hand" Click="moverBtn_Click" >
-                <materialDesign:PackIcon Background="#4472C4" Grid.Row="0" Kind="ChevronRightCircle" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="26" />
-            </Button>
         </Grid>
 
 
         <Grid Grid.Row="3" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="23*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="39*"/>
+            </Grid.ColumnDefinitions>
 
-            <DataGrid  x:Name="dataGrid" AutoGenerateColumns="True" SelectionMode="Extended" 
+            <DataGrid  x:Name="dataGrid1" AutoGenerateColumns="True" SelectionMode="Extended" 
                              ScrollViewer.CanContentScroll="True" 
                              ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                             ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" Loaded="dataGrid_Loaded" Margin="93,0,186,9.8" IsSynchronizedWithCurrentItem="False">
+                             ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" Loaded="dataGrid_Loaded" Margin="51,0,10.6,-0.2" IsSynchronizedWithCurrentItem="False" Grid.ColumnSpan="3">
 
                 <DataGrid.Columns>
                     <!--체크박스 추가-->
@@ -140,22 +147,38 @@
 
 
                     <!--데이터 바인딩-->
-                    <DataGridTextColumn Header=" 이름"  Binding="{Binding Users_before.Nurse_name}" IsReadOnly="True" />
+                    <DataGridTextColumn Header=" 이름"  Binding="{Binding Path=memberNum}" IsReadOnly="True" />
                     <DataGridTextColumn Header=" ID" Binding="{Binding Path=memberName}" IsReadOnly="True"/>
                     <DataGridTextColumn Header=" 부서" Binding="{Binding Path=memberPhoneNum}" IsReadOnly="True"/>
 
                 </DataGrid.Columns>
             </DataGrid>
-            <!--오른쪽왼쪽버튼텍스트박스-->
-            <TextBox x:Name="leftwtbox"   FontSize="17" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Margin="574,37,-294,0" TextChanged="TextBox_TextChanged_1"/>
-            <TextBox x:Name="rightwtbox"  FontSize="17" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Margin="574,102,-294,0" TextChanged="TextBox_TextChanged_1"/>
-        </Grid>
-        <Grid Grid.Row="3" Grid.Column="1">
 
-            <DataGrid  x:Name="dataGrid1" AutoGenerateColumns="True" SelectionMode="Extended" 
+        </Grid>
+
+        <Grid Grid.Row="3" Grid.Column="1">
+            <!--오른쪽왼쪽버튼텍스트박스-->
+            <Label Content="왼쪽으로 이동" Foreground="#4472C4" FontSize="17" HorizontalAlignment="Left" Height="28"  VerticalAlignment="Top" Width="120" Margin="124,15,-33.6,0"  />
+            <Label Content="오른쪽으로 이동" Foreground="#4472C4"   FontSize="17" HorizontalAlignment="Left" Height="28"  VerticalAlignment="Top" Width="132" Margin="124,55,0,0"  />
+            <!--왼쪽옮기기 버튼-->
+            <Button x:Name="leftBtn"  Foreground="white" Background="#FFE5E5E5" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                        VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Click="movelBtn_Click" Margin="68,0,0,201.8" >
+                <materialDesign:PackIcon Background="#4472C4" Grid.Row="0" Kind="ChevronLeftCircle" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="26" />
+            </Button>
+
+            <!--오른쪽옮기기 버튼-->
+            <Button x:Name="rightBtn"  Foreground="white" Background="#FFE5E5E5" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                       VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Click="moverBtn_Click" Margin="68,38,0,163.8" >
+                <materialDesign:PackIcon Background="#4472C4"  Kind="ChevronRightCircle" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="26" Grid.Column="1"/>
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="3" Grid.Column="2">
+
+            <DataGrid  x:Name="dataGrid2" AutoGenerateColumns="True" SelectionMode="Extended" 
                              ScrollViewer.CanContentScroll="True" 
                              ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                             ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" Loaded="dataGrid_Loaded2" Margin="77,0,202,9.8" IsSynchronizedWithCurrentItem="False" SelectionChanged="dataGrid1_SelectionChanged">
+                             ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" Loaded="dataGrid_Loaded2" Margin="10,0,47.4,-0.2" IsSynchronizedWithCurrentItem="False" SelectionChanged="dataGrid1_SelectionChanged">
 
                 <DataGrid.Columns>
                     <!--체크박스 추가-->
@@ -163,7 +186,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
 
-                                <CheckBox x:Name="check" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="checked1">
+                                <CheckBox x:Name="check" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="checked2">
 
                                     <CheckBox.Resources>
                                         <!--체크전-->
@@ -185,11 +208,15 @@
 
                 </DataGrid.Columns>
             </DataGrid>
+
         </Grid>
 
-        <Grid Grid.Row="4">
-            <Rectangle Fill="#FFF4F4" HorizontalAlignment="Left" Height="21" Stroke="Black" VerticalAlignment="Top" Width="360" Margin="93,-9,-53,0"/>
+        <Grid Grid.Row="4" Grid.Column="0">
+            <Rectangle Fill="#FFF4F4" HorizontalAlignment="Left" Height="21" Stroke="Black" VerticalAlignment="Top" Width="409" Margin="51,0,-164.8,0"/>
+        </Grid>
 
+        <Grid Grid.Row="4" Grid.Column="2">
+            <Rectangle Fill="#FFF4F4" HorizontalAlignment="Left" Height="21" Stroke="Black" VerticalAlignment="Top" Width="415" Margin="10,0,-130.6,0"/>
         </Grid>
 
 
