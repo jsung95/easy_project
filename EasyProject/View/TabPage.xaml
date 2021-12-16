@@ -24,25 +24,7 @@
                 </dragablz:TabablzControl.InterTabController>
                 <TabItem Header="재고현황" Margin="10,0,0,0">
                     <Grid Background="#FFE5E5E5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="0.8*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="0.8*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-
-                        <Button x:Name="signUpBtn" Content="회원가입하기" Grid.Column="0" Background="Red" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
-                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" Cursor="Hand" />
-                        <Button x:Name="loginBtn" Content="로그인하기" Grid.Column="1" Background="Blue" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
-                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" />
-                        <Button x:Name="statusBtn" Content="test" Grid.Row="1" Background="Gray" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
-                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" />
+                        <Frame NavigationUIVisibility="Hidden" Source="/View/TabItemPage/StatusPage.xaml"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="재고입력">
