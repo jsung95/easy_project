@@ -11,11 +11,31 @@
       Title="TabPage">
     <Grid>
         <Grid Height="60" VerticalAlignment="Top" Background="#FF9C27B0">
-            <TextBlock Text="재고관리 프로그램" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22" FontFamily="Champagne &amp; Limousines" Margin="38,17,0,17" Width="191" />
-            <Button  HorizontalAlignment="Right" Click="btn_close" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.2*"></ColumnDefinition>
+                <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                <ColumnDefinition Width="0.1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="재고관리 프로그램"  Grid.Column="0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" FontFamily="Champagne &amp; Limousines" Width="191" Margin="10,0,0,0"/>
+            <Grid Grid.Column="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button HorizontalAlignment="Center" Grid.Column="0" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <materialDesign:PackIcon Kind="Account"/>
+                </Button>
+                <TextBlock x:Name="userNameTxtBox" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Foreground="White"></TextBlock>
+            
+            </Grid>
+
+
+            <Button HorizontalAlignment="Center" Grid.Column="4" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}">
                 <materialDesign:PackIcon Kind="Power"/>
             </Button>
-            <TextBlock x:Name="userNameTxtBox" HorizontalAlignment="Center"></TextBlock>
         </Grid>
         <Grid Margin="0 60 0 0">
             <dragablz:TabablzControl>
