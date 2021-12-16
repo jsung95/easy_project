@@ -42,185 +42,172 @@
         </Style>
     </Page.Resources>
 
-    <Grid>
+    <Grid Height="450" Width="800" >
+        <materialDesign:Card  Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
+            <Grid>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="0.5*"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="0.5*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.4*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.4*"/>
+                </Grid.ColumnDefinitions>
 
-
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.4*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="1.4*"/>
-        </Grid.ColumnDefinitions>
-
-        <Grid Grid.Row="0" Grid.Column="1" >
-            <Button  Content="권한부여 페이지" Background="#4472C4" BorderThickness="0" FontSize="20" 
-                    HorizontalAlignment="Center" VerticalAlignment="Top" Height="50"  Width="229" Margin="0,0,-0.2,0"/>
-        </Grid>
-
-
-
-        <Grid Grid.Row="1" Grid.Column="0">
-            <ComboBox  HorizontalAlignment="Left" Background="#FF877B7B" Margin="175,10,0,0" VerticalAlignment="Top" Width="120" Grid.Column="0">
-                <Button Content="Super" Background="#FFF5ECEC"/>
-                <Button Content="Admin" Background="#FFF5ECEC"/>
-                <Button Content="Normal" Background="#FFF5ECEC"/>
-            </ComboBox>
-        </Grid>
-
-        <Grid Grid.Row="1" Grid.Column="2">
-            <ComboBox HorizontalAlignment="Left"  Background="#FF877B7B" Margin="164,10,0,0" VerticalAlignment="Top" Width="120">
-                <Button Content="Super"  Background="#FFF5ECEC"/>
-                <Button Content="Admin" Background="#FFF5ECEC"/>
-                <Button Content="Normal" Background="#FFF5ECEC"/>
-            </ComboBox>
-        </Grid>
-
-
-        <Grid Grid.Row="2" Grid.Column="0" >
-
-            <TextBox Text="사원의 정보를 입력해주세요." FontSize="15"  DockPanel.Dock="Left" RenderTransformOrigin="-0.128,0.544"  TextChanged="TextBox_TextChanged" Margin="54,30,10.2,0" />
-            <Button FontSize="50" Height="Auto" DockPanel.Dock="Right"  Click="Button_Click_1" RenderTransformOrigin="7.132,1.075"  Width="40" Margin="334,30,-78.8,0"  >
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="3*"/>
-                    </Grid.RowDefinitions>
-                    <Image Source="C:\Users\user\Desktop\새 폴더 (2)\easy_project\EasyProject\image\검색.png"  RenderTransformOrigin="-0.44,0.475" Margin="-45,-6,-45,-7" Grid.Row="1" />
+                <Grid Grid.Row="0" Grid.Column="1" >
                 </Grid>
-            </Button>
 
-
-        </Grid>
-
-        <Grid Grid.Row="2" Grid.Column="2">
-            <TextBox Text="사원의 정보를 입력해주세요." FontSize="17"  DockPanel.Dock="Left" RenderTransformOrigin="-0.128,0.544"  TextChanged="TextBox_TextChanged" Margin="10,28,49.4,0"/>
-            <Button FontSize="50" Height="38" DockPanel.Dock="Right"  Click="Button_Click_1" RenderTransformOrigin="7.132,1.075" Width="40" Margin="294,28,-39.6,-10" VerticalAlignment="Top">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="3*"/>
-                    </Grid.RowDefinitions>
-                    <Image Source="C:\Users\user\Desktop\새 폴더 (2)\easy_project\EasyProject\image\검색.png"  RenderTransformOrigin="-0.44,0.475" Margin="-45,-6,-45,-7" Grid.Row="1" Grid.Column="1"/>
+                <Grid Grid.Row="1" Grid.Column="0">
+                    <ComboBox  HorizontalAlignment="Center" Background="#FF877B7B" VerticalAlignment="Center" Width="120" Grid.Column="0">
+                        <Button Content="Super" Background="#FFF5ECEC"/>
+                        <Button Content="Admin" Background="#FFF5ECEC"/>
+                        <Button Content="Normal" Background="#FFF5ECEC"/>
+                    </ComboBox>
                 </Grid>
-            </Button>
-        </Grid>
+
+                <Grid Grid.Row="1" Grid.Column="2">
+                    <ComboBox HorizontalAlignment="Center"  Background="#FF877B7B" VerticalAlignment="Center" Width="120">
+                        <Button Content="Super"  Background="#FFF5ECEC"/>
+                        <Button Content="Admin" Background="#FFF5ECEC"/>
+                        <Button Content="Normal" Background="#FFF5ECEC"/>
+                    </ComboBox>
+                </Grid>
 
 
-        <Grid Grid.Row="3" Grid.Column="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="23*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="39*"/>
-            </Grid.ColumnDefinitions>
+                <Grid Grid.Row="2" Grid.Column="0" >
+                    <TextBox Text="사원의 정보를 입력해주세요." FontSize="15" TextChanged="TextBox_TextChanged" Height="25"/>
+                    <Button FontSize="50" Height="25" Click="Button_Click_1" Width="40" HorizontalAlignment="Right"></Button>
+                </Grid>
 
-            <DataGrid  x:Name="dataGrid1" AutoGenerateColumns="True" SelectionMode="Extended" 
+                <Grid Grid.Row="2" Grid.Column="2">
+                    <TextBox Text="사원의 정보를 입력해주세요." FontSize="15" TextChanged="TextBox_TextChanged" Height="25"/>
+                    <Button FontSize="50" Height="25" Click="Button_Click_1" Width="40" HorizontalAlignment="Right"></Button>
+                </Grid>
+
+                <Grid Grid.Row="3" Grid.Column="0">
+                    <DataGrid  x:Name="dataGrid1" AutoGenerateColumns="True" SelectionMode="Extended" 
                              ScrollViewer.CanContentScroll="True" 
                              ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                             ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" Loaded="dataGrid_Loaded" Margin="51,0,10.6,-0.2" IsSynchronizedWithCurrentItem="False" Grid.ColumnSpan="3">
+                             ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" Loaded="dataGrid_Loaded" IsSynchronizedWithCurrentItem="False">
 
-                <DataGrid.Columns>
-                    <!--체크박스 추가-->
-                    <DataGridTemplateColumn>
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
+                        <DataGrid.Columns>
+                            <!--체크박스 추가-->
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
 
-                                <CheckBox x:Name="check1" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="checked1">
+                                        <CheckBox x:Name="check1" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="checked1">
 
-                                    <CheckBox.Resources>
-                                        <!--체크전-->
-                                        <SolidColorBrush x:Key="MaterialDesignCheckBoxOff" Color="BLACK"/>
-                                        <!--체크했을때-->
-                                        <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="Blue"/>
-                                    </CheckBox.Resources>
-                                </CheckBox>
+                                            <CheckBox.Resources>
+                                                <!--체크전-->
+                                                <SolidColorBrush x:Key="MaterialDesignCheckBoxOff" Color="BLACK"/>
+                                                <!--체크했을때-->
+                                                <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="Blue"/>
+                                            </CheckBox.Resources>
+                                        </CheckBox>
 
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
 
 
-                    <!--데이터 바인딩-->
-                    <DataGridTextColumn Header=" 이름"  Binding="{Binding Path=memberNum}" IsReadOnly="True" />
-                    <DataGridTextColumn Header=" ID" Binding="{Binding Path=memberName}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header=" 부서" Binding="{Binding Path=memberPhoneNum}" IsReadOnly="True"/>
+                            <!--데이터 바인딩-->
+                            <DataGridTextColumn Header=" 이름"  Binding="{Binding Path=memberNum}" IsReadOnly="True" />
+                            <DataGridTextColumn Header=" ID" Binding="{Binding Path=memberName}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header=" 부서" Binding="{Binding Path=memberPhoneNum}" IsReadOnly="True"/>
 
-                </DataGrid.Columns>
-            </DataGrid>
+                        </DataGrid.Columns>
+                    </DataGrid>
 
-        </Grid>
+                </Grid>
 
-        <Grid Grid.Row="3" Grid.Column="1">
-            <!--오른쪽왼쪽버튼텍스트박스-->
-            <Label Content="왼쪽으로 이동" Foreground="#4472C4" FontSize="17" HorizontalAlignment="Left" Height="28"  VerticalAlignment="Top" Width="120" Margin="124,15,-33.6,0"  />
-            <Label Content="오른쪽으로 이동" Foreground="#4472C4"   FontSize="17" HorizontalAlignment="Left" Height="28"  VerticalAlignment="Top" Width="132" Margin="124,55,0,0"  />
-            <!--왼쪽옮기기 버튼-->
-            <Button x:Name="leftBtn"   Foreground="white" Background="#FFE5E5E5" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
-                        VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Click="movelBtn_Click" Margin="68,0,0,201.8" >
-                <materialDesign:PackIcon Background="#4472C4" Grid.Row="0" Kind="ChevronLeftCircle" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="26" />
-            </Button>
+                <Grid Grid.Row="3" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-            <!--오른쪽옮기기 버튼-->
-            <Button x:Name="rightBtn"  Foreground="white" Background="#FFE5E5E5" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
-                       VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Click="moverBtn_Click" Margin="68,38,0,163.8" >
-                <materialDesign:PackIcon Background="#4472C4"  Kind="ChevronRightCircle" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="26" Grid.Column="1"/>
-            </Button>
-        </Grid>
+                    <Grid Grid.Row ="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="7*"/>
+                        </Grid.ColumnDefinitions>
 
-        <Grid Grid.Row="3" Grid.Column="2">
+                        <Label Grid.Column="1" Content="왼쪽으로 이동" Foreground="#4472C4" FontSize="17" HorizontalAlignment="Center" Height="28"  VerticalAlignment="Center" />
+                        <Button x:Name="leftBtn" Foreground="white" Background="#FFE5E5E5" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"  
+                        VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Click="movelBtn_Click">
+                            <materialDesign:PackIcon Grid.Row="0" Kind="ChevronLeftCircle" VerticalAlignment="Center" HorizontalAlignment="Center" Height="15" Width="26" />
+                        </Button>
+                    </Grid>
 
-            <DataGrid  x:Name="dataGrid2" AutoGenerateColumns="True" SelectionMode="Extended" 
+                    <Grid Grid.Row ="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="7*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="2" Content="오른쪽으로 이동" Foreground="#4472C4"   FontSize="17" HorizontalAlignment="Center" Height="28"  VerticalAlignment="Center"/>
+                        <Button x:Name="rightBtn"   Foreground="white" Background="#FFE5E5E5" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"  
+                        VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Click="movelBtn_Click">
+                            <materialDesign:PackIcon Grid.Row="0" Kind="ChevronLeftCircle" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="26" />
+                        </Button>
+                    </Grid>
+                    <!--오른쪽왼쪽버튼텍스트박스-->
+
+
+                    <!--왼쪽옮기기 버튼-->
+
+
+                    <!--오른쪽옮기기 버튼-->
+
+                </Grid>
+
+                <Grid Grid.Row="3" Grid.Column="2">
+
+                    <DataGrid  x:Name="dataGrid2" AutoGenerateColumns="True" SelectionMode="Extended" 
                              ScrollViewer.CanContentScroll="True" 
                              ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                             ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" Loaded="dataGrid_Loaded2" Margin="10,0,47.4,-0.2" IsSynchronizedWithCurrentItem="False" SelectionChanged="dataGrid1_SelectionChanged">
+                             ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" Loaded="dataGrid_Loaded2" IsSynchronizedWithCurrentItem="False" SelectionChanged="dataGrid1_SelectionChanged">
 
-                <DataGrid.Columns>
-                    <!--체크박스 추가-->
-                    <DataGridTemplateColumn>
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
+                        <DataGrid.Columns>
+                            <!--체크박스 추가-->
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
 
-                                <CheckBox x:Name="check" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="checked2">
+                                        <CheckBox x:Name="check" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="checked2">
 
-                                    <CheckBox.Resources>
-                                        <!--체크전-->
-                                        <SolidColorBrush x:Key="MaterialDesignCheckBoxOff" Color="BLACK"/>
-                                        <!--체크했을때-->
-                                        <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="Blue"/>
-                                    </CheckBox.Resources>
-                                </CheckBox>
+                                            <CheckBox.Resources>
+                                                <!--체크전-->
+                                                <SolidColorBrush x:Key="MaterialDesignCheckBoxOff" Color="BLACK"/>
+                                                <!--체크했을때-->
+                                                <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="Blue"/>
+                                            </CheckBox.Resources>
+                                        </CheckBox>
 
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-
-
-                    <!--데이터 바인딩-->
-                    <DataGridTextColumn Header=" 이름"  Binding="{Binding Path=memberNum}" IsReadOnly="True" />
-                    <DataGridTextColumn Header=" ID" Binding="{Binding Path=memberName}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header=" 부서" Binding="{Binding Path=memberPhoneNum}" IsReadOnly="True"/>
-
-                </DataGrid.Columns>
-            </DataGrid>
-
-        </Grid>
-
-        <Grid Grid.Row="4" Grid.Column="0">
-            <Rectangle Fill="#FFF4F4" HorizontalAlignment="Left" Height="21" Stroke="Black" VerticalAlignment="Top" Width="409" Margin="51,0,-164.8,0"/>
-        </Grid>
-
-        <Grid Grid.Row="4" Grid.Column="2">
-            <Rectangle Fill="#FFF4F4" HorizontalAlignment="Left" Height="21" Stroke="Black" VerticalAlignment="Top" Width="415" Margin="10,0,-130.6,0"/>
-        </Grid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
 
 
+                            <!--데이터 바인딩-->
+                            <DataGridTextColumn Header=" 이름"  Binding="{Binding Path=memberNum}" IsReadOnly="True" />
+                            <DataGridTextColumn Header=" ID" Binding="{Binding Path=memberName}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header=" 부서" Binding="{Binding Path=memberPhoneNum}" IsReadOnly="True"/>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </Grid>
+            </Grid>
+
+        </materialDesign:Card>
     </Grid>
-
-
 </Page>
