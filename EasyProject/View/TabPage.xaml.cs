@@ -26,6 +26,8 @@ namespace EasyProject
             signUpBtn.Click += signUpBtn_Click;
             loginBtn.Click += loginBtn_Click;
             statusBtn.Click += StatusBtn_Click;
+
+            userNameTextBlock.Text = App.nurse_dto.Nurse_name;
         }
 
         private void StatusBtn_Click(object sender, RoutedEventArgs e)
