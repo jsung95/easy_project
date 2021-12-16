@@ -7,7 +7,6 @@
       xmlns:local="clr-namespace:EasyProject.View"
       xmlns:wookoa="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
       Title="IncomingOutgoingPage">
     <Page.Resources>
         <Style TargetType="DataGridColumnHeader">
@@ -31,16 +30,16 @@
         </Style>
     </Page.Resources>
     <Grid Height="450" Width="800">
-        <materialDesign:Card Grid.Column="0" Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
-            <Grid Height="400" Width="750"  >
+        <materialDesign:Card Grid.Column="0"  Margin ="5,5,5,5" UniformCornerRadius="20" Background="White">
+            <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.2*"/>
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="0.3*"/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.Row="0" Fill="#BEBEBE"  HorizontalAlignment="Left" Height="32" 
-                             VerticalAlignment="Top" Width="750" RadiusY="6" RadiusX="6"/>
-                <TextBlock Grid.Row="0" FontSize="20" TextAlignment="Center"  >
+                <Rectangle Grid.Row="0" Fill="#BEBEBE"  Height="32" 
+                             VerticalAlignment="Top"  RadiusY="6" RadiusX="6"/>
+                <TextBlock Grid.Row="0" FontSize="18" TextAlignment="Center" Margin="3" >
                 <Run Foreground="White" Text="입출고 현황" IsEnabled="False"/>
                 </TextBlock>
 
@@ -57,15 +56,15 @@
                         </Grid.RowDefinitions>
                         <Rectangle Grid.Row="0" Fill="#4472C4" HorizontalAlignment="Left" Height="25" Margin="0,9,0,0"
                              VerticalAlignment="Top" Width="130" RadiusY="6" RadiusX="6"/>
-                        <TextBlock Grid.Row="0" Text="입고 현황" Foreground="White" VerticalAlignment="Top" Margin="0,11,269,0"
-                                   FontSize="13" HorizontalAlignment="Right" Width="69" ></TextBlock>
-                        <Border BorderBrush="#BEBEBE" BorderThickness="1" Grid.Row="0" Width="95" Height="21" VerticalAlignment="Center" HorizontalAlignment="Right" >
-                            <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="10"
+                        <TextBlock Text="입고 현황" Foreground="White" VerticalAlignment="Center" Margin="32,0,0,0"
+                                   FontSize="13" HorizontalAlignment="Left" Width="69" />
+                        <Border BorderBrush="#BEBEBE" BorderThickness="1" Grid.Row="0" Width="95" Height="21" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,7,0,0" >
+                            <TextBlock Grid.Row="0" VerticalAlignment="Top" FontSize="10"
                                 Text="{Binding Source={x:Static wookoa:DateTime.Now}, StringFormat='{}{0:yy-MM-dd HH:mm:ss}', Mode=OneWay}" 
-                                Margin="5" Foreground="#4472C4" />
+                                Margin="0,2,0,0" Foreground="#4472C4" HorizontalAlignment="Center" Width="82" />
                         </Border>
                         <Button x:Name="resetBtn"  Foreground="#4472C4"  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  Background="White"
-                            VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="45" Cursor="Hand" Margin="227,0,0,0">
+                            VerticalAlignment="Top"  BorderThickness="0" Height="23" Width="45" Cursor="Hand" Margin="245,6,0,0">
                             <materialDesign:PackIcon Grid.Row="0" Kind="Restore" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
                         </Button>
                         <DataGrid x:Name="dataGrid1"  HorizontalAlignment="Center"  VerticalAlignment="Top" 
@@ -74,30 +73,32 @@
                                 <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="55" IsReadOnly="True" />
                                 <DataGridTextColumn Binding="{Binding ProductName}" Header="제품명" Width="55" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Category}" Header="품목/종류" Width="55" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Total}" Header="총 수량" Width="55" IsReadOnly="True"/>
-                                <DataGridTextColumn  Binding="{Binding Price}"  Header="제품가격" Width="55"  IsReadOnly="True"/>
-                                <DataGridTextColumn  Binding="{Binding ExpirationDate}"  Header="유통기한" Width="55"  IsReadOnly="True"/>
-                                <DataGridTextColumn  Binding="{Binding State}"  Header="상태" Width="55"  IsReadOnly="True"/>
-                                <DataGridTextColumn  Binding="{Binding Application}"  Header="신청" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Total}" Header="유통기한" Width="55" IsReadOnly="True"/>
+                                <DataGridTextColumn  Binding="{Binding Price}"  Header="가격" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn  Binding="{Binding ExpirationDate}"  Header="수량" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn  Binding="{Binding State}"  Header="입고일" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn  Binding="{Binding Application}"  Header="입고유형" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn  Binding="{Binding Application}"  Header="부서명" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn  Binding="{Binding Application}"  Header="관리자명" Width="55"  IsReadOnly="True"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
-                    <Grid Grid.Column="1" Margin="5,0,0,0">
+                    <Grid Grid.Column="1" Margin="0,0,5,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0.25*"/>
                             <RowDefinition Height="2*"/>
                         </Grid.RowDefinitions>
                         <Rectangle Grid.Row="0" Fill="#4472C4" HorizontalAlignment="Left" Height="25" Margin="0,9,0,0"
                              VerticalAlignment="Top" Width="130" RadiusY="6" RadiusX="6"/>
-                        <TextBlock Grid.Row="0" Text="출고 현황" Foreground="White" VerticalAlignment="Top" Margin="0,11,269,0"
-                                   FontSize="13" HorizontalAlignment="Right" Width="69" ></TextBlock>
-                        <Border BorderBrush="#BEBEBE" BorderThickness="1" Grid.Row="0" Width="95" Height="21" VerticalAlignment="Center" HorizontalAlignment="Right" >
+                        <TextBlock Text="출고 현황" Foreground="White" VerticalAlignment="Center" Margin="33,0,0,0"
+                                   FontSize="13" HorizontalAlignment="Left" Width="69" />
+                        <Border BorderBrush="#BEBEBE" BorderThickness="1" Grid.Row="0" Width="95" Height="21" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,7,0,0" >
                             <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="10"
                                 Text="{Binding Source={x:Static wookoa:DateTime.Now}, StringFormat='{}{0:yy-MM-dd HH:mm:ss}', Mode=OneWay}" 
                                 Margin="5" Foreground="#4472C4" />
                         </Border>
                         <Button x:Name="resetBtn2"  Foreground="#4472C4"  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
-                            VerticalAlignment="Center"  BorderThickness="0"  Height="23" Width="45" Cursor="Hand" Margin="227,0,0,0" Background="White">
+                            VerticalAlignment="Top"  BorderThickness="0"  Height="23" Width="45" Cursor="Hand" Margin="245,6,0,0" Background="White">
                             <materialDesign:PackIcon Grid.Row="0" Kind="Restore" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
                         </Button>
 
@@ -107,11 +108,14 @@
                                 <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="55" IsReadOnly="True" />
                                 <DataGridTextColumn Binding="{Binding ProductName}" Header="제품명" Width="55" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Category}" Header="품목/종류" Width="55" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Total}" Header="총 수량" Width="55" IsReadOnly="True"/>
-                                <DataGridTextColumn  Binding="{Binding Price}"  Header="제품가격" Width="55"  IsReadOnly="True"/>
-                                <DataGridTextColumn  Binding="{Binding ExpirationDate}"  Header="유통기한" Width="55"  IsReadOnly="True"/>
-                                <DataGridTextColumn  Binding="{Binding State}"  Header="상태" Width="55"  IsReadOnly="True"/>
-                                <DataGridTextColumn  Binding="{Binding Application}"  Header="신청" Width="55"  IsReadOnly="True"/>
+                                
+                                <DataGridTextColumn  Binding="{Binding Price}"  Header="가격" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn  Binding="{Binding ExpirationDate}"  Header="수량" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn  Binding="{Binding State}"  Header="출고일" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn  Binding="{Binding Application}"  Header="출고유형" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn  Binding="{Binding Application}"  Header="부서명" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn  Binding="{Binding Application}"  Header="관리자명" Width="55"  IsReadOnly="True"/>
+
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
