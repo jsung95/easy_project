@@ -5,12 +5,13 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:EasyProject.View"
+      xmlns:wookoa="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="IncomingOutgoingPage">
     <Page.Resources>
         <Style TargetType="DataGridColumnHeader">
-            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="Background" Value="#EAEAEA"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -31,172 +32,163 @@
     </Page.Resources>
     <Grid Height="450" Width="800">
         <materialDesign:Card Grid.Column="0" Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
-            <Grid Height="400" Width="750" Background="White" >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.3*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="0.3*"/>
-            </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" FontSize="20" TextAlignment="Center" Background="#4472C4" >
+            <Grid Height="400" Width="750"  >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="0.3*"/>
+                </Grid.RowDefinitions>
+                <Rectangle Grid.Row="0" Fill="#BEBEBE"  HorizontalAlignment="Left" Height="32" 
+                             VerticalAlignment="Top" Width="750" RadiusY="6" RadiusX="6"/>
+                <TextBlock Grid.Row="0" FontSize="20" TextAlignment="Center"  >
                 <Run Foreground="White" Text="입출고 현황" IsEnabled="False"/>
-            </TextBlock>
+                </TextBlock>
 
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <DataGrid x:Name="dataGrid1" Grid.Column ="0" 
-                HorizontalAlignment="Left" Margin="10"  
-                VerticalAlignment="Top" AutoGenerateColumns="True" 
-                CanUserSortColumns="True" IsReadOnly="True" ColumnWidth="*">
-                    <DataGrid.Columns >
-                        <DataGridTextColumn 
-                    Binding="{Binding Prod_code}" 
-                    Header="제품코드" Width="55" IsReadOnly="True" />
-                        <DataGridTextColumn 
-                    Binding="{Binding ProductName}"
-                    Header="제품명" Width="55" 
-                    IsReadOnly="True"/>
-                        <DataGridTextColumn 
-                    Binding="{Binding Category}" 
-                    Header="품목/종류" Width="55" 
-                    IsReadOnly="True"/>
-                        <DataGridTextColumn 
-                    Binding="{Binding Total}" 
-                    Header="총 수량" Width="55" 
-                    IsReadOnly="True"/>
-                        <DataGridTextColumn 
-                    Binding="{Binding Price}" 
-                    Header="제품가격" Width="55" 
-                    IsReadOnly="True"/>
-                        <DataGridTextColumn 
-                    Binding="{Binding ExpirationDate}" 
-                    Header="유통기한" Width="55" 
-                    IsReadOnly="True"/>
-                        <DataGridTextColumn 
-                    Binding="{Binding State}" 
-                    Header="상태" Width="55" 
-                    IsReadOnly="True"/>
-                        <DataGridTextColumn 
-                    Binding="{Binding Application}" 
-                    Header="신청" Width="55" 
-                    IsReadOnly="True"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-                <DataGrid x:Name="dataGrid2" Grid.Column ="1" 
-                HorizontalAlignment="Left" Margin="10"  
-                VerticalAlignment="Top" AutoGenerateColumns="True" 
-                CanUserSortColumns="True" IsReadOnly="True" ColumnWidth="*">
-                    <DataGrid.Columns >
-                        <DataGridTextColumn 
-                    Binding="{Binding Productcode}" 
-                    Header="제품코드" Width="55" 
-                    IsReadOnly="True" />
-                        <DataGridTextColumn 
-                    Binding="{Binding ProductName}"
-                    Header="제품명" Width="55" 
-                    IsReadOnly="True"/>
-                        <DataGridTextColumn 
-                    Binding="{Binding Category}" 
-                    Header="품목/종류" Width="55" 
-                    IsReadOnly="True"/>
-                        <DataGridTextColumn 
-                    Binding="{Binding Total}" 
-                    Header="총 수량" Width="55" 
-                    IsReadOnly="True"/>
-                        <DataGridTextColumn 
-                    Binding="{Binding Price}" 
-                    Header="제품가격" Width="55" 
-                    IsReadOnly="True"/>
-                        <DataGridTextColumn 
-                    Binding="{Binding ExpirationDate}" 
-                    Header="유통기한" Width="55" 
-                    IsReadOnly="True"/>
-                        <DataGridTextColumn 
-                    Binding="{Binding State}" 
-                    Header="상태" Width="55" 
-                    IsReadOnly="True"/>
-                        <DataGridTextColumn 
-                    Binding="{Binding Application}" 
-                    Header="신청" Width="55" 
-                    IsReadOnly="True"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>                  
-            
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" >
-                    <StackPanel Orientation="Horizontal">
-                        <Button Height="23" HorizontalAlignment="Left"  Grid.Column ="0" FontSize="10"
-                        Name="btnFirst" VerticalAlignment="Bottom" Width="36" Foreground="White" Background="#4472C4"
-                        Content="&lt;&lt;" Click="btnFirst_Click" Opacity="0.75" Margin="10" Cursor="Hand" />
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                        <Button Height="23" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column ="1" FontSize="10" 
-                        Name="btnPrev" Width="40" Click="btnPrev_Click" Margin="10" Foreground="White" Background="#4472C4"
-                        Opacity="0.75" Content="&lt;" Cursor="Hand"/>
+                    <Grid Grid.Column="0" Margin="0,0,5,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.25*"/>
+                            <RowDefinition Height="2*"/>
+                        </Grid.RowDefinitions>
+                        <Rectangle Grid.Row="0" Fill="#4472C4" HorizontalAlignment="Left" Height="25" Margin="0,9,0,0"
+                             VerticalAlignment="Top" Width="130" RadiusY="6" RadiusX="6"/>
+                        <TextBlock Grid.Row="0" Text="입고 현황" Foreground="White" VerticalAlignment="Top" Margin="0,11,269,0"
+                                   FontSize="13" HorizontalAlignment="Right" Width="69" ></TextBlock>
+                        <Border BorderBrush="#BEBEBE" BorderThickness="1" Grid.Row="0" Width="95" Height="21" VerticalAlignment="Center" HorizontalAlignment="Right" >
+                            <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="10"
+                                Text="{Binding Source={x:Static wookoa:DateTime.Now}, StringFormat='{}{0:yy-MM-dd HH:mm:ss}', Mode=OneWay}" 
+                                Margin="5" Foreground="#4472C4" />
+                        </Border>
+                        <Button x:Name="resetBtn"  Foreground="#4472C4"  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  Background="White"
+                            VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="45" Cursor="Hand" Margin="227,0,0,0">
+                            <materialDesign:PackIcon Grid.Row="0" Kind="Restore" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
+                        </Button>
+                        <DataGrid x:Name="dataGrid1"  HorizontalAlignment="Center"  VerticalAlignment="Top" 
+                                  AutoGenerateColumns="True" CanUserSortColumns="True" IsReadOnly="True" ColumnWidth="*" Margin="0,31,0,0" Grid.RowSpan="2">
+                            <DataGrid.Columns >
+                                <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="55" IsReadOnly="True" />
+                                <DataGridTextColumn Binding="{Binding ProductName}" Header="제품명" Width="55" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Category}" Header="품목/종류" Width="55" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Total}" Header="총 수량" Width="55" IsReadOnly="True"/>
+                                <DataGridTextColumn  Binding="{Binding Price}"  Header="제품가격" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn  Binding="{Binding ExpirationDate}"  Header="유통기한" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn  Binding="{Binding State}"  Header="상태" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn  Binding="{Binding Application}"  Header="신청" Width="55"  IsReadOnly="True"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                    <Grid Grid.Column="1" Margin="5,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.25*"/>
+                            <RowDefinition Height="2*"/>
+                        </Grid.RowDefinitions>
+                        <Rectangle Grid.Row="0" Fill="#4472C4" HorizontalAlignment="Left" Height="25" Margin="0,9,0,0"
+                             VerticalAlignment="Top" Width="130" RadiusY="6" RadiusX="6"/>
+                        <TextBlock Grid.Row="0" Text="출고 현황" Foreground="White" VerticalAlignment="Top" Margin="0,11,269,0"
+                                   FontSize="13" HorizontalAlignment="Right" Width="69" ></TextBlock>
+                        <Border BorderBrush="#BEBEBE" BorderThickness="1" Grid.Row="0" Width="95" Height="21" VerticalAlignment="Center" HorizontalAlignment="Right" >
+                            <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="10"
+                                Text="{Binding Source={x:Static wookoa:DateTime.Now}, StringFormat='{}{0:yy-MM-dd HH:mm:ss}', Mode=OneWay}" 
+                                Margin="5" Foreground="#4472C4" />
+                        </Border>
+                        <Button x:Name="resetBtn2"  Foreground="#4472C4"  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                            VerticalAlignment="Center"  BorderThickness="0"  Height="23" Width="45" Cursor="Hand" Margin="227,0,0,0" Background="White">
+                            <materialDesign:PackIcon Grid.Row="0" Kind="Restore" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
+                        </Button>
 
-                        <!--<Label x:Name="lblpageInformation" HorizontalContentAlignment="Center" 
+                        <DataGrid x:Name="dataGrid2"  HorizontalAlignment="Center"  VerticalAlignment="Top" 
+                                  AutoGenerateColumns="True" CanUserSortColumns="True" IsReadOnly="True" ColumnWidth="*" Margin="0,31,0,0" Grid.RowSpan="2">
+                            <DataGrid.Columns >
+                                <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="55" IsReadOnly="True" />
+                                <DataGridTextColumn Binding="{Binding ProductName}" Header="제품명" Width="55" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Category}" Header="품목/종류" Width="55" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Total}" Header="총 수량" Width="55" IsReadOnly="True"/>
+                                <DataGridTextColumn  Binding="{Binding Price}"  Header="제품가격" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn  Binding="{Binding ExpirationDate}"  Header="유통기한" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn  Binding="{Binding State}"  Header="상태" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn  Binding="{Binding Application}"  Header="신청" Width="55"  IsReadOnly="True"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" >
+                        <StackPanel Orientation="Horizontal">
+                            <Button Height="23" HorizontalAlignment="Left"  Grid.Column ="0" FontSize="10"
+                                Name="btnFirst" VerticalAlignment="Bottom" Width="36" Foreground="White" Background="#4472C4"
+                                Content="&lt;&lt;" Click="btnFirst_Click" Opacity="0.75" Margin="10" Cursor="Hand" />
+
+                            <Button Height="23" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column ="1" FontSize="10" 
+                                Name="btnPrev" Width="40" Click="btnPrev_Click" Margin="10" Foreground="White" Background="#4472C4"
+                                Opacity="0.75" Content="&lt;" Cursor="Hand"/>
+
+                            <!--<Label x:Name="lblpageInformation" HorizontalContentAlignment="Center" 
                  Grid.Column ="2" Margin="10" 
                  HorizontalAlignment="Center" Height="30" Width="100" 
                  VerticalContentAlignment="Center" VerticalAlignment="Bottom"/>-->
-                        <Button Height="26" HorizontalAlignment="Left" Grid.Column ="2" Foreground="White" Background="#4472C4"
-                        VerticalAlignment="Bottom" Width="50" Margin="10.2,0,0,10.4" FontSize="13"
-                        Content="excel"  Opacity="0.75" Cursor="Hand" Click="Button_Click"/>
+                            <Button Height="26" HorizontalAlignment="Left" Grid.Column ="2" Foreground="White" Background="#4472C4"
+                                VerticalAlignment="Bottom" Width="50" Margin="10.2,0,0,10.4" FontSize="13"
+                                Content="excel"  Opacity="0.75" Cursor="Hand" Click="Button_Click"/>
 
-                        <Button Height="23" HorizontalAlignment="Left" Grid.Column ="3" Foreground="White" Background="#4472C4"
-                        Name="btnNext" VerticalAlignment="Bottom" Width="40" Margin="10"
-                        Content="&gt;" Click="btnNext_Click" Opacity="0.75" Cursor="Hand"/>
+                            <Button Height="23" HorizontalAlignment="Left" Grid.Column ="3" Foreground="White" Background="#4472C4"
+                                Name="btnNext" VerticalAlignment="Bottom" Width="40" Margin="10"
+                                Content="&gt;" Click="btnNext_Click" Opacity="0.75" Cursor="Hand"/>
 
-                        <Button Height="23" HorizontalAlignment="Left"  Grid.Column ="4" Foreground="White" Background="#4472C4"
-                        VerticalAlignment="Bottom" Width="40" Name="btnLast" Margin="10"
-                        Click="btnLast_Click" Opacity="0.75" Content="&gt;&gt;"/>
+                            <Button Height="23" HorizontalAlignment="Left"  Grid.Column ="4" Foreground="White" Background="#4472C4"
+                                VerticalAlignment="Bottom" Width="40" Name="btnLast" Margin="10"
+                                Click="btnLast_Click" Opacity="0.75" Content="&gt;&gt;"/>
 
-                        <ComboBox x:Name="cbNumberOfRecords" HorizontalAlignment="Left"  Grid.Column ="5"
-            VerticalAlignment="Bottom" Width="50"  SelectedIndex="0" Margin="10"
-            SelectionChanged="cbNumberOfRecords_SelectionChanged" Opacity="0.75"/>
-                    </StackPanel>       
-                </Grid>
-                <Grid Grid.Column="1">
-                    <StackPanel Orientation="Horizontal">
-                        <Button Height="23" HorizontalAlignment="Right"  Grid.Column ="0" 
-                 Name="btnFirst2" VerticalAlignment="Bottom" Width="40" Foreground="White" Background="#4472C4"
-                 Content="&lt;&lt;" Click="btnFirst_Click" Opacity="0.75" Margin="10" Cursor="Hand" />
+                            <ComboBox x:Name="cbNumberOfRecords" HorizontalAlignment="Left"  Grid.Column ="5"
+                                VerticalAlignment="Bottom" Width="50"  SelectedIndex="0" Margin="10"
+                                SelectionChanged="cbNumberOfRecords_SelectionChanged" Opacity="0.75"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Height="23" HorizontalAlignment="Right"  Grid.Column ="0" 
+                                Name="btnFirst2" VerticalAlignment="Bottom" Width="40" Foreground="White" Background="#4472C4"
+                                Content="&lt;&lt;" Click="btnFirst_Click" Opacity="0.75" Margin="10" Cursor="Hand" />
 
-                        <Button Height="23" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column ="1"  
-                 Name="btnPrev2" Width="40" Click="btnPrev_Click" Margin="10" Foreground="White" Background="#4472C4"
-                 Opacity="0.75" Content="&lt;"/>
+                            <Button Height="23" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column ="1"  
+                                Name="btnPrev2" Width="40" Click="btnPrev_Click" Margin="10" Foreground="White" Background="#4472C4"
+                                Opacity="0.75" Content="&lt;"/>
 
-                        <!--<Label x:Name="lblpageInformation" HorizontalContentAlignment="Center" 
+                            <!--<Label x:Name="lblpageInformation" HorizontalContentAlignment="Center" 
                  Grid.Column ="2" Margin="10" 
                  HorizontalAlignment="Center" Height="30" Width="100" 
                  VerticalContentAlignment="Center" VerticalAlignment="Bottom"/>-->
-                        <Button Height="26" HorizontalAlignment="Left" Grid.Column ="2" Foreground="White" Background="#4472C4"
-                  VerticalAlignment="Bottom" Width="50" Margin="10.2,0,0,10.4"
-                 Content="excel"  Opacity="0.75" Cursor="Hand" Click="Button_Click"/>
+                            <Button Height="26" HorizontalAlignment="Left" Grid.Column ="2" Foreground="White" Background="#4472C4"
+                                VerticalAlignment="Bottom" Width="50" Margin="10.2,0,0,10.4"
+                                Content="excel"  Opacity="0.75" Cursor="Hand" Click="Button_Click"/>
 
-                        <Button Height="23" HorizontalAlignment="Left" Grid.Column ="3" Foreground="White" Background="#4472C4"
-                 Name="btnNext2" VerticalAlignment="Bottom" Width="40" Margin="10"
-                 Content="&gt;" Click="btnNext_Click" Opacity="0.75" Cursor="Hand"/>
+                            <Button Height="23" HorizontalAlignment="Left" Grid.Column ="3" Foreground="White" Background="#4472C4"
+                                Name="btnNext2" VerticalAlignment="Bottom" Width="40" Margin="10"
+                                Content="&gt;" Click="btnNext_Click" Opacity="0.75" Cursor="Hand"/>
 
-                        <Button Height="23" HorizontalAlignment="Left"  Grid.Column ="4" Foreground="White" Background="#4472C4"
-            VerticalAlignment="Bottom" Width="40" Name="btnLast2" Margin="10"
-            Click="btnLast_Click" Opacity="0.75" Content="&gt;&gt;"/>
+                            <Button Height="23" HorizontalAlignment="Left"  Grid.Column ="4" Foreground="White" Background="#4472C4"
+                                VerticalAlignment="Bottom" Width="40" Name="btnLast2" Margin="10"
+                                Click="btnLast_Click" Opacity="0.75" Content="&gt;&gt;"/>
 
-                        <ComboBox x:Name="cbNumberOfRecords2" HorizontalAlignment="Right"  Grid.Column ="5"
-            VerticalAlignment="Bottom" Width="50"  SelectedIndex="0" Margin="10"
-            SelectionChanged="cbNumberOfRecords_SelectionChanged" Opacity="0.75"/>
-                    </StackPanel>
+                            <ComboBox x:Name="cbNumberOfRecords2" HorizontalAlignment="Right"  Grid.Column ="5"
+                                VerticalAlignment="Bottom" Width="50"  SelectedIndex="0" Margin="10"
+                                SelectionChanged="cbNumberOfRecords_SelectionChanged" Opacity="0.75"/>
+                        </StackPanel>
 
+                    </Grid>
                 </Grid>
+
+
             </Grid>
-            
-
-        </Grid>
         </materialDesign:Card>
     </Grid>
 </Page>
