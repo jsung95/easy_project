@@ -24,8 +24,7 @@ namespace EasyProject.ViewModel
         public NurseModel Nurse { get; set; }
 
         //입력한 재고 데이터를 담은 객체를 담아줄 옵저버블컬렉션 리스트
-        public static ObservableCollection<ProductForListModel> Add_list { get; set; }
-
+        public static ObservableCollection<ProductInOutModel> Add_list { get; set; }
 
         public ProductViewModel()
         {
@@ -39,11 +38,9 @@ namespace EasyProject.ViewModel
             //App.xaml.cs 에 로그인할 때 바인딩 된 로그인 정보 객체
             Nurse = App.nurse_dto;
 
-
-            //입력한 재고 데이터를 담은 객체를 담아줄 옵저버블컬렉션 리스트
-            Add_list = new ObservableCollection<ProductForListModel>();            
+            //현재 로그인 사용자의 입고 목록을 가져옴
+            Add_list = dao.GetProductInByNurse(Nurse);
         }
-
 
         private ActionCommand command;
         public ICommand Command
@@ -70,36 +67,21 @@ namespace EasyProject.ViewModel
 
             //IMP_DEPT 테이블에 추가
             dao.AddImpDept(Product, Nurse);
-            
-            /////////////////////////////////////////////
-            
-            //사용자가 입력한 데이터를 담아줄 임시 객체 생성
-            ProductForListModel dto = new ProductForListModel();
 
-            //객체 바인딩
+            // 현재 사용자가 추가 입고 내역을 담을 임시 객체
+            ProductInOutModel dto = new ProductInOutModel();
+
+            // 새로 입고 시 Add_list(사용자의 입고 내역 목록) 업데이트
+            dto.Prod_in_date = DateTime.Now;
             dto.Prod_code = Product.Prod_code;
             dto.Prod_name = Product.Prod_name;
             dto.Category_name = SelectedCategory.Category_name;
             dto.Prod_expire = Product.Prod_expire;
             dto.Prod_price = Product.Prod_price;
-            dto.Prod_total = Product.Prod_total;
+            dto.Prod_in_count = Product.Prod_total;
+            dto.Nurse_name = Nurse.Nurse_name;
 
-            //옵저버블컬렉션 리스트에 추가
-            Add_list.Add(dto);
-            
-            foreach (var item in Add_list)
-            {
-                Console.WriteLine("=====================");
-                Console.WriteLine(item.Prod_code);
-                Console.WriteLine(item.Prod_name);
-                Console.WriteLine(item.Category_name);
-                Console.WriteLine(item.Prod_expire);
-                Console.WriteLine(item.Prod_price);
-                Console.WriteLine(item.Prod_total);
-                Console.WriteLine("=====================");
-            }
-            /////////////////////////////////////////////
-            
+            Add_list.Insert(0, dto);
 
         }// ProductInsert
 

@@ -18,9 +18,14 @@
             <ListView Grid.Row="0" Name="InsertListView" FontSize="15" Margin="3" ItemsSource="{Binding Add_list}">
                 <ListView.View>
                     <GridView>
+                        <GridViewColumn Header="입력일자" DisplayMemberBinding="{Binding Prod_in_date}" Width="auto"/>
                         <GridViewColumn Header="제품코드" DisplayMemberBinding="{Binding Prod_code}" Width="auto"/>
                         <GridViewColumn Header="제품명" DisplayMemberBinding="{Binding Prod_name}" Width="auto"/>
+                        <GridViewColumn Header="품목/종류" DisplayMemberBinding="{Binding Category_name}" Width="auto"/>
+                        <GridViewColumn Header="유통기한" DisplayMemberBinding="{Binding Prod_expire}" Width="auto"/>
                         <GridViewColumn Header="가격" DisplayMemberBinding="{Binding Prod_price}" Width="auto"/>
+                        <GridViewColumn Header="수량" DisplayMemberBinding="{Binding Prod_in_count}" Width="auto"/>
+                        <GridViewColumn Header="관리자명" DisplayMemberBinding="{Binding Nurse_name}" Width="auto"/>
                     </GridView>
                 </ListView.View>
             </ListView>

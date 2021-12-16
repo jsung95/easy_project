@@ -1,13 +1,14 @@
 ﻿using EasyProject.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace EasyProject.Dao
 {
     public interface IProductDao
     {
         // 재고조회
-        List<ProductModel> GetProduct();
+        List<ProductShowModel> GetProducts();
 
         // 재고입력 - 제품 카테고리 가져오기
         List<CategoryModel> GetCategoryModels();
@@ -26,6 +27,9 @@ namespace EasyProject.Dao
 
         // IMP_DEPT 테이블 추가
         void AddImpDept(ProductModel prod_dto, NurseModel nurse_dto);
+
+        // 현재 사용자의 입고 목록을 가져옴(InsertListPage)
+        ObservableCollection<ProductInOutModel> GetProductInByNurse(NurseModel nurse_dto);
     }//interface
 
 }//namespace

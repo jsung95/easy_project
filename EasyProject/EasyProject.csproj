@@ -82,6 +82,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Dao\CommonDBConn.cs" />
+    <Compile Include="Dao\DeptDao.cs" />
+    <Compile Include="Dao\IDeptDao.cs" />
     <Compile Include="Dao\ILoginDao.cs" />
     <Compile Include="Dao\IOrderDao.cs" />
     <Compile Include="Dao\IProductDao.cs" />
@@ -97,7 +99,7 @@
     <Compile Include="Model\ImpDeptModel.cs" />
     <Compile Include="Model\NurseModel.cs" />
     <Compile Include="Model\Notifier.cs" />
-    <Compile Include="Model\ProductForListModel.cs" />
+    <Compile Include="Model\ProductShowModel.cs" />
     <Compile Include="Model\ProductInOutModel.cs" />
     <Compile Include="Model\ProductModel.cs" />
     <Compile Include="Model\UserModel.cs" />
