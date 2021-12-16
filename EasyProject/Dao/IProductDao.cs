@@ -26,6 +26,9 @@ namespace EasyProject.Dao
 
         // IMP_DEPT 테이블 추가
         void AddImpDept(ProductModel prod_dto, NurseModel nurse_dto);
+
+        // 현재 사용자의 입고 목록을 가져옴(InsertListPage)
+        List<ProductInOutModel> GetProductInByNurse(NurseModel nurse_dto);
     }//interface
 
 }//namespace

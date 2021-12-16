@@ -393,6 +393,82 @@ namespace EasyProject.Dao
 
         }//AddImpDept
 
+        public List<ProductInOutModel> GetProductInByNurse(NurseModel nurse_dto)
+        {
+            List<ProductInOutModel> list = new List<ProductInOutModel>();
+            Console.WriteLine("GetProductInByNurse 실행");
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_expire, P.prod_price, I.prod_in_count, N.nurse_name, I.prod_in_date, I.prod_in_from, I.prod_in_to, I.prod_in_type " +
+                                          "FROM PRODUCT_IN I " +
+                                          "INNER JOIN PRODUCT P " +
+                                          "ON I.prod_id = P.prod_id " +
+                                          "INNER JOIN CATEGORY C " +
+                                          "ON P.category_id = C.category_id " +
+                                          "LEFT OUTER JOIN NURSE N " +
+                                          "ON I.nurse_no = N.nurse_no " +
+                                          "WHERE I.nurse_no = :no ";
+
+                        cmd.Parameters.Add(new OracleParameter(":no", nurse_dto.Nurse_no));
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string prod_code = reader.GetString(0);
+                            string prod_name = reader.GetString(1);
+                            string category_name = reader.GetString(2);
+                            DateTime prod_expire = reader.GetDateTime(3);
+                            int? prod_price = reader.GetInt32(4);
+                            int? prod_in_count = reader.GetInt32(5);
+                            string nurse_name = reader.GetString(6);
+                            DateTime prod_in_date = reader.GetDateTime(7);
+                            string prod_in_from = reader.GetString(8);
+                            string prod_in_to = reader.GetString(9);
+                            string prod_in_type = reader.GetString(10);
+
+                            ProductInOutModel dto = new ProductInOutModel()
+                            {
+                                Prod_code = prod_code,
+                                Prod_name = prod_name,
+                                Category_name = category_name,
+                                Prod_expire = prod_expire,
+                                Prod_price = prod_price,
+                                Prod_in_count = prod_in_count,
+                                Nurse_name = nurse_name,
+                                Prod_in_date = prod_in_date,
+                                Prod_in_from = prod_in_from,
+                                Prod_in_to = prod_in_to,
+                                Prod_in_type = prod_in_type
+                            };
+
+                            list.Add(dto);
+
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return list;
+        }//GetProductInByNurse
+
     }//class
 
 }//namespace
