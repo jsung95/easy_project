@@ -5,51 +5,78 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:EasyProject"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      d:DesignHeight="600" d:DesignWidth="1080"
       Title="TabPage">
-    <TabControl>
-        <TabItem Header="재고 현황">
-            <Grid Background="#FFE5E5E5">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0.8*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="0.8*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
+    <Grid>
+        <Grid Height="60" VerticalAlignment="Top" Background="#FF9C27B0">
+            <TextBlock Text="재고관리 프로그램" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22" FontFamily="Champagne &amp; Limousines" Margin="38,17,0,17" Width="191" />
+            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}">
+                <materialDesign:PackIcon Kind="Power"/>
+            </Button>
+        </Grid>
+        <Grid Margin="0 60 0 0">
+            <dragablz:TabablzControl>
+                <dragablz:TabablzControl.InterTabController>
+                    <dragablz:InterTabController/>
+                </dragablz:TabablzControl.InterTabController>
+                <TabItem Header="재고현황" Margin="10,0,0,0">
+                    <Grid Background="#FFE5E5E5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.8*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="0.8*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
 
-                <Button x:Name="signUpBtn" Content="회원가입하기" Grid.Column="0" Background="Red" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
+                        <Button x:Name="signUpBtn" Content="회원가입하기" Grid.Column="0" Background="Red" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" Cursor="Hand" />
-                <Button x:Name="loginBtn" Content="로그인하기" Grid.Column="1" Background="Blue" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
+                        <Button x:Name="loginBtn" Content="로그인하기" Grid.Column="1" Background="Blue" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" />
-                <Button x:Name="statusBtn" Content="test" Grid.Row="1" Background="Gray" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
+                        <Button x:Name="statusBtn" Content="test" Grid.Row="1" Background="Gray" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" />
-            </Grid>
-        </TabItem>
-        <TabItem Header="재고 입력">
-            <Grid Background="#FFE5E5E5">
-                <Frame Source="TabItemPage/InsertPage.xaml"/>
-            </Grid>
-        </TabItem>
-        <TabItem Header="입출고 현황">
-            <Grid Background="#FFE5E5E5">
-                <Frame Source="TabItemPage/IncomingOutgoingPage.xaml"/>
-            </Grid>
-        </TabItem>
-        <TabItem Header="발주 신청">
-            <Grid Background="#FFE5E5E5">
-                <Frame Source="TabItemPage/OrderPage.xaml"/>
-            </Grid>
-        </TabItem>
-        <TabItem Header="권한부여">
-            <Grid Background="#FFE5E5E5">
-                <Frame Source="TabItemPage/AuthorityPage.xaml"/>
-            </Grid>
-        </TabItem>
-    </TabControl>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="재고입력">
+                    <Grid Background="#FFE5E5E5">
+                        <Frame Source="TabItemPage/InsertPage.xaml"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="입출고현황">
+                    <Grid Background="#FFE5E5E5">
+                        <Grid Background="#FFE5E5E5">
+                            <Frame Source="TabItemPage/IncomingOutgoingPage.xaml"/>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="발주신청">
+                    <Grid Background="#FFE5E5E5">
+                        <Frame Source="TabItemPage/OrderPage.xaml"/>
+                    </Grid>
+                </TabItem>
+
+                <TabItem Header="권한부여">
+                    <Grid Background="#FFE5E5E5">
+                        <Frame Source="TabItemPage/AuthorityPage.xaml"/>
+                    </Grid>
+                </TabItem>
+                
+                <!--<TabItem>
+                    <TabItem.Header>
+                        <materialDesign:PackIcon Kind="Github" Foreground="{DynamicResource PrimaryHueLightBrush}"/>
+                    </TabItem.Header>
+                    <TextBlock Text="github.com/Abel13/TabMenu2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </TabItem>-->
+            </dragablz:TabablzControl>
+        </Grid>
+    </Grid>
+    
+    
 </Page>
