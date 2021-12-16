@@ -8,9 +8,9 @@ namespace EasyProject.Dao
     public class ProductDao : CommonDBConn, IProductDao //DB연결 Class 및 인터페이스 상속
     {
 
-        public List<ProductModel> GetProduct()
+        public List<ProductShowModel> GetProducts()
         {
-            List<ProductModel> list = new List<ProductModel>();
+            List<ProductShowModel> list = new List<ProductShowModel>();
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -24,29 +24,39 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
 
-                        cmd.CommandText = "SELECT * FROM PRODUCT WHERE ";
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, I.imp_dept_count, P.prod_expire " +
+                                          "FROM PRODUCT P " +
+                                          "INNER JOIN IMP_DEPT I " +
+                                          "ON P.prod_id = I.prod_id " +
+                                          "INNER JOIN CATEGORY C " +
+                                          "ON P.category_id = C.category_id " +
+                                          "RIGHT OUTER JOIN DEPT D " +
+                                          "ON I.dept_id = D.dept_id " +
+                                          "WHERE D.dept_statud != '폐지' " +
+                                          "AND D.dept_name = :dept_name";
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
                         while (reader.Read())
                         {
-                            int? prod_id = reader.GetInt32(0);
-                            string prod_code = reader.GetString(1);
-                            string prod_name = reader.GetString(2);
+                            string prod_code = reader.GetString(0);
+                            string prod_name = reader.GetString(1);
+                            string category_name = reader.GetString(2);
                             int? prod_price = reader.GetInt32(3);
                             int? prod_total = reader.GetInt32(4);
-                            DateTime prod_expire = reader.GetDateTime(5);
-                            int? category_id = reader.GetInt32(6);
+                            int? imp_dept_count = reader.GetInt32(5);
+                            DateTime prod_expire = reader.GetDateTime(6);
 
-                            ProductModel dto = new ProductModel()
+
+                            ProductShowModel dto = new ProductShowModel()
                             {
-                                Prod_id = prod_id,
                                 Prod_code = prod_code,
                                 Prod_name = prod_name,
+                                Category_name = category_name,
                                 Prod_price = prod_price,
                                 Prod_total = prod_total,
-                                Prod_expire = prod_expire,
-                                Category_id = category_id
+                                Imp_dept_count = imp_dept_count,
+                                Prod_expire = prod_expire
                             };
 
                             list.Add(dto);

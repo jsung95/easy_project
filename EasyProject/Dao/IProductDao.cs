@@ -7,7 +7,7 @@ namespace EasyProject.Dao
     public interface IProductDao
     {
         // 재고조회
-        List<ProductModel> GetProduct();
+        List<ProductShowModel> GetProducts();
 
         // 재고입력 - 제품 카테고리 가져오기
         List<CategoryModel> GetCategoryModels();

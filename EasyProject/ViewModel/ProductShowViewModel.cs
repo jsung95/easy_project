@@ -10,16 +10,23 @@ namespace EasyProject.ViewModel
 {
     public class ProductShowViewModel : Notifier
     {
-        ProductDao dao = new ProductDao();
+        DeptDao dept_dao = new DeptDao();
+        ProductDao product_dao = new ProductDao();
 
         //재고 목록 조회해서 담을 옵저버블컬렉션 리스트 프로퍼티
-        public ObservableCollection<ProductModel> Products { get; set; }
+        public ObservableCollection<ProductShowModel> Products { get; set; }
+
+        //부서 목록 콤보박스, 부서 리스트 출력
+        public ObservableCollection<DeptModel> Depts { get; set; }
 
 
         public ProductShowViewModel()
         {
-            List<ProductModel> list = dao.GetProduct();
-            Products = new ObservableCollection<ProductModel>(list);
+            List<DeptModel> dept_list = dept_dao.GetDepts();
+            Depts = new ObservableCollection<DeptModel>(dept_list);
+
+            List<ProductShowModel> product_list = product_dao.GetProducts();
+            Products = new ObservableCollection<ProductShowModel>(product_list);
         }
 
 

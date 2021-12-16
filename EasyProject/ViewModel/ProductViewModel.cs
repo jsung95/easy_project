@@ -41,7 +41,6 @@ namespace EasyProject.ViewModel
             //현재 로그인 사용자의 입고 목록을 담는 OC
             List<ProductInOutModel> list2 = dao.GetProductInByNurse(Nurse);
             Add_list = new ObservableCollection<ProductInOutModel>(list2);
-         
         }
 
         private ActionCommand command;
