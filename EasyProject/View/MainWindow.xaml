@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:EasyProject"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="재고 관리 프로그램" Height="600" Width="1300" WindowStyle="None" AllowsTransparency="True" >
+        Title="재고 관리 프로그램" Height="600" Width="1300" WindowStyle="None">
     <Grid>
         <Frame NavigationUIVisibility="Hidden" Source="TabPage.xaml"/>
     </Grid>
