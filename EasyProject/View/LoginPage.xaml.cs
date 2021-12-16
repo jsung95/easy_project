@@ -52,10 +52,8 @@ namespace EasyProject
             //throw new NotImplementedException();
             //DB 연결해서 있는 회원인지 아닌지 확인 후 없으면 MessageBox 없다고, 있으면 메인화면 연결
             //MessageBox.Show(id_TxtBox.Text + " " + password_PwBox.Password);
-            NavigationService.Navigate(
-                new Uri("/View/TabPage.xaml", UriKind.Relative));
-            //MessageBox.Show(App.nurse_dto.Nurse_name);
-
+            //NavigationService.Navigate(
+            //    new Uri("/View/TabPage.xaml", UriKind.Relative));
         }
     }
 }

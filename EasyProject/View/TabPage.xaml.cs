@@ -23,7 +23,6 @@ namespace EasyProject
         public TabPage()
         {
             InitializeComponent();
-            
         }
         /*private void StatusBtn_Click(object sender, RoutedEventArgs e)
         {

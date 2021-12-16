@@ -3,7 +3,13 @@ using EasyProject.Dao;
 using System;
 using Microsoft.Expression.Interactivity.Core;
 using System.Windows.Input;
-using GalaSoft.MvvmLight.Views;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using Xamarin.Forms;
+
+
 
 namespace EasyProject.ViewModel
 {
@@ -21,6 +27,10 @@ namespace EasyProject.ViewModel
                 //OnPropertyChanged("Nurse");
             }
         }
+
+        public INavigation Navigation { get; set; }
+
+
 
         public LoginViewModel()
         {
