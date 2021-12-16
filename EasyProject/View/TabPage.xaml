@@ -25,10 +25,10 @@
                     <ColumnDefinition Width="0.5*"></ColumnDefinition>
                     <ColumnDefinition Width="0.5*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button HorizontalAlignment="Center" Grid.Column="0" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}">
+                <Button HorizontalAlignment="Right" Grid.Column="0" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}">
                     <materialDesign:PackIcon Kind="Account"/>
                 </Button>
-                <TextBlock x:Name="userNameTxtBox" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Foreground="White"></TextBlock>
+                <TextBlock x:Name="userNameTxtBox" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="White"></TextBlock>
             
             </Grid>
 
