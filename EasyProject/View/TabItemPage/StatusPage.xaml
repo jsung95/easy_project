@@ -6,9 +6,11 @@
       xmlns:local="clr-namespace:EasyProject.View.TabItemPage"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:wookoa="clr-namespace:System;assembly=mscorlib"
+      xmlns:vm ="clr-namespace:EasyProject.ViewModel"
       mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800"
       Title="StatusPage">
     <Page.Resources>
+        <vm:ProductShowViewModel x:Key="vm"/>
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="LightGray"/>
             <Setter Property="FontSize" Value="12"/>
@@ -38,9 +40,9 @@
                     <RowDefinition Height="2*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Background="#4472C4">
-                    <TextBlock FontWeight="Bold" FontSize="17" TextAlignment="Center" Margin="23,8,0.4,7.2" 
-                 VerticalAlignment="center">
-                <Run Foreground="White" Text="재고 현황" IsEnabled="False"/>
+                    <TextBlock FontWeight="Bold" FontSize="17" TextAlignment="Center" 
+                          HorizontalAlignment="Center" Margin="7" VerticalAlignment="center">
+                    <Run Foreground="White" Text="재고 현황" IsEnabled="False"/>
                     </TextBlock>
                 </Grid>
                 <Grid Grid.Row="1">
@@ -54,7 +56,22 @@
                     <Label Content="부서명" Foreground="#4472C4" Grid.Column="0" FontSize="12" 
                        FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10"/>
-                    <ComboBox x:Name="Part_comboBox" Grid.Column="1" HorizontalAlignment="Center" Margin="10" VerticalAlignment="Center" Width="100"/>
+                    <StackPanel Grid.Column="1" >
+                        <ComboBox DataContext="{Binding Source={StaticResource vm}}"
+                        x:Name="Part_comboBox" HorizontalAlignment="Left" Margin="10" 
+                        VerticalAlignment="Top" Width="100">
+                            <!-- [ 추가하기 ] ItemsSource="{Binding Path=Students}"
+                  SelectedItem="{Binding Path=SelectedStudent}"-->
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Dept_name}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                    
 
                     <Border Grid.Column="5" BorderBrush="#BEBEBE" BorderThickness="1" Width="95" Height="22" VerticalAlignment="Center" HorizontalAlignment="Center" >
                         <TextBlock Grid.Column="5" VerticalAlignment="Top" FontSize="10"
