@@ -29,6 +29,7 @@ namespace EasyProject
             //체크박스 클릭 시 --> 아이디 다음번에 왔을 때 기억하는거 어떻게 할지  정해야함.
         }
 
+
         private void searchBtn_Click(object sender, RoutedEventArgs e) //ID/PW 찾기 버튼 클릭 시
         {
             //throw new NotImplementedException();
@@ -53,6 +54,7 @@ namespace EasyProject
             //MessageBox.Show(id_TxtBox.Text + " " + password_PwBox.Password);
             NavigationService.Navigate(
                 new Uri("/View/TabPage.xaml", UriKind.Relative));
+            MessageBox.Show(App.nurse_dto.Nurse_name);
 
         }
     }
