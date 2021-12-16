@@ -15,6 +15,7 @@
             <Button  HorizontalAlignment="Right" Click="btn_close" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}">
                 <materialDesign:PackIcon Kind="Power"/>
             </Button>
+            <TextBlock x:Name="userNameTxtBox" HorizontalAlignment="Center"></TextBlock>
         </Grid>
         <Grid Margin="0 60 0 0">
             <dragablz:TabablzControl>
