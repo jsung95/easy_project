@@ -1,6 +1,7 @@
 ﻿using EasyProject.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace EasyProject.Dao
 {
@@ -28,7 +29,7 @@ namespace EasyProject.Dao
         void AddImpDept(ProductModel prod_dto, NurseModel nurse_dto);
 
         // 현재 사용자의 입고 목록을 가져옴(InsertListPage)
-        List<ProductInOutModel> GetProductInByNurse(NurseModel nurse_dto);
+        ObservableCollection<ProductInOutModel> GetProductInByNurse(NurseModel nurse_dto);
     }//interface
 
 }//namespace

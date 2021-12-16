@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Oracle.ManagedDataAccess.Client;
+using System.Collections.ObjectModel;
 
 namespace EasyProject.Dao
 {
@@ -403,9 +404,9 @@ namespace EasyProject.Dao
 
         }//AddImpDept
 
-        public List<ProductInOutModel> GetProductInByNurse(NurseModel nurse_dto)
+        public ObservableCollection<ProductInOutModel> GetProductInByNurse(NurseModel nurse_dto)
         {
-            List<ProductInOutModel> list = new List<ProductInOutModel>();
+            ObservableCollection<ProductInOutModel> list = new ObservableCollection<ProductInOutModel>();
             Console.WriteLine("GetProductInByNurse 실행");
             try
             {
@@ -428,7 +429,8 @@ namespace EasyProject.Dao
                                           "ON P.category_id = C.category_id " +
                                           "LEFT OUTER JOIN NURSE N " +
                                           "ON I.nurse_no = N.nurse_no " +
-                                          "WHERE I.nurse_no = :no ";
+                                          "WHERE I.nurse_no = :no " +
+                                          "ORDER BY I.prod_in_date DESC";
 
                         cmd.Parameters.Add(new OracleParameter(":no", nurse_dto.Nurse_no));
                         OracleDataReader reader = cmd.ExecuteReader();
