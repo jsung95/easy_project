@@ -23,16 +23,8 @@ namespace EasyProject
         public TabPage()
         {
             InitializeComponent();
-            this.Loaded += TabPage_Loaded;
             
         }
-
-        private void TabPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            //MessageBox.Show(App.nurse_dto.Nurse_name);
-            //userNameTxtBox.Text = App.nurse_dto.Nurse_name;
-        }
-
         /*private void StatusBtn_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate

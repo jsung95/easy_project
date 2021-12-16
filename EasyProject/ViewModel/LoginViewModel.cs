@@ -3,6 +3,7 @@ using EasyProject.Dao;
 using System;
 using Microsoft.Expression.Interactivity.Core;
 using System.Windows.Input;
+using GalaSoft.MvvmLight.Views;
 
 namespace EasyProject.ViewModel
 {

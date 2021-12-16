@@ -54,7 +54,7 @@ namespace EasyProject
             //MessageBox.Show(id_TxtBox.Text + " " + password_PwBox.Password);
             NavigationService.Navigate(
                 new Uri("/View/TabPage.xaml", UriKind.Relative));
-            MessageBox.Show(App.nurse_dto.Nurse_name);
+            //MessageBox.Show(App.nurse_dto.Nurse_name);
 
         }
     }
