@@ -62,6 +62,10 @@
                         VerticalAlignment="Top" Width="100">
                             <!-- [ 추가하기 ] ItemsSource="{Binding Path=Students}"
                   SelectedItem="{Binding Path=SelectedStudent}"-->
+                            <ComboBox.Resources>
+                                <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+                            </ComboBox.Resources>
+                            
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
