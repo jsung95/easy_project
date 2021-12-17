@@ -13,7 +13,7 @@
                 <ResourceDictionary Source="/Dictionary/WaterMarkDictionary.xaml"></ResourceDictionary>
                 <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />-->
 
-                <!-- primart color-->
+                <!-- primary color-->
                 <ResourceDictionary>
                     <ResourceDictionary.MergedDictionaries>
                         <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.purple.xaml" />
@@ -31,7 +31,7 @@
                     
                 </ResourceDictionary>
 
-                <!-- secondary colour -->
+                <!-- secondary color -->
                 <ResourceDictionary>
                     <!-- include your secondary pallette -->
                     <ResourceDictionary.MergedDictionaries>
