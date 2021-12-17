@@ -47,6 +47,7 @@ public partial class StatusPage : Page {
             cbNumberOfRecords.Items.Add("100");
             cbNumberOfRecords.SelectedItem = 10;
             //WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+            deptName_ComboBox1.SelectedIndex = (int)App.nurse_dto.Dept_id - 1;
             this.Loaded += MainWindow_Loaded;
         }
 

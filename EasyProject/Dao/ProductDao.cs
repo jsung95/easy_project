@@ -9,7 +9,7 @@ namespace EasyProject.Dao
     public class ProductDao : CommonDBConn, IProductDao //DB연결 Class 및 인터페이스 상속
     {
 
-        public List<ProductShowModel> GetProducts(DeptModel dept_dto)
+        public List<ProductShowModel> GetProducts()
         {
             List<ProductShowModel> list = new List<ProductShowModel>();
             try
@@ -33,11 +33,10 @@ namespace EasyProject.Dao
                                           "ON P.category_id = C.category_id " +
                                           "INNER JOIN DEPT D " +
                                           "ON I.dept_id = D.dept_id " +
-                                          "WHERE D.dept_status != '폐지' ";
-                        /*+
-                        "AND D.dept_name = :dept_name";*/
+                                          "WHERE D.dept_status != '폐지' " +
+                                          "AND D.dept_name = (select dept_name from dept where dept_id = :dept_id)";
 
-                        //cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
+                        cmd.Parameters.Add(new OracleParameter("dept_id", App.nurse_dto.Dept_id));
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
@@ -78,6 +77,77 @@ namespace EasyProject.Dao
             return list;
 
         }//GetProduct()
+
+
+        public List<ProductShowModel> GetProductsByDept(DeptModel dept_dto)
+        {
+            List<ProductShowModel> list = new List<ProductShowModel>();
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, I.imp_dept_count, P.prod_expire " +
+                                          "FROM PRODUCT P " +
+                                          "INNER JOIN IMP_DEPT I " +
+                                          "ON P.prod_id = I.prod_id " +
+                                          "INNER JOIN CATEGORY C " +
+                                          "ON P.category_id = C.category_id " +
+                                          "INNER JOIN DEPT D " +
+                                          "ON I.dept_id = D.dept_id " +
+                                          "WHERE D.dept_status != '폐지' " +
+                                          "AND D.dept_name = :dept_name";
+
+                        cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string prod_code = reader.GetString(0);
+                            string prod_name = reader.GetString(1);
+                            string category_name = reader.GetString(2);
+                            int? prod_price = reader.GetInt32(3);
+                            int? imp_dept_count = reader.GetInt32(4);
+                            DateTime prod_expire = reader.GetDateTime(5);
+
+
+                            ProductShowModel dto = new ProductShowModel()
+                            {
+                                Prod_code = prod_code,
+                                Prod_name = prod_name,
+                                Category_name = category_name,
+                                Prod_price = prod_price,
+                                Imp_dept_count = imp_dept_count,
+                                Prod_expire = prod_expire
+                            };
+
+                            list.Add(dto);
+
+                        }// while
+
+                    } //using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+            Console.WriteLine("@@ GetProductsByDept");
+            return list;
+        }//GetProductsByDept
+
+
 
         public List<CategoryModel> GetCategoryModels()
         {

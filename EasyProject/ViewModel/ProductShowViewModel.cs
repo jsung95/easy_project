@@ -14,7 +14,16 @@ namespace EasyProject.ViewModel
         ProductDao product_dao = new ProductDao();
 
         //재고 목록 조회해서 담을 옵저버블컬렉션 리스트 프로퍼티
-        public ObservableCollection<ProductShowModel> Products { get; set; }
+        private ObservableCollection<ProductShowModel> products;
+        public ObservableCollection<ProductShowModel> Products
+        {
+            get { return products; }
+            set
+            {
+                products = value;
+                OnPropertyChanged("Products");
+            }
+        }
 
         //부서 목록 콤보박스, 부서 리스트 출력
         public ObservableCollection<DeptModel> Depts { get; set; }
@@ -26,7 +35,7 @@ namespace EasyProject.ViewModel
         {
             Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts());
 
-            Products = new ObservableCollection<ProductShowModel>(product_dao.GetProducts(SelectedDept));
+            Products = new ObservableCollection<ProductShowModel>(product_dao.GetProducts());
         }
 
 
@@ -37,15 +46,17 @@ namespace EasyProject.ViewModel
             {
                 if (command == null)
                 {
-                    command = new ActionCommand(DoSomething);
+                    command = new ActionCommand(GetProductsByDept);
                 }
                 return command;
             }//get
         }
 
-        public void DoSomething()
+        public void GetProductsByDept()
         {
 
+
+            Products = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
         }
 
     }//class
