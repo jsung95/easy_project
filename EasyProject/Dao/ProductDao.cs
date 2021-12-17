@@ -31,12 +31,13 @@ namespace EasyProject.Dao
                                           "ON P.prod_id = I.prod_id " +
                                           "INNER JOIN CATEGORY C " +
                                           "ON P.category_id = C.category_id " +
-                                          "RIGHT OUTER JOIN DEPT D " +
+                                          "INNER JOIN DEPT D " +
                                           "ON I.dept_id = D.dept_id " +
-                                          "WHERE D.dept_statud != '폐지' " +
-                                          "AND D.dept_name = :dept_name";
+                                          "WHERE D.dept_status != '폐지' ";
+                        /*+
+                        "AND D.dept_name = :dept_name";*/
 
-                        cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
+                        //cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
@@ -46,9 +47,8 @@ namespace EasyProject.Dao
                             string prod_name = reader.GetString(1);
                             string category_name = reader.GetString(2);
                             int? prod_price = reader.GetInt32(3);
-                            int? prod_total = reader.GetInt32(4);
-                            int? imp_dept_count = reader.GetInt32(5);
-                            DateTime prod_expire = reader.GetDateTime(6);
+                            int? imp_dept_count = reader.GetInt32(4);
+                            DateTime prod_expire = reader.GetDateTime(5);
 
 
                             ProductShowModel dto = new ProductShowModel()
@@ -57,7 +57,6 @@ namespace EasyProject.Dao
                                 Prod_name = prod_name,
                                 Category_name = category_name,
                                 Prod_price = prod_price,
-                                Prod_total = prod_total,
                                 Imp_dept_count = imp_dept_count,
                                 Prod_expire = prod_expire
                             };
@@ -160,10 +159,10 @@ namespace EasyProject.Dao
                     }//using(cmd)
 
                 }//using(conn)
-                
+
 
             }//try
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }//catch
@@ -224,16 +223,16 @@ namespace EasyProject.Dao
 
                 using (conn)
                 {
-                    conn.Open ();
+                    conn.Open();
 
                     using (cmd)
                     {
-                        cmd.Connection= conn;
+                        cmd.Connection = conn;
 
                         cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_expire, P.prod_price, I.prod_in_count, N.nurse_name, I.prod_in_date, I.prod_in_from, I.prod_in_to, I.prod_in_type, D.dept_name " +
                                           "FROM PRODUCT_IN I " +
                                           "INNER JOIN PRODUCT P " +
-                                          "ON I.prod_id = P.prod_id "  +
+                                          "ON I.prod_id = P.prod_id " +
                                           "INNER JOIN CATEGORY C " +
                                           "ON P.category_id = C.category_id " +
                                           "LEFT OUTER JOIN NURSE N " +
@@ -273,7 +272,7 @@ namespace EasyProject.Dao
                                 Prod_in_type = prod_in_type,
                                 Dept_name = dept_name
                             };
-                            
+
                             list.Add(dto);
 
                         }//while
@@ -283,7 +282,7 @@ namespace EasyProject.Dao
                 }//using(conn)
 
             }//try
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }//catch
