@@ -35,6 +35,8 @@ namespace EasyProject.Model
         //NURSE
         public string Nurse_name { get; set; }
 
+        //DEPT
+        public string Dept_name { get; set; }
 
     }//class
 

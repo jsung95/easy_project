@@ -19,12 +19,13 @@ namespace EasyProject.ViewModel
         public ObservableCollection<ProductInOutModel> Product_out { get; set; }
 
 
+
+
         public ProductInOutViewModel()
         {
-/*            List<ProductInOutModel> in_list = dao.GetProductIn();
-            List<ProductInOutModel> out_list = dao.GetProductIn();
-            Product_in = new ObservableCollection<ProductInOutModel>(in_list);
-            Product_out = new ObservableCollection<ProductInOutModel>(out_list);*/
+            Product_in = new ObservableCollection<ProductInOutModel>(dao.GetProductIn());
+            Product_out = new ObservableCollection<ProductInOutModel>(dao.GetProductOut());
+
         }//Constructor
 
 
@@ -47,6 +48,7 @@ namespace EasyProject.ViewModel
             
 
         }// 
+
 
     }//class
 
