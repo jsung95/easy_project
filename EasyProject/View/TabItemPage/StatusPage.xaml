@@ -6,11 +6,13 @@
       xmlns:local="clr-namespace:EasyProject.View.TabItemPage"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:wookoa="clr-namespace:System;assembly=mscorlib"
-      xmlns:vm ="clr-namespace:EasyProject.ViewModel"
+      xmlns:vm ="clr-namespace:EasyProject.ViewModel" 
       mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800"
       Title="StatusPage">
-    <Page.Resources>
-        <vm:ProductShowViewModel x:Key="vm"/>
+    <Page.DataContext>
+        <vm:SignupViewModel/>
+    </Page.DataContext>
+    <Page.Resources>        
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="LightGray"/>
             <Setter Property="FontSize" Value="12"/>
@@ -56,27 +58,17 @@
                     <Label Content="부서명" Foreground="#4472C4" Grid.Column="0" FontSize="12" 
                        FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10"/>
-                    <StackPanel Grid.Column="1" >
-                        <ComboBox DataContext="{Binding Source={StaticResource vm}}"
-                        x:Name="Part_comboBox" HorizontalAlignment="Left" Margin="10" 
-                        VerticalAlignment="Top" Width="100">
-                            <!-- [ 추가하기 ] ItemsSource="{Binding Path=Students}"
-                  SelectedItem="{Binding Path=SelectedStudent}"-->
-                            <ComboBox.Resources>
-                                <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
-                            </ComboBox.Resources>
-                            
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Dept_name}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </StackPanel>
                     
-
+                    <ComboBox x:Name="deptName_ComboBox1" Grid.Column="1" HorizontalContentAlignment="Left" 
+                       ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Dept_name}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>             
                     <Border Grid.Column="5" BorderBrush="#BEBEBE" BorderThickness="1" Width="95" Height="22" VerticalAlignment="Center" HorizontalAlignment="Center" >
                         <TextBlock Grid.Column="5" VerticalAlignment="Top" FontSize="10"
                                 Text="{Binding Source={x:Static wookoa:DateTime.Now}, StringFormat='{}{0:yy-MM-dd HH:mm:ss}', Mode=OneWay}" 
@@ -105,11 +97,11 @@
                                 <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="55" IsReadOnly="True" />
                                 <DataGridTextColumn Binding="{Binding ProductName}" Header="제품명" Width="55" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Category}" Header="품목/종류" Width="55" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Total}" Header="총 수량" Width="55" IsReadOnly="True"/>
-                                <DataGridTextColumn  Binding="{Binding Price}"  Header="제품가격" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Total}" Header="가격" Width="55" IsReadOnly="True"/>
+                                <DataGridTextColumn  Binding="{Binding Price}"  Header="수량" Width="55"  IsReadOnly="True"/>
                                 <DataGridTextColumn  Binding="{Binding ExpirationDate}"  Header="유통기한" Width="55"  IsReadOnly="True"/>
                                 <DataGridTextColumn  Binding="{Binding State}"  Header="상태" Width="55"  IsReadOnly="True"/>
-                                <DataGridTextColumn  Binding="{Binding Application}"  Header="신청" Width="55"  IsReadOnly="True"/>
+                                <DataGridTextColumn  Binding="{Binding Application}"  Header="" Width="55"  IsReadOnly="True"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <Grid Grid.Row="1">
@@ -158,9 +150,7 @@
                                         <TextBlock Text="Gained" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="14" Margin="5 0 10 0" />
                                     </StackPanel>
                                 </Grid>
-
                             </StackPanel>
-
                         </materialDesign:Card>
                     </Grid>
                 </Grid>

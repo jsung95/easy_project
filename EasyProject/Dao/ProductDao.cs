@@ -9,7 +9,7 @@ namespace EasyProject.Dao
     public class ProductDao : CommonDBConn, IProductDao //DB연결 Class 및 인터페이스 상속
     {
 
-        public List<ProductShowModel> GetProducts()
+        public List<ProductShowModel> GetProducts(DeptModel dept_dto)
         {
             List<ProductShowModel> list = new List<ProductShowModel>();
             try
@@ -35,6 +35,8 @@ namespace EasyProject.Dao
                                           "ON I.dept_id = D.dept_id " +
                                           "WHERE D.dept_statud != '폐지' " +
                                           "AND D.dept_name = :dept_name";
+
+                        cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
@@ -155,7 +157,6 @@ namespace EasyProject.Dao
 
 
                         cmd.ExecuteNonQuery();
-                        Console.WriteLine("ok1");
                     }//using(cmd)
 
                 }//using(conn)
@@ -198,7 +199,6 @@ namespace EasyProject.Dao
                         cmd.Parameters.Add(new OracleParameter("in_type", "발주"));
 
                         cmd.ExecuteNonQuery();
-                        Console.WriteLine("ok2");
                     }//using(cmd)
 
                 }//using(conn)
@@ -309,7 +309,7 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
 
-                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_expire, P.prod_price, O.prod_out_count, N.nurse_name, O.prod_out_date, O.prod_out_from, O.prod_out_to, O.prod_out_type, D.dept_name " +
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, O.prod_out_count, O.prod_out_date, O.prod_out_type, D.dept_name, N.nurse_name " +
                                           "FROM PRODUCT_OUT O " +
                                           "INNER JOIN PRODUCT P " +
                                           "ON O.prod_id = P.prod_id " +
@@ -327,36 +327,27 @@ namespace EasyProject.Dao
                             string prod_code = reader.GetString(0);
                             string prod_name = reader.GetString(1);
                             string category_name = reader.GetString(2);
-                            DateTime prod_expire = reader.GetDateTime(3);
-                            int? prod_price = reader.GetInt32(4);
-                            int? prod_out_count = reader.GetInt32(5);
-                            string nurse_name = reader.GetString(6);
-                            DateTime prod_out_date = reader.GetDateTime(7);
-                            string prod_out_content = reader.GetString(8);
-                            string prod_out_from = reader.GetString(9);
-                            string prod_out_to = reader.GetString(10);
-                            string prod_out_type = reader.GetString(11);
-                            string dept_name = reader.GetString(12);
+                            int? prod_price = reader.GetInt32(3);
+                            int? prod_out_count = reader.GetInt32(4);
+                            DateTime prod_out_date = reader.GetDateTime(5);
+                            string prod_out_type = reader.GetString(6);
+                            string dept_name = reader.GetString(7);
+                            string nurse_name = reader.GetString(8);
 
                             ProductInOutModel dto = new ProductInOutModel()
                             {
                                 Prod_code = prod_code,
                                 Prod_name = prod_name,
                                 Category_name = category_name,
-                                Prod_expire = prod_expire,
                                 Prod_price = prod_price,
                                 Prod_out_count = prod_out_count,
-                                Nurse_name = nurse_name,
                                 Prod_out_date = prod_out_date,
-                                Prod_out_content = prod_out_content,
-                                Prod_in_from = prod_out_from,
-                                Prod_in_to = prod_out_to,
-                                Prod_in_type = prod_out_type,
-                                Dept_name = dept_name
+                                Prod_out_type = prod_out_type,
+                                Dept_name = dept_name,
+                                Nurse_name = nurse_name
                             };
 
                             list.Add(dto);
-
                         }//while
 
                     }//using(cmd)

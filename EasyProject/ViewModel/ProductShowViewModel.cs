@@ -19,14 +19,16 @@ namespace EasyProject.ViewModel
         //부서 목록 콤보박스, 부서 리스트 출력
         public ObservableCollection<DeptModel> Depts { get; set; }
 
+        //선택한 부서를 담을 프로퍼티
+        public DeptModel SelectedDept { get; set; }
 
         public ProductShowViewModel()
         {
-            List<DeptModel> dept_list = dept_dao.GetDepts();
-            Depts = new ObservableCollection<DeptModel>(dept_list);
+            //List<DeptModel> dept_list = dept_dao.GetDepts();
+            //Depts = new ObservableCollection<DeptModel>(dept_list);
 
-            List<ProductShowModel> product_list = product_dao.GetProducts();
-            Products = new ObservableCollection<ProductShowModel>(product_list);
+            //List<ProductShowModel> product_list = product_dao.GetProducts(SelectedDept);
+            //Products = new ObservableCollection<ProductShowModel>(product_list);
         }
 
 
