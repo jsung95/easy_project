@@ -23,6 +23,7 @@ namespace EasyProject
         public TabPage()
         {
             InitializeComponent();
+            userNameTxtBox.Text = App.nurse_dto.Nurse_name;
         }
         /*private void StatusBtn_Click(object sender, RoutedEventArgs e)
         {

@@ -43,18 +43,18 @@
                          Text="{Binding Nurse.Nurse_no}"/>
                 <PasswordBox x:Name="password_PwBox" HorizontalAlignment="Stretch" Margin="10" Grid.Row="1" VerticalAlignment="Center" 
                              HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="25" Height="40" Width="300" Grid.Column="1"
-                             w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding Nurse.Nurse_pw, Mode=TwoWay}"/>
+                             w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding Password, Mode=TwoWay}" Cursor="IBeam"/>
                 
             </Grid>
 
             <Grid Grid.Row="2" >
-                <Button x:Name="loginBtn" Content="로그인" Background="#4472C4" BorderThickness="0" FontSize="20" 
+                    <Button x:Name="loginBtn" Command="{Binding Command}" Content="로그인" Background="#4472C4" BorderThickness="0" FontSize="20" 
                    Foreground="White" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Height="40" Margin="10" Width="300" Cursor="Hand">
-                    <i:Interaction.Triggers>
+                    <!--<i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding Command}" />
                         </i:EventTrigger>
-                    </i:Interaction.Triggers>
+                    </i:Interaction.Triggers>-->
                 </Button>
             </Grid>
 
