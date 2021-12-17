@@ -2,8 +2,9 @@
 using EasyProject.Dao;
 using System;
 using Microsoft.Expression.Interactivity.Core;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,6 +55,8 @@ namespace EasyProject.ViewModel
 
         public void Login()
         {
+
+            
             
             NurseModel result = dao.LoginUserInfo(Nurse);
             if (result.Nurse_no != null)
@@ -81,6 +84,20 @@ namespace EasyProject.ViewModel
                 Console.WriteLine("  DEPT ID : {0}", App.nurse_dto.Dept_id);
             }
         }
+
+
+
+        private string password;
+
+        public string Password 
+        { 
+            get => password;
+            set
+            { 
+                password = value;
+                nurse.Nurse_pw = value;
+            }
+         }
 
     }//class
 
