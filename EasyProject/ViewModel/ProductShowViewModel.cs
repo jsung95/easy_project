@@ -24,11 +24,11 @@ namespace EasyProject.ViewModel
 
         public ProductShowViewModel()
         {
-            /*List<DeptModel> dept_list = dept_dao.GetDepts();
-            Depts = new ObservableCollection<DeptModel>(dept_list);
+            //List<DeptModel> dept_list = dept_dao.GetDepts();
+            //Depts = new ObservableCollection<DeptModel>(dept_list);
 
-            List<ProductShowModel> product_list = product_dao.GetProducts(SelectedDept);
-            Products = new ObservableCollection<ProductShowModel>(product_list);*/
+            //List<ProductShowModel> product_list = product_dao.GetProducts(SelectedDept);
+            //Products = new ObservableCollection<ProductShowModel>(product_list);
         }
 
 
