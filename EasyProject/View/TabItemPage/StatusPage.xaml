@@ -61,6 +61,10 @@
                     
                     <ComboBox x:Name="deptName_ComboBox1" Grid.Column="1" HorizontalContentAlignment="Left" 
                        ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept}">
+                        <ComboBox.Resources>
+                            <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+                        </ComboBox.Resources>
+                        
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
