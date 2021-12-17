@@ -124,6 +124,11 @@ public partial class StatusPage : Page {
         {
 
         }
+
+        private void resetBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         //private void Navigate(int mode)
         //{
         //    int count;
