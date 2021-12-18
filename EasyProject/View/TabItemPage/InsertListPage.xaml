@@ -7,13 +7,12 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:vm="clr-namespace:EasyProject.ViewModel"      
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
       Title="InsertListPage">
     <Page.DataContext>
         <vm:ProductViewModel/>
     </Page.DataContext>
 
-    <Grid>
+    <Grid Height="450">
         <materialDesign:Card Grid.Column="0" Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
             <ListView Grid.Row="0" Name="InsertListView" FontSize="15" Margin="3" ItemsSource="{Binding Add_list}">
                 <ListView.View>

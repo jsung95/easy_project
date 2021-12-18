@@ -8,7 +8,7 @@
       xmlns:wookoa="clr-namespace:System;assembly=mscorlib"
       xmlns:vm ="clr-namespace:EasyProject.ViewModel" 
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-      mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800"
+      mc:Ignorable="d"
       Title="StatusPage">
     <Page.DataContext>
         <vm:ProductShowViewModel/>
@@ -26,7 +26,7 @@
             <Setter Property="Background" Value="White"/>
             <Setter Property="VerticalGridLinesBrush" Value="#4472C4"/>
             <Setter Property="HorizontalGridLinesBrush" Value="#4472C4"/>
-            <Setter Property="RowHeight" Value="30"/>
+            <Setter Property="RowHeight" Value="32"/>
             <Setter Property="RowHeaderWidth" Value="0"/>
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -118,26 +118,31 @@
                             <RowDefinition Height="0.2*"/>
                         </Grid.RowDefinitions>
                         <DataGrid x:Name="dataGrid" 
-                            HorizontalAlignment="Left" Margin="10"  
+                            HorizontalAlignment="Left" Margin="10 0"
                             VerticalAlignment="Top" AutoGenerateColumns="False" 
                             CanUserSortColumns="True" IsReadOnly="True" ColumnWidth="*"
                             ItemsSource="{Binding Products}">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="55" IsReadOnly="True" />
-                                <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="55" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="55" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Imp_dept_count}" Header="총 수량" Width="55" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Prod_price}"  Header="제품가격" Width="55"  IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Prod_expire}"  Header="유통기한" Width="55"  IsReadOnly="True"/>
-                                <DataGridTextColumn Header="상태" Width="55"  IsReadOnly="True"/>
-                                <!--<DataGridTextColumn Header="신청" Width="55"  IsReadOnly="True"/>-->
-                                
-                                <DataGridTemplateColumn Header="신청">
+                                <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="*" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="1.5*" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Imp_dept_count}" Header="총 수량" Width="1.5*" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_price}"  Header="제품가격" Width="1.5*"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_expire}"  Header="유통기한" Width="3*"  IsReadOnly="True"/>
+
+                                <DataGridTemplateColumn Header="상태" Width="*" IsReadOnly="True">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            
-                                            <Button x:Name="goDialog_Btn" Grid.Column="3" Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White"
-                            VerticalAlignment="Center" Height="45"  Width="45" HorizontalAlignment="Left" Click="goDialog_Btn_Click">
+                                            <materialDesign:Badged Background="red"></materialDesign:Badged>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Header="신청" Width="*" IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button x:Name="goDialog_Btn" Grid.Column="3" Foreground="#4472C4"  FontSize="12" FontWeight="Bold" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand"
+                            VerticalAlignment="Center" Height="45"  Width="45" HorizontalAlignment="Center" Click="goDialog_Btn_Click">
                                                 <materialDesign:PackIcon  Kind="Input" VerticalAlignment="Center" HorizontalAlignment="Center" Height="auto" Width="auto" />
                                             </Button>
                                         </DataTemplate>
