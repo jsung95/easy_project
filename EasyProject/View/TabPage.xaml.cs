@@ -39,5 +39,31 @@ namespace EasyProject
             Window.GetWindow(this).Close();
         }
 
+        private void TabButtonClick(object sender, RoutedEventArgs e)       //버튼 창닫기
+        {
+            int index = int.Parse(((Button)e.Source).Uid);
+
+            GridCursor.Margin = new Thickness((150 * index), 0, 0, 0);
+
+            switch (index)
+            {
+                case 0:
+                    TabFrame.Source = new Uri("TabItemPage/StatusPage.xaml", UriKind.Relative);
+                    break;
+                case 1:
+                    TabFrame.Source = new Uri("TabItemPage/InsertPage.xaml", UriKind.Relative);
+                    break;
+                case 2:
+                    TabFrame.Source = new Uri("TabItemPage/IncomingOutgoingPage.xaml", UriKind.Relative);
+                    break;
+                case 3:
+                    TabFrame.Source = new Uri("TabItemPage/OrderPage.xaml", UriKind.Relative);
+                    break;
+                case 4:
+                    TabFrame.Source = new Uri("TabItemPage/AuthorityPage.xaml", UriKind.Relative);
+                    break;
+            }
+        }
+
     }
 }

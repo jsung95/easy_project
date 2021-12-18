@@ -61,5 +61,20 @@ namespace EasyProject
             FrameworkElement rootElement = this.Content as FrameworkElement;
             rootElement.LayoutTransform = scale;
         }
+
+        private void btn_close(object sender, RoutedEventArgs e)       //버튼 창닫기
+        {
+            Window.GetWindow(this).Close();
+        }
+
+        private void btn_minimize(object sender, RoutedEventArgs e)       //버튼 창닫기
+        {
+            Window.GetWindow(this).Close();
+        }
+
+        private void btn_extend(object sender, RoutedEventArgs e)       //버튼 창닫기
+        {
+            Window.GetWindow(this).Close();
+        }
     }
 }

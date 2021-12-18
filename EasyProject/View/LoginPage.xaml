@@ -19,7 +19,7 @@
         <vm:LoginViewModel/>
     </Page.DataContext>
 
-    <Grid  Background="LightGray"  >
+    <Grid  Background="White"  >
         <materialDesign:Card Height="400" Width="450" Margin ="10" UniformCornerRadius="20" Background="White">
         <Grid Height="400" Width="450"  >
             <Grid.RowDefinitions>

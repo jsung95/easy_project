@@ -34,9 +34,9 @@
             <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
         </Style>
     </Page.Resources>
-    <Grid Background="LightGray">
-        <materialDesign:Card  Height="450" Width="800" UniformCornerRadius="20" Background="White">
-            <Grid Height="400" Width="750" Background="White" >
+    <Grid Background="White">
+        <materialDesign:Card  Height="450" Width="1200" UniformCornerRadius="20" Background="White">
+            <Grid Height="400" Width="1100" Background="White" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.2*"/>
                     <RowDefinition Height="0.3*"/>
@@ -50,9 +50,9 @@
                 </Grid>
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="68*"/>
-                        <ColumnDefinition Width="120*"/>
-                        <ColumnDefinition Width="300*"/>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="100*"/>
+                        <ColumnDefinition Width="320*"/>
                         <ColumnDefinition Width="60*"/>
                         <ColumnDefinition Width="120*"/>
                     </Grid.ColumnDefinitions>
@@ -60,7 +60,7 @@
                        FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10"/>
                     
-                    <ComboBox x:Name="deptName_ComboBox1" Grid.Column="1" HorizontalContentAlignment="Left" 
+                    <ComboBox x:Name="deptName_ComboBox1" Height="30" Grid.Column="1" HorizontalContentAlignment="Left" 
                        ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept}">
                         <ComboBox.Resources>
                             <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
@@ -82,8 +82,8 @@
                     </ComboBox>
                     <Grid Grid.Column="2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.7*"/>
-                            <ColumnDefinition Width="0.3*"/>
+                            <ColumnDefinition Width="7*"/>
+                            <ColumnDefinition Width="3*"/>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
                             <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요" Grid.Column="5" HorizontalContentAlignment="Left" 

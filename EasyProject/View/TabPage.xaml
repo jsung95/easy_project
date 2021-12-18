@@ -9,80 +9,30 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       d:DesignHeight="600" d:DesignWidth="1080"
       Title="TabPage">
-    <Grid>
-        <Grid Height="60" VerticalAlignment="Top" Background="#FF9C27B0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.2*"></ColumnDefinition>
-                <ColumnDefinition Width="0.5*"></ColumnDefinition>
-                <ColumnDefinition Width="0.08*"></ColumnDefinition>
-                <ColumnDefinition Width="0.08*"></ColumnDefinition>
-                <ColumnDefinition Width="0.08*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+    <StackPanel Orientation="Vertical" Background="white">
+        <Grid Height="40">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                <Button Uid="0" Height="40" Width="150" Click="TabButtonClick" ToolTip="Follow me on Twitter" Foreground="#ff2196f3" Content="재고현황" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand"/>
+                <Button Uid="1" Height="40" Width="150" Click="TabButtonClick" ToolTip="Follow me on Twitter" Foreground="#ff2196f3" Content="재고입력" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" />
+                <Button Uid="2" Height="40" Width="150" Click="TabButtonClick" ToolTip="Follow me on Twitter" Foreground="#ff2196f3" Content="입출고현황" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" />
+                <Button Uid="3" Height="40" Width="150" Click="TabButtonClick" ToolTip="Follow me on Twitter" Foreground="#ff2196f3" Content="발주신청" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" />
+                <Button Uid="4" Height="40" Width="150" Click="TabButtonClick" ToolTip="Follow me on Twitter" Foreground="#ff2196f3" Content="권한부여" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" />
+            </StackPanel>
 
-            <TextBlock Text="재고관리 프로그램"  Grid.Column="0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" FontFamily="Champagne &amp; Limousines" Width="191" Margin="10,0,0,0"/>
-            <Button HorizontalAlignment="Right" Grid.Column="2" VerticalAlignment="Center"  BorderBrush="{x:Null}">
-                <materialDesign:PackIcon Kind="BellAlertOutline"/>
-            </Button>
-            <Grid Grid.Column="3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
-                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Button HorizontalAlignment="Right" Grid.Column="0" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}">
-                    <materialDesign:PackIcon Kind="AccountOutline"/>
-                </Button>
-                <TextBlock x:Name="userNameTxtBox" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="White"></TextBlock>
+            <StackPanel Orientation="Horizontal" Margin="10 0" VerticalAlignment="Center" HorizontalAlignment="Right">
+                <TextBlock x:Name="userNameTxtBox" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#ff2196f3"></TextBlock>
+                <TextBlock x:Name="userNamePlusTxtBlock" Text="님" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#ff2196f3"></TextBlock>
+            </StackPanel>
             
-            </Grid>
+            <Grid x:Name="GridCursor" Width="150" Height="5" Background="#ff2196f3" VerticalAlignment="Bottom" HorizontalAlignment="Left"></Grid>
 
-
-            <Button Click="btn_close" HorizontalAlignment="Center" Grid.Column="4" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}">
-                <materialDesign:PackIcon Kind="Power"/>
-            </Button>
+            
         </Grid>
-        <Grid Margin="0 60 0 0">
-            <dragablz:TabablzControl>
-                <dragablz:TabablzControl.InterTabController>
-                    <dragablz:InterTabController/>
-                </dragablz:TabablzControl.InterTabController>
-                <TabItem Header="재고현황" Margin="10,0,0,0">
-                    <Grid Background="#FFE5E5E5">
-                        <Frame NavigationUIVisibility="Hidden" Source="/View/TabItemPage/StatusPage.xaml"/>
-                    </Grid>
-                </TabItem>
-                <TabItem Header="재고입력">
-                    <Grid Background="#FFE5E5E5">
-                        <Frame Source="TabItemPage/InsertPage.xaml"/>
-                    </Grid>
-                </TabItem>
-                <TabItem Header="입출고현황">
-                    <Grid Background="#FFE5E5E5">
-                        <Grid Background="#FFE5E5E5">
-                            <Frame Source="TabItemPage/IncomingOutgoingPage.xaml"/>
-                        </Grid>
-                    </Grid>
-                </TabItem>
-                <TabItem Header="발주신청">
-                    <Grid Background="#FFE5E5E5">
-                        <Frame Source="TabItemPage/OrderPage.xaml"/>
-                    </Grid>
-                </TabItem>
+        <Grid x:Name="TabBorder" Width="1300" Height="1" Background="LightGray" VerticalAlignment="Bottom" HorizontalAlignment="Left"></Grid>
 
-                <TabItem Header="권한부여">
-                    <Grid Background="#FFE5E5E5">
-                        <Frame Source="TabItemPage/AuthorityPage.xaml"/>
-                    </Grid>
-                </TabItem>
-
-                <!--<TabItem>
-                    <TabItem.Header>
-                        <materialDesign:PackIcon Kind="Github" Foreground="{DynamicResource PrimaryHueLightBrush}"/>
-                    </TabItem.Header>
-                    <TextBlock Text="github.com/Abel13/TabMenu2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </TabItem>-->
-            </dragablz:TabablzControl>
+        <Grid Height="550">
+            <Frame x:Name="TabFrame" NavigationUIVisibility="Hidden" Source="/View/TabItemPage/StatusPage.xaml"/>
         </Grid>
-    </Grid>
-
-
+    </StackPanel>
+    
 </Page>
