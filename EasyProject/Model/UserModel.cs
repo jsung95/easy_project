@@ -16,6 +16,8 @@ namespace EasyProject.Model
         public string Dept_name { get; set; }
         public string Dept_phone { get; set; }
         public string Dept_status { get; set; }
+        public bool? IsChecked { get; set; }
+        
 
     }//class
 

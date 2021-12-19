@@ -8,95 +8,70 @@ using Microsoft.Expression.Interactivity.Core;
 
 namespace EasyProject.ViewModel
 {
-    /*public class UserAuthViewModel : Notifier
+    public class UserAuthViewModel : Notifier
     {
         UsersDao dao = new UsersDao();
-
+        // 콤보박스의 권한 리스트
+        public string[] AuthList { get; set; }
         //검색 텍스트박스로 부터 입력받은 데이터를 담을 프로퍼티
-        private string user_name;
-        public string User_name
-        {
-            get { return user_name; }
-            set 
-            { 
-                user_name = value;
-                OnPropertyChanged("User_name");
-            }
-        }
+        public string Keyword1 { get; set; }
+        public string Keyword2 { get; set; }
 
-        //권한별로 나온 사용자 정보를 담을 옵저버블컬렉션 리스트 프로퍼티
-        public ObservableCollection<UserModel> Users_before { get; set; }
+        // 콤보박스에서 선택한 권한을 담을 프로퍼티
+        public string SelectedAuth1 { get; set; }
+        public string SelectedAuth2 { get; set; }
 
-        //체크박스 체크 시에 권한변경할 사용자 정보를 담을 옵저버블컬렉션 리스트 프로퍼티
-        public ObservableCollection<UserModel> Users_selected { get; set; }
-
-        //권한변경 '후' 사용자 정보를 담을 옵저버블컬렉션 리스트 프로퍼티
-        public ObservableCollection<UserModel> Users_after { get; set; }
-
-        //콤보박스에서 권한 변경 '전', 선택한 권한 데이터를 담을 프로퍼티
-        private string auth_before;
-        public string Auth_before
-        {
-            get { return auth_before; }
-            set 
-            {
-                auth_before = value;
-                OnPropertyChanged("Auth_before");
-            }
-        }
-
-        //콤보박스에서 권한 변경 '후', 선택한 권한 데이터를 담을 프로퍼티
-        private string auth_after;
-        public string Auth_after
-        {
-            get { return auth_after; }
-            set
-            {
-                auth_before = value;
-                OnPropertyChanged("Auth_after");
-            }
-        }
+        // 사용자 검색 시 나온 사용자 정보를 담을 옵저버블컬렉션 프로퍼티
+        public ObservableCollection<UserModel> Users_searched1 { get; set; }
+        public ObservableCollection<UserModel> Users_searched2 { get; set; }
 
         public UserAuthViewModel()
         {
-            //List<UserModel> list = dao.GetUserInfo(Auth_before);
-            //Users_before = new ObservableCollection<UserModel>(list);
+            AuthList = new[] { "NORMAL", "ADMIN", "SUPER"};
+            Users_searched1 = new ObservableCollection<UserModel>();
+            Users_searched2 = new ObservableCollection<UserModel>();
 
         }//Constructor
 
-
-
-
-
-
         private ActionCommand command;
-        public ICommand Command
+        public ICommand Search1
         {
             get
             {
                 if (command == null)
                 {
-                    command = new ActionCommand(DoSomething);
+                    command = new ActionCommand(DoSearch1);
                 }
                 return command;
             }//get
 
         }//Command
 
-
-        public void DoSomething()
+        public ICommand Search2
         {
-            //권한별 유저정보 조회
-            //dao.GetUserInfo(Auth_before);
+            get
+            {
+                if (command == null)
+                {
+                    command = new ActionCommand(DoSearch2);
+                }
+                return command;
+            }//get
 
-            //유저권한변경
-            //dao.UserAuthChange(Auth_after, Users_selected);
-
-            //유저정보검색
-            //dao.SearchUser(User_name);
+        }//Command
+        public void DoSearch1() // 좌측 리스트 검색
+        {
+            Console.WriteLine("DoSearch1()");
+            List<UserModel> list = dao.SearchUser(SelectedAuth1, Keyword1);
+            Users_searched1 = new ObservableCollection<UserModel>(list);
+        
         }
 
-
-    }//class*/
+        public void DoSearch2() // 우측 리스트 검색
+        {
+            List<UserModel> list = dao.SearchUser(SelectedAuth2, Keyword2);
+            Users_searched2 = new ObservableCollection<UserModel>(list);
+        }
+    }//class
 
 }//namespace

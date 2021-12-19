@@ -15,7 +15,7 @@ namespace EasyProject.Dao
         void UserAuthChange(string auth, ObservableCollection<UserModel> no);
 
         //사용자 검색
-        List<UserModel> SearchUser(string name);
+        List<UserModel> SearchUser(string auth, string name);
 
     }// interface
 

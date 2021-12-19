@@ -119,8 +119,9 @@ namespace EasyProject.Dao
 
 
 
-        public List<UserModel> SearchUser(string name)
+        public List<UserModel> SearchUser(string auth, string keyword)
         {
+            Console.WriteLine($"SearchUser({auth}, {keyword})");
             List<UserModel> list = new List<UserModel> ();
 
             try
@@ -136,13 +137,20 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection= conn;
 
-                        cmd.CommandText = "SELECT N.nurse_no, N.nurse_name, N.nurse_auth, D.dept_name " +
-                                          "FROM NURSE N" +
-                                          "LEFT OUTER JOIN DEPT D" +
-                                          "ON N.dept_id = D.dept_id" +
-                                          "WHERE N.nurse_name LIKE '%:name%'";
+                        cmd.CommandText = "SELECT N.nurse_no, N.nurse_name, N.nurse_auth, D.dept_name " +   
+                                          "FROM NURSE N " +
+                                          "LEFT OUTER JOIN DEPT D " +
+                                          "ON N.dept_id = D.dept_id " +
+                                          "WHERE N.nurse_name LIKE '%'|| :keyword1 ||'%' " +
+                                          "OR d.dept_name LIKE '%'|| :keyword2 ||'%' " +
+                                          "OR N.nurse_no LIKE '%'|| :keyword3 ||'%' " +
+                                          "AND N.nurse_auth = :auth";
 
-                        cmd.Parameters.Add(new OracleParameter("name", name));
+
+                        cmd.Parameters.Add(new OracleParameter("keyword1", keyword));
+                        cmd.Parameters.Add(new OracleParameter("keyword2", keyword));
+                        cmd.Parameters.Add(new OracleParameter("keyword3", keyword));
+                        cmd.Parameters.Add(new OracleParameter("auth", auth));
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
@@ -175,7 +183,7 @@ namespace EasyProject.Dao
             {
                 Console.WriteLine(e.Message);
             }//catch
-
+            Console.WriteLine(list.Count);
             return list;
 
         }//SearchUser()

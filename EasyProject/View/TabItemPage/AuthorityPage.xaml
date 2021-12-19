@@ -6,10 +6,13 @@
       xmlns:local="clr-namespace:EasyProject.View"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="EasyProject.View.AuthorityPage"
       xmlns:y="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+      xmlns:vm="clr-namespace:EasyProject.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AuthorityPage">
-
+    <Page.DataContext>
+        <vm:UserAuthViewModel />
+    </Page.DataContext>
     <Page.Resources>
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="Template">
@@ -63,37 +66,35 @@
                 </Grid>
 
                 <Grid Grid.Row="1" Grid.Column="0">
-                    <ComboBox  HorizontalAlignment="Center" Background="#FF877B7B" VerticalAlignment="Center" Width="120" Grid.Column="0">
-                        <Button Content="Super" Background="#FFF5ECEC"/>
-                        <Button Content="Admin" Background="#FFF5ECEC"/>
-                        <Button Content="Normal" Background="#FFF5ECEC"/>
-                    </ComboBox>
+                    <ComboBox  HorizontalAlignment="Center" Background="#FF877B7B" VerticalAlignment="Center" Width="120" Grid.Column="0" SelectedItem="{Binding SelectedAuth1}" ItemsSource="{Binding AuthList}"/>
                 </Grid>
 
                 <Grid Grid.Row="1" Grid.Column="2">
-                    <ComboBox HorizontalAlignment="Center"  Background="#FF877B7B" VerticalAlignment="Center" Width="120">
-                        <Button Content="Super"  Background="#FFF5ECEC"/>
-                        <Button Content="Admin" Background="#FFF5ECEC"/>
-                        <Button Content="Normal" Background="#FFF5ECEC"/>
-                    </ComboBox>
+                    <ComboBox HorizontalAlignment="Center"  Background="#FF877B7B" VerticalAlignment="Center" Width="120" SelectedItem="{Binding SelectedAuth2}" ItemsSource="{Binding AuthList}"/>
                 </Grid>
 
 
                 <Grid Grid.Row="2" Grid.Column="0" >
-                    <TextBox Text="사원의 정보를 입력해주세요." FontSize="15" TextChanged="TextBox_TextChanged" Height="25"/>
-                    <Button FontSize="50" Height="25" Click="Button_Click_1" Width="40" HorizontalAlignment="Right"></Button>
+                    <TextBox Text="{Binding Keyword1}" FontSize="15" Height="25" />
+                    <Button FontSize="50" Height="25" Width="40" HorizontalAlignment="Right" Command="{Binding Search1}"></Button>
                 </Grid>
 
                 <Grid Grid.Row="2" Grid.Column="2">
-                    <TextBox Text="사원의 정보를 입력해주세요." FontSize="15" TextChanged="TextBox_TextChanged" Height="25"/>
-                    <Button FontSize="50" Height="25" Click="Button_Click_1" Width="40" HorizontalAlignment="Right"></Button>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="175*"/>
+                        <ColumnDefinition Width="17*"/>
+                        <ColumnDefinition Width="95*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Text="{Binding Keyword2}" FontSize="15" Height="25" Grid.ColumnSpan="3" Margin="0,14,0,15"/>
+                    <Button FontSize="50" Height="25" Width="40" HorizontalAlignment="Left" Command="{Binding Search2}" Grid.Column="2" Margin="55,14,0,15"></Button>
                 </Grid>
 
                 <Grid Grid.Row="3" Grid.Column="0">
-                    <DataGrid  x:Name="dataGrid1" AutoGenerateColumns="True" SelectionMode="Extended" 
+                    <DataGrid  x:Name="dataGrid1" AutoGenerateColumns="False" SelectionMode="Extended"
+                             ItemsSource="{Binding Users_searched1}"                           
                              ScrollViewer.CanContentScroll="True" 
                              ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                             ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" Loaded="dataGrid_Loaded" IsSynchronizedWithCurrentItem="False">
+                             ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" IsSynchronizedWithCurrentItem="False">
 
                         <DataGrid.Columns>
                             <!--체크박스 추가-->
@@ -101,7 +102,7 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
 
-                                        <CheckBox x:Name="check1" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="checked1">
+                                        <CheckBox x:Name="check1" HorizontalAlignment="Center" VerticalAlignment="Center">
 
                                             <CheckBox.Resources>
                                                 <!--체크전-->
@@ -117,9 +118,9 @@
 
 
                             <!--데이터 바인딩-->
-                            <DataGridTextColumn Header=" 이름"  Binding="{Binding Path=memberNum}" IsReadOnly="True" />
-                            <DataGridTextColumn Header=" ID" Binding="{Binding Path=memberName}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header=" 부서" Binding="{Binding Path=memberPhoneNum}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header=" 이름"  Binding="{Binding Nurse_name}" IsReadOnly="True" />
+                            <DataGridTextColumn Header=" ID" Binding="{Binding Nurse_no}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header=" 부서" Binding="{Binding Dept_name}" IsReadOnly="True"/>
 
                         </DataGrid.Columns>
                     </DataGrid>
@@ -142,7 +143,7 @@
 
                         <Label Grid.Column="1" Content="왼쪽으로 이동" Foreground="#4472C4" FontSize="17" HorizontalAlignment="Center" Height="28"  VerticalAlignment="Center" />
                         <Button x:Name="leftBtn" Foreground="white" Background="#FFE5E5E5" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"  
-                        VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Click="movelBtn_Click">
+                        VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="51" Cursor="Hand">
                             <materialDesign:PackIcon Grid.Row="0" Kind="ChevronLeftCircle" VerticalAlignment="Center" HorizontalAlignment="Center" Height="15" Width="26" />
                         </Button>
                     </Grid>
@@ -155,7 +156,7 @@
 
                         <Label Grid.Column="2" Content="오른쪽으로 이동" Foreground="#4472C4"   FontSize="17" HorizontalAlignment="Center" Height="28"  VerticalAlignment="Center"/>
                         <Button x:Name="rightBtn"   Foreground="white" Background="#FFE5E5E5" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"  
-                        VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Click="movelBtn_Click">
+                        VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="51" Cursor="Hand">
                             <materialDesign:PackIcon Grid.Row="0" Kind="ChevronLeftCircle" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="26" />
                         </Button>
                     </Grid>
@@ -171,10 +172,11 @@
 
                 <Grid Grid.Row="3" Grid.Column="2">
 
-                    <DataGrid  x:Name="dataGrid2" AutoGenerateColumns="True" SelectionMode="Extended" 
+                    <DataGrid  x:Name="dataGrid2" AutoGenerateColumns="false" SelectionMode="Extended"
+                             ItemsSource="{Binding Users_searched2}"  
                              ScrollViewer.CanContentScroll="True" 
                              ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                             ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" Loaded="dataGrid_Loaded2" IsSynchronizedWithCurrentItem="False" SelectionChanged="dataGrid1_SelectionChanged">
+                             ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" IsSynchronizedWithCurrentItem="False">
 
                         <DataGrid.Columns>
                             <!--체크박스 추가-->
@@ -182,7 +184,7 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
 
-                                        <CheckBox x:Name="check" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="checked2">
+                                        <CheckBox x:Name="check" HorizontalAlignment="Center" VerticalAlignment="Center">
 
                                             <CheckBox.Resources>
                                                 <!--체크전-->
@@ -198,9 +200,9 @@
 
 
                             <!--데이터 바인딩-->
-                            <DataGridTextColumn Header=" 이름"  Binding="{Binding Path=memberNum}" IsReadOnly="True" />
-                            <DataGridTextColumn Header=" ID" Binding="{Binding Path=memberName}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header=" 부서" Binding="{Binding Path=memberPhoneNum}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header=" 이름"  Binding="{Binding Nurse_name}" IsReadOnly="True" />
+                            <DataGridTextColumn Header=" ID" Binding="{Binding Nurse_no}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header=" 부서" Binding="{Binding Dept_name}" IsReadOnly="True"/>
 
                         </DataGrid.Columns>
                     </DataGrid>
