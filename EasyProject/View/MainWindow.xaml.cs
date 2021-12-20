@@ -22,12 +22,14 @@ namespace EasyProject
 
     public partial class MainWindow : Window
     {
+
         double orginalWidth, originalHeight;
         ScaleTransform scale = new ScaleTransform();
 
         public MainWindow()
         {
             InitializeComponent();
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;  //화면버튼
             this.Loaded += new RoutedEventHandler(Window1_Loaded);
             this.MouseLeftButtonDown += MainWindow_MouseLeftButtonDown;    //드래그 무브
         }
@@ -67,14 +69,29 @@ namespace EasyProject
             Window.GetWindow(this).Close();
         }
 
-        private void btn_minimize(object sender, RoutedEventArgs e)       //버튼 창닫기
+        private void btn_minimize(object sender, RoutedEventArgs e)       //화면 내리기
         {
-            Window.GetWindow(this).Close();
+            if (this.WindowState == WindowState.Normal)
+            {
+                this.WindowState = WindowState.Minimized;
+            }
+            else if (this.WindowState == WindowState.Minimized)
+            {
+                this.WindowState = WindowState.Normal;
+            }
         }
 
-        private void btn_extend(object sender, RoutedEventArgs e)       //버튼 창닫기
+        private void btn_extend(object sender, RoutedEventArgs e)       //화면 확대 축소
         {
-            Window.GetWindow(this).Close();
+            if (this.WindowState == WindowState.Normal)
+            {
+                this.WindowState = WindowState.Maximized;
+            }
+            else if (this.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+            }
+
         }
     }
 }
