@@ -138,6 +138,9 @@
     <Compile Include="View\DialogPage.xaml.cs">
       <DependentUpon>DialogPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ModifyPage.xaml.cs">
+      <DependentUpon>ModifyPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TabItemPage\AuthorityPage.xaml.cs">
       <DependentUpon>AuthorityPage.xaml</DependentUpon>
     </Compile>
@@ -177,6 +180,10 @@
     <Page Include="View\DialogPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ModifyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TabItemPage\AuthorityPage.xaml">
       <SubType>Designer</SubType>
