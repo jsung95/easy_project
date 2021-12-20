@@ -31,6 +31,28 @@ namespace EasyProject.ViewModel
         //선택한 부서를 담을 프로퍼티
         public DeptModel SelectedDept { get; set; }
 
+        //선택한 1개의 제품 정보를 담을 객체
+        private static ProductShowModel selectedProduct;
+        public static ProductShowModel SelectedProduct 
+        {
+            get { return selectedProduct; }
+            set
+            {
+                selectedProduct = value;
+                //OnPropertyChanged("SelectedProducts");
+                //Message.Send(SelectedProducts);
+                Console.WriteLine("==선택한 재고 정보==");
+                Console.WriteLine($"  Prod_code : {SelectedProduct.Prod_code}");
+                Console.WriteLine($"  Prod_name : {SelectedProduct.Prod_name}");
+                Console.WriteLine($"  Category_name : {SelectedProduct.Category_name}");
+                Console.WriteLine($"  Prod_price : {SelectedProduct.Prod_price}");
+                Console.WriteLine($"  Imp_dept_count : {SelectedProduct.Imp_dept_count}");
+                Console.WriteLine($"  Prod_expire : {SelectedProduct.Prod_expire}");
+                Console.WriteLine($"  Prod_id : {SelectedProduct.Prod_id}");
+
+            }
+        }
+
         public ProductShowViewModel()
         {
             Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts());

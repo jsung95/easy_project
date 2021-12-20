@@ -136,7 +136,7 @@
                             HorizontalAlignment="Left" Margin="10 0"
                             VerticalAlignment="Top" AutoGenerateColumns="False" 
                             CanUserSortColumns="True" IsReadOnly="True" ColumnWidth="*"
-                            ItemsSource="{Binding Products}">
+                            ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" SelectionMode="Extended" SelectionUnit="FullRow">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="1.5*" IsReadOnly="True" />
                                 <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="1.5*" IsReadOnly="True"/>

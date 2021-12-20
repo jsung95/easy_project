@@ -594,7 +594,7 @@ namespace EasyProject.Dao
 
                         cmd.Parameters.Add(new OracleParameter("code", prod_dto.Prod_code));
                         cmd.Parameters.Add(new OracleParameter("name", prod_dto.Prod_name));
-                        cmd.Parameters.Add(new OracleParameter("category_name", prod_dto.Category_name));
+                        cmd.Parameters.Add(new OracleParameter("category_name", category_dto.Category_name));
                         cmd.Parameters.Add(new OracleParameter("expire", prod_dto.Prod_expire));
                         cmd.Parameters.Add(new OracleParameter("price", prod_dto.Prod_price));
                         cmd.Parameters.Add(new OracleParameter("total", prod_dto.Prod_total));
