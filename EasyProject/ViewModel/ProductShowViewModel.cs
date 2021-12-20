@@ -90,6 +90,25 @@ namespace EasyProject.ViewModel
             Products = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
         }
 
+
+        private ActionCommand changeProductCommand;
+        public ICommand ChangeProductCommand
+        {
+            get
+            {
+                if (changeProductCommand == null)
+                {
+                    changeProductCommand = new ActionCommand(ChangeProductInfo);
+                }
+                return changeProductCommand;
+            }//get
+        }
+
+        public void ChangeProductInfo()
+        {
+            product_dao.ChangeProductInfo(SelectedProduct, SelectedCategory);
+        }
+
     }//class
 
         

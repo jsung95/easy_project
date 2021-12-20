@@ -225,13 +225,13 @@ namespace EasyProject.Dao
                         cmd.Parameters.Add(new OracleParameter("total", prod_dto.Prod_total));
 
                         // 날짜형식을 -> String 타입으로 변경 후 바인딩
-                        string month = "";
-                        if(prod_dto.Prod_expire.Month < 10)
+                        string month = prod_dto.Prod_expire.Month.ToString();
+                        if (prod_dto.Prod_expire.Month < 10)
                         {
                             month = "0" + prod_dto.Prod_expire.Month.ToString();
                         }// 선택한 월이 1자리 라면 앞에 0을 붙임
 
-                        string day = "";
+                        string day = prod_dto.Prod_expire.Day.ToString();
                         if (prod_dto.Prod_expire.Day < 10)
                         {
                             day = "0" + prod_dto.Prod_expire.Day.ToString();
@@ -241,7 +241,7 @@ namespace EasyProject.Dao
                         Console.WriteLine("Insert DATE : {0}", expire);
                         cmd.Parameters.Add(new OracleParameter("expire", expire));
                         ////////////////////////////////////////////////////////////////////////////
-                        
+
                         cmd.Parameters.Add(new OracleParameter("category_name", category_dto.Category_name));
 
 
@@ -584,20 +584,40 @@ namespace EasyProject.Dao
                         cmd.Connection = conn;
 
                         cmd.CommandText = "UPDATE PRODUCT SET " +
-                                          "prod_code = :code " +
-                                          "prod_name = :name " +
-                                          "category_id = (SELECT category_id FROM CATEGORY WHERE category_name = :category_name) " +
-                                          "prod_expire = :expire " +
-                                          "prod_price = :pirce " +
+                                          "prod_code = :code, " +
+                                          "prod_name = :name, " +
+                                          "category_id = (SELECT category_id FROM CATEGORY WHERE category_name = :category_name), " +
+                                          "prod_expire = TO_DATE(:expire, 'YYYYMMDD'), " +
+                                          "prod_price = :pirce, " +
                                           "prod_total = :total " +
-                                          "WHERE prod_id = :id ";
+                                          "WHERE prod_id = :id";
 
                         cmd.Parameters.Add(new OracleParameter("code", prod_dto.Prod_code));
                         cmd.Parameters.Add(new OracleParameter("name", prod_dto.Prod_name));
-                        cmd.Parameters.Add(new OracleParameter("category_name", category_dto.Category_name));
-                        cmd.Parameters.Add(new OracleParameter("expire", prod_dto.Prod_expire));
+                        cmd.Parameters.Add(new OracleParameter("category_name", prod_dto.Category_name));
+
+
+                        // 날짜형식을 -> String 타입으로 변경 후 바인딩
+                        string month = prod_dto.Prod_expire.Month.ToString();
+                        if (prod_dto.Prod_expire.Month < 10)
+                        {
+                            month = "0" + prod_dto.Prod_expire.Month.ToString();
+                        }// 선택한 월이 1자리 라면 앞에 0을 붙임
+
+                        string day = prod_dto.Prod_expire.Day.ToString();
+                        if (prod_dto.Prod_expire.Day < 10)
+                        {
+                            day = "0" + prod_dto.Prod_expire.Day.ToString();
+                        }// 선택한 일이 1자리 라면 앞에 0을 붙임
+
+                        string expire = prod_dto.Prod_expire.Year.ToString() + month + day;
+                        Console.WriteLine("Insert DATE : {0}", expire);
+                        cmd.Parameters.Add(new OracleParameter("expire", expire));
+                        ////////////////////////////////////////////////////////////////////////////
+
+
                         cmd.Parameters.Add(new OracleParameter("price", prod_dto.Prod_price));
-                        cmd.Parameters.Add(new OracleParameter("total", prod_dto.Prod_total));
+                        cmd.Parameters.Add(new OracleParameter("total", prod_dto.Imp_dept_count));
                         cmd.Parameters.Add(new OracleParameter("id", prod_dto.Prod_id));
 
                         cmd.ExecuteNonQuery();
@@ -608,7 +628,7 @@ namespace EasyProject.Dao
             }//try
             catch(Exception e)
             {
-
+                Console.WriteLine(e.Message);
             }//catch
         }//ChangeProductInfo()
 
