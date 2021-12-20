@@ -56,6 +56,7 @@ namespace EasyProject.ViewModel
                 Console.WriteLine($"  Imp_dept_count : {SelectedProduct.Imp_dept_count}");
                 Console.WriteLine($"  Prod_expire : {SelectedProduct.Prod_expire}");
                 Console.WriteLine($"  Prod_id : {SelectedProduct.Prod_id}");
+                Console.WriteLine($"  Imp_dept_id : {SelectedProduct.Imp_dept_id}");
 
             }
         }
@@ -106,7 +107,8 @@ namespace EasyProject.ViewModel
 
         public void ChangeProductInfo()
         {
-            product_dao.ChangeProductInfo(SelectedProduct, SelectedCategory);
+            product_dao.ChangeProductInfo(SelectedProduct);
+            product_dao.ChangeProductInfo_IMP_DEPT(SelectedProduct);
         }
 
     }//class

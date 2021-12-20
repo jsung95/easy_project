@@ -25,7 +25,7 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
 
-                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, I.imp_dept_count, P.prod_expire, P.prod_id " +
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, I.imp_dept_count, P.prod_expire, P.prod_id, I.imp_dept_id " +
                                           "FROM PRODUCT P " +
                                           "INNER JOIN IMP_DEPT I " +
                                           "ON P.prod_id = I.prod_id " +
@@ -50,6 +50,7 @@ namespace EasyProject.Dao
                             int? imp_dept_count = reader.GetInt32(4);
                             DateTime prod_expire = reader.GetDateTime(5);
                             int? prod_id = reader.GetInt32(6);
+                            int? imp_dept_id = reader.GetInt32(7);
 
 
                             ProductShowModel dto = new ProductShowModel()
@@ -60,7 +61,8 @@ namespace EasyProject.Dao
                                 Prod_price = prod_price,
                                 Imp_dept_count = imp_dept_count,
                                 Prod_expire = prod_expire,
-                                Prod_id = prod_id
+                                Prod_id = prod_id,
+                                Imp_dept_id = imp_dept_id
                             };
 
                             list.Add(dto);
@@ -98,7 +100,7 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
 
-                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, I.imp_dept_count, P.prod_expire, P.prod_id " +
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, I.imp_dept_count, P.prod_expire, P.prod_id, I.imp_dept_id " +
                                           "FROM PRODUCT P " +
                                           "INNER JOIN IMP_DEPT I " +
                                           "ON P.prod_id = I.prod_id " +
@@ -123,6 +125,7 @@ namespace EasyProject.Dao
                             int? imp_dept_count = reader.GetInt32(4);
                             DateTime prod_expire = reader.GetDateTime(5);
                             int? prod_id = reader.GetInt32(6);
+                            int? imp_dept_id = reader.GetInt32(7);
 
 
                             ProductShowModel dto = new ProductShowModel()
@@ -133,7 +136,8 @@ namespace EasyProject.Dao
                                 Prod_price = prod_price,
                                 Imp_dept_count = imp_dept_count,
                                 Prod_expire = prod_expire,
-                                Prod_id = prod_id
+                                Prod_id = prod_id,
+                                Imp_dept_id = imp_dept_id
                             };
 
                             list.Add(dto);
@@ -568,7 +572,7 @@ namespace EasyProject.Dao
             return list;
         }//GetProductInByNurse
 
-        public void ChangeProductInfo(ProductShowModel prod_dto, CategoryModel category_dto)
+        public void ChangeProductInfo(ProductShowModel prod_dto)
         {
             try
             {
@@ -590,7 +594,7 @@ namespace EasyProject.Dao
                                           "prod_expire = TO_DATE(:expire, 'YYYYMMDD'), " +
                                           "prod_price = :pirce, " +
                                           "prod_total = :total " +
-                                          "WHERE prod_id = :id";
+                                          "WHERE prod_id = :id ";
 
                         cmd.Parameters.Add(new OracleParameter("code", prod_dto.Prod_code));
                         cmd.Parameters.Add(new OracleParameter("name", prod_dto.Prod_name));
@@ -620,6 +624,8 @@ namespace EasyProject.Dao
                         cmd.Parameters.Add(new OracleParameter("total", prod_dto.Imp_dept_count));
                         cmd.Parameters.Add(new OracleParameter("id", prod_dto.Prod_id));
 
+
+
                         cmd.ExecuteNonQuery();
 
                     }//using(cmd)
@@ -632,6 +638,42 @@ namespace EasyProject.Dao
             }//catch
         }//ChangeProductInfo()
 
+        public void ChangeProductInfo_IMP_DEPT(ProductShowModel prod_dto)
+        {
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "UPDATE IMP_DEPT SET " +
+                                          "imp_dept_count = :total " +
+                                          "WHERE imp_dept_id = :id ";
+                        Console.WriteLine(prod_dto.Imp_dept_count);
+                        Console.WriteLine(prod_dto.Prod_id);
+                        cmd.Parameters.Add(new OracleParameter("total", prod_dto.Imp_dept_count));
+                        cmd.Parameters.Add(new OracleParameter("id", prod_dto.Prod_id));
+
+
+
+                        cmd.ExecuteNonQuery();
+
+                    }//using(cmd)
+
+                }//using(conn)
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+        }
     }//class
 
 }//namespace

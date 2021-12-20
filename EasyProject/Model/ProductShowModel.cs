@@ -17,6 +17,7 @@ namespace EasyProject.Model
         public int? Imp_dept_count { get; set; }
         public DateTime Prod_expire { get; set; }
         public int? Prod_id { get; set; }
+        public int? Imp_dept_id { get; set; }
     }//class
 
 }//namespace
