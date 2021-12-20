@@ -8,7 +8,7 @@
       xmlns:wookoa="clr-namespace:System;assembly=mscorlib"
       xmlns:vm="clr-namespace:EasyProject.ViewModel"
       mc:Ignorable="d" 
-      Title="IncomingOutgoingPage">
+      Title="IncomingOutgoingPage" Cursor="Hand">
     <Page.DataContext>
         <vm:ProductInOutViewModel/>
     </Page.DataContext>

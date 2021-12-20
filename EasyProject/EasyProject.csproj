@@ -147,8 +147,17 @@
     <Compile Include="View\TabItemPage\FileUploadPageFunction.xaml.cs">
       <DependentUpon>FileUploadPageFunction.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TabItemPage\IncomingOutgoingList1Page.xaml.cs">
+      <DependentUpon>IncomingOutgoingList1Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TabItemPage\IncomingOutgoingList2Page.xaml.cs">
+      <DependentUpon>IncomingOutgoingList2Page.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TabItemPage\IncomingOutgoingPage.xaml.cs">
       <DependentUpon>IncomingOutgoingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TabItemPage\IncomingOutgoingPageBtn.xaml.cs">
+      <DependentUpon>IncomingOutgoingPageBtn.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TabItemPage\InsertListPage.xaml.cs">
       <DependentUpon>InsertListPage.xaml</DependentUpon>
@@ -193,7 +202,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\TabItemPage\IncomingOutgoingList1Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabItemPage\IncomingOutgoingList2Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\TabItemPage\IncomingOutgoingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabItemPage\IncomingOutgoingPageBtn.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
