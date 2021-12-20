@@ -12,22 +12,47 @@
         <vm:ProductViewModel/>
     </Page.DataContext>
 
+    <Page.Resources>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Height" Value="20"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="VerticalGridLinesBrush" Value="#4472C4"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#4472C4"/>
+            <Setter Property="RowHeight" Value="32"/>
+            <Setter Property="RowHeaderWidth" Value="0"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+        </Style>
+    </Page.Resources>
+
     <Grid Height="450">
         <materialDesign:Card Grid.Column="0" Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
-            <ListView Grid.Row="0" Name="InsertListView" FontSize="15" Margin="3" ItemsSource="{Binding Add_list}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="입력일자" DisplayMemberBinding="{Binding Prod_in_date}" Width="auto"/>
-                        <GridViewColumn Header="제품코드" DisplayMemberBinding="{Binding Prod_code}" Width="auto"/>
-                        <GridViewColumn Header="제품명" DisplayMemberBinding="{Binding Prod_name}" Width="auto"/>
-                        <GridViewColumn Header="품목/종류" DisplayMemberBinding="{Binding Category_name}" Width="auto"/>
-                        <GridViewColumn Header="유통기한" DisplayMemberBinding="{Binding Prod_expire}" Width="auto"/>
-                        <GridViewColumn Header="가격" DisplayMemberBinding="{Binding Prod_price}" Width="auto"/>
-                        <GridViewColumn Header="수량" DisplayMemberBinding="{Binding Prod_in_count}" Width="auto"/>
-                        <GridViewColumn Header="관리자명" DisplayMemberBinding="{Binding Nurse_name}" Width="auto"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+            <DataGrid x:Name="dataGrid" 
+                            HorizontalAlignment="Left" Margin="10 10 10 10"
+                            VerticalAlignment="Top" AutoGenerateColumns="False" 
+                            CanUserSortColumns="True" IsReadOnly="True" ColumnWidth="*"
+                            ItemsSource="{Binding Add_list}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Prod_in_date}" Header="입력일자" Width="1.5*" IsReadOnly="True" />
+                    <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="1.5*" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Category_name}" Header="제품명" Width="1.5*" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Prod_price}"  Header="품목/종류" Width="1*"  IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Prod_price}" Header="제품가격" Width="1*" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Prod_expire}"  Header="유통기한" Width="3*"  IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Prod_in_count}"  Header="수량" Width="3*"  IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Nurse_name}"  Header="관리자명" Width="3*"  IsReadOnly="True"/>
+
+                </DataGrid.Columns>
+            </DataGrid>
         </materialDesign:Card>
     </Grid>
 </Page>
