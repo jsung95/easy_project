@@ -33,6 +33,9 @@ namespace EasyProject.Dao
 
         // 현재 사용자의 입고 목록을 가져옴(InsertListPage)
         ObservableCollection<ProductInOutModel> GetProductInByNurse(NurseModel nurse_dto);
+
+        // 재고 수정
+        void ChangeProductInfo(ProductShowModel prod_dto, CategoryModel category_dto);
     }//interface
 
 }//namespace
