@@ -9,24 +9,30 @@ using Excel = Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Interop.Excel;
 using Page = Microsoft.Office.Interop.Excel.Page;
 using System.Data;
+using System.Runtime.InteropServices;
+
 namespace EasyProject.View
 {
     /// <summary>
     /// IncomingOutgoingPage.xaml에 대한 상호 작용 논리
     /// </summary>
     public partial class IncomingOutgoingPage : Page
-    {       
+    {
+        int pIndex = 1;
+        private int numberOf;
+        
         private enum PagingMode { 
             First = 1, Next = 2, Previous = 3, Last = 4, PageCountChange = 5 
         };
 
-        //List<object> myList = new List<object>();
+        List<object> myList = new List<object>();
 
-       // public WindowStartupLocation WindowStartupLocation { get; }
+        public WindowStartupLocation WindowStartupLocation { get; }
 
         public IncomingOutgoingPage()
         {
             InitializeComponent();
+ 
             //DataGridTextColumn col1 = new DataGridTextColumn();
             //dataGrid1.Columns.Add(col1);
             //col1.Header = "ID"; //Header = "제품코드"
@@ -41,35 +47,37 @@ namespace EasyProject.View
 
             // dataGrid1.ItemsSource = this.table.DefaultView;
             // this.dataGrid1.ItemsSource = this.table.DefaultView;
+            //myList = (List<object>)dataGrid1.ItemsSource;
 
-            cbNumberOfRecords.Items.Add("10");
-            cbNumberOfRecords.Items.Add("20");
-            cbNumberOfRecords.Items.Add("30");
-            cbNumberOfRecords.Items.Add("50");
-            cbNumberOfRecords.Items.Add("100");
-            cbNumberOfRecords.SelectedItem = 10;
-            //WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
-            //this.Loaded += MainWindow_Loaded;
+            //cbNumberOfRecords.Items.Add("10");
+            //cbNumberOfRecords.Items.Add("20");
+            //cbNumberOfRecords.Items.Add("30");
+            //cbNumberOfRecords.Items.Add("50");
+            //cbNumberOfRecords.Items.Add("100");
+            //cbNumberOfRecords.SelectedItem = 10;
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+            this.Loaded += Page_Loaded;
         }
-        //private System.Data.DataTable GetTable()
-        //{             
-           
-        //    //dataGrid1.Columns.Add(col1); ///제품코드 
+            //private System.Data.DataTable GetTable()
+            //{             
 
-        //    //table.Columns.Add("b"); ///제품명
+            //    //dataGrid1.Columns.Add(col1); ///제품코드 
 
-        //    //table.Rows.Add("123");
+            //    //table.Columns.Add("b"); ///제품명
 
-        //    return table;
-        //}
-        //private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //myList = GetData();
-        //dataGrid1.ItemsSource = myList.Take(numberOfRecPerPage);
+            //    //table.Rows.Add("123");
 
-        //int count = myList.Take(numberOfRecPerPage).Count();
-        //lblpageInformation.Content = count + " of " + myList.Count;
-        //}
+            //    return table;
+            //}
+
+            private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            //myList = GetData();
+            //dataGrid1.ItemsSource = myList.Take(numberOfRecPerPage);
+
+            int count = myList.Take(numberOf).Count();
+            //lblpageInformation.Content = count + " of " + myList.Count;
+        }
         //private List<object> GetData()
         //{
         //    List<object> genericList = new List<object>();
@@ -116,124 +124,125 @@ namespace EasyProject.View
         //#region Pagination 
         private void btnFirst_Click(object sender, System.EventArgs e)
         {
-            //Navigate((int)PagingMode.First);
+            Navigate((int)PagingMode.First);
         }
 
         private void btnNext_Click(object sender, System.EventArgs e)
         {
-            //Navigate((int)PagingMode.Next);
+            Navigate((int)PagingMode.Next);
 
         }
 
         private void btnPrev_Click(object sender, System.EventArgs e)
         {
-            //Navigate((int)PagingMode.Previous);
+            Navigate((int)PagingMode.Previous);
 
         }
 
         private void btnLast_Click(object sender, System.EventArgs e)
         {
-            //Navigate((int)PagingMode.Last);
+            Navigate((int)PagingMode.Last);
         }
         private void cbNumberOfRecords_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //Navigate((int)PagingMode.PageCountChange);
+            Navigate((int)PagingMode.PageCountChange);
         }
-        //private void Navigate(int mode)
-        //{
-        //    int count;
-        //    switch (mode)
-        //    {
-        //        case (int)PagingMode.Next:
-        //            btnPrev.IsEnabled = true;
-        //            btnFirst.IsEnabled = true;
-        //            if (myList.Count >= (pageIndex * numberOfRecPerPage))
-        //            {
-        //                if (myList.Skip(pageIndex *
-        //                numberOfRecPerPage).Take(numberOfRecPerPage).Count() == 0)
-        //                {
-        //                    dataGrid1.ItemsSource = null;
-        //                    dataGrid1.ItemsSource = myList.Skip((pageIndex *
-        //                    numberOfRecPerPage) - numberOfRecPerPage).Take(numberOfRecPerPage);
-        //                    count = (pageIndex * numberOfRecPerPage) +
-        //                    (myList.Skip(pageIndex *
-        //                    numberOfRecPerPage).Take(numberOfRecPerPage)).Count();
-        //                }
-        //                else
-        //                {
-        //                    dataGrid1.ItemsSource = null;
-        //                    dataGrid1.ItemsSource = myList.Skip(pageIndex *
-        //                    numberOfRecPerPage).Take(numberOfRecPerPage);
-        //                    count = (pageIndex * numberOfRecPerPage) +
-        //                    (myList.Skip(pageIndex * numberOfRecPerPage).Take(numberOfRecPerPage)).Count();
-        //                    pageIndex++;
-        //                }
+        private void Navigate(int mode)
+        {
+            //int count;
+            //switch (mode)
+            //{
+            //    case (int)PagingMode.Next:
+            //        btnPrev.IsEnabled = true;
+            //        btnFirst.IsEnabled = true;
 
-        //                //lblpageInformation.Content = count + " of " + myList.Count;
-        //            }
+            //        if (myList.Count >= (pIndex * numberOf))
+            //        {
+            //            if (myList.Skip(pIndex *
+            //            numberOf).Take(numberOf).Count() == 0)
+            //            {
+            //                dataGrid1.ItemsSource = null;
+            //                dataGrid1.ItemsSource = myList.Skip((pIndex *
+            //                numberOf) - numberOf).Take(numberOf);
+            //                count = (pIndex * numberOf) +
+            //                (myList.Skip(pIndex *
+            //                numberOf).Take(numberOf)).Count();
+            //            }
+            //            else
+            //            {
+            //                dataGrid1.ItemsSource = null;
+            //                dataGrid1.ItemsSource = myList.Skip(pIndex * numberOf).Take(numberOf);
+            //                count = (pIndex * numberOf) + (myList.Skip(pIndex * numberOf).Take(numberOf)).Count();
+            //                pIndex++;
+            //            }
 
-        //            else
-        //            {
-        //                btnNext.IsEnabled = false;
-        //                btnLast.IsEnabled = false;
-        //            }
+            //            //lblpageInformation.Content = count + " of " + myList.Count;
+            //        }
+            //        else
+            //        {
+            //            btnNext.IsEnabled = false;
+            //            btnLast.IsEnabled = false;
+            //        }
+            //        break;
+            //    case (int)PagingMode.Previous:
+            //        btnNext.IsEnabled = true;
+            //        btnLast.IsEnabled = true;
+            //        if (pIndex > 1)
+            //        {
+            //            pIndex -= 1;
+            //            //dataGrid.ItemsSource = null;
+            //            if (pIndex == 1)
+            //            {
+            //               //dataGrid.ItemsSource = myLst.Take(numberOf);
+            //                count = myList.Take(numberOf).Count();
+            //                //lblpageInformation.Content = count + " of " + myLst.Count;
+            //            }
+            //            else
+            //            {
+            //                //dataGrid.ItemsSource = myLst.Skip
+            //                //(pIndex * numberOf).Take(numberOf);
+            //                count = Math.Min(pIndex * numberOf, myList.Count);
+            //                //lblpageInformation.Content = count + " of " + myLst.Count;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            btnPrev.IsEnabled = false;
+            //            btnFirst.IsEnabled = false;
+            //        }
+            //        break;
 
-        //            break;
-        //        case (int)PagingMode.Previous:
-        //            btnNext.IsEnabled = true;
-        //            btnLast.IsEnabled = true;
-        //            if (pageIndex > 1)
-        //            {
-        //                pageIndex -= 1;
-        //                dataGrid1.ItemsSource = null;
-        //                if (pageIndex == 1)
-        //                {
-        //                    dataGrid1.ItemsSource = myList.Take(numberOfRecPerPage);
-        //                    count = myList.Take(numberOfRecPerPage).Count();
-        //                    //lblpageInformation.Content = count + " of " + myList.Count;
-        //                }
-        //                else
-        //                {
-        //                    dataGrid1.ItemsSource = myList.Skip
-        //                    (pageIndex * numberOfRecPerPage).Take(numberOfRecPerPage);
-        //                    count = Math.Min(pageIndex * numberOfRecPerPage, myList.Count);
-        //                    //lblpageInformation.Content = count + " of " + myList.Count;
-        //                }
-        //            }
-        //            else
-        //            {
-        //                btnPrev.IsEnabled = false;
-        //                btnFirst.IsEnabled = false;
-        //            }
-        //            break;
+            //    case (int)PagingMode.First:
+            //        pIndex = 2;
+            //        Navigate((int)PagingMode.Previous);
+            //        break;
+            //    case (int)PagingMode.Last:
+            //        pIndex = (myList.Count / numberOf);
+            //        Navigate((int)PagingMode.Next);
+            //        break;
 
-        //        case (int)PagingMode.First:
-        //            pageIndex = 2;
-        //            Navigate((int)PagingMode.Previous);
-        //            break;
-        //        case (int)PagingMode.Last:
-        //            pageIndex = (myList.Count / numberOfRecPerPage);
-        //            Navigate((int)PagingMode.Next);
-        //            break;
-
-        //        case (int)PagingMode.PageCountChange:
-        //            pageIndex = 1;
-        //            numberOfRecPerPage = Convert.ToInt32(cbNumberOfRecords.SelectedItem);
-        //            dataGrid1.ItemsSource = null;
-        //            dataGrid1.ItemsSource = myList.Take(numberOfRecPerPage);
-        //            count = (myList.Take(numberOfRecPerPage)).Count();
-        //            //lblpageInformation.Content = count + " of " + myList.Count;
-        //            btnNext.IsEnabled = true;
-        //            btnLast.IsEnabled = true;
-        //            btnPrev.IsEnabled = true;
-        //            btnFirst.IsEnabled = true;
-        //            break;
-        //    }
-        //}
+            //    case (int)PagingMode.PageCountChange:
+            //        pIndex = 1;
+            //        numberOf = Convert.ToInt32(cbNumberOfRecords.SelectedItem);
+            //        dataGrid1.ItemsSource = null;
+            //        dataGrid1.ItemsSource = myList.Take(numberOf);
+            //        count = (myList.Take(numberOf)).Count();
+            //       // lblpageInformation.Content = count + " of " + myLiist.Count;
+            //        btnNext.IsEnabled = true;
+            //        btnLast.IsEnabled = true;
+            //        btnPrev.IsEnabled = true;
+            //        btnFirst.IsEnabled = true;
+            //        break;
+            //}
+        }
         //#endregion
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            //public Microsoft.Office.Interop.Excel.Application APP = null;
+            //public Microsoft.Office.Interop.Excel.Workbook WB = null;
+            //public Microsoft.Office.Interop.Excel.Worksheet WS = null;
+            //public Microsoft.Office.Interop.Excel.Range Range = null;
             Excel.Application excel = new Excel.Application();
             excel.Visible = true; //www.yazilimkodlama.com
             Workbook workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
@@ -246,7 +255,7 @@ namespace EasyProject.View
                 sheet1.Columns[j + 1].ColumnWidth = 15; //열 너비 설정
                 myRange.Value2 = dataGrid1.Columns[j].Header;
             }
-            for (int i = 0; i < dataGrid1.Columns.Count; i++)
+            /*for (int i = 0; i < dataGrid1.Columns.Count; i++)
             { //www.yazilimkodlama.com
                 for (int j = 0; j < dataGrid1.Items.Count; j++)
                 {
@@ -256,7 +265,7 @@ namespace EasyProject.View
                     myRange.Value2 = b.Text;
 
                 }
-            }
+            }*/
         }
 
         HeaderFooter Page.LeftHeader => throw new NotImplementedException();
