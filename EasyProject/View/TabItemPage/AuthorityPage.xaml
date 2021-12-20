@@ -66,17 +66,24 @@
                 </Grid>
 
                 <Grid Grid.Row="1" Grid.Column="0">
+                    <ComboBox  HorizontalAlignment="Left" Background="#FF877B7B" VerticalAlignment="Center" Width="120" Grid.Column="0" SelectedItem="{Binding NormalSearchType}" ItemsSource="{Binding SearchTypeList}" Grid.ColumnSpan="2" />
                     <!-- <ComboBox  HorizontalAlignment="Center" Background="#FF877B7B" VerticalAlignment="Center" Width="120" Grid.Column="0" SelectedItem="{Binding SelectedAuth1}" ItemsSource="{Binding AuthList}"/> -->
                 </Grid>
 
                 <Grid Grid.Row="1" Grid.Column="2">
-                    <!--<ComboBox HorizontalAlignment="Center"  Background="#FF877B7B" VerticalAlignment="Center" Width="120" SelectedItem="{Binding SelectedAuth2}" ItemsSource="{Binding AuthList}"/>-->
+                    <ComboBox HorizontalAlignment="Left"  Background="#FF877B7B" VerticalAlignment="Center" Width="120" SelectedItem="{Binding AdminSearchType}" ItemsSource="{Binding SearchTypeList}"/>
                 </Grid>
 
-
                 <Grid Grid.Row="2" Grid.Column="0" >
-                    <TextBox Text="{Binding Keyword1}" FontSize="15" Height="25" />
-                    <Button FontSize="50" Height="25" Width="40" HorizontalAlignment="Right" Command="{Binding Search1}"></Button>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="187*"/>
+                        <ColumnDefinition Width="101*"/>
+                    </Grid.ColumnDefinitions>
+
+
+                    <TextBox Text="{Binding Normal_Keyword}" FontSize="15" Height="25" Grid.ColumnSpan="2" Margin="0,14,0,15" />
+                    <Button FontSize="50" Height="25" Width="40" HorizontalAlignment="Left" Command="{Binding NormalSearchCommand}" Grid.Column="1" Margin="60,14,0,15"></Button>
                 </Grid>
 
                 <Grid Grid.Row="2" Grid.Column="2">
@@ -85,39 +92,21 @@
                         <ColumnDefinition Width="17*"/>
                         <ColumnDefinition Width="95*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Text="{Binding Keyword2}" FontSize="15" Height="25" Grid.ColumnSpan="3" Margin="0,14,0,15"/>
-                    <Button FontSize="50" Height="25" Width="40" HorizontalAlignment="Left" Command="{Binding Search2}" Grid.Column="2" Margin="55,14,0,15"></Button>
+                    <TextBox Text="{Binding Admin_Keyword}" FontSize="15" Height="25" Grid.ColumnSpan="3" Margin="0,14,0,15"/>
+                    <Button FontSize="50" Height="25" Width="40" HorizontalAlignment="Left" Command="{Binding AdminSearchCommand}" Grid.Column="2" Margin="55,14,0,15" Cursor="Hand"></Button>
                 </Grid>
 
                 <Grid Grid.Row="3" Grid.Column="0">
                     <DataGrid  x:Name="dataGrid1" AutoGenerateColumns="False" SelectionMode="Extended"
-                             ItemsSource="{Binding Users_searched1}"                           
+                             ItemsSource="{Binding Normals_searched, Mode=TwoWay}"                           
                              ScrollViewer.CanContentScroll="True" 
                              ScrollViewer.VerticalScrollBarVisibility="Visible" 
                              ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" IsSynchronizedWithCurrentItem="False">
 
                         <DataGrid.Columns>
-                            <!--체크박스 추가-->
-                            <DataGridTemplateColumn>
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-
-                                        <CheckBox x:Name="check1" HorizontalAlignment="Center" VerticalAlignment="Center">
-
-                                            <CheckBox.Resources>
-                                                <!--체크전-->
-                                                <SolidColorBrush x:Key="MaterialDesignCheckBoxOff" Color="BLACK"/>
-                                                <!--체크했을때-->
-                                                <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="Blue"/>
-                                            </CheckBox.Resources>
-                                        </CheckBox>
-
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-
-
+                           
                             <!--데이터 바인딩-->
+                            <DataGridCheckBoxColumn Binding="{Binding IsChecked}" IsReadOnly="False" />
                             <DataGridTextColumn Header=" 이름"  Binding="{Binding Nurse_name}" IsReadOnly="True" />
                             <DataGridTextColumn Header=" ID" Binding="{Binding Nurse_no}" IsReadOnly="True"/>
                             <DataGridTextColumn Header=" 부서" Binding="{Binding Dept_name}" IsReadOnly="True"/>
@@ -140,10 +129,10 @@
                             <ColumnDefinition Width="3*"/>
                             <ColumnDefinition Width="7*"/>
                         </Grid.ColumnDefinitions>
-
+                        <!--왼쪽옮기기 버튼-->
                         <Label Grid.Column="1" Content="왼쪽으로 이동" Foreground="#4472C4" FontSize="17" HorizontalAlignment="Center" Height="28"  VerticalAlignment="Center" />
                         <Button x:Name="leftBtn" Foreground="white" Background="#FFE5E5E5" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"  
-                        VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="51" Cursor="Hand">
+                        VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Command="{Binding MoveLeftCommand}">
                             <materialDesign:PackIcon Grid.Row="0" Kind="ChevronLeftCircle" VerticalAlignment="Center" HorizontalAlignment="Center" Height="15" Width="26" />
                         </Button>
                     </Grid>
@@ -153,57 +142,29 @@
                             <ColumnDefinition Width="3*"/>
                             <ColumnDefinition Width="7*"/>
                         </Grid.ColumnDefinitions>
-
+                        <!--오른쪽옮기기 버튼-->
                         <Label Grid.Column="2" Content="오른쪽으로 이동" Foreground="#4472C4"   FontSize="17" HorizontalAlignment="Center" Height="28"  VerticalAlignment="Center"/>
                         <Button x:Name="rightBtn"   Foreground="white" Background="#FFE5E5E5" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"  
-                        VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="51" Cursor="Hand">
-                            <materialDesign:PackIcon Grid.Row="0" Kind="ChevronLeftCircle" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="26" />
+                        VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Command="{Binding MoveRightCommand}">
+                            <materialDesign:PackIcon Grid.Row="0" Kind="ChevronRightCircle" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="26" />
                         </Button>
                     </Grid>
-                    <!--오른쪽왼쪽버튼텍스트박스-->
-
-
-                    <!--왼쪽옮기기 버튼-->
-
-
-                    <!--오른쪽옮기기 버튼-->
-
                 </Grid>
 
                 <Grid Grid.Row="3" Grid.Column="2">
 
                     <DataGrid  x:Name="dataGrid2" AutoGenerateColumns="false" SelectionMode="Extended"
-                             ItemsSource="{Binding Users_searched2}"  
+                             ItemsSource="{Binding Admins_searched, Mode=TwoWay}"  
                              ScrollViewer.CanContentScroll="True" 
                              ScrollViewer.VerticalScrollBarVisibility="Visible" 
                              ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" IsSynchronizedWithCurrentItem="False">
 
                         <DataGrid.Columns>
-                            <!--체크박스 추가-->
-                            <DataGridTemplateColumn>
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-
-                                        <CheckBox x:Name="check" HorizontalAlignment="Center" VerticalAlignment="Center">
-
-                                            <CheckBox.Resources>
-                                                <!--체크전-->
-                                                <SolidColorBrush x:Key="MaterialDesignCheckBoxOff" Color="BLACK"/>
-                                                <!--체크했을때-->
-                                                <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="Blue"/>
-                                            </CheckBox.Resources>
-                                        </CheckBox>
-
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-
-
                             <!--데이터 바인딩-->
+                            <DataGridCheckBoxColumn Binding="{Binding IsChecked}" IsReadOnly="False"/>
                             <DataGridTextColumn Header=" 이름"  Binding="{Binding Nurse_name}" IsReadOnly="True" />
                             <DataGridTextColumn Header=" ID" Binding="{Binding Nurse_no}" IsReadOnly="True"/>
                             <DataGridTextColumn Header=" 부서" Binding="{Binding Dept_name}" IsReadOnly="True"/>
-
                         </DataGrid.Columns>
                     </DataGrid>
 

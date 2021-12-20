@@ -11,67 +11,164 @@ namespace EasyProject.ViewModel
     public class UserAuthViewModel : Notifier
     {
         UsersDao dao = new UsersDao();
-        // 콤보박스의 권한 리스트
-        public string[] AuthList { get; set; }
+        // 콤보박스의 검색타입 리스트
+        public string[] SearchTypeList { get; set; }
         //검색 텍스트박스로 부터 입력받은 데이터를 담을 프로퍼티
-        public string Keyword1 { get; set; }
-        public string Keyword2 { get; set; }
+        public string Normal_Keyword { get; set; }
+        public string Admin_Keyword { get; set; }
 
         // 콤보박스에서 선택한 권한을 담을 프로퍼티
-        public string SelectedAuth1 { get; set; }
-        public string SelectedAuth2 { get; set; }
+        public string NormalSearchType { get; set; }
+        public string AdminSearchType { get; set; }
 
         // 사용자 검색 시 나온 사용자 정보를 담을 옵저버블컬렉션 프로퍼티
-        public ObservableCollection<UserModel> Users_searched1 { get; set; }
-        public ObservableCollection<UserModel> Users_searched2 { get; set; }
+        public ObservableCollection<UserModel> Normals_searched { get; set; }
+
+        private ObservableCollection<UserModel> admins_searched;
+
+        public ObservableCollection<UserModel> Admins_searched
+        {
+            get { return admins_searched; }
+            set 
+            { 
+                admins_searched = value;
+                OnPropertyChanged("Admins_searched");
+            }
+        }
+
 
         public UserAuthViewModel()
         {
-            AuthList = new[] { "NORMAL", "ADMIN", "SUPER"};
-            Users_searched1 = new ObservableCollection<UserModel>();
-            Users_searched2 = new ObservableCollection<UserModel>();
+            SearchTypeList = new[] { "이름", "아이디", "부서" };
+            Normals_searched = new ObservableCollection<UserModel>();
+            Admins_searched = new ObservableCollection<UserModel>();
 
         }//Constructor
 
-        private ActionCommand command;
-        public ICommand Search1
+        private ActionCommand normalSearchCommand;
+        public ICommand NormalSearchCommand
         {
             get
             {
-                if (command == null)
+                if (normalSearchCommand == null)
                 {
-                    command = new ActionCommand(DoSearch1);
+                    normalSearchCommand = new ActionCommand(NormalSearch);
                 }
-                return command;
+                return normalSearchCommand;
             }//get
 
         }//Command
 
-        public ICommand Search2
+        private ActionCommand adminSearchCommand;
+        public ICommand AdminSearchCommand
         {
             get
             {
-                if (command == null)
+                if (adminSearchCommand == null)
                 {
-                    command = new ActionCommand(DoSearch2);
+                    adminSearchCommand = new ActionCommand(AdminSearch);
                 }
-                return command;
+                return adminSearchCommand;
             }//get
 
         }//Command
-        public void DoSearch1() // 좌측 리스트 검색
+
+        private ActionCommand moveRightCommand;
+        public ICommand MoveRightCommand
         {
-            Console.WriteLine("DoSearch1()");
-            List<UserModel> list = dao.SearchUser(SelectedAuth1, Keyword1);
-            Users_searched1 = new ObservableCollection<UserModel>(list);
-        
+            get
+            {
+                if (moveRightCommand == null)
+                {
+                    moveRightCommand = new ActionCommand(MoveRight);
+                }
+                return moveRightCommand;
+            }//get
+
+        }//Command
+
+        private ActionCommand moveLeftCommand;
+        public ICommand MoveLeftCommand
+        {
+            get
+            {
+                if (moveLeftCommand == null)
+                {
+                    moveLeftCommand = new ActionCommand(MoveLeft);
+                }
+                return moveLeftCommand;
+            }//get
+
+        }//Command
+        public void NormalSearch() // 좌측 리스트(NORMAL) 검색
+        {
+            Console.WriteLine("Normal 유저 검색");
+            Normals_searched.Clear();
+            List<UserModel> list = dao.SearchUser("NORMAL", NormalSearchType, Normal_Keyword);
+            //Users_searched1.CollectionChanged += Users_searched1ContentCollectionChanged;
+            foreach (UserModel user in list)
+            {
+                Normals_searched.Add(user);
+            }
         }
 
-        public void DoSearch2() // 우측 리스트 검색
+        public void AdminSearch() // 우측 리스트(ADMIN) 검색
         {
-            List<UserModel> list = dao.SearchUser(SelectedAuth2, Keyword2);
-            Users_searched2 = new ObservableCollection<UserModel>(list);
+            Console.WriteLine("Admin 유저 검색");
+            Admins_searched.Clear();
+            List<UserModel> list = dao.SearchUser("ADMIN", AdminSearchType, Admin_Keyword);
+            foreach (UserModel user in list)
+            {
+                Admins_searched.Add(user);
+            }
         }
+
+        public void MoveRight()
+        {
+            Console.WriteLine("MoveRight");
+            Admins_searched.Clear();
+            for (int i = 0; i < Normals_searched.Count; i++)
+            {
+                var item = Normals_searched[i];
+                if (item.IsChecked)
+                {
+                    Admins_searched.Add(item);
+                    Normals_searched.Remove(item);
+                }
+            }
+            //foreach (var item in Normals_searched)
+            //{
+            //    if (item.IsChecked)
+            //    {
+            //        Admins_searched.Add(item);
+            //        Normals_searched.Remove(item);
+            //    }
+            //}
+        }//MoveRight
+
+        public void MoveLeft()
+        {
+            Console.WriteLine("MoveLeft");
+            Normals_searched.Clear();
+            for (int i = 0; i < Admins_searched.Count; i++)
+            {
+                var item = Admins_searched[i];
+                if (item.IsChecked)
+                {
+                    Normals_searched.Add(item);
+                    Admins_searched.Remove(item);
+                }
+            }
+            //foreach (var item in Admins_searched)
+            //{
+            //    if (item.IsChecked)
+            //    {
+            //        Normals_searched.Add(item);
+            //        Admins_searched.Remove(item);
+            //    }
+            //}
+
+        }//MoveLeft
     }//class
 
 }//namespace
