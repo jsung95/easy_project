@@ -18,6 +18,27 @@
     
 
     <Grid  Background="LightGray"  >
+        <!--<materialDesign:DialogHost
+            VerticalAlignment="Center"
+            IsOpen="{Binding IsSample4DialogOpen}"
+            DialogContent="{Binding Sample4Content}"
+            CloseOnClickAway="True"
+            OverlayBackground="{DynamicResource PrimaryHueDarkBrush}"
+            DialogTheme="Inherit">
+            <Border
+                BorderThickness="1"
+                BorderBrush="{DynamicResource PrimaryHueMidBrush}"
+                MinWidth="256"
+                MinHeight="256"
+                ClipToBounds="True">
+                <Button
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Command="{Binding OpenSample4DialogCommand}"
+                Content="RUN" />
+            </Border>
+        </materialDesign:DialogHost>-->
+        
         <materialDesign:Card Height="250" Width="500" Margin ="10" UniformCornerRadius="20" Background="White">
         <Grid Height="250" Width="500"  >
 
@@ -63,11 +84,11 @@
                     <TextBlock Grid.Row="2" Name="order_form" Text="발주신청서 작성" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"></TextBlock>
                 </Grid>
 
-                <!--<Path Stroke="Black" StrokeThickness="1" >
+                <Path Stroke="Black" StrokeThickness="1" >
                     <Path.Data>
                         <LineGeometry StartPoint="750,10" EndPoint="750,1148" />
                     </Path.Data>
-                </Path>-->
+                </Path>
             
             </Grid>
         </materialDesign:Card>

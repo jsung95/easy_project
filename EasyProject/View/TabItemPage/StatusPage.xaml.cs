@@ -221,7 +221,12 @@ public partial class StatusPage : Page {
         //#endregion
         private void goDialog_Btn_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Working");
+            NavigationService.Navigate
+                (
+                new Uri("/View/DialogPage.xaml", UriKind.Relative)
+                );
+
+           
 
         }
 
