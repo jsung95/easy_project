@@ -11,9 +11,9 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ModifyPage">
 
-    <!--<Page.DataContext>
-        <vm:OrderViewModel/>
-    </Page.DataContext>-->
+    <Page.DataContext>
+        <vm:ProductShowViewModel/>
+    </Page.DataContext>
 
     <Grid Height="450" Width="800" >
         <materialDesign:Card  Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
@@ -63,20 +63,22 @@
                        VerticalAlignment="Center"/>
 
                     <TextBox x:Name="prodcode_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="제품코드" Grid.Column="2" HorizontalContentAlignment="Center" 
-                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" />
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" 
+                             Text="{Binding SelectedProduct.Prod_code}"/>
 
                     <Label Content="제품명" Foreground="#4472C4" Grid.Column="3" FontSize="12" FontWeight="Bold" HorizontalAlignment="center"  
                        VerticalAlignment="Center"/>
 
                     <TextBox x:Name="prodname_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="제품명" Grid.Column="4" HorizontalContentAlignment="Center" 
-                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" />
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" 
+                             Text="{Binding SelectedProduct.Prod_name}"/>
 
                     <Label Content="품목/종류" Foreground="#4472C4" Grid.Column="5" FontSize="12" FontWeight="Bold" HorizontalAlignment="center"  
                        VerticalAlignment="Center"/>
 
                     <ComboBox x:Name="ItemType_ComboBox" Grid.Column="6" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30"
-                       ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept}">
+                       ItemsSource="{Binding Path=Categories}" SelectedItem="{Binding SelectedCategory}" SelectedValuePath="Category_name" SelectedValue="{Binding SelectedProduct.Category_name}">
                         <ComboBox.Resources>
                             <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
                         </ComboBox.Resources>
@@ -84,7 +86,7 @@
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Dept_name}"/>
+                                    <TextBlock Text="{Binding Category_name}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
@@ -107,19 +109,21 @@
                        VerticalAlignment="Center"/>
                     <DatePicker x:Name="expirationDate_DatePicker" Grid.Column="2" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="0,0,20,0" Height="30" 
-                                SelectedDate="{Binding Product.Prod_expire}"/>
+                                SelectedDate="{Binding SelectedProduct.Prod_expire}"/>
 
                     <Label Content="가격" Foreground="#4472C4" Grid.Column="3" FontSize="12" FontWeight="Bold" HorizontalAlignment="center"  
                        VerticalAlignment="Center"/>
 
                     <TextBox x:Name="price_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="가격" Grid.Column="4" HorizontalContentAlignment="Center" 
-                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" />
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" 
+                             Text="{Binding SelectedProduct.Prod_price}"/>
 
                     <Label Content="수량" Foreground="#4472C4" Grid.Column="5" FontSize="12" FontWeight="Bold" HorizontalAlignment="center"  
                        VerticalAlignment="Center"/>
 
                     <TextBox x:Name="mount_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="6" HorizontalContentAlignment="Center" 
-                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" />
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" 
+                             Text="{Binding SelectedProduct.Imp_dept_count}"/>
 
                 </Grid>
 
