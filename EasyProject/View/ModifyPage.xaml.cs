@@ -37,7 +37,10 @@ namespace EasyProject.View
 
         private void cancel_Btn_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate
+                (
+                new Uri("/View/TabItemPage/StatusPage.xaml", UriKind.Relative)
+                );
         }
 
         private void signUp_Btn_Click(object sender, RoutedEventArgs e)

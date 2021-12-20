@@ -35,7 +35,8 @@ namespace EasyProject.Dao
         ObservableCollection<ProductInOutModel> GetProductInByNurse(NurseModel nurse_dto);
 
         // 재고 수정
-        void ChangeProductInfo(ProductShowModel prod_dto, CategoryModel category_dto);
+        void ChangeProductInfo(ProductShowModel prod_dto);
+        void ChangeProductInfo_IMP_DEPT(ProductShowModel prod_dto);
     }//interface
 
 }//namespace

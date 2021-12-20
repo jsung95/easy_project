@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace EasyProject.Model
 {
     public class UserModel : Notifier
@@ -16,8 +11,19 @@ namespace EasyProject.Model
         public string Dept_name { get; set; }
         public string Dept_phone { get; set; }
         public string Dept_status { get; set; }
-        public bool? IsChecked { get; set; }
-        
+
+        private bool isChecked;
+        public bool IsChecked
+        {
+            get { return isChecked; }
+            set
+            {
+                isChecked = value;
+                OnPropertyChanged("IsChecked");
+            }
+        }
+
+
 
     }//class
 
