@@ -7,6 +7,9 @@ using System.Data;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Windows.Controls;
 using System.Windows.Data;
+using EasyProject.ViewModel;
+using EasyProject.Model;
+using System.Collections.Generic;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -16,15 +19,25 @@ namespace EasyProject.View.TabItemPage
     public partial class FileUploadPageFunction : PageFunction<String>
     {
         private OpenFileDialog openFileDialog;
+        private List<ProductShowModel> excelProductList;
+
         public FileUploadPageFunction(OpenFileDialog openFileDialog)
         {
             InitializeComponent();
+            this.DataContext = new ProductViewModel();
+
+            var bindingParameter = new Binding("OpenFileDialog");
+            bindingParameter.Source = openFileDialog.FileName;
+            HiddenControl.Visibility = Visibility.Hidden;
+            HiddenControl.SetBinding(TextBlock.TextProperty, bindingParameter);
+
+            excelProductList = new List<ProductShowModel>();
+            fileUploadBtn.Click += fileUploadBtn_Click;
 
             this.openFileDialog = openFileDialog;
             SetFileNameTxtBlock();
-            SetDataGrid();
 
-            fileUploadBtn.Click += fileUploadBtn_Click;
+            ExcelReader();
         }
 
         private string GetFileName(OpenFileDialog openFileDialog)
@@ -33,9 +46,11 @@ namespace EasyProject.View.TabItemPage
         }
         private void SetFileNameTxtBlock()
         {
-           fileNameTxtbox.Text = GetFileName(this.openFileDialog);
+            fileNameTxtbox.Text = GetFileName(this.openFileDialog);
         }
-        private void SetDataGrid()
+
+
+        private void ExcelReader()
         {
             Excel.Application xlApp;
             Excel.Workbook xlWorkBook;
@@ -44,7 +59,6 @@ namespace EasyProject.View.TabItemPage
 
             try
             {
-                string str;
                 int rCnt = 0; // 열 갯수
                 int cCnt = 0; // 행 갯수
 
@@ -54,27 +68,21 @@ namespace EasyProject.View.TabItemPage
 
                 range = xlWorkSheet.UsedRange; // 가져 온 시트의 데이터 범위 값
 
-                for (rCnt = 1; rCnt <= range.Rows.Count; rCnt++)
+                for (rCnt = 2; rCnt <= range.Rows.Count; rCnt++)
                 {
+                    var product = new ProductShowModel();
                     for (cCnt = 1; cCnt <= range.Columns.Count; cCnt++)
                     {
-                        if(rCnt == 1)
-                        {
-                            str = (string)(range.Cells[rCnt, cCnt] as Excel.Range).Value2;
-                            var col = new DataGridTextColumn();
-                            col.Header = str;
-                            col.Width = 80;
-                            col.Binding = new Binding(str);
-                            fileUploadDataGrid.Columns.Add(col);
-                        }
-                        else
-                        {
-                            // 열과 행에 해당하는 데이터를 문자열로 반환
-                            //str = (string)(range.Cells[rCnt, cCnt] as Excel.Range).Value2;
-                            str = range.Cells[rCnt, cCnt].Text.ToString();
-                            MessageBox.Show(str);
-                        }
+                        // 열과 행에 해당하는 데이터를 문자열로 반환
+                        //str = (string)(range.Cells[rCnt, cCnt] as Excel.Range).Value2;
+                        product = SetProductObject(ref product, ref range, rCnt, cCnt);
+                        
+                        //MessageBox.Show(product.Prod_code+".."+product.Prod_name+
+                        //   ".." + product.Category_name+".."+product.Prod_expire
+                        //   + ".." + product.Prod_price + ".." + product.Prod_total);  
                     }
+                    excelProductList.Add(product);
+                    MessageBox.Show(excelProductList.Count+"개");
 
                 }
 
@@ -89,6 +97,45 @@ namespace EasyProject.View.TabItemPage
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+        private ProductShowModel SetProductObject(ref ProductShowModel Product, ref Excel.Range range, int rCnt, int cCnt)
+        {
+            
+            string headerText = range.Cells[1, cCnt].Text.ToString();
+
+            switch (headerText)
+            {
+                case "제품코드":
+                    Product.Prod_code = (string)GetCellText(range, rCnt, 1);
+                    break;
+
+                case "제품명":
+                    Product.Prod_name = (string)GetCellText(range, rCnt, 2);
+                    break;
+
+                case "품목/종류":
+                    Product.Category_name = (string)GetCellText(range, rCnt, 3);
+                    break;
+
+                case "유통기한":
+                    Product.Prod_expire = Convert.ToDateTime(GetCellText(range, rCnt, 4));
+                    break;
+
+                case "가격":
+                    Product.Prod_price = Int32.Parse(GetCellText(range, rCnt, 5));
+                    break;
+
+                case "수량":
+                    Product.Prod_total = Int32.Parse(GetCellText(range, rCnt, 6));
+                    break;
+
+            }
+            return Product;
+        }
+        private string GetCellText(Excel.Range range, int rCnt, int cCnt)
+        {
+            string cellText = range.Cells[rCnt, cCnt].Text.ToString();
+            return cellText;
         }
 
         private void releaseObject(object obj)
@@ -112,7 +159,7 @@ namespace EasyProject.View.TabItemPage
         private void fileUploadBtn_Click(object sender, RoutedEventArgs e)
         {
             //이전 페이지로 돌아가기 (PageFunction 객체 생성한 페이지)
-            OnReturn(new ReturnEventArgs<string>()); 
+            OnReturn(new ReturnEventArgs<string>());
         }
 
     }

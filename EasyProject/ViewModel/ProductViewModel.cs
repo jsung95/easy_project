@@ -5,12 +5,18 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Microsoft.Expression.Interactivity.Core;
+using Microsoft.Win32;
 
 namespace EasyProject.ViewModel
 {
     public class ProductViewModel : Notifier
     {
         ProductDao dao = new ProductDao();
+
+        public string OpenFileDialog { 
+            get;
+            
+            set; }
 
         public ObservableCollection<CategoryModel> Categories { get; set; }
 
@@ -40,6 +46,7 @@ namespace EasyProject.ViewModel
 
             //현재 로그인 사용자의 입고 목록을 가져옴
             Add_list = dao.GetProductInByNurse(Nurse);
+            
         }
 
         private ActionCommand command;
@@ -56,6 +63,25 @@ namespace EasyProject.ViewModel
 
         }//Command
 
+        public ICommand ListCommand
+        {
+            get
+            {
+                if (command == null)
+                {
+                    command = new ActionCommand(ProductListInsert);
+                }
+                return command;
+            }//get
+
+        }//Command
+
+        //excel로 입력받은 여러개의 제품들에 대한 처리 
+        public void ProductListInsert()
+        {
+            Console.WriteLine(OpenFileDialog);
+
+        }
         public void ProductInsert()
         {
             
