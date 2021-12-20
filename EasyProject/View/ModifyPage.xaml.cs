@@ -28,7 +28,11 @@ namespace EasyProject.View
 
         private void reset_Btn_Click(object sender, RoutedEventArgs e)
         {
-
+            prodcode_TxtBox.Text = "";
+            prodname_TxtBox.Text = "";
+            price_TxtBox.Text = "";
+            mount_TxtBox.Text = "";
+            expirationDate_DatePicker.SelectedDate = null;
         }
 
         private void cancel_Btn_Click(object sender, RoutedEventArgs e)
