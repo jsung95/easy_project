@@ -66,11 +66,11 @@
                 </Grid>
 
                 <Grid Grid.Row="1" Grid.Column="0">
-                    <ComboBox  HorizontalAlignment="Center" Background="#FF877B7B" VerticalAlignment="Center" Width="120" Grid.Column="0" SelectedItem="{Binding SelectedAuth1}" ItemsSource="{Binding AuthList}"/>
+                    <!-- <ComboBox  HorizontalAlignment="Center" Background="#FF877B7B" VerticalAlignment="Center" Width="120" Grid.Column="0" SelectedItem="{Binding SelectedAuth1}" ItemsSource="{Binding AuthList}"/> -->
                 </Grid>
 
                 <Grid Grid.Row="1" Grid.Column="2">
-                    <ComboBox HorizontalAlignment="Center"  Background="#FF877B7B" VerticalAlignment="Center" Width="120" SelectedItem="{Binding SelectedAuth2}" ItemsSource="{Binding AuthList}"/>
+                    <!--<ComboBox HorizontalAlignment="Center"  Background="#FF877B7B" VerticalAlignment="Center" Width="120" SelectedItem="{Binding SelectedAuth2}" ItemsSource="{Binding AuthList}"/>-->
                 </Grid>
 
 
@@ -207,6 +207,9 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
+                </Grid>
+                <Grid Grid.Row="5" Grid.Column="3">
+                    <Button Content="확인" Background="#4472C4"  FontSize="20" Foreground="White" HorizontalAlignment="Right" ></Button>
                 </Grid>
             </Grid>
 
