@@ -126,7 +126,7 @@ namespace EasyProject.ViewModel
         public void MoveRight()
         {
             Console.WriteLine("MoveRight");
-            Admins_searched.Clear();
+            //Admins_searched.Clear();
             for (int i = 0; i < Normals_searched.Count; i++)
             {
                 var item = Normals_searched[i];
@@ -149,7 +149,7 @@ namespace EasyProject.ViewModel
         public void MoveLeft()
         {
             Console.WriteLine("MoveLeft");
-            Normals_searched.Clear();
+            //Normals_searched.Clear();
             for (int i = 0; i < Admins_searched.Count; i++)
             {
                 var item = Admins_searched[i];
