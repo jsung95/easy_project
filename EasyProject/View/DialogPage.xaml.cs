@@ -20,6 +20,20 @@ namespace EasyProject
     /// </summary>
     public partial class DialogPage : Page
     {
-       
+        private void goOrder_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate
+                (
+                new Uri("/View/TabItemPage/OrderPage.xaml", UriKind.Relative)
+                );
+        }
+
+        private void InventoryRevise_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate
+                (
+                new Uri("/View/ModifyPage.xaml", UriKind.Relative)
+                );
+        }
     }
 }

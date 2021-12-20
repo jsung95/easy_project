@@ -53,11 +53,21 @@ namespace EasyProject.ViewModel
 
         }
 
+        private ActionCommand logout;
+        public ICommand LogoutCommand
+        {
+            get
+            {
+                if(logout == null)
+                {
+                    logout = new ActionCommand(Logout);
+                }
+                return logout;
+            }
+        }
+
         public void Login()
         {
-
-            
-            
             NurseModel result = dao.LoginUserInfo(Nurse);
             if (result.Nurse_no != null)
             {
@@ -85,6 +95,25 @@ namespace EasyProject.ViewModel
             }
         }
 
+        public void Logout()
+        {
+            
+            if (App.nurse_dto.Nurse_no != null)
+            {
+                App.nurse_dto.Nurse_no = null;
+                App.nurse_dto.Nurse_name = null;
+                App.nurse_dto.Nurse_auth = null;
+                App.nurse_dto.Nurse_pw = null;
+                App.nurse_dto.Dept_id = null;
+
+                Console.WriteLine("로그아웃 성공");
+                Console.WriteLine("  Nurse NO : {0}", App.nurse_dto.Nurse_no);
+                Console.WriteLine("  Nurse NAME : {0}", App.nurse_dto.Nurse_name);
+                Console.WriteLine("  Nurse AUTH : {0}", App.nurse_dto.Nurse_auth);
+                Console.WriteLine("  Nurse PW : {0}", App.nurse_dto.Nurse_pw);
+                Console.WriteLine("  DEPT ID : {0}", App.nurse_dto.Dept_id);
+            }
+        }
 
 
         private string password;

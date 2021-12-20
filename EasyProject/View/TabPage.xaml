@@ -7,8 +7,13 @@
       mc:Ignorable="d" 
       xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:vm="clr-namespace:EasyProject.ViewModel"
       d:DesignHeight="600" d:DesignWidth="1080"
       Title="TabPage">
+    <Page.DataContext>
+        <vm:LoginViewModel/>
+    </Page.DataContext>
     <StackPanel Orientation="Vertical" Background="white">
         <Grid Height="40">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
@@ -18,10 +23,11 @@
                 <Button Uid="3" Height="40" Width="150" Click="TabButtonClick" ToolTip="Follow me on Twitter" Foreground="#ff2196f3" Content="발주신청" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" />
                 <Button Uid="4" Height="40" Width="150" Click="TabButtonClick" ToolTip="Follow me on Twitter" Foreground="#ff2196f3" Content="권한부여" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" />
             </StackPanel>
-
+ 
             <StackPanel Orientation="Horizontal" Margin="10 0" VerticalAlignment="Center" HorizontalAlignment="Right">
                 <TextBlock x:Name="userNameTxtBox" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#ff2196f3"></TextBlock>
                 <TextBlock x:Name="userNamePlusTxtBlock" Text="님" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#ff2196f3"></TextBlock>
+                <!--<Button Content="로그아웃" Cursor="Hand" Command="{Binding LogoutCommand}"/>-->
             </StackPanel>
             
             <Grid x:Name="GridCursor" Width="150" Height="5" Background="#ff2196f3" VerticalAlignment="Bottom" HorizontalAlignment="Left"></Grid>

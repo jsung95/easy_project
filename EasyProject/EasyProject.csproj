@@ -103,8 +103,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Dao\CategoryDao.cs" />
     <Compile Include="Dao\CommonDBConn.cs" />
     <Compile Include="Dao\DeptDao.cs" />
+    <Compile Include="Dao\ICategoryDao.cs" />
     <Compile Include="Dao\IDeptDao.cs" />
     <Compile Include="Dao\ILoginDao.cs" />
     <Compile Include="Dao\IOrderDao.cs" />
@@ -137,6 +139,9 @@
     <Compile Include="ViewModel\UserAuthViewModel.cs" />
     <Compile Include="View\DialogPage.xaml.cs">
       <DependentUpon>DialogPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ModifyPage.xaml.cs">
+      <DependentUpon>ModifyPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TabItemPage\AuthorityPage.xaml.cs">
       <DependentUpon>AuthorityPage.xaml</DependentUpon>
@@ -177,6 +182,10 @@
     <Page Include="View\DialogPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ModifyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TabItemPage\AuthorityPage.xaml">
       <SubType>Designer</SubType>
