@@ -778,7 +778,7 @@ namespace EasyProject.Dao
                                           "VALUES(:count, :prod_id, :nurse_no, :dept_id1, (SELECT dept_name FROM DEPT WHERE dept_id = :dept_id2), :out_to, :out_type)";
 
                         //파라미터 값 바인딩
-                        cmd.Parameters.Add(new OracleParameter("count", prod_dto.Prod_total));
+                        cmd.Parameters.Add(new OracleParameter("count", prod_dto.Imp_dept_count));
                         cmd.Parameters.Add(new OracleParameter("prod_id", prod_dto.Prod_id));
                         cmd.Parameters.Add(new OracleParameter("nurse_no", nurse_dto.Nurse_no));
                         cmd.Parameters.Add(new OracleParameter("dept_id1", nurse_dto.Dept_id));
@@ -798,7 +798,7 @@ namespace EasyProject.Dao
                             cmd.Parameters.Add(new OracleParameter("out_to", SelectedOutType));
                         }
                         ///////////////////////////////////////////////////////////////////////
-
+                        
                         cmd.Parameters.Add(new OracleParameter("out_type", SelectedOutType));
 
 

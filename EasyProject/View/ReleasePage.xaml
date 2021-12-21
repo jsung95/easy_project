@@ -80,7 +80,7 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>-->
                         <ComboBox Margin="10,25" Height="30" Width="70" Grid.Column="1" HorizontalAlignment="Center"  Name="Type_comboBox" VerticalAlignment="Center"
-                                  SelectedItem="{Binding SelectedOutType}">
+                                  SelectedValue="{Binding SelectedOutType}" SelectedValuePath="Content">
                             <ComboBoxItem Content="사용" />
                             <ComboBoxItem Content="이관" />
                             <ComboBoxItem Content="폐기" />
