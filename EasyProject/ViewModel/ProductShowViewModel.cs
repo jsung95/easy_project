@@ -14,6 +14,9 @@ namespace EasyProject.ViewModel
         ProductDao product_dao = new ProductDao();
         CategoryDao category_dao = new CategoryDao();
 
+        //로그인한 간호자(사용자) 정보를 담을 프로퍼티
+        public NurseModel Nurse { get; set; }
+
         //재고 목록 조회해서 담을 옵저버블컬렉션 리스트 프로퍼티
         private ObservableCollection<ProductShowModel> products;
         public ObservableCollection<ProductShowModel> Products
@@ -76,6 +79,21 @@ namespace EasyProject.ViewModel
             }
         }
 
+        // 재고 출고 - 선택한 출고 유형 콤보박스를 담을 값
+        public string SelectedOutType { get; set; }
+
+        // 재고 출고 - 선택한 부서를 담을 프로퍼티
+        private string selectedDeptForOut;
+        public string SelectedDeptForOut
+        {
+            get { return selectedDeptForOut; }
+            set 
+            { 
+                selectedDeptForOut = value;
+                OnPropertyChanged("SelectedDeptForOut");
+            }
+        }
+
         public ProductShowViewModel()
         {
             Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts());
@@ -83,6 +101,9 @@ namespace EasyProject.ViewModel
             Products = new ObservableCollection<ProductShowModel>(product_dao.GetProducts());
 
             Categories = new ObservableCollection<CategoryModel>(category_dao.GetCategories());
+
+            //App.xaml.cs 에 로그인할 때 바인딩 된 로그인 정보 객체
+            Nurse = App.nurse_dto;
         }
 
 
@@ -101,7 +122,7 @@ namespace EasyProject.ViewModel
 
         public void GetProductsByDept()
         {
-
+            
 
             Products = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
         }
@@ -146,8 +167,57 @@ namespace EasyProject.ViewModel
             
         }
 
+
+        private ActionCommand outProductCommand;
+        public ICommand OutProductCommand
+        {
+            get
+            {
+                if (outProductCommand == null)
+                {
+                    outProductCommand = new ActionCommand(OutProduct);
+                }
+                return outProductCommand;
+            }//get
+        }
+
+        public void OutProduct()
+        {
+            product_dao.OutProduct(SelectedProduct, Nurse, SelectedOutType, SelectedDept);
+        }
+
+
+        private ActionCommand clearType;
+        public ICommand ClearType
+        {
+            get
+            {
+                if (clearType == null)
+                {
+                    clearType = new ActionCommand(ClearComboboxType);
+                }
+                return clearType;
+            }//get
+        }
+
+        public void ClearComboboxType()
+        {
+            
+            if (SelectedOutType.Equals("System.Windows.Controls.ComboBoxItem: 사용") || SelectedOutType.Equals("System.Windows.Controls.ComboBoxItem: 폐기"))
+            {
+                Console.WriteLine("!!!!");
+                SelectedDeptForOut = null;
+            } 
+            else
+            {
+                OnPropertyChanged("SelectedDeptForOut");
+            }
+        }
+
+
+
     }//class
 
-        
+
 
 }//namespace

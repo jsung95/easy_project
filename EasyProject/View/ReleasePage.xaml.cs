@@ -51,11 +51,13 @@ namespace EasyProject.View
 
         private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox currentComboBox = sender as ComboBox; if (currentComboBox != null)
+            ComboBox currentComboBox = sender as ComboBox;
+            
+            if (currentComboBox != null)
             {
 
                 ComboBoxItem currentItem = currentComboBox.SelectedItem as ComboBoxItem;
-
+                Console.WriteLine(currentItem);
                 if (currentItem.Content.Equals("사용")|| currentItem.Content.Equals("폐기"))
                 {
                     
@@ -69,7 +71,7 @@ namespace EasyProject.View
                 }
 
             }
-            
+
 
         }
     }

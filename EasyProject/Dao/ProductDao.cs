@@ -757,7 +757,106 @@ namespace EasyProject.Dao
             {
                 Console.WriteLine(e.Message);
             }//catch
-        }
+        }//ChangeProductInfo_IMP_DEPT()
+
+        public void OutProduct(ProductShowModel prod_dto, NurseModel nurse_dto, string SelectedOutType, DeptModel dept_dto)
+        {
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "INSERT INTO PRODUCT_OUT(PROD_OUT_COUNT, PROD_ID, NURSE_NO, DEPT_ID, PROD_OUT_FROM, PROD_OUT_TO, PROD_OUT_TYPE) " +
+                                          "VALUES(:count, :prod_id, :nurse_no, :dept_id1, (SELECT dept_name FROM DEPT WHERE dept_id = :dept_id2), :out_to, :out_type)";
+
+                        //파라미터 값 바인딩
+                        cmd.Parameters.Add(new OracleParameter("count", prod_dto.Prod_total));
+                        cmd.Parameters.Add(new OracleParameter("prod_id", prod_dto.Prod_id));
+                        cmd.Parameters.Add(new OracleParameter("nurse_no", nurse_dto.Nurse_no));
+                        cmd.Parameters.Add(new OracleParameter("dept_id1", nurse_dto.Dept_id));
+                        cmd.Parameters.Add(new OracleParameter("dept_id2", nurse_dto.Dept_id));
+
+                        ///////////////////////////////////////////////////////////////////////
+                        if (SelectedOutType.Equals("이관"))
+                        {
+                            cmd.Parameters.Add(new OracleParameter("out_to", dept_dto.Dept_name)); //출고된 곳은 콤보박스에서 선택한 부서로 출고
+                        }
+                        else if (SelectedOutType.Equals("사용")) //출고된 곳이 '사용'이라면
+                        {
+                            cmd.Parameters.Add(new OracleParameter("out_to", GetNurseDeptName(nurse_dto)));
+                        }
+                        else // 폐기 일때
+                        {
+                            cmd.Parameters.Add(new OracleParameter("out_to", SelectedOutType));
+                        }
+                        ///////////////////////////////////////////////////////////////////////
+
+                        cmd.Parameters.Add(new OracleParameter("out_type", SelectedOutType));
+
+
+                        cmd.ExecuteNonQuery();
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+        }// OutProduct()
+
+
+        public string GetNurseDeptName(NurseModel nurse_dto)
+        {
+            string dept_name = "";
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT dept_name FROM DEPT WHERE dept_id = :dept_id ";
+
+                        cmd.Parameters.Add(new OracleParameter("dept_id", nurse_dto.Dept_id));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            dept_name = reader.GetString(0);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return dept_name;
+
+        }//GetNurseDeptName()
+
     }//class
 
 }//namespace
