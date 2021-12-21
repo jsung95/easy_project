@@ -625,7 +625,6 @@ namespace EasyProject.Dao
                         cmd.Parameters.Add(new OracleParameter("id", prod_dto.Prod_id));
 
 
-
                         cmd.ExecuteNonQuery();
 
                     }//using(cmd)
@@ -654,12 +653,11 @@ namespace EasyProject.Dao
                         cmd.Connection = conn;
 
                         cmd.CommandText = "UPDATE IMP_DEPT SET " +
-                                          "imp_dept_count = :total " +
-                                          "WHERE imp_dept_id = :id ";
-                        Console.WriteLine(prod_dto.Imp_dept_count);
-                        Console.WriteLine(prod_dto.Prod_id);
-                        cmd.Parameters.Add(new OracleParameter("total", prod_dto.Imp_dept_count));
-                        cmd.Parameters.Add(new OracleParameter("id", prod_dto.Prod_id));
+                                          "imp_dept_count = :imp_total " +
+                                          "WHERE imp_dept_id = :imp_id";
+
+                        cmd.Parameters.Add(new OracleParameter("imp_total", prod_dto.Imp_dept_count));
+                        cmd.Parameters.Add(new OracleParameter("imp_id", prod_dto.Imp_dept_id));
 
 
 
