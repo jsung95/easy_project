@@ -143,6 +143,9 @@
     <Compile Include="View\ModifyPage.xaml.cs">
       <DependentUpon>ModifyPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ReleasePage.xaml.cs">
+      <DependentUpon>ReleasePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TabItemPage\AuthorityPage.xaml.cs">
       <DependentUpon>AuthorityPage.xaml</DependentUpon>
     </Compile>
@@ -193,6 +196,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\ModifyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ReleasePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -35,5 +35,13 @@ namespace EasyProject
                 new Uri("/View/ModifyPage.xaml", UriKind.Relative)
                 );
         }
+
+        private void Release_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate
+                (
+                new Uri("/View/ReleasePage.xaml", UriKind.Relative)
+                );
+        }
     }
 }
