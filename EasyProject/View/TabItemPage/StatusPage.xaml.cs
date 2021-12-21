@@ -51,16 +51,16 @@ public partial class StatusPage : Page {
             deptName_ComboBox1.SelectedIndex = (int)App.nurse_dto.Dept_id - 1;
             this.Loaded += MainWindow_Loaded;
 
-            chart.LegendLocation = LiveCharts.LegendLocation.Top;
+            //chart.LegendLocation = LiveCharts.LegendLocation.Top;
 
             ////세로 눈금 값 설정
             //chart.AxisY.Add(new LiveCharts.Wpf.Axis { MinValue = 0, MaxValue = 1000 });
             //chart.AxisX.Add(new LiveCharts.Wpf.Axis { Labels = new string[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" } });
             Values = Values = new ChartValues<float>
             {
-                3,4,6,3,2,6
+               3,4,6,3,2,6
             };
-            DataContext = this;
+            //DataContext = this;
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
