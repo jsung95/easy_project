@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,10 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace EasyProject.View.TabItemPage
 {
@@ -23,9 +22,18 @@ namespace EasyProject.View.TabItemPage
         public IncomingOutgoingList1Page()
         {
             InitializeComponent();
-            //export_btn.Click += Export_Click();
+            export_btn.Click += Export_btn_Click;
         }
 
-     
+        private void Export_btn_Click(object sender, RoutedEventArgs e)
+        {
+            dataGrid1.SelectAllCells();
+            dataGrid1.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
+            ApplicationCommands.Copy.Execute(null, dataGrid1);
+            dataGrid1.UnselectAllCells();
+            String result = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
+            Console.WriteLine(result);
+            File.AppendAllText(@"c:\temp\MyTest.csv", result, UnicodeEncoding.UTF8);
+        }
     }
 }

@@ -28,15 +28,10 @@
 
         </Grid>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" >
 
             <Frame x:Name="ListFrame"  Source="IncomingOutgoingList1Page.xaml"/>
 
         </Grid>
-
-        <Grid Grid.Column="1">
-
-        </Grid>
-
     </Grid>
 </Page>
