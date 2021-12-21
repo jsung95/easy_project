@@ -73,7 +73,7 @@ namespace EasyProject.Dao
         }//GetUserInfo()
 
 
-        public void UserAuthChange(string auth, ObservableCollection<UserModel> no)
+        public void UserAuthChange(string auth, List<UserModel> no)
         {
             try
             {
@@ -88,8 +88,8 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
 
-                        cmd.CommandText = "UPDATE NURSE" +
-                                          "SET nurse_auth = :auth" +
+                        cmd.CommandText = "UPDATE NURSE " +
+                                          "SET nurse_auth = :auth " +
                                           "WHERE nurse_no IN (:no)";
 
                         cmd.Parameters.Add(new OracleParameter("auth", auth));
@@ -100,10 +100,8 @@ namespace EasyProject.Dao
                             user_nos += item.Nurse_no + ",";
                         }//foreach
                         user_nos = user_nos.Remove(user_nos.Length - 1, 1);
-
                         cmd.Parameters.Add(new OracleParameter("no", user_nos));
-
-
+                        Console.WriteLine(user_nos);
                         cmd.ExecuteNonQuery();
 
                     }//using(cmd)
