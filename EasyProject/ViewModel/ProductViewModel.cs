@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Microsoft.Expression.Interactivity.Core;
 using Microsoft.Win32;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace EasyProject.ViewModel
 {
@@ -13,10 +14,19 @@ namespace EasyProject.ViewModel
     {
         ProductDao dao = new ProductDao();
 
+        private string openFileDialog;
         public string OpenFileDialog { 
-            get;
-            
-            set; }
+            get
+            {
+                return openFileDialog;
+            }
+
+            set
+            {
+                this.openFileDialog = value;
+                OnPropertyChanged("OpenFileDialog");
+            }
+        }
 
         public ObservableCollection<CategoryModel> Categories { get; set; }
 
@@ -32,6 +42,8 @@ namespace EasyProject.ViewModel
         //입력한 재고 데이터를 담은 객체를 담아줄 옵저버블컬렉션 리스트
         public static ObservableCollection<ProductInOutModel> Add_list { get; set; }
 
+        private List<ProductShowModel> excelProductList;
+
         public ProductViewModel()
         {
             Product = new ProductModel()
@@ -46,7 +58,9 @@ namespace EasyProject.ViewModel
 
             //현재 로그인 사용자의 입고 목록을 가져옴
             Add_list = dao.GetProductInByNurse(Nurse);
-            
+
+            excelProductList = new List<ProductShowModel>();
+
         }
 
         private ActionCommand command;
@@ -69,7 +83,7 @@ namespace EasyProject.ViewModel
             {
                 if (command == null)
                 {
-                    command = new ActionCommand(ProductListInsert);
+                    command = new ActionCommand(ExcelReader);
                 }
                 return command;
             }//get
@@ -77,10 +91,134 @@ namespace EasyProject.ViewModel
         }//Command
 
         //excel로 입력받은 여러개의 제품들에 대한 처리 
-        public void ProductListInsert()
-        {
-            Console.WriteLine(OpenFileDialog);
 
+        private void ExcelReader()
+        {
+            Excel.Application xlApp;
+            Excel.Workbook xlWorkBook;
+            Excel.Worksheet xlWorkSheet;
+            Excel.Range range;
+
+            try
+            {
+                int rCnt = 0; // 열 갯수
+                int cCnt = 0; // 행 갯수
+
+                xlApp = new Excel.Application();
+                xlWorkBook = xlApp.Workbooks.Open(openFileDialog);
+                xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1); // 첫번째 시트를 가져 옴.
+
+                range = xlWorkSheet.UsedRange; // 가져 온 시트의 데이터 범위 값
+
+                for (rCnt = 2; rCnt <= range.Rows.Count; rCnt++)
+                {
+                    var product = new ProductShowModel();
+                    for (cCnt = 1; cCnt <= range.Columns.Count; cCnt++)
+                    {
+                        product = SetProductObject(ref product, ref range, rCnt, cCnt);
+                    }
+                    excelProductList.Add(product);
+                    //MessageBox.Show(excelProductList.Count + "개");
+
+                }
+
+                foreach (ProductShowModel elem in excelProductList)
+                {
+                    //MessageBox.Show(product.Prod_code+".."+product.Prod_name+
+                    //   ".." + product.Category_name+".."+product.Prod_expire
+                    //   + ".." + product.Prod_price + ".." + product.Prod_total);
+
+                    dao.AddProductForExcel(elem, elem.Category_name);
+                    dao.StoredProductForExcel(elem, Nurse);
+                    dao.AddImpDeptForExcel(elem, Nurse);
+
+                    // 현재 사용자가 추가 입고 내역을 담을 임시 객체
+                    ProductInOutModel productDto = new ProductInOutModel();
+
+                    // 새로 입고 시 Add_list(사용자의 입고 내역 목록) 업데이트
+                    productDto.Prod_in_date = DateTime.Now;
+                    productDto.Prod_code = elem.Prod_code;
+                    productDto.Prod_name = elem.Prod_name;
+                    productDto.Category_name = elem.Category_name;
+                    productDto.Prod_expire = elem.Prod_expire;
+                    productDto.Prod_price = elem.Prod_price;
+                    productDto.Prod_in_count = elem.Prod_total;
+                    productDto.Nurse_name = Nurse.Nurse_name;
+
+                    Add_list.Insert(0, productDto);
+                    Console.WriteLine(Add_list.Count+"개");
+                }
+
+                xlWorkBook.Close(true, null, null);
+                xlApp.Quit();
+
+                releaseObject(xlWorkSheet);
+                releaseObject(xlWorkBook);
+                releaseObject(xlApp);
+
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private ProductShowModel SetProductObject(ref ProductShowModel Product, ref Excel.Range range, int rCnt, int cCnt)
+        {
+
+            string headerText = range.Cells[1, cCnt].Text.ToString();
+
+            switch (headerText)
+            {
+                case "제품코드":
+                    Product.Prod_code = (string)GetCellText(range, rCnt, 1);
+                    break;
+
+                case "제품명":
+                    Product.Prod_name = (string)GetCellText(range, rCnt, 2);
+                    break;
+
+                case "품목/종류":
+                    Product.Category_name = (string)GetCellText(range, rCnt, 3);
+                    break;
+
+                case "유통기한":
+                    Product.Prod_expire = Convert.ToDateTime(GetCellText(range, rCnt, 4));
+                    break;
+
+                case "가격":
+                    Product.Prod_price = Int32.Parse(GetCellText(range, rCnt, 5));
+                    break;
+
+                case "수량":
+                    Product.Prod_total = Int32.Parse(GetCellText(range, rCnt, 6));
+                    break;
+
+            }
+            return Product;
+        }
+        private string GetCellText(Excel.Range range, int rCnt, int cCnt)
+        {
+            string cellText = range.Cells[rCnt, cCnt].Text.ToString();
+            return cellText;
+        }
+
+        private void releaseObject(object obj)
+        {
+            try
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                obj = null;
+            }
+            catch (Exception ex)
+            {
+                obj = null;
+            }
+            finally
+            {
+                GC.Collect();
+            }
         }
         public void ProductInsert()
         {
