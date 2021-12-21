@@ -31,8 +31,6 @@ namespace EasyProject.ViewModel
 
         public INavigation Navigation { get; set; }
 
-
-
         public LoginViewModel()
         {
             Nurse = new NurseModel();

@@ -250,6 +250,7 @@ namespace EasyProject.Dao
 
 
                         cmd.ExecuteNonQuery();
+
                     }//using(cmd)
 
                 }//using(conn)
@@ -260,7 +261,6 @@ namespace EasyProject.Dao
             {
                 Console.WriteLine(e.Message);
             }//catch
-
 
         }//AddProduct
 
