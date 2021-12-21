@@ -30,6 +30,7 @@ namespace EasyProject.View.TabItemPage
 public partial class StatusPage : Page {
         //int pIndex = 1;
         //private int numberOf;
+        public ChartValues<float> Values { get; set; }
         private enum PagingMode
         { First = 1, Next = 2, Previous = 3, Last = 4, PageCountChange = 5 };
 
@@ -49,13 +50,27 @@ public partial class StatusPage : Page {
             //WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             deptName_ComboBox1.SelectedIndex = (int)App.nurse_dto.Dept_id - 1;
             this.Loaded += MainWindow_Loaded;
+
+            //chart.LegendLocation = LiveCharts.LegendLocation.Top;
+
+            ////세로 눈금 값 설정
+            //chart.AxisY.Add(new LiveCharts.Wpf.Axis { MinValue = 0, MaxValue = 1000 });
+            //chart.AxisX.Add(new LiveCharts.Wpf.Axis { Labels = new string[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" } });
+            Values = Values = new ChartValues<float>
+            {
+               3,4,6,3,2,6
+            };
+            //DataContext = this;
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-           // myLst = GetData();
+            searchText_ComboBox.Items.Add("제품코드");
+            searchText_ComboBox.Items.Add("제품명");
+            searchText_ComboBox.SelectedIndex = 0;
+            // myLst = GetData();
 
-           // dataGrid.ItemsSource = myLst.Take(numberOf);
+            // dataGrid.ItemsSource = myLst.Take(numberOf);
 
             //dataGrid.Columns[0].Header = "제품ID";
             //dataGrid.Columns[1].Header = "제품명";

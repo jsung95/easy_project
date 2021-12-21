@@ -66,7 +66,7 @@
                 <Button x:Name="signUpBtn" Grid.Column="0" Content="회원가입" Background="#E0E0E0" BorderThickness="0" FontSize="20" 
                     HorizontalAlignment="Right" VerticalAlignment="Center" Height="40" Width="140" Margin="0,0,10,0"/>
                 <Button x:Name="searchBtn" Grid.Column="1" Content="ID/PW 찾기" Background="#E0E0E0" BorderThickness="0" FontSize="20" 
-                    HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" Width="140" Margin="10,0,0,0"/>
+                    HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" Width="140" Margin="10,0,0,0" Cursor="Hand"/>
             </Grid>
 
         </Grid>

@@ -16,7 +16,7 @@
     </Page.DataContext>
     <Grid  Background="White"  >
         <materialDesign:Card Height="400" Width="450" Margin ="10" UniformCornerRadius="20" Background="White">
-        <Grid Height="400" Width="450"  HorizontalAlignment="Center" >
+            <Grid Height="400" Width="450"  HorizontalAlignment="Center" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.8*"/>
                     <RowDefinition Height="*"/>
@@ -47,7 +47,7 @@
                         <ComboBox.Resources>
                             <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
                         </ComboBox.Resources>
-                        
+
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -82,14 +82,15 @@
                 </Grid>
                 <Grid Grid.Row="4">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="6*"/>
-                        <ColumnDefinition Width="14*"/>
+                        <ColumnDefinition Width="135*"/>
+                        <ColumnDefinition Width="89*"/>
+                        <ColumnDefinition Width="226*"/>
                     </Grid.ColumnDefinitions>
 
                     <Label Content="비밀번호 재입력" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
                     <PasswordBox x:Name="rePassword_PwBox" Grid.Column="1" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" />
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Grid.ColumnSpan="2" w:PasswordHelper.Password="{Binding Nurse.Nurse_re_pw, Mode=TwoWay}"/>
                 </Grid>
                 <Grid Grid.Row="5" >
                     <Grid.ColumnDefinitions>
@@ -105,7 +106,7 @@
                     <Button x:Name="backBtn" Content="돌아가기" Grid.Column="0" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" Cursor="Hand" />
                     <Button x:Name="rewriteBtn" Content="다시 작성하기" Grid.Column="2" Background="LightGray" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
-                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" Cursor="Hand" />
+                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" Cursor="Hand" Command="{Binding ResetCommand}"/>
                 </Grid>
             </Grid>
         </materialDesign:Card>

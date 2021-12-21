@@ -35,7 +35,10 @@ namespace EasyProject
             //throw new NotImplementedException();
             //ID/PW 찾기 페이지 연결
             MessageBox.Show("ID/PW 찾기 버튼 누르셨습니다.");
-
+            NavigationService.Navigate
+                (
+                new Uri("/View/PWChangePage.xaml", UriKind.Relative) // 비밀번호 변경화면
+                );
         }
         private void signUpBtn_Click(object sender, RoutedEventArgs e) //회원가입 버튼 클릭 시
         {

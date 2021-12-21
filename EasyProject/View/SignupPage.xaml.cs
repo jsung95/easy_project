@@ -24,7 +24,7 @@ namespace EasyProject
         {
             InitializeComponent();
             backBtn.Click += backBtn_Click;
-            rewriteBtn.Click += rewriteBtn_Click;
+            //rewriteBtn.Click += rewriteBtn_Click;
             signUpBtn.Click += signUpBtn_Click;
         }
         private void backBtn_Click(object sender, RoutedEventArgs e)
@@ -34,13 +34,15 @@ namespace EasyProject
                 new Uri("/View/LoginPage.xaml", UriKind.Relative) //회원가입화면
                 );
         }
+        /*
         private void rewriteBtn_Click(object sender, RoutedEventArgs e)
         {
-            name_TxtBox.Text = "";
-            id_TxtBox.Text = "";
-            password_PwBox.Password = "";
-            rePassword_PwBox.Password = "";
+            //name_TxtBox.Text = "";
+            //id_TxtBox.Text = "";
+            //password_PwBox.Password = "";
+            //rePassword_PwBox.Password = "";
         }
+        */
         private void signUpBtn_Click(object sender, RoutedEventArgs e)
         {
             if (password_PwBox.Password == rePassword_PwBox.Password)

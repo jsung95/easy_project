@@ -31,10 +31,20 @@ namespace EasyProject.ViewModel
         public ObservableCollection<CategoryModel> Categories { get; set; }
 
         //선택한 카테고리를 담을 프로퍼티
-        public CategoryModel SelectedCategory { get; set; }
-        
+        private CategoryModel selectedCategory;
+        public CategoryModel SelectedCategory
+        {
+            get { return selectedCategory; }
+            set
+            {
+                selectedCategory = value;
+                OnPropertyChanged("SelectedCategory");
+            }
+        }
+
         //재고 입력 데이터를 담을 프로퍼티
         public ProductModel Product { get; set; }
+       
 
         //로그인한 간호자(사용자) 정보를 담을 프로퍼티
         public NurseModel Nurse { get; set; }
@@ -73,6 +83,19 @@ namespace EasyProject.ViewModel
                     command = new ActionCommand(ProductInsert);   
                 }
                 return command;
+            }//get
+
+        }//Command
+        private ActionCommand resetCommand;
+        public ICommand ResetCommand
+        {
+            get
+            {
+                if (resetCommand == null)
+                {
+                    resetCommand = new ActionCommand(ResetForm);
+                }
+                return resetCommand;
             }//get
 
         }//Command
@@ -146,7 +169,7 @@ namespace EasyProject.ViewModel
                     productDto.Nurse_name = Nurse.Nurse_name;
 
                     Add_list.Insert(0, productDto);
-                    Console.WriteLine(Add_list.Count+"개");
+                    Console.WriteLine(Add_list.Count + "개");
                 }
 
                 xlWorkBook.Close(true, null, null);
@@ -156,7 +179,7 @@ namespace EasyProject.ViewModel
                 releaseObject(xlWorkBook);
                 releaseObject(xlApp);
 
-                
+
             }
             catch (Exception ex)
             {
@@ -248,7 +271,15 @@ namespace EasyProject.ViewModel
             Add_list.Insert(0, dto);
 
         }// ProductInsert
-
+        public void ResetForm()
+        {
+            Product.Prod_expire = DateTime.Now;
+            Product.Prod_name = null;
+            Product.Prod_price = null;
+            Product.Prod_total = null;
+            Product.Prod_code = null;
+            SelectedCategory = null;
+        }
     }//class
 
 }//namespace

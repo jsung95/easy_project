@@ -66,7 +66,7 @@
                         <RowDefinition Height="0.5*"/>
                         <RowDefinition Height="0.3*"/>
                     </Grid.RowDefinitions>
-                    <Button Grid.Row="1" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="80" Width="80">
+                    <Button Name="Release_Btn" Grid.Row="1" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="80" Width="80" Click="Release_Btn_Click" >
                         <materialDesign:PackIcon Kind="Arrow" Foreground="black" Height="60" Width="60" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Button>
                     <TextBlock Grid.Row="2" Name="release" Text="출고(사용)" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"></TextBlock>

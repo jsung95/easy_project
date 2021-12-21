@@ -24,18 +24,7 @@ namespace EasyProject.ViewModel
         // 사용자 검색 시 나온 사용자 정보를 담을 옵저버블컬렉션 프로퍼티
         public ObservableCollection<UserModel> Normals_searched { get; set; }
 
-        private ObservableCollection<UserModel> admins_searched;
-
-        public ObservableCollection<UserModel> Admins_searched
-        {
-            get { return admins_searched; }
-            set 
-            { 
-                admins_searched = value;
-                OnPropertyChanged("Admins_searched");
-            }
-        }
-
+        public ObservableCollection<UserModel> Admins_searched { get; set; }
 
         public UserAuthViewModel()
         {
@@ -105,7 +94,6 @@ namespace EasyProject.ViewModel
             Console.WriteLine("Normal 유저 검색");
             Normals_searched.Clear();
             List<UserModel> list = dao.SearchUser("NORMAL", NormalSearchType, Normal_Keyword);
-            //Users_searched1.CollectionChanged += Users_searched1ContentCollectionChanged;
             foreach (UserModel user in list)
             {
                 Normals_searched.Add(user);
@@ -117,6 +105,7 @@ namespace EasyProject.ViewModel
             Console.WriteLine("Admin 유저 검색");
             Admins_searched.Clear();
             List<UserModel> list = dao.SearchUser("ADMIN", AdminSearchType, Admin_Keyword);
+                        
             foreach (UserModel user in list)
             {
                 Admins_searched.Add(user);
@@ -126,47 +115,57 @@ namespace EasyProject.ViewModel
         public void MoveRight()
         {
             Console.WriteLine("MoveRight");
-            Admins_searched.Clear();
-            for (int i = 0; i < Normals_searched.Count; i++)
+            ObservableCollection<UserModel> tempObject = new ObservableCollection<UserModel>();
+            List<UserModel> updateList = new List<UserModel>(); // 업데이트 할 객체들을 담을 임시리스트
+
+            foreach (var item in Normals_searched)
             {
-                var item = Normals_searched[i];
                 if (item.IsChecked)
                 {
-                    Admins_searched.Add(item);
-                    Normals_searched.Remove(item);
+                    item.IsChecked = false;
+                    Admins_searched.Add(item); // 화면에 보이는 Admin_searched 목록에 있는 리스트
+                    updateList.Add(item);                    
                 }
+                else tempObject.Add(item); // 체크 박스 선택되지 않은 리스트
             }
-            //foreach (var item in Normals_searched)
-            //{
-            //    if (item.IsChecked)
-            //    {
-            //        Admins_searched.Add(item);
-            //        Normals_searched.Remove(item);
-            //    }
-            //}
+
+            dao.UserAuthChange("ADMIN", updateList); // 업데이트 실행
+            updateList.Clear();
+
+            Normals_searched.Clear(); // 기존의 검색 목록을 비움.
+
+            foreach (var item in tempObject)
+            {
+                Normals_searched.Add(item); // 선택되지 않은 리스트만 검색 목록에 다시 넣어줌
+            }
         }//MoveRight
 
         public void MoveLeft()
         {
-            Console.WriteLine("MoveLeft");
-            Normals_searched.Clear();
-            for (int i = 0; i < Admins_searched.Count; i++)
+            Console.WriteLine("MoveLeft");          
+            ObservableCollection<UserModel> tempObject =new  ObservableCollection<UserModel>();
+            List<UserModel> updateList = new List<UserModel>(); // 업데이트 할 객체들을 담을 임시리스트
+
+            foreach (var item in Admins_searched)
             {
-                var item = Admins_searched[i];
                 if (item.IsChecked)
                 {
+                    item.IsChecked = false;
                     Normals_searched.Add(item);
-                    Admins_searched.Remove(item);
+                    updateList.Add(item);
                 }
+                else tempObject.Add(item);
             }
-            //foreach (var item in Admins_searched)
-            //{
-            //    if (item.IsChecked)
-            //    {
-            //        Normals_searched.Add(item);
-            //        Admins_searched.Remove(item);
-            //    }
-            //}
+
+            dao.UserAuthChange("NORMAL", updateList);
+            updateList.Clear();
+
+            Admins_searched.Clear();
+
+            foreach (var item in tempObject)
+            {
+                Admins_searched.Add(item);
+            }
 
         }//MoveLeft
     }//class

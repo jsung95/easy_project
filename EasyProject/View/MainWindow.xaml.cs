@@ -79,6 +79,10 @@ namespace EasyProject
             {
                 this.WindowState = WindowState.Normal;
             }
+            else
+            {
+                this.WindowState = WindowState.Minimized;
+            }
         }
 
         private void btn_extend(object sender, RoutedEventArgs e)       //화면 확대 축소

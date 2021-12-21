@@ -134,6 +134,7 @@
     <Compile Include="Util\SHA256Hash.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\OrderViewModel.cs" />
+    <Compile Include="ViewModel\PasswordChangeViewModel.cs" />
     <Compile Include="ViewModel\ProductInOutViewModel.cs" />
     <Compile Include="ViewModel\ProductShowViewModel.cs" />
     <Compile Include="ViewModel\ProductViewModel.cs" />
@@ -146,14 +147,26 @@
     <Compile Include="View\ModifyPage.xaml.cs">
       <DependentUpon>ModifyPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\PasswordChangePage.xaml.cs">
+      <DependentUpon>PasswordChangePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ReleasePage.xaml.cs">
+      <DependentUpon>ReleasePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TabItemPage\AuthorityPage.xaml.cs">
       <DependentUpon>AuthorityPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TabItemPage\FileUploadPageFunction.xaml.cs">
       <DependentUpon>FileUploadPageFunction.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TabItemPage\IncomingOutgoingPage.xaml.cs">
-      <DependentUpon>IncomingOutgoingPage.xaml</DependentUpon>
+    <Compile Include="View\TabItemPage\IncomingOutgoingList1Page.xaml.cs">
+      <DependentUpon>IncomingOutgoingList1Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TabItemPage\IncomingOutgoingList2Page.xaml.cs">
+      <DependentUpon>IncomingOutgoingList2Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TabItemPage\IncomingOutgoingPageBtn.xaml.cs">
+      <DependentUpon>IncomingOutgoingPageBtn.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TabItemPage\InsertListPage.xaml.cs">
       <DependentUpon>InsertListPage.xaml</DependentUpon>
@@ -190,6 +203,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\PasswordChangePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ReleasePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\TabItemPage\AuthorityPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -198,7 +219,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\TabItemPage\IncomingOutgoingPage.xaml">
+    <Page Include="View\TabItemPage\IncomingOutgoingList1Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabItemPage\IncomingOutgoingList2Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabItemPage\IncomingOutgoingPageBtn.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
