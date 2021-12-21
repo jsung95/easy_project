@@ -79,10 +79,10 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>-->
-                        <ComboBox Margin="10,25" Height="30" Width="70" Grid.Column="1" HorizontalAlignment="Center"  Name="comboBox" VerticalAlignment="Center">
-                            <ComboBoxItem Content="서울" />
-                            <ComboBoxItem Content="부산" />
-                            <ComboBoxItem Content="대전" />
+                        <ComboBox Margin="10,25" Height="30" Width="70" Grid.Column="1" HorizontalAlignment="Center"  Name="Type_comboBox" VerticalAlignment="Center" SelectionChanged="comboBox_SelectionChanged">
+                            <ComboBoxItem Content="사용" />
+                            <ComboBoxItem Content="이관" />
+                            <ComboBoxItem Content="폐기" />
                         </ComboBox>
 
                     </Grid>
@@ -104,6 +104,13 @@
 
                         <Label Content="부서" Foreground="#4472C4" Grid.Column="0" FontSize="15" FontWeight="Bold" HorizontalAlignment="center"  
                        VerticalAlignment="Center"/>
+
+                        <ComboBox Margin="10,25" Height="30" Width="70" Grid.Column="1" HorizontalAlignment="Center"  Name="Dept_comboBox" VerticalAlignment="Center" SelectionChanged="comboBox_SelectionChanged">
+                            <ComboBoxItem Content="중환자실" />
+                            <ComboBoxItem Content="응급실" />
+                            <ComboBoxItem Content="수술실" />
+                        </ComboBox>
+
 
                         <!--<ComboBox x:Name="Dept_ComboBox" Grid.Column="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,25" Height="30"

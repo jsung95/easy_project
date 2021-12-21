@@ -32,7 +32,8 @@ namespace EasyProject.View
 
             private void reset_Btn_Click(object sender, RoutedEventArgs e)
         {
-            mount_TxtBox.Text = "";
+                
+                mount_TxtBox.Text = "";
         }
 
         private void cancel_Btn_Click(object sender, RoutedEventArgs e)
@@ -48,6 +49,28 @@ namespace EasyProject.View
 
         }
 
+        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox currentComboBox = sender as ComboBox; if (currentComboBox != null)
+            {
 
+                ComboBoxItem currentItem = currentComboBox.SelectedItem as ComboBoxItem;
+
+                if (currentItem.Content.Equals("사용")|| currentItem.Content.Equals("폐기"))
+                {
+                    
+                    Dept_comboBox.Visibility = Visibility.Hidden;
+                }
+
+                else
+                {
+                    Dept_comboBox.Visibility = Visibility.Visible;
+
+                }
+
+            }
+            
+
+        }
     }
 }
