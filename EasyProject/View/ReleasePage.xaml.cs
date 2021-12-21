@@ -23,9 +23,14 @@ namespace EasyProject.View
         public ReleasePage()
         {
             InitializeComponent();
+            
+
         }
 
-        private void reset_Btn_Click(object sender, RoutedEventArgs e)
+        
+       
+
+            private void reset_Btn_Click(object sender, RoutedEventArgs e)
         {
             mount_TxtBox.Text = "";
         }
@@ -42,5 +47,7 @@ namespace EasyProject.View
         {
 
         }
+
+
     }
 }

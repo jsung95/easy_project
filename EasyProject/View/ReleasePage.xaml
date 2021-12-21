@@ -64,7 +64,7 @@
                         <Label Content="유형" Foreground="#4472C4" Grid.Column="0" FontSize="15" FontWeight="Bold" HorizontalAlignment="center"  
                        VerticalAlignment="Center"/>
 
-                        <ComboBox x:Name="RelaseType_ComboBox" Grid.Column="1" HorizontalContentAlignment="Left" 
+                        <!--<ComboBox x:Name="RelaseType_ComboBox" Grid.Column="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,25" Height="30"
                        ItemsSource="{Binding Path=Categories}" SelectedItem="{Binding SelectedCategory}" SelectedValuePath="Category_name" SelectedValue="{Binding SelectedProduct.Category_name}">
                             <ComboBox.Resources>
@@ -78,7 +78,13 @@
                                     </StackPanel>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
+                        </ComboBox>-->
+                        <ComboBox Margin="10,25" Height="30" Width="70" Grid.Column="1" HorizontalAlignment="Center"  Name="comboBox" VerticalAlignment="Center">
+                            <ComboBoxItem Content="서울" />
+                            <ComboBoxItem Content="부산" />
+                            <ComboBoxItem Content="대전" />
                         </ComboBox>
+
                     </Grid>
 
                 </Grid>
@@ -99,9 +105,9 @@
                         <Label Content="부서" Foreground="#4472C4" Grid.Column="0" FontSize="15" FontWeight="Bold" HorizontalAlignment="center"  
                        VerticalAlignment="Center"/>
 
-                        <ComboBox x:Name="Dept_ComboBox" Grid.Column="1" HorizontalContentAlignment="Left" 
+                        <!--<ComboBox x:Name="Dept_ComboBox" Grid.Column="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,25" Height="30"
-                       ItemsSource="{Binding Path=Categories}" SelectedItem="{Binding SelectedCategory}" SelectedValuePath="Category_name" SelectedValue="{Binding SelectedProduct.Category_name}">
+                       ItemsSource="{Binding Path=Categories}" SelectedItem="{Binding SelectedCategory}" SelectedValuePath="Category_name" SelectedValue="{Binding SelectedProduct.Category_name}" SelectionChanged="Dept_ComboBox_SelectionChanged">
                             <ComboBox.Resources>
                                 <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
                             </ComboBox.Resources>
@@ -113,7 +119,7 @@
                                     </StackPanel>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
-                        </ComboBox>
+                        </ComboBox>-->
                     </Grid>
 
                 </Grid>
