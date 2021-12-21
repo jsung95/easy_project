@@ -22,7 +22,7 @@
             <Button x:Name="IncomingBtn" Content="입고 현황" Grid.Column="0" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
                     Foreground="White"   
                     VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="150" Cursor="Hand"/>
-            <Button x:Name="OutgoingBtn" Content="입고 현황" Grid.Column="1" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
+            <Button x:Name="OutgoingBtn" Content="출고 현황" Grid.Column="1" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
                     Foreground="White"   
                     VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="150" Cursor="Hand"/>
 
