@@ -13,20 +13,21 @@ namespace EasyProject.ViewModel
         SignupDao dao = new SignupDao();
 
         public List<DeptModel> Depts { get; set; }    // Depts = DeptModel 객체가 담긴 리스트
-      
-        public DeptModel SelectedDept { get; set; } // 콤보박스에서 선택한 부서객체
 
-        // 회원가입 시에 사용자가 입력한 데이터를 담을 프로퍼티
-        private NurseModel nurse;
-        public NurseModel Nurse
+        private DeptModel selectedDept; // 콤보박스에서 선택한 부서객체
+        public DeptModel SelectedDept
         {
-            get { return nurse; }
+            get { return selectedDept; }
             set
             {
-                nurse = value;
-                OnPropertyChanged("Nurse");
+                selectedDept = value;
+                OnPropertyChanged("SelectedDept");
             }
         }
+
+        // 회원가입 시에 사용자가 입력한 데이터를 담을 프로퍼티       
+        public NurseModel Nurse { get; set; }
+       
 
         public SignupViewModel()
         {
@@ -47,7 +48,18 @@ namespace EasyProject.ViewModel
             }
 
         }
-
+        private ActionCommand resetCommand;
+        public ICommand ResetCommand
+        { 
+            get
+            {
+                if (resetCommand == null)
+                {
+                    resetCommand = new ActionCommand(ResetForm);
+                }
+                return resetCommand;
+            }
+        }
         public void SignupInsert()
         {
             Nurse = dao.IdCheck(Nurse);
@@ -57,5 +69,13 @@ namespace EasyProject.ViewModel
             }
         }
 
+        public void ResetForm()
+        {           
+            Nurse.Nurse_name = null;
+            SelectedDept = null;
+            Nurse.Nurse_no = null;
+            Nurse.Nurse_pw = null;
+            Nurse.Nurse_re_pw = null;
+        }
     } // SignupViewModel
 } // namespace

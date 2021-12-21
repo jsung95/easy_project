@@ -79,7 +79,8 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>-->
-                        <ComboBox Margin="10,25" Height="30" Width="70" Grid.Column="1" HorizontalAlignment="Center"  Name="Type_comboBox" VerticalAlignment="Center" SelectionChanged="comboBox_SelectionChanged">
+                        <ComboBox Margin="10,25" Height="30" Width="70" Grid.Column="1" HorizontalAlignment="Center"  Name="Type_comboBox" VerticalAlignment="Center"
+                                  SelectedItem="{Binding SelectedOutType}">
                             <ComboBoxItem Content="사용" />
                             <ComboBoxItem Content="이관" />
                             <ComboBoxItem Content="폐기" />
@@ -105,10 +106,15 @@
                         <Label Content="부서" Foreground="#4472C4" Grid.Column="0" FontSize="15" FontWeight="Bold" HorizontalAlignment="center"  
                        VerticalAlignment="Center"/>
 
-                        <ComboBox Margin="10,25" Height="30" Width="70" Grid.Column="1" HorizontalAlignment="Center"  Name="Dept_comboBox" VerticalAlignment="Center" SelectionChanged="comboBox_SelectionChanged">
-                            <ComboBoxItem Content="중환자실" />
-                            <ComboBoxItem Content="응급실" />
-                            <ComboBoxItem Content="수술실" />
+                        <ComboBox Margin="10,25" Height="30" Width="70" Grid.Column="1" HorizontalAlignment="Center"  Name="Dept_comboBox" VerticalAlignment="Center"
+                                  ItemsSource="{Binding Depts}" SelectedItem="{Binding SelectedDept}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Dept_name}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                         </ComboBox>
 
 
@@ -172,7 +178,7 @@
                        VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="35" Width="70" Cursor="Hand"  Foreground="White" Click="cancel_Btn_Click"/>
 
                     <Button x:Name="signUp_Btn" Content="확인" Grid.Column="4" Background="#4472C4" FontSize="12"  HorizontalAlignment="Left"  
-                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="35" Width="70" Cursor="Hand"  Command="{Binding ChangeProductCommand}" Foreground="white" Click="signUp_Btn_Click">
+                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="35" Width="70" Cursor="Hand"  Command="{Binding OutProductCommand}" Foreground="white" Click="signUp_Btn_Click">
                     </Button>
                     
                 </Grid>

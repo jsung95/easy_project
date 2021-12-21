@@ -38,7 +38,10 @@ namespace EasyProject.Dao
         // 재고 수정
         void ChangeProductInfo(ProductShowModel prod_dto);
         void ChangeProductInfo_IMP_DEPT(ProductShowModel prod_dto);
-        
+
+        // 재고 출고
+        void OutProduct(ProductShowModel prod_dto, NurseModel nurse_dto, string SelectedOutType, DeptModel dept_dto);
+
     }//interface
 
 }//namespace
