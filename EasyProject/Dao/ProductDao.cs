@@ -110,7 +110,7 @@ namespace EasyProject.Dao
                                           "ON I.dept_id = D.dept_id " +
                                           "WHERE D.dept_status != '폐지' " +
                                           "AND D.dept_name = :dept_name " +
-                                          "ORDER BY P.prod_expire";
+                                          "ORDER BY P.prod_expire, P.prod_name";
 
                         cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
 
@@ -597,18 +597,19 @@ namespace EasyProject.Dao
                                           "ON P.category_id = C.category_id " +
                                           "INNER JOIN DEPT D " +
                                           "ON I.dept_id = D.dept_id " +
-                                          "WHERE D.dept_status != '폐지' " +
-                                          "AND D.dept_name = :dept_name " +
-                                          "AND " +
-                                            "((:search_combo = '제품코드') AND (P.prod_code LIKE '%'||:search_text||'%')) " +
+                                          "WHERE " +
+                                            "((:search_combo = '제품코드' AND D.dept_name = :dept_name ) AND (P.prod_code LIKE '%'||:search_text||'%')) " +
                                           "OR " +
-                                            "((:search_combo = '제품명') AND (P.prod_name LIKE '%'||:search_text||'%')) " +
+                                            "((:search_combo = '제품명' AND D.dept_name = :dept_name ) AND (P.prod_name LIKE '%'||:search_text||'%')) " +
+                                          "AND D.dept_status != '폐지' " +
                                           "ORDER BY P.prod_expire, P.prod_name";
 
-                        cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
+                        cmd.BindByName = true;
 
                         cmd.Parameters.Add(new OracleParameter("search_combo", search_type));
                         cmd.Parameters.Add(new OracleParameter("search_text", search_text));
+                        cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
+
                         Console.WriteLine("dept_name : " + dept_dto.Dept_name);
                         Console.WriteLine("search_combo : " + search_type);
                         Console.WriteLine("search_text : " + search_text);
@@ -651,7 +652,7 @@ namespace EasyProject.Dao
             {
                 Console.WriteLine(e.Message);
             }//catch
-            Console.WriteLine("success");
+
             return list;
 
         }//SearchProducts()
