@@ -16,39 +16,31 @@ using System.Windows.Shapes;
 namespace EasyProject.View
 {
     /// <summary>
-    /// ModifyPage.xaml에 대한 상호 작용 논리
+    /// ReleasePage.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class ModifyPage : Page
+    public partial class ReleasePage : Page
     {
-        public ModifyPage()
+        public ReleasePage()
         {
             InitializeComponent();
-
         }
 
         private void reset_Btn_Click(object sender, RoutedEventArgs e)
         {
-            prodcode_TxtBox.Text = "";
-            prodname_TxtBox.Text = "";
-            price_TxtBox.Text = "";
             mount_TxtBox.Text = "";
-            expirationDate_DatePicker.SelectedDate = null;
         }
 
         private void cancel_Btn_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate
-                (
-                new Uri("/View/TabItemPage/StatusPage.xaml", UriKind.Relative)
-                );
+               (
+               new Uri("/View/TabItemPage/StatusPage.xaml", UriKind.Relative)
+               );
         }
 
         private void signUp_Btn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate
-                (
-                new Uri("/View/TabItemPage/StatusPage.xaml", UriKind.Relative)
-                );
+
         }
     }
 }
