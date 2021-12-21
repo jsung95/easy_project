@@ -51,7 +51,15 @@ namespace EasyProject.View
 
         private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox currentComboBox = sender as ComboBox;
+            if(Type_comboBox.SelectedValue.Equals("사용") || Type_comboBox.SelectedValue.Equals("폐기"))
+            {
+                Dept_comboBox.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                Dept_comboBox.Visibility = Visibility.Visible;
+            }
+            /*ComboBox currentComboBox = sender as ComboBox;
             
             if (currentComboBox != null)
             {
@@ -70,7 +78,7 @@ namespace EasyProject.View
 
                 }
 
-            }
+            }*/
 
 
         }

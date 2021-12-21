@@ -880,7 +880,7 @@ namespace EasyProject.Dao
             }//catch
         }//ChangeProductInfo_IMP_DEPT()
 
-        public void OutProduct(ProductShowModel prod_dto, NurseModel nurse_dto, string SelectedOutType, DeptModel dept_dto)
+        public void OutProduct(int? InputOutCount, ProductShowModel prod_dto, NurseModel nurse_dto, string SelectedOutType, DeptModel dept_dto)
         {
             try
             {
@@ -899,7 +899,7 @@ namespace EasyProject.Dao
                                           "VALUES(:count, :prod_id, :nurse_no, :dept_id1, (SELECT dept_name FROM DEPT WHERE dept_id = :dept_id2), :out_to, :out_type)";
 
                         //파라미터 값 바인딩
-                        cmd.Parameters.Add(new OracleParameter("count", prod_dto.Imp_dept_count));
+                        cmd.Parameters.Add(new OracleParameter("count", InputOutCount));
                         cmd.Parameters.Add(new OracleParameter("prod_id", prod_dto.Prod_id));
                         cmd.Parameters.Add(new OracleParameter("nurse_no", nurse_dto.Nurse_no));
                         cmd.Parameters.Add(new OracleParameter("dept_id1", nurse_dto.Dept_id));
@@ -977,6 +977,85 @@ namespace EasyProject.Dao
             return dept_name;
 
         }//GetNurseDeptName()
+
+
+
+
+        public void ChangeProductInfo_IMP_DEPT_ForOut(int? InputOutCount, ProductShowModel prod_dto)
+        {
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "UPDATE IMP_DEPT SET " +
+                                          "imp_dept_count = imp_dept_count - :imp_total " +
+                                          "WHERE imp_dept_id = :imp_id";
+
+                        cmd.Parameters.Add(new OracleParameter("imp_total", InputOutCount));
+                        cmd.Parameters.Add(new OracleParameter("imp_id", prod_dto.Imp_dept_id));
+
+
+
+                        cmd.ExecuteNonQuery();
+
+                    }//using(cmd)
+
+                }//using(conn)
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+        }//ChangeProductInfo_IMP_DEPT_ForOut
+
+
+        public void ChangeProductInfo_ForOut(int? InputOutCount, ProductShowModel prod_dto)
+        {
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "UPDATE PRODUCT SET " +
+                                          "prod_total = prod_total - :total " +
+                                          "WHERE prod_id = :id ";
+
+                        cmd.Parameters.Add(new OracleParameter("total", InputOutCount));
+                        cmd.Parameters.Add(new OracleParameter("id", prod_dto.Prod_id));
+
+
+                        cmd.ExecuteNonQuery();
+
+                    }//using(cmd)
+
+                }//using(conn)
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+        }//ChangeProductInfo_ForOut
+
+
 
     }//class
 
