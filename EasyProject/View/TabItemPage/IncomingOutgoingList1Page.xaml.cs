@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using Excel = Microsoft.Office.Interop.Excel;
 
 
 namespace EasyProject.View.TabItemPage
@@ -33,13 +34,35 @@ namespace EasyProject.View.TabItemPage
             dataGrid1.UnselectAllCells();
             String result = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
             string today = String.Format(DateTime.Now.ToString("yyyyMMddhhmmss"));
-            string f_path = @"c:\temp\MyTest" + today + ".csv";
+            string f_path = @"c:\temp\IncommingData" + today + ".csv";
             File.AppendAllText(f_path, result, UnicodeEncoding.UTF8);
-            //using (StreamWriter sw = File.CreateText(f_path, UnicodeEncoding.UTF8))
-            //{
-            //    sw.Write(result);
-            //}
-            //    ;
+
+            // Get the Excel application object.
+            Excel.Application excel_app = new Excel.Application();
+
+            // Make Excel visible (optional).
+            excel_app.Visible = true;
+
+            // Open the file.
+            excel_app.Workbooks.Open(
+                f_path,               // Filename
+                Type.Missing,
+                Type.Missing,
+
+                   Excel.XlFileFormat.xlCSV,   // Format
+                   Type.Missing,
+                   Type.Missing,
+                   Type.Missing,
+                   Type.Missing,
+
+                   ",",          // Delimiter
+                   Type.Missing,
+                   Type.Missing,
+                   Type.Missing,
+                   Type.Missing,
+                   Type.Missing,
+                   Type.Missing
+            );
         }
     }
 }

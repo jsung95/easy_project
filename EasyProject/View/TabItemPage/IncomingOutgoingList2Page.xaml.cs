@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -38,6 +39,34 @@ namespace EasyProject.View.TabItemPage
             string today = String.Format(DateTime.Now.ToString("yyyyMMddhhmmss"));
             string f_path = @"c:\temp\OutgoingData" + today + ".csv";
             File.AppendAllText(f_path, result, UnicodeEncoding.UTF8);
+
+            // Get the Excel application object.
+            Excel.Application excel_app = new Excel.Application();
+
+            // Make Excel visible (optional).
+            excel_app.Visible = true;
+
+            // Open the file.
+            excel_app.Workbooks.Open(
+                f_path,               // Filename
+                Type.Missing,
+                Type.Missing,
+
+                   Excel.XlFileFormat.xlCSV,   // Format
+                   Type.Missing,
+                   Type.Missing,
+                   Type.Missing,
+                   Type.Missing,
+
+                   ",",          // Delimiter
+                   Type.Missing,
+                   Type.Missing,
+                   Type.Missing,
+                   Type.Missing,
+                   Type.Missing,
+                   Type.Missing
+            );
         }
     }
+    
 }
