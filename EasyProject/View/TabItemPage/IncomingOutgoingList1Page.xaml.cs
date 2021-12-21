@@ -34,12 +34,12 @@ namespace EasyProject.View.TabItemPage
             String result = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
             string today = String.Format(DateTime.Now.ToString("yyyyMMddhhmmss"));
             string f_path = @"c:\temp\MyTest" + today + ".csv";
-
-            using (StreamWriter sw = File.CreateText(f_path))
-            {
-                sw.Write(result);
-            }
-                ;
+            File.AppendAllText(f_path, result, UnicodeEncoding.UTF8);
+            //using (StreamWriter sw = File.CreateText(f_path, UnicodeEncoding.UTF8))
+            //{
+            //    sw.Write(result);
+            //}
+            //    ;
         }
     }
 }

@@ -35,15 +35,9 @@ namespace EasyProject.View.TabItemPage
             dataGrid2.UnselectAllCells();
             String result = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
 
-            //string f = @"c:\temp"; 
             string today = String.Format(DateTime.Now.ToString("yyyyMMddhhmmss"));
-            string f_path = @"c:\temp\MyTest"+today+".csv";
-
-            using (StreamWriter sw = File.CreateText(f_path))
-            {
-                sw.Write(result);
-            } 
-                ;
+            string f_path = @"c:\temp\OutgoingData" + today + ".csv";
+            File.AppendAllText(f_path, result, UnicodeEncoding.UTF8);
         }
     }
 }
