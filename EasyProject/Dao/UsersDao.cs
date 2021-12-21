@@ -3,6 +3,7 @@ using System;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace EasyProject.Dao
 {
@@ -79,6 +80,13 @@ namespace EasyProject.Dao
             {
                 OracleConnection conn = new OracleConnection(connectionString);
                 OracleCommand cmd = new OracleCommand();
+                string user_nos = null;
+               
+                foreach (var item in no)
+                {
+                    user_nos += item.Nurse_no + ",";
+                }//foreach
+                user_nos = user_nos.Remove(user_nos.Length - 1, 1);
 
                 using (conn)
                 {
@@ -86,27 +94,20 @@ namespace EasyProject.Dao
 
                     using (cmd)
                     {
+                        
                         cmd.Connection = conn;
-
                         cmd.CommandText = "UPDATE NURSE " +
                                           "SET nurse_auth = :auth " +
-                                          "WHERE nurse_no IN (:no)";
+                                          $"WHERE nurse_no IN ({user_nos})";
 
-                        cmd.Parameters.Add(new OracleParameter("auth", auth));
-
-                        string user_nos = null;
-                        foreach (var item in no)
-                        {
-                            user_nos += item.Nurse_no + ",";
-                        }//foreach
-                        user_nos = user_nos.Remove(user_nos.Length - 1, 1);
-                        cmd.Parameters.Add(new OracleParameter("no", user_nos));
-                        Console.WriteLine(user_nos);
+                        cmd.Parameters.Add(new OracleParameter("auth", auth));                      
                         cmd.ExecuteNonQuery();
 
+                        MessageBox.Show($"선택한 사용자들의 권한을 {auth}으로 변경하였습니다.");
                     }//using(cmd)
 
                 }//using(conn)
+                
             }//try
             catch (Exception e)
             {
@@ -114,8 +115,6 @@ namespace EasyProject.Dao
             }//catch
 
         }//UserAuthChange()
-
-
 
         public List<UserModel> SearchUser(string auth, string searchType, string keyword)
         {
@@ -142,7 +141,7 @@ namespace EasyProject.Dao
                                           "FROM NURSE N " +
                                           "LEFT OUTER JOIN DEPT D " +
                                           "ON N.dept_id = D.dept_id " +
-                                          "WHERE N.nurse_name LIKE '%'|| :keyword ||'%' " +
+                                          $"WHERE N.nurse_name LIKE '%'|| :keyword ||'%' " +
                                           "AND N.nurse_auth = :auth";
                                 break;
 
@@ -188,7 +187,7 @@ namespace EasyProject.Dao
                             };
 
                             list.Add(user);
-
+                           
                         }//while
 
                     }//using(cmd)
@@ -200,7 +199,12 @@ namespace EasyProject.Dao
             {
                 Console.WriteLine(e.Message);
             }//catch
-            Console.WriteLine(list.Count);
+
+            if (list.Count == 0)
+            {
+                MessageBox.Show("검색 결과가 없습니다.");
+            }
+
             return list;
 
         }//SearchUser()

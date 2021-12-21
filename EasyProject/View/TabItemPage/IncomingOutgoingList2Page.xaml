@@ -8,7 +8,7 @@
        xmlns:wookoa="clr-namespace:System;assembly=mscorlib"
       xmlns:vm="clr-namespace:EasyProject.ViewModel"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="1000"
       Title="IncomingOutgoingList2Page" Cursor="Hand">
 
     <Page.DataContext>
@@ -36,8 +36,8 @@
         </Style>
     </Page.Resources>
 
-    <Grid >
-        <materialDesign:Card Grid.Column="0"  UniformCornerRadius="20" Background="White">
+    <Grid  Height="450" Width="1000">
+        <materialDesign:Card  UniformCornerRadius="20" Background="White">
             <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*"/>
@@ -58,13 +58,13 @@
                                 <ColumnDefinition Width="0.7*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Border BorderBrush="#BEBEBE" BorderThickness="1" Grid.Column="3"  Width="95" Height="21" VerticalAlignment="Center" HorizontalAlignment="Left"  >
+                            <Border BorderBrush="#BEBEBE" BorderThickness="1" Grid.Column="3"  Width="95" Height="21" VerticalAlignment="Center" HorizontalAlignment="Center"  >
                                 <TextBlock Grid.Row="0" VerticalAlignment="Top" FontSize="10"
                                 Text="{Binding Source={x:Static wookoa:DateTime.Now}, StringFormat='{}{0:yy-MM-dd HH:mm:ss}', Mode=OneWay}" 
                                 Margin="0,2,0,0" Foreground="#4472C4" HorizontalAlignment="Center" Width="82" />
                             </Border>
                             <Button x:Name="resetBtn" Grid.Column="2" Foreground="#4472C4"  FontSize="12" 
-                                    FontWeight="Bold" HorizontalAlignment="Center"  Background="White"
+                                    FontWeight="Bold" HorizontalAlignment="Right"  Background="White"
                                     VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="45" Cursor="Hand" >
                                 <materialDesign:PackIcon Grid.Column="2" Kind="Restore" VerticalAlignment="Center" HorizontalAlignment="Center" Height="15" Width="15" />
                             </Button>
@@ -72,18 +72,18 @@
 
                         <DataGrid x:Name="dataGrid2" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Top" ScrollViewer.CanContentScroll="True"         
                               ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.HorizontalScrollBarVisibility="Visible" 
-                                  AutoGenerateColumns="False" CanUserSortColumns="True" IsReadOnly="True" 
+                                  AutoGenerateColumns="False" CanUserSortColumns="True" IsReadOnly="True" Margin="5"
                                    ItemsSource="{Binding Product_out}">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" IsReadOnly="True" />
-                                <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류"  IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Prod_price}"  Header="가격"  IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Prod_out_count}"  Header="수량" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Prod_out_date}"  Header="출고일"  IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Prod_out_type}"  Header="출고유형"  IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Dept_name}"  Header="부서명"  IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Nurse_name}"  Header="관리자명" IsReadOnly="True"/>                            </DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="*"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="*"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_price}"  Header="가격" Width="*"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_out_count}"  Header="수량" Width="0.5*"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_out_date}"  Header="출고일" Width="*"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_out_type}"  Header="출고유형" Width="0.7*"   IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Dept_name}"  Header="부서명" Width="*"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Nurse_name}"  Header="관리자명" Width="*"  IsReadOnly="True"/>                            </DataGrid.Columns>
                             <DataGrid.RowStyle>
 
                                 <Style TargetType="{x:Type DataGridRow}">

@@ -8,7 +8,7 @@
        xmlns:wookoa="clr-namespace:System;assembly=mscorlib"
       xmlns:vm="clr-namespace:EasyProject.ViewModel"
       mc:Ignorable="d" 
-      Title="IncomingOutgoingList1Page">
+      Title="IncomingOutgoingList1Page" Cursor="Hand">
     <Page.DataContext>
         <vm:ProductInOutViewModel/>
     </Page.DataContext>
@@ -74,15 +74,15 @@
                                   ItemsSource="{Binding Product_in}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="*" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="1.26*" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="1.32*" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="0.9*" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Prod_expire}" Header="유통기한" Width="1.33*" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Prod_price}" Header="가격" Width="0.53*" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_price}" Header="가격" Width="0.55*" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Prod_in_count}" Header="수량" Width="0.7*" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Prod_in_date}" Header="입고일" Width="1.33*" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Prod_in_type}" Header="입고유형" Width="0.6*" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Dept_name}" Header="부서명" Width="0.7*" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Nurse_name}" Header="관리자명" Width="0.6*"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Nurse_name}" Header="관리자명" Width="0.65*"  IsReadOnly="True"/>
                             </DataGrid.Columns>
                             <DataGrid.RowStyle>
                                 <Style TargetType="{x:Type DataGridRow}">
@@ -98,7 +98,7 @@
                 <Grid Grid.Row="1">
                     <Grid Grid.Column="0" >
                         <Button x:Name="export_btn" Height="26" HorizontalAlignment="Center" Grid.Column ="2" Foreground="White" Background="#4472C4"
-                                VerticalAlignment="Center" Width="140"  FontSize="13" Margin="0,7,0,7"
+                                VerticalAlignment="Center" Width="140"  FontSize="13" Margin="0,0,0,10"
                                 Content="excel to export"  Opacity="0.75" Cursor="Hand"/>
                     </Grid>
                 </Grid>

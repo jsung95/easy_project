@@ -26,19 +26,6 @@ namespace EasyProject.ViewModel
 
         public ObservableCollection<UserModel> Admins_searched { get; set; }
 
-        //private ObservableCollection<UserModel> admins_searched;
-
-        //public ObservableCollection<UserModel> Admins_searched
-        //{
-        //    get { return admins_searched; }
-        //    set
-        //    {
-        //        admins_searched = value;
-        //        OnPropertyChanged("Admins_searched");
-        //    }
-        //}
-
-
         public UserAuthViewModel()
         {
             SearchTypeList = new[] { "이름", "아이디", "부서" };
@@ -107,7 +94,6 @@ namespace EasyProject.ViewModel
             Console.WriteLine("Normal 유저 검색");
             Normals_searched.Clear();
             List<UserModel> list = dao.SearchUser("NORMAL", NormalSearchType, Normal_Keyword);
-            //Users_searched1.CollectionChanged += Users_searched1ContentCollectionChanged;
             foreach (UserModel user in list)
             {
                 Normals_searched.Add(user);
@@ -136,13 +122,14 @@ namespace EasyProject.ViewModel
             {
                 if (item.IsChecked)
                 {
+                    item.IsChecked = false;
                     Admins_searched.Add(item); // 화면에 보이는 Admin_searched 목록에 있는 리스트
                     updateList.Add(item);                    
                 }
                 else tempObject.Add(item); // 체크 박스 선택되지 않은 리스트
             }
 
-            //dao.UserAuthChange("ADMIN", updateList); // 업데이트 실행
+            dao.UserAuthChange("ADMIN", updateList); // 업데이트 실행
             updateList.Clear();
 
             Normals_searched.Clear(); // 기존의 검색 목록을 비움.
@@ -163,12 +150,14 @@ namespace EasyProject.ViewModel
             {
                 if (item.IsChecked)
                 {
+                    item.IsChecked = false;
                     Normals_searched.Add(item);
                     updateList.Add(item);
                 }
                 else tempObject.Add(item);
             }
-            //dao.UserAuthChange("NORMAL", updateList);
+
+            dao.UserAuthChange("NORMAL", updateList);
             updateList.Clear();
 
             Admins_searched.Clear();
