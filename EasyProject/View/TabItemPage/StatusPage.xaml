@@ -58,25 +58,12 @@
                     </Grid.ColumnDefinitions>
 
                     <ComboBox x:Name="searchText_ComboBox" Height="30" Grid.Column="0" HorizontalContentAlignment="Left" 
-                       ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept}">
+                       SelectedItem="{Binding SelectedSearchType}">
                         <ComboBox.Resources>
                             <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
                         </ComboBox.Resources>
-
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Dept_name}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding Command}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
                     </ComboBox>
+                    
                     <Grid Grid.Column="1" Margin="10 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="6*"/>
@@ -84,11 +71,13 @@
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
                             <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요" Grid.Column="5" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" />
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
+                                     Text="{Binding TextForSearch}"/>
                         </Grid>
                         <Grid Grid.Column="1">
                             <Button x:Name="search_Btn" Grid.Column="3" Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White"
-                            VerticalAlignment="Center" Height="30"  Width="45" HorizontalAlignment="Left" >
+                            VerticalAlignment="Center" Height="30"  Width="45" HorizontalAlignment="Left" 
+                                    Command="{Binding SearchCommand}">
                                 <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
                             </Button>
                         </Grid>

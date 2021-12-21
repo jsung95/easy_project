@@ -38,6 +38,21 @@ namespace EasyProject.ViewModel
         //선택한 카테고리명을 담을 프로퍼티
         public CategoryModel SelectedCategory { get; set; }
 
+        //선택한 검색 콤보박스를 담을 프로퍼티
+        public string SelectedSearchType { get; set; }
+
+        //입력한 검색내용을 담을 프로퍼티
+        private string textForSearch;
+        public string TextForSearch 
+        {
+            get { return textForSearch; }
+            set
+            {
+                textForSearch = value; 
+                OnPropertyChanged("TextForSearch"); 
+            }
+        }
+
         //선택한 1개의 제품 정보를 담을 객체
         private static ProductShowModel selectedProduct;
         public static ProductShowModel SelectedProduct 
@@ -109,6 +124,26 @@ namespace EasyProject.ViewModel
         {
             product_dao.ChangeProductInfo(SelectedProduct);
             product_dao.ChangeProductInfo_IMP_DEPT(SelectedProduct);
+        }
+
+
+        private ActionCommand searchCommand;
+        public ICommand SearchCommand
+        {
+            get
+            {
+                if (searchCommand == null)
+                {
+                    searchCommand = new ActionCommand(SearchProducts);
+                }
+                return searchCommand;
+            }//get
+        }
+
+        public void SearchProducts()
+        {
+            Products = new ObservableCollection<ProductShowModel>(product_dao.SearchProducts(SelectedDept, SelectedSearchType, TextForSearch));
+            
         }
 
     }//class

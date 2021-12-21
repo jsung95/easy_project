@@ -65,9 +65,12 @@ public partial class StatusPage : Page {
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-           // myLst = GetData();
+            searchText_ComboBox.Items.Add("제품코드");
+            searchText_ComboBox.Items.Add("제품명");
+            searchText_ComboBox.SelectedIndex = 0;
+            // myLst = GetData();
 
-           // dataGrid.ItemsSource = myLst.Take(numberOf);
+            // dataGrid.ItemsSource = myLst.Take(numberOf);
 
             //dataGrid.Columns[0].Header = "제품ID";
             //dataGrid.Columns[1].Header = "제품명";
