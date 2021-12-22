@@ -179,7 +179,6 @@ namespace EasyProject.ViewModel
                 releaseObject(xlWorkBook);
                 releaseObject(xlApp);
 
-
             }
             catch (Exception ex)
             {
@@ -243,6 +242,7 @@ namespace EasyProject.ViewModel
                 GC.Collect();
             }
         }
+
         public void ProductInsert()
         {
             

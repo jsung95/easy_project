@@ -23,6 +23,15 @@ namespace EasyProject.View
         public PasswordChangePage()
         {
             InitializeComponent();
+            backBtn.Click += backBtn_Click;
+        }
+
+        private void backBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate
+           (
+                new Uri("/View/LoginPage.xaml", UriKind.Relative) //로그인 화면
+           );
         }
     }
 }
