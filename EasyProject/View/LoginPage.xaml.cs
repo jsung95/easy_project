@@ -59,8 +59,7 @@ namespace EasyProject
                 button.Command.Execute(null);
             }
 
-            NavigationService.Navigate(
-                new Uri("/View/TabPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/View/TabPage.xaml", UriKind.Relative));
         
         }
     }
