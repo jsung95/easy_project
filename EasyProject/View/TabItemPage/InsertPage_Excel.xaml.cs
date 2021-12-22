@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using Microsoft.Win32;
+using EasyProject.ViewModel;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -59,10 +60,5 @@ namespace EasyProject.View.TabItemPage
                 NavigationService.Navigate(uploadPFunction);
             }
         }
-        private void fileReader()
-        {
-            
-        }
-
     }
 }

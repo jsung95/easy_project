@@ -263,9 +263,92 @@ namespace EasyProject.Dao
             }//catch
 
         }//AddProduct
+        
+        public void AddProductForExcel(ProductShowModel prod_dto, String categoryName)
+        {
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
 
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "INSERT INTO PRODUCT(PROD_CODE, PROD_NAME, PROD_PRICE, PROD_TOTAL, PROD_EXPIRE, CATEGORY_ID) " +
+                                          "VALUES(:code, :name, :price, :total, TO_DATE(:expire, 'YYYYMMDD'), (SELECT category_id FROM CATEGORY WHERE category_name = :category_name) )";
+
+
+                        //파라미터 값 바인딩
+                        cmd.Parameters.Add(new OracleParameter("code", prod_dto.Prod_code));
+                        cmd.Parameters.Add(new OracleParameter("name", prod_dto.Prod_name));
+                        cmd.Parameters.Add(new OracleParameter("price", prod_dto.Prod_price));
+                        cmd.Parameters.Add(new OracleParameter("total", prod_dto.Prod_total));
+
+                        String expireText = prod_dto.Prod_expire.Year.ToString()+
+                            prod_dto.Prod_expire.Month.ToString()+ prod_dto.Prod_expire.Day.ToString();
+
+                        cmd.Parameters.Add(new OracleParameter("expire", expireText));
+                        cmd.Parameters.Add(new OracleParameter("category_name", categoryName));
+
+                        cmd.ExecuteNonQuery();
+                    }//using(cmd)
+
+                }//using(conn)
+
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+        }
 
         public void StoredProduct(ProductModel prod_dto, NurseModel nurse_dto)
+        {
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "INSERT INTO PRODUCT_IN(PROD_IN_COUNT, PROD_ID, NURSE_NO, DEPT_ID, PROD_IN_FROM, PROD_IN_TO, PROD_IN_TYPE) " +
+                                          "VALUES(:count, PROD_SEQ.CURRVAL, :nurse_no, :dept_id1, :in_from, (SELECT dept_name FROM DEPT WHERE dept_id = :dept_id2), :in_type)";
+
+                        //파라미터 값 바인딩
+                        cmd.Parameters.Add(new OracleParameter("count", prod_dto.Prod_total));
+                        cmd.Parameters.Add(new OracleParameter("nurse_no", nurse_dto.Nurse_no));
+                        cmd.Parameters.Add(new OracleParameter("dept_id1", nurse_dto.Dept_id));
+
+                        cmd.Parameters.Add(new OracleParameter("in_from", "발주처"));
+                        cmd.Parameters.Add(new OracleParameter("dept_id2", nurse_dto.Dept_id));
+                        cmd.Parameters.Add(new OracleParameter("in_type", "발주"));
+
+                        cmd.ExecuteNonQuery();
+                    }//using(cmd)
+
+                }//using(conn)
+
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+        }// StoredProduct()
+
+        public void StoredProductForExcel(ProductShowModel prod_dto, NurseModel nurse_dto)
         {
             try
             {
@@ -458,6 +541,44 @@ namespace EasyProject.Dao
         }//GetProductOut
 
         public void AddImpDept(ProductModel prod_dto, NurseModel nurse_dto)
+        {
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "INSERT INTO IMP_DEPT(imp_dept_count, dept_id, prod_id) " +
+                                          "VALUES(:count, :dept_id, PROD_SEQ.CURRVAL) ";
+
+                        //파라미터 값 바인딩
+                        cmd.Parameters.Add(new OracleParameter("count", prod_dto.Prod_total));
+                        cmd.Parameters.Add(new OracleParameter("dept_id", nurse_dto.Dept_id));
+
+
+
+                        cmd.ExecuteNonQuery();
+                    }//using(cmd)
+
+                }//using(conn)
+
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+        }//AddImpDept
+
+        public void AddImpDeptForExcel(ProductShowModel prod_dto, NurseModel nurse_dto)
         {
             try
             {
@@ -759,7 +880,7 @@ namespace EasyProject.Dao
             }//catch
         }//ChangeProductInfo_IMP_DEPT()
 
-        public void OutProduct(ProductShowModel prod_dto, NurseModel nurse_dto, string SelectedOutType, DeptModel dept_dto)
+        public void OutProduct(int? InputOutCount, ProductShowModel prod_dto, NurseModel nurse_dto, string SelectedOutType, DeptModel dept_dto)
         {
             try
             {
@@ -778,7 +899,7 @@ namespace EasyProject.Dao
                                           "VALUES(:count, :prod_id, :nurse_no, :dept_id1, (SELECT dept_name FROM DEPT WHERE dept_id = :dept_id2), :out_to, :out_type)";
 
                         //파라미터 값 바인딩
-                        cmd.Parameters.Add(new OracleParameter("count", prod_dto.Prod_total));
+                        cmd.Parameters.Add(new OracleParameter("count", InputOutCount));
                         cmd.Parameters.Add(new OracleParameter("prod_id", prod_dto.Prod_id));
                         cmd.Parameters.Add(new OracleParameter("nurse_no", nurse_dto.Nurse_no));
                         cmd.Parameters.Add(new OracleParameter("dept_id1", nurse_dto.Dept_id));
@@ -798,7 +919,7 @@ namespace EasyProject.Dao
                             cmd.Parameters.Add(new OracleParameter("out_to", SelectedOutType));
                         }
                         ///////////////////////////////////////////////////////////////////////
-
+                        
                         cmd.Parameters.Add(new OracleParameter("out_type", SelectedOutType));
 
 
@@ -856,6 +977,85 @@ namespace EasyProject.Dao
             return dept_name;
 
         }//GetNurseDeptName()
+
+
+
+
+        public void ChangeProductInfo_IMP_DEPT_ForOut(int? InputOutCount, ProductShowModel prod_dto)
+        {
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "UPDATE IMP_DEPT SET " +
+                                          "imp_dept_count = imp_dept_count - :imp_total " +
+                                          "WHERE imp_dept_id = :imp_id";
+
+                        cmd.Parameters.Add(new OracleParameter("imp_total", InputOutCount));
+                        cmd.Parameters.Add(new OracleParameter("imp_id", prod_dto.Imp_dept_id));
+
+
+
+                        cmd.ExecuteNonQuery();
+
+                    }//using(cmd)
+
+                }//using(conn)
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+        }//ChangeProductInfo_IMP_DEPT_ForOut
+
+
+        public void ChangeProductInfo_ForOut(int? InputOutCount, ProductShowModel prod_dto)
+        {
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "UPDATE PRODUCT SET " +
+                                          "prod_total = prod_total - :total " +
+                                          "WHERE prod_id = :id ";
+
+                        cmd.Parameters.Add(new OracleParameter("total", InputOutCount));
+                        cmd.Parameters.Add(new OracleParameter("id", prod_dto.Prod_id));
+
+
+                        cmd.ExecuteNonQuery();
+
+                    }//using(cmd)
+
+                }//using(conn)
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+        }//ChangeProductInfo_ForOut
+
+
 
     }//class
 

@@ -82,17 +82,9 @@ namespace EasyProject.ViewModel
         // 재고 출고 - 선택한 출고 유형 콤보박스를 담을 값
         public string SelectedOutType { get; set; }
 
-        // 재고 출고 - 선택한 부서를 담을 프로퍼티
-        private string selectedDeptForOut;
-        public string SelectedDeptForOut
-        {
-            get { return selectedDeptForOut; }
-            set 
-            { 
-                selectedDeptForOut = value;
-                OnPropertyChanged("SelectedDeptForOut");
-            }
-        }
+        // 재고 출고 - 입력한 출고 수량을 담을 프로퍼티
+        public int? InputOutCount { get; set; }
+
 
         public ProductShowViewModel()
         {
@@ -183,36 +175,12 @@ namespace EasyProject.ViewModel
 
         public void OutProduct()
         {
-            product_dao.OutProduct(SelectedProduct, Nurse, SelectedOutType, SelectedDept);
-        }
-
-
-        private ActionCommand clearType;
-        public ICommand ClearType
-        {
-            get
-            {
-                if (clearType == null)
-                {
-                    clearType = new ActionCommand(ClearComboboxType);
-                }
-                return clearType;
-            }//get
-        }
-
-        public void ClearComboboxType()
-        {
+            product_dao.OutProduct(InputOutCount, SelectedProduct, Nurse, SelectedOutType, SelectedDept);
             
-            if (SelectedOutType.Equals("System.Windows.Controls.ComboBoxItem: 사용") || SelectedOutType.Equals("System.Windows.Controls.ComboBoxItem: 폐기"))
-            {
-                Console.WriteLine("!!!!");
-                SelectedDeptForOut = null;
-            } 
-            else
-            {
-                OnPropertyChanged("SelectedDeptForOut");
-            }
+            product_dao.ChangeProductInfo_IMP_DEPT_ForOut(InputOutCount, SelectedProduct);
+            product_dao.ChangeProductInfo_ForOut(InputOutCount, SelectedProduct);
         }
+
 
 
 

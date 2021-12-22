@@ -7,29 +7,34 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:local="clr-namespace:EasyProject.View.TabItemPage"
+    xmlns:local="clr-namespace:EasyProject.View.TabItemPage" 
+    xmlns:vm="clr-namespace:EasyProject.ViewModel"
     mc:Ignorable="d"
     Title="FileUploadPageFunction">
+
+    <Page.DataContext>
+        <vm:ProductViewModel/>
+    </Page.DataContext>
+    
     <Grid Height="450">
         <materialDesign:Card Grid.Column="0" Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="0.3*"/>
                 </Grid.RowDefinitions>
 
                 <Grid Margin="20,20,20,0" Background="#FFE5E5E5" AllowDrop="True">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0.8*"/>
+                        <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="0.3*"/>
                     </Grid.RowDefinitions>
 
                     <materialDesign:PackIcon Grid.Row="0" Foreground="Green" Kind="MicrosoftExcel" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="48" Width="48" />
 
-                    <StackPanel Grid.Row="1" Margin="5" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock x:Name="fileNameTxtbox" Text="" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 5 0 0" FontSize="25" FontWeight="SemiBold"/>
+                    <StackPanel Grid.Row="1" Margin="5" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center">
+                        <TextBlock x:Name="fileNameTxtbox" Text="" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 5 0 0" FontSize="25" FontWeight="SemiBold"/>
                         <Button x:Name="fileUploadBtn" Background="White" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
                        VerticalAlignment="Top" BorderThickness="0" Height="30" Width="140" Cursor="Hand">
                             <StackPanel Orientation="Horizontal">
@@ -37,27 +42,21 @@
                                 <TextBlock Text="파일 다시선택"/>
                             </StackPanel>
                         </Button>
-                        
-
                     </StackPanel>
                 </Grid>
 
-                <Grid Grid.Row="1" Margin="20,10,20,0" Background="#FFE5E5E5">
-                    <DataGrid x:Name="fileUploadDataGrid">
-                        <!--<DataGrid.Columns>
-                            <DataGridTextColumn Header="제품코드" Binding="{Binding ProductCode}" IsReadOnly="True"></DataGridTextColumn>
-                            <DataGridTextColumn Header="제품명" Binding="{Binding ProductName}" IsReadOnly="True"></DataGridTextColumn>
-                            <DataGridTextColumn Header="품목/종류" Binding="{Binding CategoryName}" IsReadOnly="True"></DataGridTextColumn>
-                            <DataGridTextColumn Header="유통기한" Binding="{Binding ExpirationDate, StringFormat= {} {0:yyyy-MM-dd}}" IsReadOnly="True"></DataGridTextColumn>
-                            <DataGridTextColumn Header="가격" Binding="{Binding Price}" IsReadOnly="True"></DataGridTextColumn>
-                        </DataGrid.Columns>-->
-                        
-                    </DataGrid>
-                </Grid>
-
-                <Grid Grid.Row="2">
+                <Grid Grid.Row="1">
+                    <!--<ItemsControl ItemsSource={Binding Add_List}>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding OwnerData.OwnerName}" />
+                                <TextBlock Text="{Binding Credit}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    -->
                     <Button x:Name="insertBtn" Content="추가하기" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
-                       VerticalAlignment="Center" BorderThickness="0" Height="30" Width="90" Cursor="Hand" />
+                       VerticalAlignment="Center" BorderThickness="0" Height="30" Width="90" Cursor="Hand" Command="{Binding ListCommand}"/>
                 </Grid>
             </Grid>
         </materialDesign:Card>
