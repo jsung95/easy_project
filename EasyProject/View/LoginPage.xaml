@@ -45,6 +45,12 @@
                              HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="25" Height="40" Width="300" Grid.Column="1"
                              w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding Password, Mode=TwoWay}" Cursor="IBeam"/>
                 
+                
+                    <StackPanel Grid.Row="2">
+                        <CheckBox x:Name="id_Checkbox" Width="100" Height="30" HorizontalAlignment="Left" Margin="75,0,75,21"
+                                  Unchecked="checkbox_UnChecked" Checked="checkbox_Checked" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" BorderBrush="#FF0E0D0D" Foreground="#FF111010" Content="아이디저장"/>
+                    </StackPanel>
+
             </Grid>
 
             <Grid Grid.Row="2" >

@@ -63,5 +63,15 @@ namespace EasyProject
                 new Uri("/View/TabPage.xaml", UriKind.Relative));
         
         }
+
+        private void checkbox_UnChecked(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void checkbox_Checked(object sender, RoutedEventArgs e)
+        {
+        
+        }
     }
 }
