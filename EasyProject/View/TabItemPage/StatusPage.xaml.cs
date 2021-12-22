@@ -53,6 +53,8 @@ namespace EasyProject.View.TabItemPage
             deptName_ComboBox1.SelectedIndex = (int)App.nurse_dto.Dept_id - 1;
             this.Loaded += MainWindow_Loaded;
 
+            userDept = (deptName_ComboBox1.SelectedValue as DeptModel).Dept_name;
+
 
         }
 

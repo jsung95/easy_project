@@ -84,7 +84,7 @@
                             VerticalAlignment="Center" Height="30"  Width="45" HorizontalAlignment="Left" 
                                     Command="{Binding SearchCommand}" Cursor="Hand">
                                 <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
-                                <Button.Style>
+                                <!--<Button.Style>
                                     <Style TargetType="Button">
                                         <Setter Property="Visibility" Value="Visible"></Setter>
                                         <Style.Triggers>
@@ -93,7 +93,7 @@
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
-                                </Button.Style>
+                                </Button.Style>-->
                             </Button>
                         </Grid>
 
