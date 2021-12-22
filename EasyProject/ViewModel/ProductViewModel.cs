@@ -7,10 +7,12 @@ using System.Windows.Input;
 using Microsoft.Expression.Interactivity.Core;
 using Microsoft.Win32;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Linq;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace EasyProject.ViewModel
 {
-    public class ProductViewModel : Notifier
+    public class ProductViewModel : ObservableObject
     {
         ProductDao dao = new ProductDao();
 
@@ -50,7 +52,19 @@ namespace EasyProject.ViewModel
         public NurseModel Nurse { get; set; }
 
         //입력한 재고 데이터를 담은 객체를 담아줄 옵저버블컬렉션 리스트
-        public static ObservableCollection<ProductInOutModel> Add_list { get; set; }
+        private ObservableCollection<ProductInOutModel> add_list;
+        public ObservableCollection<ProductInOutModel> Add_list { 
+            get
+            {
+                return add_list;    
+            }
+            set
+            {
+                SetProperty(ref add_list, value);
+            }
+                 }
+
+        public List<ProductInOutModel> productDtoList { get; set; }
 
         private List<ProductShowModel> excelProductList;
 
@@ -68,7 +82,7 @@ namespace EasyProject.ViewModel
 
             //현재 로그인 사용자의 입고 목록을 가져옴
             Add_list = dao.GetProductInByNurse(Nurse);
-
+            
             excelProductList = new List<ProductShowModel>();
 
         }
@@ -100,15 +114,16 @@ namespace EasyProject.ViewModel
 
         }//Command
 
+        private ActionCommand listCommand;
         public ICommand ListCommand
         {
             get
             {
-                if (command == null)
+                if (listCommand == null)
                 {
-                    command = new ActionCommand(ExcelReader);
+                    listCommand = new ActionCommand(ExcelReader);
                 }
-                return command;
+                return listCommand;
             }//get
 
         }//Command
@@ -168,9 +183,15 @@ namespace EasyProject.ViewModel
                     productDto.Prod_in_count = elem.Prod_total;
                     productDto.Nurse_name = Nurse.Nurse_name;
 
+                    //productDtoList.Insert(0, productDto);
                     Add_list.Insert(0, productDto);
+                    //Add_list.Add(productDto);
                     Console.WriteLine(Add_list.Count + "개");
                 }
+
+                //var ob2list = Add_list.ToList();
+                //ob2list.AddRange(productDtoList);
+                //Add_list = new ObservableCollection<ProductInOutModel>(ob2list);
 
                 xlWorkBook.Close(true, null, null);
                 xlApp.Quit();
