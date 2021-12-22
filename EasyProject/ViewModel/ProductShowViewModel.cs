@@ -32,6 +32,17 @@ namespace EasyProject.ViewModel
         //부서 목록 콤보박스, 부서 리스트 출력
         public ObservableCollection<DeptModel> Depts { get; set; }
 
+        private bool comboboxChanged = false;
+        public bool ComboboxChanged
+        {
+            get { return comboboxChanged; }
+            set
+            {
+                comboboxChanged = value;
+                OnPropertyChanged("ComboboxChanged");
+            }
+        }
+
         //카테고리 목록 콤보박스, 카테고리 목록 출력
         public ObservableCollection<CategoryModel> Categories { get; set; }
 
@@ -144,9 +155,8 @@ namespace EasyProject.ViewModel
 
         public void GetProductsByDept()
         {
-            
-
             Products = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+            ComboboxChanged = true;
         }
 
 

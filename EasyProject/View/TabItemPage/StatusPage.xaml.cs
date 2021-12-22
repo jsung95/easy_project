@@ -9,6 +9,7 @@ using LiveCharts.Wpf;
 using System.Windows.Navigation;
 using System.Windows.Media;
 using System.Collections;
+using EasyProject.Model;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -27,7 +28,7 @@ namespace EasyProject.View.TabItemPage
     //    public string test8 { get; set; }
 
     //}
-public partial class StatusPage : Page {
+    public partial class StatusPage : Page {
         //int pIndex = 1;
         //private int numberOf;
         public ChartValues<float> Values { get; set; }
@@ -36,6 +37,7 @@ public partial class StatusPage : Page {
 
         List<object> myLst = new List<object>();
 
+        public String userDept = null;
         //public WindowStartupLocation WindowStartupLocation { get; }
 
         public StatusPage()
@@ -61,6 +63,8 @@ public partial class StatusPage : Page {
                3,4,6,3,2,6
             };
             //DataContext = this;
+            userDept = (deptName_ComboBox1.SelectedValue as DeptModel).Dept_name;
+
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -68,9 +72,9 @@ public partial class StatusPage : Page {
             searchText_ComboBox.Items.Add("제품코드");
             searchText_ComboBox.Items.Add("제품명");
             searchText_ComboBox.SelectedIndex = 0;
-            
+
         }
-       
+
         private void RowButton_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("버튼을 클릭했습니다.");
@@ -102,7 +106,7 @@ public partial class StatusPage : Page {
         {
             //Navigate((int)PagingMode.PageCountChange);
         }
-        private void Part_comboBox_Selection (object sender, SelectedCellsChangedEventArgs e)
+        private void Part_comboBox_Selection(object sender, SelectedCellsChangedEventArgs e)
         {
 
         }
@@ -207,9 +211,30 @@ public partial class StatusPage : Page {
                 new Uri("/View/DialogPage.xaml", UriKind.Relative)
                 );
 
-           
+
 
         }
 
+        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (deptName_ComboBox1.SelectedValue != null)
+            {
+                var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
+                var deptNameText = deptModelObject.Dept_name;
+                var userText = userDept;
+
+                
+                if (deptNameText.Equals(userText) || userText == null)
+                {
+                    Console.WriteLine(userText + "같은 부서일때");
+                    buttonColumn.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    Console.WriteLine(userText + "다른 부서일때");
+                    buttonColumn.Visibility = Visibility.Hidden;
+                }
+            }
+        } 
     }
 }
