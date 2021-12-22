@@ -86,6 +86,8 @@ namespace EasyProject.ViewModel
                 Console.WriteLine("  DEPT ID : {0}", App.nurse_dto.Dept_id);
 
                 isLogin = true;
+
+                
             }
             else
             {

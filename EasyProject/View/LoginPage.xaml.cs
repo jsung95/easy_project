@@ -28,7 +28,9 @@ namespace EasyProject
             loginBtn.Click += loginBtn_Click;
             signUpBtn.Click += signUpBtn_Click;
             searchBtn.Click += searchBtn_Click;
-            //체크박스 클릭 시 --> 아이디 다음번에 왔을 때 기억하는거 어떻게 할지  정해야함.
+
+            id_TxtBox.Text = Properties.Settings.Default.LoginIDSave;
+            id_TxtBox.Focus();
         }
 
 
@@ -64,6 +66,18 @@ namespace EasyProject
                 {
                     button.Command.Execute(null);
                 }
+
+                if(id_Checkbox.IsChecked == true)
+                {
+                    Properties.Settings.Default.LoginIDSave = Convert.ToString(App.nurse_dto.Nurse_no);
+                    Properties.Settings.Default.Save();
+                }
+                else
+                {
+                    Properties.Settings.Default.LoginIDSave = null;
+                    Properties.Settings.Default.Save();
+                }
+
 
                 NavigationService.Navigate(new Uri("/View/TabPage.xaml", UriKind.Relative));
             }
