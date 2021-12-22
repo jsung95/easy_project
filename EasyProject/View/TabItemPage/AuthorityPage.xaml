@@ -87,7 +87,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
-                            <TextBox  Grid.Column="0" Text="{Binding Normal_Keyword}" 
+                            <TextBox  Grid.Column="0" Text="{Binding Normal_Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                              Style="{DynamicResource WatermarkTextBox}" Tag ="검색명을 입력해주세요" FontSize="10" Height="25"  Grid.ColumnSpan="2" Margin="5" Cursor="Hand" />
                         </Grid>
                         <Grid Grid.Column="1">
@@ -103,12 +103,12 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
-                            <TextBox  Grid.Column="0" Text="{Binding Admin_Keyword}" 
+                            <TextBox  Grid.Column="0" Text="{Binding Admin_Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                              Style="{DynamicResource WatermarkTextBox}" Tag ="검색명을 입력해주세요" FontSize="10" Height="25"  Grid.ColumnSpan="2" Margin="5" Cursor="Hand" />
                         </Grid>
                         <Grid Grid.Column="1">
                             <Button  Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White" Height="25" 
-                             Command="{Binding NormalSearchCommand}" Margin="10" Cursor="Hand">
+                             Command="{Binding AdminSearchCommand}" Margin="10" Cursor="Hand">
                                 <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
                             </Button>
                         </Grid>
@@ -121,11 +121,15 @@
                         <ColumnDefinition Width="1.4*"/>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                        <DataGrid  x:Name="dataGrid1" Margin="5" AutoGenerateColumns="False" SelectionMode="Extended"
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="103*"/>
+                            <ColumnDefinition Width="185*"/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid  x:Name="dataGrid1" Margin="5,5,5,5" AutoGenerateColumns="False" SelectionMode="Extended"
                              ItemsSource="{Binding Normals_searched, Mode=TwoWay}"                           
                              ScrollViewer.CanContentScroll="True" 
                              ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                             ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" IsSynchronizedWithCurrentItem="False">
+                             ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" IsSynchronizedWithCurrentItem="False" Grid.ColumnSpan="2">
 
                             <DataGrid.Columns>
 

@@ -18,6 +18,8 @@ namespace EasyProject.ViewModel
     {
         LoginDao dao = new LoginDao();
 
+        public bool LoginCheck { get; set; } 
+
         private NurseModel nurse;
         public NurseModel Nurse
         {
@@ -81,6 +83,8 @@ namespace EasyProject.ViewModel
                 Console.WriteLine("  Nurse AUTH : {0}", App.nurse_dto.Nurse_auth);
                 Console.WriteLine("  Nurse PW : {0}", App.nurse_dto.Nurse_pw);
                 Console.WriteLine("  DEPT ID : {0}", App.nurse_dto.Dept_id);
+
+                LoginCheck = true;
             }
             else
             {
@@ -91,6 +95,8 @@ namespace EasyProject.ViewModel
                 Console.WriteLine("  Nurse PW : {0}", App.nurse_dto.Nurse_pw);
                 Console.WriteLine("  DEPT ID : {0}", App.nurse_dto.Dept_id);
             }
+
+            Console.WriteLine("vm : Login");
         }
 
         public void Logout()
