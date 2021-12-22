@@ -5,12 +5,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:EasyProject.View.TabItemPage"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:vm="clr-namespace:EasyProject.ViewModel"      
+      xmlns:vm="clr-namespace:EasyProject.ViewModel" 
+      xmlns:l="clr-namespace:EasyProject"
+      
       mc:Ignorable="d" 
-      Title="InsertListPage">
-    <Page.DataContext>
-        <vm:ProductViewModel/>
-    </Page.DataContext>
+      Title="InsertListPage"
+      DataContext="{Binding PVM, Source={StaticResource Locator}}"
+      >
+
 
     <Page.Resources>
         <Style TargetType="DataGridColumnHeader">
@@ -40,7 +42,7 @@
                             HorizontalAlignment="Left" Margin="10 10 10 10"
                             VerticalAlignment="Top" AutoGenerateColumns="False" 
                             CanUserSortColumns="True" IsReadOnly="True" ColumnWidth="*"
-                            ItemsSource="{Binding Add_list}">
+                            ItemsSource="{Binding Add_list, Mode=TwoWay}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Prod_in_date}" Header="입력일자" Width="1.5*" IsReadOnly="True" />
                     <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="1.5*" IsReadOnly="True"/>

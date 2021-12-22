@@ -10,12 +10,9 @@
     xmlns:local="clr-namespace:EasyProject.View.TabItemPage" 
     xmlns:vm="clr-namespace:EasyProject.ViewModel"
     mc:Ignorable="d"
+    DataContext="{Binding PVM, Source={StaticResource Locator}}"
     Title="FileUploadPageFunction">
 
-    <Page.DataContext>
-        <vm:ProductViewModel/>
-    </Page.DataContext>
-    
     <Grid Height="450">
         <materialDesign:Card Grid.Column="0" Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
             <Grid>
@@ -55,7 +52,7 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                     -->
-                    <Button x:Name="insertBtn" Content="추가하기" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
+                    <Button Content="추가하기" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
                        VerticalAlignment="Center" BorderThickness="0" Height="30" Width="90" Cursor="Hand" Command="{Binding ListCommand}"/>
                 </Grid>
             </Grid>

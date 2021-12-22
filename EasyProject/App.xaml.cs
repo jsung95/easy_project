@@ -6,6 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using EasyProject.Model;
+using EasyProject.ViewModel;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 
 namespace EasyProject
 {
@@ -18,6 +21,10 @@ namespace EasyProject
 
         public App()
         {
+            Ioc.Default.ConfigureServices(new ServiceCollection()
+                .AddSingleton<ProductViewModel>()
+                .BuildServiceProvider());
+
             this.InitializeComponent();
             nurse_dto = new NurseModel();
             Console.WriteLine("===> Init NurseDTO");

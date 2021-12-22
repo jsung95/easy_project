@@ -8,10 +8,10 @@
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:vm="clr-namespace:EasyProject.ViewModel"
       mc:Ignorable="d"
-      Title="InsertPage_Form">
-    <Page.DataContext>
-        <vm:ProductViewModel/>
-    </Page.DataContext>
+      Title="InsertPage_Form"
+      DataContext="{Binding PVM, Source={StaticResource Locator}}"
+      >
+
 
     <Grid Height="450">
         <materialDesign:Card Grid.Column="0" Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
