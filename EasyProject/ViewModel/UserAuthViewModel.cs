@@ -55,13 +55,11 @@ namespace EasyProject.ViewModel
         public UserAuthViewModel()
         {
             SearchTypeList = new[] { "이름", "아이디", "부서" };
-            Normals_searched = new ObservableCollection<UserModel>(dao.GetUserInfo("NORMAL")); 
-            Admins_searched = new ObservableCollection<UserModel>(dao.GetUserInfo("ADMIN"));
-            Normal_users = dao.GetUserInfo("NORMAL");
-            Admin_users = dao.GetUserInfo("ADMIN");
-            //Normals_searched = new ObservableCollection<UserModel>();
-            //Admins_searched = new ObservableCollection<UserModel>();
-
+            Normals_searched = new ObservableCollection<UserModel>(dao.GetUserInfo("NORMAL")); // 화면에 보일 리스트
+            Admins_searched = new ObservableCollection<UserModel>(dao.GetUserInfo("ADMIN"));  // 화면에 보일 리스트
+            Normal_users = dao.GetUserInfo("NORMAL"); // 사용자들을 검색할 리스트
+            Admin_users = dao.GetUserInfo("ADMIN");   // 사용자들을 검색할 리스트
+            
         }//Constructor
 
         //private ActionCommand normalSearchCommand;
@@ -119,6 +117,7 @@ namespace EasyProject.ViewModel
             }//get
 
         }//Command
+
         //public void NormalSearch() // 좌측 리스트(NORMAL) 검색
         //{
         //    Console.WriteLine("Normal 유저 검색");
@@ -153,7 +152,8 @@ namespace EasyProject.ViewModel
                 if (item.IsChecked)
                 {
                     item.IsChecked = false;
-                    Admins_searched.Add(item); // 화면에 보이는 Admin_searched 목록에 있는 리스트
+                    Admins_searched.Add(item); // 화면에 보이는 Admin_searched 목록에 있는 리스트                   
+                    Admin_users.Add(item);
                     Normal_users.Remove(item);
                     item.Nurse_auth = "ADMIN";
                     updateList.Add(item);                    
@@ -184,6 +184,7 @@ namespace EasyProject.ViewModel
                 {
                     item.IsChecked = false;
                     Normals_searched.Add(item);
+                    Normal_users.Add(item);
                     Admin_users.Remove(item);
                     item.Nurse_auth = "NORMAL";
                     updateList.Add(item);
@@ -207,7 +208,20 @@ namespace EasyProject.ViewModel
         {
             Console.WriteLine("OnNormalKeywordChanged()");
             IEnumerable<UserModel> temp = new List<UserModel>();
-            temp = Normal_users.Where( user => user.Nurse_name.Contains(Normal_Keyword) && user.Nurse_auth.Equals("NORMAL") );
+
+            switch (NormalSearchType)
+            {
+                case "이름":
+                    temp = Normal_users.Where(user => user.Nurse_name.Contains(Normal_Keyword));
+                    break;
+                case "아이디":
+                    temp = Normal_users.Where(user => user.Nurse_no.ToString().Contains(Normal_Keyword));
+                    break;
+                case "부서":
+                    temp = Normal_users.Where(user => user.Dept_name.Contains(Normal_Keyword));
+                    break;
+            }
+        
             Normals_searched.Clear();
             foreach (var item in temp)
             {
@@ -219,7 +233,19 @@ namespace EasyProject.ViewModel
         {
             Console.WriteLine("OnAdminKeywordChanged()");
             IEnumerable<UserModel> temp = new List<UserModel>();
-            temp = Admin_users.Where(user => user.Nurse_name.Contains(Admin_Keyword) && user.Nurse_auth.Equals("ADMIN"));
+
+            switch (AdminSearchType)
+            {
+                case "이름":
+                    temp = Admin_users.Where(user => user.Nurse_name.Contains(Admin_Keyword));
+                    break;
+                case "아이디":
+                    temp = Admin_users.Where(user => user.Nurse_no.ToString().Contains(Admin_Keyword));
+                    break;
+                case "부서":
+                    temp = Admin_users.Where(user => user.Dept_name.Contains(Admin_Keyword));
+                    break;
+            }
             Admins_searched.Clear();
             foreach (var item in temp)
             {
