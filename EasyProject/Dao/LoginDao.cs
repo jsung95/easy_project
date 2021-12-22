@@ -10,7 +10,8 @@ using Oracle.ManagedDataAccess.Client;
 namespace EasyProject.Dao
 {
     public class LoginDao : CommonDBConn, ILoginDao
-    {
+    {       
+
         public NurseModel LoginUserInfo(NurseModel nurse_dto)
         {
             
@@ -60,7 +61,87 @@ namespace EasyProject.Dao
             }//catch
 
             return nurse_dto;
-        }///
+        }///LoginUserInfo
+
+        public bool IdPasswordCheck(string nurse_no, string nurse_pw)
+        {
+            bool result = false;
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "SELECT * FROM NURSE WHERE nurse_no = :no AND nurse_pw = :pw";
+
+                        cmd.Parameters.Add(new OracleParameter("no", nurse_no));
+                        cmd.Parameters.Add(new OracleParameter("pw", SHA256Hash.StringToHash(nurse_pw)));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.Read())
+                        {
+                            result = true;
+                        } else
+                        {
+                            result = false;
+                        }
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return result;
+        }//IdPasswordCheck
+
+        public void PasswordChange(string nurse_no, string newPassword)
+        {
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "UPDATE Nurse SET " +
+                                          "nurse_pw = :newPW " +
+                                          "WHERE nurse_no = :no";
+
+                        cmd.Parameters.Add(new OracleParameter("newPW", SHA256Hash.StringToHash(newPassword))); // 비밀번호 암호화
+                        cmd.Parameters.Add(new OracleParameter("no", nurse_no));
+
+                        cmd.ExecuteNonQuery();
+                        Console.WriteLine("비번변경!");
+                    }//using(cmd)                    
+
+                }//using(conn)
+
+            }//try
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+        }//PasswordChange
+
     }//class
 
 }//namespace

@@ -100,7 +100,7 @@ namespace EasyProject.ViewModel
             }//get
 
         }//Command
-        private ActionCommand resetCommand;
+        private ActionCommand resetCommand; // 초기화 버튼(입력 폼 비우기)
         public ICommand ResetCommand
         {
             get
@@ -112,7 +112,7 @@ namespace EasyProject.ViewModel
                 return resetCommand;
             }//get
 
-        }//Command
+        }//ResetCommand
 
         private ActionCommand listCommand;
         public ICommand ListCommand
@@ -126,7 +126,7 @@ namespace EasyProject.ViewModel
                 return listCommand;
             }//get
 
-        }//Command
+        }//ListCommand
 
         //excel로 입력받은 여러개의 제품들에 대한 처리 
 

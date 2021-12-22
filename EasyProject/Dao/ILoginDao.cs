@@ -10,6 +10,9 @@ namespace EasyProject.Dao
     public interface ILoginDao
     {
         NurseModel LoginUserInfo(NurseModel nurse_dto);
+        bool IdPasswordCheck(string nurse_no, string nurse_pw);
+
+        void PasswordChange(string nurse_no, string newPassword);
     }//interface
 
 }//namespace

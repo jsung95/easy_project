@@ -54,13 +54,12 @@ namespace EasyProject
         {
 
             var button = sender as Button;
-            if (button != null)
+            if (button != null) 
             {
                 button.Command.Execute(null);
             }
 
-            NavigationService.Navigate(
-                new Uri("/View/TabPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/View/TabPage.xaml", UriKind.Relative));
         
         }
 
