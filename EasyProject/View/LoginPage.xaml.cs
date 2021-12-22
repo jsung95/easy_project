@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EasyProject.ViewModel;
 
 namespace EasyProject
 {
@@ -50,16 +52,33 @@ namespace EasyProject
                 );
 
         }
-        private void loginBtn_Click(object sender, RoutedEventArgs e) //로그인 버튼 클릭 시
+        private async void loginBtn_Click(object sender, RoutedEventArgs e) //로그인 버튼 클릭 시
         {
+            await Task.Delay(1500);
+            var temp = Ioc.Default.GetService<LoginViewModel>();
 
-            var button = sender as Button;
+            if(temp.isLogin == true)
+            {
+                var button = sender as Button;
+                if (button != null)
+                {
+                    button.Command.Execute(null);
+                }
+
+                NavigationService.Navigate(new Uri("/View/TabPage.xaml", UriKind.Relative));
+            }
+            else
+            {
+                MessageBox.Show("올바른 사번/비밀번호를 입력해주세요.");
+            }
+
+/*            var button = sender as Button;
             if (button != null) 
             {
                 button.Command.Execute(null);
             }
 
-            NavigationService.Navigate(new Uri("/View/TabPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/View/TabPage.xaml", UriKind.Relative));*/
         
         }
 

@@ -11,6 +11,7 @@ namespace EasyProject.Dao
     {
         NurseModel LoginUserInfo(NurseModel nurse_dto);
         bool IdPasswordCheck(string nurse_no, string nurse_pw);
+        bool IdPasswordCheck(NurseModel nurse_dto);
 
         void PasswordChange(string nurse_no, string newPassword);
     }//interface
