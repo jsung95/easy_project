@@ -32,7 +32,7 @@ namespace EasyProject
         {
             NavigationService.Navigate
                 (
-                new Uri("/View/ModifyPage.xaml", UriKind.Relative)
+                new Uri("/View/ExportPage/ModifyPage.xaml", UriKind.Relative)
                 );
         }
 
@@ -40,7 +40,7 @@ namespace EasyProject
         {
             NavigationService.Navigate
                 (
-                new Uri("/View/ReleasePage.xaml", UriKind.Relative)
+                new Uri("/View/ExportPage/ReleasePage.xaml", UriKind.Relative)
                 );
         }
     }

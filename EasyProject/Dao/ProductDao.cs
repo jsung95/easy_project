@@ -1054,7 +1054,95 @@ namespace EasyProject.Dao
             }//catch
 
         }//ChangeProductInfo_ForOut
+        public List<ProductShowModel> Prodcode_Info()     //prodcode 
+        {
+            List<ProductShowModel> list = new List<ProductShowModel>();
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
 
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "select distinct(prod_code) from product";
+                        //cmd.CommandText = "SELECT * FROM NURSE WHERE nurse_no = :no AND nurse_pw = :pw";
+
+                        //cmd.Parameters.Add(new OracleParameter("p_code", prod_dto.Prod_code));
+                        //cmd.Parameters.Add(new OracleParameter("total", prod_dto.Prod_total));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string Prod_code = reader.GetString(0);
+                            //int? Prod_total = reader.GetInt32(1);
+                            ProductShowModel dto = new ProductShowModel()
+                            {
+                                Prod_code = Prod_code
+                            };
+                            list.Add(dto);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+            return list;
+        }///product_info
+        public List<ProductShowModel> Prodtotal_Info()               //total
+        {
+            List<ProductShowModel> list = new List<ProductShowModel>();
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "select sum(prod_total) from product group by prod_code";
+                        //cmd.CommandText = "SELECT * FROM NURSE WHERE nurse_no = :no AND nurse_pw = :pw";
+
+                        //cmd.Parameters.Add(new OracleParameter("p_code", prod_dto.Prod_code));
+                        //cmd.Parameters.Add(new OracleParameter("total", prod_dto.Prod_total));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            int? Prod_total = reader.GetInt32(0);
+                            ProductShowModel dto = new ProductShowModel()
+                            {
+                                Prod_total = Prod_total
+                            };
+                            list.Add(dto);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+            return list;
+        }///product_info
 
 
     }//class

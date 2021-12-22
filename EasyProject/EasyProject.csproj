@@ -174,16 +174,16 @@
     <Compile Include="ViewModel\InsertProductViewModel.cs" />
     <Compile Include="ViewModel\SignupViewModel.cs" />
     <Compile Include="ViewModel\UserAuthViewModel.cs" />
-    <Compile Include="View\DialogPage.xaml.cs">
+    <Compile Include="View\ExportPage\DialogPage.xaml.cs">
       <DependentUpon>DialogPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ModifyPage.xaml.cs">
+    <Compile Include="View\ExportPage\ModifyPage.xaml.cs">
       <DependentUpon>ModifyPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PasswordChangePage.xaml.cs">
       <DependentUpon>PasswordChangePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ReleasePage.xaml.cs">
+    <Compile Include="View\ExportPage\ReleasePage.xaml.cs">
       <DependentUpon>ReleasePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TabItemPage\AuthorityPage.xaml.cs">
@@ -228,11 +228,11 @@
     <Compile Include="View\TabPage.xaml.cs">
       <DependentUpon>TabPage.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\DialogPage.xaml">
+    <Page Include="View\ExportPage\DialogPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\ModifyPage.xaml">
+    <Page Include="View\ExportPage\ModifyPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -240,7 +240,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ReleasePage.xaml">
+    <Page Include="View\ExportPage\ReleasePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

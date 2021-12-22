@@ -15,14 +15,14 @@
         <vm:ProductShowViewModel/>
     </Page.DataContext>
 
-    <Grid Height="450" Width="500">
+    <Grid Height="450" Width="700">
         <materialDesign:Card  Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
-            <Grid Height="400" Width="500" Background="White" >
+            <Grid Height="400" Width="700" Background="White" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.3*"/>
-                    <RowDefinition Height="0.3*"/>
-                    <RowDefinition Height="0.3*"/>
-                    <RowDefinition Height="0.3*"/>
+                    <RowDefinition Height="0.45*"/>
+                    <RowDefinition Height="0.45*"/>
+                   
                     <RowDefinition Height="0.3*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
@@ -64,28 +64,13 @@
                         <Label Content="유형" Foreground="#4472C4" Grid.Column="0" FontSize="15" FontWeight="Bold" HorizontalAlignment="center"  
                        VerticalAlignment="Center"/>
 
-                        <!--<ComboBox x:Name="RelaseType_ComboBox" Grid.Column="1" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,25" Height="30"
-                       ItemsSource="{Binding Path=Categories}" SelectedItem="{Binding SelectedCategory}" SelectedValuePath="Category_name" SelectedValue="{Binding SelectedProduct.Category_name}">
-                            <ComboBox.Resources>
-                                <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
-                            </ComboBox.Resources>
 
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Category_name}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>-->
                         <ComboBox Margin="10,25" Height="30" Width="70" Grid.Column="1" HorizontalAlignment="Center"  Name="Type_comboBox" VerticalAlignment="Center"
                                   SelectedValue="{Binding SelectedOutType}" SelectedValuePath="Content" SelectionChanged="comboBox_SelectionChanged">
                             <ComboBoxItem Content="사용" />
                             <ComboBoxItem Content="이관" />
                             <ComboBoxItem Content="폐기" />
                         </ComboBox>
-
                     </Grid>
 
                 </Grid>
