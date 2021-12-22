@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EasyProject.ViewModel;
 
 namespace EasyProject
 {
@@ -26,7 +28,9 @@ namespace EasyProject
             loginBtn.Click += loginBtn_Click;
             signUpBtn.Click += signUpBtn_Click;
             searchBtn.Click += searchBtn_Click;
-            //체크박스 클릭 시 --> 아이디 다음번에 왔을 때 기억하는거 어떻게 할지  정해야함.
+
+            id_TxtBox.Text = Properties.Settings.Default.LoginIDSave;
+            id_TxtBox.Focus();
         }
 
 
@@ -50,16 +54,45 @@ namespace EasyProject
                 );
 
         }
-        private void loginBtn_Click(object sender, RoutedEventArgs e) //로그인 버튼 클릭 시
+        private async void loginBtn_Click(object sender, RoutedEventArgs e) //로그인 버튼 클릭 시
         {
+            await Task.Delay(1500);
+            var temp = Ioc.Default.GetService<LoginViewModel>();
 
-            var button = sender as Button;
+            if(temp.isLogin == true)
+            {
+                var button = sender as Button;
+                if (button != null)
+                {
+                    button.Command.Execute(null);
+                }
+
+                if(id_Checkbox.IsChecked == true)
+                {
+                    Properties.Settings.Default.LoginIDSave = Convert.ToString(App.nurse_dto.Nurse_no);
+                    Properties.Settings.Default.Save();
+                }
+                else
+                {
+                    Properties.Settings.Default.LoginIDSave = null;
+                    Properties.Settings.Default.Save();
+                }
+
+
+                NavigationService.Navigate(new Uri("/View/TabPage.xaml", UriKind.Relative));
+            }
+            else
+            {
+                MessageBox.Show("올바른 사번/비밀번호를 입력해주세요.");
+            }
+
+/*            var button = sender as Button;
             if (button != null) 
             {
                 button.Command.Execute(null);
             }
 
-            NavigationService.Navigate(new Uri("/View/TabPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/View/TabPage.xaml", UriKind.Relative));*/
         
         }
 

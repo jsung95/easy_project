@@ -12,13 +12,10 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:w="clr-namespace:EasyProject.Util"
       mc:Ignorable="d" 
+      DataContext="{Binding LVM, Source={StaticResource Locator}}"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="LoginPage">
-
-    <Page.DataContext>
-        <vm:LoginViewModel/>
-    </Page.DataContext>
-
+      
     <Grid  Background="White"  >
         <materialDesign:Card Height="400" Width="450" Margin ="10" UniformCornerRadius="20" Background="White">
         <Grid Height="400" Width="450"  >

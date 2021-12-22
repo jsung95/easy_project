@@ -106,6 +106,50 @@ namespace EasyProject.Dao
             return result;
         }//IdPasswordCheck
 
+        public bool IdPasswordCheck(NurseModel nurse_dto)
+        {
+            bool result = false;
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "SELECT * FROM NURSE WHERE nurse_no = :no AND nurse_pw = :pw";
+
+                        cmd.Parameters.Add(new OracleParameter("no", nurse_dto.Nurse_no));
+                        cmd.Parameters.Add(new OracleParameter("pw", nurse_dto.Nurse_pw));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.Read())
+                        {
+                            result = true;
+                        }
+                        else
+                        {
+                            result = false;
+                        }
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return result;
+        }//IdPasswordCheck()
+
         public void PasswordChange(string nurse_no, string newPassword)
         {
             try
@@ -141,6 +185,7 @@ namespace EasyProject.Dao
             }//catch
 
         }//PasswordChange
+
 
     }//class
 
