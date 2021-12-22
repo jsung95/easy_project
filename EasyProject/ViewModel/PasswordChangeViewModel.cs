@@ -88,7 +88,7 @@ namespace EasyProject.ViewModel
                     MessageBox.Show("다시 입력란을 채워주세요!");
                     return;
                 }
-                if(NewPassword == Nurse_no)
+                if(NewPassword == Nurse_pw)
                 {
                     MessageBox.Show("현재 비밀번호와 다른 비밀번호를 입력해주세요!");
                     return;
@@ -98,7 +98,6 @@ namespace EasyProject.ViewModel
                 {
                     MessageBox.Show("비밀번호 변경.");
                     dao.PasswordChange(Nurse_no, NewPassword);
-
                 }
                 else
                 {

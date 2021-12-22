@@ -54,7 +54,7 @@ namespace EasyProject
         {
 
             var button = sender as Button;
-            if (button != null)
+            if (button != null) 
             {
                 button.Command.Execute(null);
             }
