@@ -80,7 +80,7 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>-->
                         <ComboBox Margin="10,25" Height="30" Width="70" Grid.Column="1" HorizontalAlignment="Center"  Name="Type_comboBox" VerticalAlignment="Center"
-                                  SelectedValue="{Binding SelectedOutType}" SelectedValuePath="Content">
+                                  SelectedValue="{Binding SelectedOutType}" SelectedValuePath="Content" SelectionChanged="comboBox_SelectionChanged">
                             <ComboBoxItem Content="사용" />
                             <ComboBoxItem Content="이관" />
                             <ComboBoxItem Content="폐기" />
@@ -155,7 +155,9 @@
 
                         <TextBox x:Name="mount_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="1" HorizontalContentAlignment="Center" 
                        VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" 
-                             Text="{Binding SelectedProduct.Imp_dept_count}"/>
+                             Text="{Binding InputOutCount}"/>
+                        <TextBox x:Name="mount_TxtBox_Hidden" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="1" HorizontalContentAlignment="Center" 
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Visibility="Hidden"/>
                     </Grid>
                   
 

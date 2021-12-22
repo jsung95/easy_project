@@ -48,7 +48,6 @@
     <Grid Height="450" Width="800" >
         <materialDesign:Card  Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
             <Grid>
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.5*"/>
                     <RowDefinition Height="0.5*"/>
@@ -61,50 +60,68 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="1.4*"/>
                 </Grid.ColumnDefinitions>
-
-                <Grid Grid.Row="0" Grid.Column="1" >
+                
+                <Grid Grid.Column="0" Margin="5,10,0,0" Background="#4472C4">
+                    <TextBlock FontWeight="Bold" FontSize="15" TextAlignment="left"  
+                               Margin="10" VerticalAlignment="center"><Run Foreground="White" Text="권한 변경" IsEnabled="False" /></TextBlock>
                 </Grid>
+                <Grid  Margin="0,10,0,0" Grid.Column="1" Background="#4472C4"/>
+                <Grid  Margin="0,10,5,0" Grid.Column="2" Background="#4472C4"/>
 
                 <Grid Grid.Row="1" Grid.Column="0">
-                    <ComboBox  HorizontalAlignment="Left" Background="#FF877B7B" VerticalAlignment="Center" Width="120" Grid.Column="0" SelectedItem="{Binding NormalSearchType}" ItemsSource="{Binding SearchTypeList}" Grid.ColumnSpan="2" />
+                    <ComboBox Background="#FFE5E5E5" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Grid.Column="0" SelectedItem="{Binding NormalSearchType}" ItemsSource="{Binding SearchTypeList}" Grid.ColumnSpan="2" >
+                        
+                    </ComboBox>
                     <!-- <ComboBox  HorizontalAlignment="Center" Background="#FF877B7B" VerticalAlignment="Center" Width="120" Grid.Column="0" SelectedItem="{Binding SelectedAuth1}" ItemsSource="{Binding AuthList}"/> -->
                 </Grid>
 
                 <Grid Grid.Row="1" Grid.Column="2">
-                    <ComboBox HorizontalAlignment="Left"  Background="#FF877B7B" VerticalAlignment="Center" Width="120" SelectedItem="{Binding AdminSearchType}" ItemsSource="{Binding SearchTypeList}"/>
+                    <ComboBox Margin="5" HorizontalAlignment="Left"  Background="#FFE5E5E5" VerticalAlignment="Center" Width="120" SelectedItem="{Binding AdminSearchType}" ItemsSource="{Binding SearchTypeList}"/>
                 </Grid>
 
                 <Grid Grid.Row="2" Grid.Column="0" >
-
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="187*"/>
-                        <ColumnDefinition Width="101*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <TextBox  Grid.Column="0" Text="{Binding Normal_Keyword}" 
+                             Style="{DynamicResource WatermarkTextBox}" Tag ="검색명을 입력해주세요" FontSize="10" Height="25"  Grid.ColumnSpan="2" Margin="5" Cursor="Hand" />
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Button  Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White" Height="25" 
+                             Command="{Binding NormalSearchCommand}" Margin="10" Cursor="Hand">
+                            <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
+                        </Button>
+                    </Grid>
 
-
-                    <TextBox Text="{Binding Normal_Keyword}" FontSize="15" Height="25" Grid.ColumnSpan="2" Margin="0,14,0,15" />
-                    <Button FontSize="50" Height="25" Width="40" HorizontalAlignment="Left" Command="{Binding NormalSearchCommand}" Grid.Column="1" Margin="60,14,0,15"></Button>
                 </Grid>
 
                 <Grid Grid.Row="2" Grid.Column="2">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="175*"/>
-                        <ColumnDefinition Width="17*"/>
-                        <ColumnDefinition Width="95*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Text="{Binding Admin_Keyword}" FontSize="15" Height="25" Grid.ColumnSpan="3" Margin="0,14,0,15"/>
-                    <Button FontSize="50" Height="25" Width="40" HorizontalAlignment="Left" Command="{Binding AdminSearchCommand}" Grid.Column="2" Margin="55,14,0,15" Cursor="Hand"></Button>
+                    <Grid Grid.Column="0">
+                        <TextBox Text="{Binding Admin_Keyword}" 
+                                Style="{DynamicResource WatermarkTextBox}" Tag ="검색명을 입력해주세요" FontSize="10" Height="25"  Grid.ColumnSpan="2" Margin="5" Cursor="Hand"/>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Button Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White" Height="25" Command="{Binding AdminSearchCommand}" Margin="10" Cursor="Hand">
+                            <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
+                        </Button>
+                    </Grid>                   
                 </Grid>
 
                 <Grid Grid.Row="3" Grid.Column="0">
-                    <DataGrid  x:Name="dataGrid1" AutoGenerateColumns="False" SelectionMode="Extended"
+                    <DataGrid  x:Name="dataGrid1" Margin="5" AutoGenerateColumns="False" SelectionMode="Extended"
                              ItemsSource="{Binding Normals_searched, Mode=TwoWay}"                           
                              ScrollViewer.CanContentScroll="True" 
                              ScrollViewer.VerticalScrollBarVisibility="Visible" 
                              ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" IsSynchronizedWithCurrentItem="False">
 
                         <DataGrid.Columns>
-                           
+
                             <!--데이터 바인딩-->
                             <DataGridCheckBoxColumn Binding="{Binding IsChecked}" IsReadOnly="False" />
                             <DataGridTextColumn Header=" 이름"  Binding="{Binding Nurse_name}" IsReadOnly="True" />
@@ -126,12 +143,12 @@
 
                     <Grid Grid.Row ="1">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="5*"/>
                             <ColumnDefinition Width="7*"/>
                         </Grid.ColumnDefinitions>
                         <!--왼쪽옮기기 버튼-->
-                        <Label Grid.Column="1" Content="왼쪽으로 이동" Foreground="#4472C4" FontSize="17" HorizontalAlignment="Center" Height="28"  VerticalAlignment="Center" />
-                        <Button x:Name="leftBtn" Foreground="white" Background="#FFE5E5E5" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"  
+                        <Label Grid.Column="1" Content="왼쪽으로 이동" Foreground="#4472C4" FontSize="13" HorizontalAlignment="Center" Height="28"  VerticalAlignment="Center" />
+                        <Button x:Name="leftBtn" Foreground="white" Background="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Right"  
                         VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Command="{Binding MoveLeftCommand}">
                             <materialDesign:PackIcon Grid.Row="0" Kind="ChevronLeftCircle" VerticalAlignment="Center" HorizontalAlignment="Center" Height="15" Width="26" />
                         </Button>
@@ -139,12 +156,12 @@
 
                     <Grid Grid.Row ="2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="5*"/>
                             <ColumnDefinition Width="7*"/>
                         </Grid.ColumnDefinitions>
                         <!--오른쪽옮기기 버튼-->
-                        <Label Grid.Column="2" Content="오른쪽으로 이동" Foreground="#4472C4"   FontSize="17" HorizontalAlignment="Center" Height="28"  VerticalAlignment="Center"/>
-                        <Button x:Name="rightBtn"   Foreground="white" Background="#FFE5E5E5" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"  
+                        <Label Grid.Column="2" Content="오른쪽으로 이동" Foreground="#4472C4"   FontSize="13" HorizontalAlignment="Center" Height="28"  VerticalAlignment="Center"/>
+                        <Button x:Name="rightBtn"   Foreground="white" Background="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Right"  
                         VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Command="{Binding MoveRightCommand}">
                             <materialDesign:PackIcon Grid.Row="0" Kind="ChevronRightCircle" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="26" />
                         </Button>
@@ -153,7 +170,7 @@
 
                 <Grid Grid.Row="3" Grid.Column="2">
 
-                    <DataGrid  x:Name="dataGrid2" AutoGenerateColumns="false" SelectionMode="Extended"
+                    <DataGrid  x:Name="dataGrid2" Margin="5" AutoGenerateColumns="false" SelectionMode="Extended"
                              ItemsSource="{Binding Admins_searched, Mode=TwoWay}"  
                              ScrollViewer.CanContentScroll="True" 
                              ScrollViewer.VerticalScrollBarVisibility="Visible" 
@@ -170,7 +187,7 @@
 
                 </Grid>
                 <Grid Grid.Row="5" Grid.Column="3">
-                    <Button Content="확인" Background="#4472C4"  FontSize="20" Foreground="White" HorizontalAlignment="Right" ></Button>
+                    <Button Content="확인" Background="#4472C4"  FontSize="15" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,10,0"></Button>
                 </Grid>
             </Grid>
 
