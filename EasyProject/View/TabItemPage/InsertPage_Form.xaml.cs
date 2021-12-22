@@ -23,18 +23,6 @@ namespace EasyProject.View.TabItemPage
         public InsertPage_Form()
         {
             InitializeComponent();
-            okBtn.Click += OkBtn_Click;
-        }
-
-        private void OkBtn_Click(object sender, RoutedEventArgs e)
-        {
-
-
-        }
-
-        private void signUpBtn_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

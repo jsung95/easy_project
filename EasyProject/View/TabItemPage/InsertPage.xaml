@@ -19,7 +19,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
 
             <Button x:Name="formBtn" Content="재고 입력" Grid.Column="0" Background="White" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
@@ -32,7 +32,7 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
 
             <Frame x:Name="InsertPageFrame" Grid.Column="0" Source="InsertPage_Form.xaml"/>
