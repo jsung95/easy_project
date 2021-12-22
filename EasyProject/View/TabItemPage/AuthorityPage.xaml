@@ -103,7 +103,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
-                            <TextBox  Grid.Column="0" Text="{Binding Normal_Keyword}" 
+                            <TextBox  Grid.Column="0" Text="{Binding Admin_Keyword}" 
                              Style="{DynamicResource WatermarkTextBox}" Tag ="검색명을 입력해주세요" FontSize="10" Height="25"  Grid.ColumnSpan="2" Margin="5" Cursor="Hand" />
                         </Grid>
                         <Grid Grid.Column="1">
