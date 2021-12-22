@@ -78,8 +78,8 @@
                                 <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="*"  IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="*"  IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Prod_price}"  Header="가격" Width="*"  IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Prod_out_count}"  Header="수량" Width="0.5*"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}"  Header="가격" Width="*"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_out_count, StringFormat='{}{0:#,0} 개'}"  Header="수량" Width="0.5*"  IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Prod_out_date}"  Header="출고일" Width="*"  IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Prod_out_type}"  Header="출고유형" Width="0.7*"   IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Dept_name}"  Header="부서명" Width="*"  IsReadOnly="True"/>
