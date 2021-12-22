@@ -68,43 +68,9 @@ public partial class StatusPage : Page {
             searchText_ComboBox.Items.Add("제품코드");
             searchText_ComboBox.Items.Add("제품명");
             searchText_ComboBox.SelectedIndex = 0;
-            // myLst = GetData();
-
-            // dataGrid.ItemsSource = myLst.Take(numberOf);
-
-            //dataGrid.Columns[0].Header = "제품ID";
-            //dataGrid.Columns[1].Header = "제품명";
-            //dataGrid.Columns[2].Header = "Test";
-            //dataGrid.Columns[3].Header = "Test";
-            //dataGrid.Columns[4].Header = "Test";
-            //dataGrid.Columns[5].Header = "Test";
-            //dataGrid.Columns[6].Header = "Test";
-            //dataGrid.Columns[7].Header = "Test";
+            
         }
-        //private List<object> GetData()
-        //{
-        //    List<object> genericList2 = new List<object>();
-        //    TestData studentObj2;
-        //    //Random randomObj = new Random();
-
-        //    for (int i = 0; i < 1000; i++)
-        //    {
-        //        studentObj2 = new TestData();
-        //        studentObj2.test1 = i;
-        //        studentObj2.test2 = "B " + i;
-        //        studentObj2.test3 = i;
-        //        studentObj2.test4 = "test" + i;
-        //        studentObj2.test5 = "test" + i;
-        //        studentObj2.test6 = "FF " + i;
-        //        studentObj2.test7 = "GGGGGGG " + i;
-        //        studentObj2.test8 = "HHHHHH " + i;
-
-        //        //studentObj.Age = (uint)randomObj.Next(1, 100);
-
-        //        genericList2.Add(studentObj2);
-        //    }
-        //    return genericList2;
-        //}
+       
         private void RowButton_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("버튼을 클릭했습니다.");

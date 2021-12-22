@@ -22,7 +22,9 @@
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Height" Value="20"/>
+            <Setter Property="Cursor" Value="Hand"/>
         </Style>
+        
         <Style TargetType="DataGrid">
             <Setter Property="Background" Value="White"/>
             <Setter Property="VerticalGridLinesBrush" Value="#4472C4"/>
@@ -33,7 +35,9 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="Cursor" Value="Hand" />            
         </Style>
+
     </Page.Resources>
     <Grid Background="White">
         <materialDesign:Card  Height="450" Width="1200" UniformCornerRadius="20" Background="White">
@@ -140,13 +144,12 @@
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Button x:Name="goDialog_Btn" Grid.Column="3" Foreground="#4472C4"  FontSize="12" FontWeight="Bold" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand"
-                            VerticalAlignment="Center" Height="45"  Width="45" HorizontalAlignment="Center" Click="goDialog_Btn_Click">
+                                                VerticalAlignment="Center" Height="45"  Width="45" HorizontalAlignment="Center" Click="goDialog_Btn_Click">
                                                 <materialDesign:PackIcon  Kind="Input" VerticalAlignment="Center" HorizontalAlignment="Center" Height="auto" Width="auto" />
                                             </Button>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-
                             </DataGrid.Columns>
                         </DataGrid>
                         <Grid Grid.Row="1">
