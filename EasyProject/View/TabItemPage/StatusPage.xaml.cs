@@ -204,7 +204,7 @@ public partial class StatusPage : Page {
         {
             NavigationService.Navigate
                 (
-                new Uri("/View/DialogPage.xaml", UriKind.Relative)
+                new Uri("/View/ExportPage/DialogPage.xaml", UriKind.Relative)
                 );
 
            
