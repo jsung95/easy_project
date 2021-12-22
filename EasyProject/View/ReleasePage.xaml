@@ -156,6 +156,8 @@
                         <TextBox x:Name="mount_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="1" HorizontalContentAlignment="Center" 
                        VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" 
                              Text="{Binding InputOutCount}"/>
+                        <TextBox x:Name="mount_TxtBox_Hidden" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="1" HorizontalContentAlignment="Center" 
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Visibility="Hidden"/>
                     </Grid>
                   
 
