@@ -5,13 +5,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:EasyProject.View.TabItemPage"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-       xmlns:wookoa="clr-namespace:System;assembly=mscorlib"
-      xmlns:vm="clr-namespace:EasyProject.ViewModel"
-      mc:Ignorable="d" 
+      xmlns:wookoa="clr-namespace:System;assembly=mscorlib"
+      mc:Ignorable="d"
+      DataContext="{Binding ProductInOutViewModel, Source={StaticResource Locator}}"
       Title="IncomingOutgoingList1Page" Cursor="Hand">
-    <Page.DataContext>
-        <vm:ProductInOutViewModel/>
-    </Page.DataContext>
+
     <Page.Resources>
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="#EAEAEA"/>

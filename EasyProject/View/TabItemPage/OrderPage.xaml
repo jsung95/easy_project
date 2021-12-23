@@ -9,10 +9,8 @@
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      DataContext="{Binding OrderViewModel, Source={StaticResource Locator}}"
       Title="OrderPage">
-    <Page.DataContext>
-        <vm:OrderViewModel/>
-    </Page.DataContext>
 
     <Grid Height="450" Width="800" >
         <materialDesign:Card  Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">

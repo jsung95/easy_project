@@ -10,10 +10,9 @@
       xmlns:w="clr-namespace:EasyProject.Util"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      DataContext="{Binding SignupViewModel, Source={StaticResource Locator}}"
       Title="SignupPage">
-    <Page.DataContext>
-        <vm:SignupViewModel/>
-    </Page.DataContext>
+
     <Grid  Background="White"  >
         <materialDesign:Card Height="400" Width="450" Margin ="10" UniformCornerRadius="20" Background="White">
             <Grid Height="400" Width="450"  HorizontalAlignment="Center" >
