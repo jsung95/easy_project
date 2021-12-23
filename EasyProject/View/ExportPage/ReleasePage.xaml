@@ -6,13 +6,11 @@
       xmlns:local="clr-namespace:EasyProject.View" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-      xmlns:vm="clr-namespace:EasyProject.ViewModel"
       mc:Ignorable="d"
+      DataContext="{Binding ProductShowViewModel, Source={StaticResource Locator}}"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ReleasePage">
-    <Page.DataContext>
-        <vm:ProductShowViewModel />
-    </Page.DataContext>
+    
     <Grid Height="450" Width="700">
         <materialDesign:Card  Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
             <Grid Height="400" Width="700" Background="White" >
