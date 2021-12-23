@@ -10,7 +10,7 @@
     xmlns:local="clr-namespace:EasyProject.View.TabItemPage" 
     xmlns:vm="clr-namespace:EasyProject.ViewModel"
     mc:Ignorable="d"
-    DataContext="{Binding ProductViewModel, Source={StaticResource Locator}}"
+    DataContext="{Binding PVM, Source={StaticResource Locator}}"
     Title="FileUploadPageFunction">
 
     <Grid Height="450">

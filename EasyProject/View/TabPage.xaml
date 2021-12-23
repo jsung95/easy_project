@@ -10,9 +10,10 @@
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:vm="clr-namespace:EasyProject.ViewModel"
       d:DesignHeight="600" d:DesignWidth="1080"
-      DataContext="{Binding LoginViewModel, Source={StaticResource Locator}}" 
       Title="TabPage">
-
+    <Page.DataContext>
+        <vm:LoginViewModel/>
+    </Page.DataContext>
     <StackPanel Orientation="Vertical" Background="white">
         <Grid Height="40">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
