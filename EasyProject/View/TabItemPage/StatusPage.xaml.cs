@@ -9,6 +9,7 @@ using LiveCharts.Wpf;
 using System.Windows.Navigation;
 using System.Windows.Media;
 using System.Collections;
+using EasyProject.Model;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -38,7 +39,7 @@ namespace EasyProject.View.TabItemPage
             //cbNumberOfRecords.Items.Add("50");
             //cbNumberOfRecords.Items.Add("100");
             //cbNumberOfRecords.SelectedItem = 10;
-            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+            //WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
 
             deptName_ComboBox1.SelectedIndex = (int)App.nurse_dto.Dept_id - 1;
             this.Loaded += MainWindow_Loaded;
