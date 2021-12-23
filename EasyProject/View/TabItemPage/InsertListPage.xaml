@@ -48,9 +48,9 @@
                     <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="1.5*" IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="1.5*" IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding Category_name}"  Header="품목/종류" Width="1*"  IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding Prod_price}" Header="제품가격" Width="1*" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}" Header="제품가격" Width="1*" IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding Prod_expire}"  Header="유통기한" Width="3*"  IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding Prod_in_count}"  Header="수량" Width="3*"  IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Prod_in_count, StringFormat='{}{0:#,0} 개'}"  Header="수량" Width="3*"  IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding Nurse_name}"  Header="관리자명" Width="3*"  IsReadOnly="True"/>
 
                 </DataGrid.Columns>

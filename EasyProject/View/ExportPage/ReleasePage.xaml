@@ -14,15 +14,17 @@
     <Page.DataContext>
         <vm:ProductShowViewModel/>
     </Page.DataContext>
+    
+    
 
-    <Grid Height="450" Width="500">
+    <Grid Height="450" Width="700">
         <materialDesign:Card  Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
-            <Grid Height="400" Width="500" Background="White" >
+            <Grid Height="400" Width="700" Background="White" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.3*"/>
-                    <RowDefinition Height="0.3*"/>
-                    <RowDefinition Height="0.3*"/>
-                    <RowDefinition Height="0.3*"/>
+                    <RowDefinition Height="0.45*"/>
+                    <RowDefinition Height="0.45*"/>
+                   
                     <RowDefinition Height="0.3*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
@@ -48,55 +50,33 @@
 
                 </Grid>
                 <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.3*"/>
-                        <ColumnDefinition Width="0.4*"/>
-                        <ColumnDefinition Width="0.3*"/>
-                      
-                    </Grid.ColumnDefinitions>
-
-                    <Grid Grid.Column="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.5*"/>
-                            <ColumnDefinition Width="0.5*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label Content="유형" Foreground="#4472C4" Grid.Column="0" FontSize="15" FontWeight="Bold" HorizontalAlignment="center"  
-                       VerticalAlignment="Center"/>
-
-                        <!--<ComboBox x:Name="RelaseType_ComboBox" Grid.Column="1" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,25" Height="30"
-                       ItemsSource="{Binding Path=Categories}" SelectedItem="{Binding SelectedCategory}" SelectedValuePath="Category_name" SelectedValue="{Binding SelectedProduct.Category_name}">
-                            <ComboBox.Resources>
-                                <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
-                            </ComboBox.Resources>
-
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Category_name}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>-->
-                        <ComboBox Margin="10,25" Height="30" Width="70" Grid.Column="1" HorizontalAlignment="Center"  Name="Type_comboBox" VerticalAlignment="Center"
-                                  SelectedValue="{Binding SelectedOutType}" SelectedValuePath="Content" SelectionChanged="comboBox_SelectionChanged">
-                            <ComboBoxItem Content="사용" />
-                            <ComboBoxItem Content="이관" />
-                            <ComboBoxItem Content="폐기" />
-                        </ComboBox>
-
-                    </Grid>
+                    
 
                 </Grid>
 
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.3*"/>
-                        <ColumnDefinition Width="0.4*"/>
+                        <ColumnDefinition Width="0.3*"/>
                         <ColumnDefinition Width="0.3*"/>
                     </Grid.ColumnDefinitions>
 
+                    <Grid Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="유형" Foreground="#4472C4" Grid.Column="0" FontSize="15" FontWeight="Bold" HorizontalAlignment="center"  
+                       VerticalAlignment="Center"/>
+
+
+                        <ComboBox Margin="10,25" Height="30" Width="70" Grid.Column="1" HorizontalAlignment="Center"  Name="Type_comboBox" VerticalAlignment="Center"
+                                  SelectedValue="{Binding SelectedOutType}" SelectedValuePath="Content" SelectionChanged="comboBox_SelectionChanged">
+                            <ComboBoxItem Content="사용" />
+                            <ComboBoxItem Content="이관" />
+                            <ComboBoxItem Content="폐기" />
+                        </ComboBox>
+                    </Grid>
                     <Grid Grid.Column="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.5*"/>
@@ -134,36 +114,27 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>-->
                     </Grid>
-
-                </Grid>
-
-                <Grid Grid.Row="3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.3*"/>
-                        <ColumnDefinition Width="0.4*"/>
-                        <ColumnDefinition Width="0.3*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Grid Grid.Column="1">
+                    <Grid Grid.Column="2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.5*"/>
-                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.3*"/>
+                            <ColumnDefinition Width="0.7*"/>
                         </Grid.ColumnDefinitions>
-                        
                         <Label Content="수량" Foreground="#4472C4" Grid.Column="0" FontSize="15" FontWeight="Bold" HorizontalAlignment="center"  
                        VerticalAlignment="Center"/>
 
                         <TextBox x:Name="mount_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="1" HorizontalContentAlignment="Center" 
-                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" 
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Width="80"
                              Text="{Binding InputOutCount}"/>
                         <TextBox x:Name="mount_TxtBox_Hidden" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="1" HorizontalContentAlignment="Center" 
                        VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Visibility="Hidden"/>
+
                     </Grid>
-                  
 
                 </Grid>
 
-                <Grid Grid.Row="4">
+               
+
+                <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.1*"/>
                         <ColumnDefinition Width="0.3*"/>
@@ -173,14 +144,14 @@
                         <ColumnDefinition Width="0.1*"/>
                     </Grid.ColumnDefinitions>
                     
-                    <Button x:Name="reset_Btn" Grid.Column="1"  Content="초기화" Background="Red" FontSize="12"  HorizontalAlignment="Left"  
+                    <Button x:Name="reset_Btn" Grid.Column="1"  Content="초기화" Background="Red" FontSize="12"  HorizontalAlignment="Center"  
                        VerticalAlignment="Center"  BorderThickness="0" Height="35" Width="70"  Foreground="White" Command="{Binding OutProductReset}"  Click="reset_Btn_Click"/>
                     
-                    <Button x:Name="cancel_Btn" Content="취소" Grid.Column="3" Background="Gray" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
-                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="35" Width="70" Cursor="Hand"  Foreground="White" Click="cancel_Btn_Click"/>
+                    <Button x:Name="cancel_Btn" Content="취소" Grid.Column="3" Background="Gray" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
+                       VerticalAlignment="Center" Margin="0,0,0,0" BorderThickness="0" Height="35" Width="70" Cursor="Hand"  Foreground="White" Click="cancel_Btn_Click"/>
 
-                    <Button x:Name="signUp_Btn" Content="확인" Grid.Column="4" Background="#4472C4" FontSize="12"  HorizontalAlignment="Left"  
-                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="35" Width="70" Cursor="Hand"  Command="{Binding OutProductCommand}" Foreground="white" Click="signUp_Btn_Click">
+                    <Button x:Name="signUp_Btn" Content="확인" Grid.Column="4" Background="#4472C4" FontSize="12"  HorizontalAlignment="Center"  
+                       VerticalAlignment="Center" Margin="0,0,0,0" BorderThickness="0" Height="35" Width="70" Cursor="Hand"  Command="{Binding OutProductCommand}" Foreground="white" Click="signUp_Btn_Click">
                     </Button>
                     
                 </Grid>

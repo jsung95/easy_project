@@ -12,13 +12,10 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:w="clr-namespace:EasyProject.Util"
       mc:Ignorable="d" 
+      DataContext="{Binding LVM, Source={StaticResource Locator}}"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="LoginPage">
-
-    <Page.DataContext>
-        <vm:LoginViewModel/>
-    </Page.DataContext>
-
+      
     <Grid  Background="White"  >
         <materialDesign:Card Height="400" Width="450" Margin ="10" UniformCornerRadius="20" Background="White">
         <Grid Height="400" Width="450"  >
@@ -45,6 +42,12 @@
                              HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="25" Height="40" Width="300" Grid.Column="1"
                              w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding Password, Mode=TwoWay}" Cursor="IBeam"/>
                 
+                
+                    <StackPanel Grid.Row="2">
+                        <CheckBox x:Name="id_Checkbox" Width="100" Height="30" HorizontalAlignment="Left" Margin="75,0,75,21"
+                                  Unchecked="checkbox_UnChecked" Checked="checkbox_Checked" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" BorderBrush="#FF0E0D0D" Foreground="#FF111010" Content="아이디저장"/>
+                    </StackPanel>
+
             </Grid>
 
             <Grid Grid.Row="2" >
