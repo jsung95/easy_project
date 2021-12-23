@@ -25,8 +25,9 @@
             </StackPanel>
  
             <StackPanel Orientation="Horizontal" Margin="10 0" VerticalAlignment="Center" HorizontalAlignment="Right">
-                <TextBlock x:Name="userNameTxtBox" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#ff2196f3"></TextBlock>
-                <TextBlock x:Name="userNamePlusTxtBlock" Text="님" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="#ff2196f3"></TextBlock>
+                <Button x:Name="logoutBtn" Height="35" Width="90" FontSize="13" FontWeight="DemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3" Content="로그아웃" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand"></Button>
+                <TextBlock x:Name="userNameTxtBox" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"></TextBlock>
+                <TextBlock x:Name="userNamePlusTxtBlock" Text="님" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"></TextBlock>
                 <!--<Button Content="로그아웃" Cursor="Hand" Command="{Binding LogoutCommand}"/>-->
             </StackPanel>
             
