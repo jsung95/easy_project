@@ -11,7 +11,7 @@ namespace EasyProject
     public  class Locator
     {
         public ProductViewModel ProductViewModel => Ioc.Default.GetService<ProductViewModel>();
-        //public ProductShowViewModel ProductShowViewModel => Ioc.Default.GetService<ProductShowViewModel>();
+        public ProductShowViewModel ProductShowViewModel => Ioc.Default.GetService<ProductShowViewModel>();
         public ProductInOutViewModel ProductInOutViewModel => Ioc.Default.GetService<ProductInOutViewModel>();
         public LoginViewModel LoginViewModel => Ioc.Default.GetService<LoginViewModel>();
         public PasswordChangeViewModel PasswordChangeViewModel => Ioc.Default.GetService<PasswordChangeViewModel>();
