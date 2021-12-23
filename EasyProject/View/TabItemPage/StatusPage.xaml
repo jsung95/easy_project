@@ -9,6 +9,7 @@
       xmlns:vm ="clr-namespace:EasyProject.ViewModel" 
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      xmlns:datapager="clr-namespace:Syncfusion.UI.Xaml.Controls.DataPager;assembly=Syncfusion.SfGrid.WPF"
       mc:Ignorable="d"
       Title="StatusPage">
     <Page.DataContext>
@@ -130,14 +131,13 @@
                             HorizontalAlignment="Left" Margin="10 0"
                             VerticalAlignment="Top" AutoGenerateColumns="False" 
                             CanUserSortColumns="True" IsReadOnly="True" ColumnWidth="*"
-                            ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" SelectionMode="Extended" SelectionUnit="FullRow">
+                            ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" SelectionMode="Extended" SelectionUnit="FullRow" Cursor="Hand">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="1.5*" IsReadOnly="True" />
                                 <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="1.5*" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="1.5*" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Prod_price}"  Header="제품가격" Width="1*"  IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Imp_dept_count}" Header="수량" Width="1*" IsReadOnly="True"/>
-
                                 <DataGridTextColumn Binding="{Binding Prod_expire}"  Header="유통기한" Width="3*"  IsReadOnly="True"/>
 
                                 <DataGridTemplateColumn Header="신청" Width="*" IsReadOnly="True">
@@ -161,30 +161,32 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Button Height="23" HorizontalAlignment="Left"  Grid.Column ="0" 
+                            <Button Height="23" HorizontalAlignment="Right" Grid.Column ="0" 
                             Name="btnFirst" VerticalAlignment="Bottom" Width="40" Foreground="White" Background="#4472C4"
-                            Content="&lt;&lt;" Click="btnFirst_Click" Opacity="0.75" Margin="5" />
+                            Content="&lt;&lt;"  Opacity="0.75" Margin="5" />
 
-                            <Button Height="23" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column ="1"  
-                            Name="btnPrev" Width="40" Click="btnPrev_Click" Margin="5" Foreground="White" Background="#4472C4"
+                            <Button Height="23" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column ="1"  
+                            Name="btnPrev" Width="40"  Margin="5" Foreground="White" Background="#4472C4"
                             Opacity="0.75" Content="&lt;"/>
 
                             <Label x:Name="lblpageInformation" HorizontalContentAlignment="Center" 
                             Grid.Column ="2" Margin="5"
                             HorizontalAlignment="Center" Height="30" Width="100" 
                             VerticalContentAlignment="Center" VerticalAlignment="Bottom"/>
+                     
 
                             <Button Height="23" HorizontalAlignment="Left" Grid.Column ="3" Foreground="White" Background="#4472C4"
                             Name="btnNext" VerticalAlignment="Bottom" Width="40" Margin="5"
-                            Content="&gt;" Click="btnNext_Click" Opacity="0.75"/>
+                            Content="&gt;"  Opacity="0.75" Cursor="Hand"/>
 
                             <Button Height="23" HorizontalAlignment="Left"  Grid.Column ="4" Foreground="White" Background="#4472C4"
                             VerticalAlignment="Bottom" Width="40" Name="btnLast" Margin="5"
-                            Click="btnLast_Click" Opacity="0.75" Content="&gt;&gt;"/>
+                             Opacity="0.75" Content="&gt;&gt;"/>
 
                             <ComboBox x:Name="cbNumberOfRecords" HorizontalAlignment="Left"  Grid.Column ="5"
                             VerticalAlignment="Top" Width="60"  SelectedIndex="0" 
-                            SelectionChanged="cbNumberOfRecords_SelectionChanged" Opacity="0.75"/>
+                            Opacity="0.75"/>
+
                         </Grid>
                     </Grid>
                     <Grid Grid.Column="1">
