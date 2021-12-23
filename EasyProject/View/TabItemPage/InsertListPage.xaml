@@ -5,14 +5,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:EasyProject.View.TabItemPage"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:vm="clr-namespace:EasyProject.ViewModel" 
       xmlns:l="clr-namespace:EasyProject"
       
       mc:Ignorable="d" 
-      Title="InsertListPage"
-      DataContext="{Binding PVM, Source={StaticResource Locator}}"
-      >
-
+      DataContext="{Binding ProductViewModel, Source={StaticResource Locator}}"
+      Title="InsertListPage">
 
     <Page.Resources>
         <Style TargetType="DataGridColumnHeader">
