@@ -81,18 +81,18 @@
                                 SelectedDate="{Binding Product.Prod_expire}">
                         <DatePicker.Resources>
                             <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
-                                <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#B2F39B" />
-                                <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="Black" />
+                                <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />
+                                <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="white" />
                             </Style>
                             <Style x:Key="CustomCalendarButton" TargetType="CalendarButton" BasedOn="{StaticResource MaterialDesignCalendarButton}">
-                                <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#B2F39B" />
-                                <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="Black" />
+                                <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />
+                                <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="White" />
                             </Style>
                             <Style x:Key="CustomCalendar" TargetType="{x:Type Calendar}" BasedOn="{StaticResource MaterialDesignDatePickerCalendarPortrait}">
-                                <Setter Property="Background" Value="#343C3F" />
-                                <Setter Property="Foreground" Value="White" />
-                                <Setter Property="materialDesign:CalendarAssist.HeaderBackground" Value="#A2E9FF" />
-                                <Setter Property="materialDesign:CalendarAssist.HeaderForeground" Value="Black" />
+                                <Setter Property="Background" Value="White" />
+                                <Setter Property="Foreground" Value="lightGray" />
+                                <Setter Property="materialDesign:CalendarAssist.HeaderBackground" Value="DarkGray" />
+                                <Setter Property="materialDesign:CalendarAssist.HeaderForeground" Value="White" />
                                 <Setter Property="CalendarDayButtonStyle" Value="{StaticResource CustomCalendarDayButton}" />
                                 <Setter Property="CalendarButtonStyle" Value="{StaticResource CustomCalendarButton}" />
                             </Style>
