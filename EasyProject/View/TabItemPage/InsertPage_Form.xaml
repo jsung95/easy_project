@@ -78,7 +78,29 @@
                     <TextBlock  Text="유통기한" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13"></TextBlock>
                     <DatePicker x:Name="expirationDate_DatePicker" Grid.Column="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="0,0,20,0" Height="30" 
-                                SelectedDate="{Binding Product.Prod_expire}"/>
+                                SelectedDate="{Binding Product.Prod_expire}">
+                        <DatePicker.Resources>
+                            <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
+                                <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#B2F39B" />
+                                <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="Black" />
+                            </Style>
+                            <Style x:Key="CustomCalendarButton" TargetType="CalendarButton" BasedOn="{StaticResource MaterialDesignCalendarButton}">
+                                <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#B2F39B" />
+                                <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="Black" />
+                            </Style>
+                            <Style x:Key="CustomCalendar" TargetType="{x:Type Calendar}" BasedOn="{StaticResource MaterialDesignDatePickerCalendarPortrait}">
+                                <Setter Property="Background" Value="#343C3F" />
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="materialDesign:CalendarAssist.HeaderBackground" Value="#A2E9FF" />
+                                <Setter Property="materialDesign:CalendarAssist.HeaderForeground" Value="Black" />
+                                <Setter Property="CalendarDayButtonStyle" Value="{StaticResource CustomCalendarDayButton}" />
+                                <Setter Property="CalendarButtonStyle" Value="{StaticResource CustomCalendarButton}" />
+                            </Style>
+                            <Style TargetType="DatePicker" BasedOn="{StaticResource MaterialDesignFloatingHintDatePicker}">
+                                <Setter Property="CalendarStyle" Value="{StaticResource CustomCalendar}" />
+                            </Style>
+                        </DatePicker.Resources>
+                    </DatePicker>
                 </Grid>
 
                 <Grid Grid.Row="4">
