@@ -30,7 +30,16 @@ namespace EasyProject
             searchBtn.Click += searchBtn_Click;
 
             id_TxtBox.Text = Properties.Settings.Default.LoginIDSave;
-            id_TxtBox.Focus();
+            if(id_TxtBox.Text.Equals(""))
+            {
+
+            }
+            else
+            {
+                id_TxtBox.Focus();
+                id_TxtBox.SelectionStart = id_TxtBox.Text.Length;
+            }
+
         }
 
 
