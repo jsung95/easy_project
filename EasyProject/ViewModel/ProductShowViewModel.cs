@@ -77,7 +77,7 @@ namespace EasyProject.ViewModel
 
         //선택한 1개의 제품 정보를 담을 객체
         private static ProductShowModel selectedProduct;
-        public  static ProductShowModel SelectedProduct 
+        public static ProductShowModel SelectedProduct 
         {
             get { return selectedProduct; }
             set
