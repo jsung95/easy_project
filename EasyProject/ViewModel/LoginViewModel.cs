@@ -106,22 +106,22 @@ namespace EasyProject.ViewModel
 
         public void Logout()
         {
-            
-            if (App.nurse_dto.Nurse_no != null)
-            {
-                App.nurse_dto.Nurse_no = null;
-                App.nurse_dto.Nurse_name = null;
-                App.nurse_dto.Nurse_auth = null;
-                App.nurse_dto.Nurse_pw = null;
-                App.nurse_dto.Dept_id = null;
+            App.nurse_dto.Nurse_no = null;
+            App.nurse_dto.Nurse_name = null;
+            App.nurse_dto.Nurse_auth = null;
+            App.nurse_dto.Nurse_pw = null;
+            App.nurse_dto.Dept_id = null;
 
-                Console.WriteLine("로그아웃 성공");
-                Console.WriteLine("  Nurse NO : {0}", App.nurse_dto.Nurse_no);
-                Console.WriteLine("  Nurse NAME : {0}", App.nurse_dto.Nurse_name);
-                Console.WriteLine("  Nurse AUTH : {0}", App.nurse_dto.Nurse_auth);
-                Console.WriteLine("  Nurse PW : {0}", App.nurse_dto.Nurse_pw);
-                Console.WriteLine("  DEPT ID : {0}", App.nurse_dto.Dept_id);
-            }
+            Console.WriteLine("로그아웃 성공");
+            Console.WriteLine("  Nurse NO : {0}", App.nurse_dto.Nurse_no);
+            Console.WriteLine("  Nurse NAME : {0}", App.nurse_dto.Nurse_name);
+            Console.WriteLine("  Nurse AUTH : {0}", App.nurse_dto.Nurse_auth);
+            Console.WriteLine("  Nurse PW : {0}", App.nurse_dto.Nurse_pw);
+            Console.WriteLine("  DEPT ID : {0}", App.nurse_dto.Dept_id);
+            
+            //로그아웃 버튼 클릭 시에 프로그램 재시작
+            //System.Windows.Forms.Application.Restart();
+            //System.Windows.Application.Current.Shutdown();
         }
 
 

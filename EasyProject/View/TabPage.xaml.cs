@@ -65,5 +65,9 @@ namespace EasyProject
             }
         }
 
+        private void logoutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/View/LoginPage.xaml", UriKind.Relative));
+        }
     }
 }
