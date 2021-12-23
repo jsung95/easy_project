@@ -52,7 +52,16 @@ namespace EasyProject.ViewModel
         public DeptModel SelectedDept { get; set; }
 
         //선택한 카테고리명을 담을 프로퍼티
-        public CategoryModel SelectedCategory { get; set; }
+        private CategoryModel selectedCategory;
+        public CategoryModel SelectedCategory 
+        {
+            get { return selectedCategory; } 
+            set
+            {
+                selectedCategory = value;
+                OnPropertyChanged("SelectedCategory");
+            }
+        }
 
         //선택한 검색 콤보박스를 담을 프로퍼티
         public string SelectedSearchType { get; set; }
@@ -230,6 +239,26 @@ namespace EasyProject.ViewModel
             product_dao.ChangeProductInfo_IMP_DEPT_ForOut(InputOutCount, SelectedProduct);
             product_dao.ChangeProductInfo_ForOut(InputOutCount, SelectedProduct);
         }
+
+
+        private ActionCommand modifyProductReset;
+        public ICommand ModifyProductReset
+        {
+            get
+            {
+                if (modifyProductReset == null)
+                {
+                    modifyProductReset = new ActionCommand(modifyProductResetClick);
+                }
+                return modifyProductReset;
+            }//get
+        }
+
+        public void modifyProductResetClick()
+        {
+            SelectedCategory = null;
+        }
+
 
 
         private ActionCommand outProductReset;
