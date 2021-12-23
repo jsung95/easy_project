@@ -107,9 +107,6 @@ namespace EasyProject.View.TabItemPage
                 (
                 new Uri("/View/ExportPage/DialogPage.xaml", UriKind.Relative)
                 );
-
-
-
         }
 
         private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
