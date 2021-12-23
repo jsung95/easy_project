@@ -16,15 +16,14 @@
         <vm:ProductShowViewModel/>
     </Page.DataContext>
     <Page.Resources>
-        <Style TargetType="DataGridColumnHeader">
-            <Setter Property="Background" Value="LightGray"/>
+        <!--<Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="White"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Height" Value="20"/>
-            <Setter Property="Cursor" Value="Hand"/>
-        </Style>
+        </Style>-->
         
         <Style TargetType="DataGrid">
             <Setter Property="Background" Value="White"/>
@@ -35,8 +34,7 @@
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
-            <Setter Property="Cursor" Value="Hand" />            
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>          
             
         </Style>
 
@@ -141,15 +139,15 @@
                         <DataGrid x:Name="dataGrid" 
                             HorizontalAlignment="Left" Margin="10 0"
                             VerticalAlignment="Top" AutoGenerateColumns="False" 
-                            CanUserSortColumns="True" IsReadOnly="True" ColumnWidth="*"
+                            IsReadOnly="True" ColumnWidth="*"
                             ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" SelectionMode="Extended" SelectionUnit="FullRow" Cursor="Hand">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="1.5*" IsReadOnly="True" />
-                                <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="1.5*" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="1.5*" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}"  Header="제품가격" Width="1*"  IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Imp_dept_count, StringFormat='{}{0:#,0} 개'}" Header="수량" Width="1*" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Prod_expire}"  Header="유통기한" Width="3*"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="1.5*" CanUserSort="false" IsReadOnly="True" />
+                                <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="1.5*" CanUserSort="false" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="1.5*" CanUserSort="false" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}" CanUserSort="true" Header="제품가격" Width="1*"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Imp_dept_count, StringFormat='{}{0:#,0} 개'}" CanUserSort="true" Header="수량" Width="1*" IsReadOnly="True" />
+                                <DataGridTextColumn Binding="{Binding Prod_expire}"  Header="유통기한" Width="3*" CanUserSort="true" IsReadOnly="True"/>
 
                                 <DataGridTemplateColumn x:Name="buttonColumn" Header="신청" Width="*" IsReadOnly="True" Visibility="Visible">
 
