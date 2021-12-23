@@ -6,9 +6,12 @@
       xmlns:local="clr-namespace:EasyProject.View.TabItemPage"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:vm="clr-namespace:EasyProject.ViewModel"
       mc:Ignorable="d"
-      DataContext="{Binding ProductViewModel, Source={StaticResource Locator}}"
-      Title="InsertPage_Form">
+      Title="InsertPage_Form"
+      DataContext="{Binding PVM, Source={StaticResource Locator}}"
+      >
+
 
     <Grid Height="450">
         <materialDesign:Card Grid.Column="0" Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
