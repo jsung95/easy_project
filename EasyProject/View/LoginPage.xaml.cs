@@ -63,18 +63,18 @@ namespace EasyProject
                 );
 
         }
-        private async void loginBtn_Click(object sender, RoutedEventArgs e) //로그인 버튼 클릭 시
+        private void loginBtn_Click(object sender, RoutedEventArgs e) //로그인 버튼 클릭 시
         {
-            await Task.Delay(1500);
+            //await Task.Delay(1500);
             var temp = Ioc.Default.GetService<LoginViewModel>();
-
+            temp.Login();
             if(temp.isLogin == true)
             {
-                var button = sender as Button;
-                if (button != null)
-                {
-                    button.Command.Execute(null);
-                }
+                //var button = sender as Button;
+                //if (button != null)
+                //{
+                //    button.Command.Execute(null);
+                //}
 
                 if(id_Checkbox.IsChecked == true)
                 {
