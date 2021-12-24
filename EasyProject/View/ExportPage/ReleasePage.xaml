@@ -45,11 +45,18 @@
 
                 </Grid>
                 <Grid Grid.Row="1">
-                    <DataGrid x:Name="uiGrid_Main" Grid.ColumnSpan="3" Margin="5"
-                  AutoGenerateColumns="False"
-                  ItemsSource="{Binding SelectedProductList}">
+                    <DataGrid x:Name="dataGrid" 
+                            HorizontalAlignment="Left" Margin="10 0"
+                            VerticalAlignment="Top" AutoGenerateColumns="False" 
+                            IsReadOnly="True" ColumnWidth="*"
+                            ItemsSource="{Binding SelectedProductList}" Cursor="Hand">
                         <DataGrid.Columns>
-                            <DataGridTextColumn MinWidth="10" Width="Auto" Header="NAME" Binding="{Binding Prod_code}"/>
+                            <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="0.7*" CanUserSort="false" IsReadOnly="True" />
+                            <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="0.7*" CanUserSort="false" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="0.8*" CanUserSort="false" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}" CanUserSort="false" Header="제품가격" Width="0.8*"  IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Imp_dept_count, StringFormat='{}{0:#,0} 개'}" CanUserSort="false" Header="수량" Width="0.5*" IsReadOnly="True" />
+                            <DataGridTextColumn Binding="{Binding Prod_expire,StringFormat='{}{0:yyyy년 MM월 dd일}'}"  Header="유통기한" Width="*" CanUserSort="false" IsReadOnly="True"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
@@ -126,7 +133,7 @@
                        VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Width="80"
                              Text="{Binding InputOutCount}"/>
                         <TextBox x:Name="mount_TxtBox_Hidden" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="1" HorizontalContentAlignment="Center" 
-                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Visibility="Hidden"/>
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Width="80" Visibility="Hidden"/>
 
                     </Grid>
 
