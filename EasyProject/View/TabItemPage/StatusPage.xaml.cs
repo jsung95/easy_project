@@ -19,8 +19,8 @@ namespace EasyProject.View.TabItemPage
     /// 
     /// 
     public partial class StatusPage : Page {
-        int pIndex = 1;
-        private int numberOf;
+        //int pIndex = 1;
+        //private int numberOf;
         public ChartValues<float> Values { get; set; }
         private enum PagingMode
         { First = 1, Next = 2, Previous = 3, Last = 4, PageCountChange = 5 };
@@ -28,6 +28,8 @@ namespace EasyProject.View.TabItemPage
         List<object> myLst = new List<object>();
 
         public String userDept = null;
+
+        public bool isComboBoxDropDownOpened = false;
         //public WindowStartupLocation WindowStartupLocation { get; }
 
         public StatusPage()
@@ -109,15 +111,17 @@ namespace EasyProject.View.TabItemPage
                 );
         }
 
-        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void OnDropDownOpened(object sender, EventArgs e)
         {
-            if (deptName_ComboBox1.SelectedValue != null)
-            {
-                var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
-                var deptNameText = deptModelObject.Dept_name;
-                var userText = userDept;
+            isComboBoxDropDownOpened = true;
 
-                
+            var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
+            var deptNameText = deptModelObject.Dept_name;
+            var userText = userDept;
+
+            if (isComboBoxDropDownOpened)
+            {
+
                 if (deptNameText.Equals(userText) || userText == null)
                 {
                     Console.WriteLine(userText + "같은 부서일때");
@@ -129,6 +133,6 @@ namespace EasyProject.View.TabItemPage
                     buttonColumn.Visibility = Visibility.Hidden;
                 }
             }
-        } 
+        }
     }
 }
