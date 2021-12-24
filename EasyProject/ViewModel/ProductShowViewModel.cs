@@ -85,12 +85,13 @@ namespace EasyProject.ViewModel
         }
 
         //선택한 1개의 제품 정보를 담을 객체
-        private static ProductShowModel selectedProduct;
-        public static ProductShowModel SelectedProduct 
+        private ProductShowModel selectedProduct;
+        public ProductShowModel SelectedProduct 
         {
             get { return selectedProduct; }
             set
             {
+                SelectedProductList.Clear();
                 selectedProduct = value;
                 //OnPropertyChanged("SelectedProducts");
                 //Message.Send(SelectedProducts);
@@ -103,10 +104,11 @@ namespace EasyProject.ViewModel
                 Console.WriteLine($"  Prod_expire : {SelectedProduct.Prod_expire}");
                 Console.WriteLine($"  Prod_id : {SelectedProduct.Prod_id}");
                 Console.WriteLine($"  Imp_dept_id : {SelectedProduct.Imp_dept_id}");
-
+                SelectedProductList.Add(selectedProduct);
+                //Console.WriteLine(SelectedProductList[0].Prod_code);
             }
         }
-
+        public List<ProductShowModel> SelectedProductList { get; set; }
         // 재고 출고 - 선택한 출고 유형 콤보박스를 담을 값
         private string selectedOutType;
         public string SelectedOutType 
@@ -154,7 +156,7 @@ namespace EasyProject.ViewModel
 
             //App.xaml.cs 에 로그인할 때 바인딩 된 로그인 정보 객체
             Nurse = App.nurse_dto;
-
+            SelectedProductList = new List<ProductShowModel>();
             DashboardPrint();  //대시보드 프린트
         }
 

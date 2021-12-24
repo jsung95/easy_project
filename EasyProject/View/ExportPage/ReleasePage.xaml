@@ -9,14 +9,9 @@
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      DataContext="{Binding PSVM, Source={StaticResource Locator}}"
       Title="ReleasePage">
-
-    <Page.DataContext>
-        <vm:ProductShowViewModel/>
-    </Page.DataContext>
     
-    
-
     <Grid Height="450" Width="700">
         <materialDesign:Card  Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
             <Grid Height="400" Width="700" Background="White" >
@@ -50,8 +45,13 @@
 
                 </Grid>
                 <Grid Grid.Row="1">
-                    
-
+                    <DataGrid x:Name="uiGrid_Main" Grid.ColumnSpan="3" Margin="5"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding SelectedProductList}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn MinWidth="10" Width="Auto" Header="NAME" Binding="{Binding Prod_code}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
 
                 <Grid Grid.Row="2">
