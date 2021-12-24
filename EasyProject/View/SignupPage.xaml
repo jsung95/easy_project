@@ -8,12 +8,11 @@
       xmlns:local="clr-namespace:EasyProject"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:w="clr-namespace:EasyProject.Util"
+      DataContext="{Binding SVM, Source={StaticResource Locator}}"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SignupPage">
-    <Page.DataContext>
-        <vm:SignupViewModel/>
-    </Page.DataContext>
+
     <Grid  Background="White"  >
         <materialDesign:Card Height="400" Width="450" Margin ="10" UniformCornerRadius="20" Background="White">
             <Grid Height="400" Width="450"  HorizontalAlignment="Center" >
@@ -90,7 +89,8 @@
                     <Label Content="비밀번호 재입력" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
                     <PasswordBox x:Name="rePassword_PwBox" Grid.Column="1" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Grid.ColumnSpan="2" w:PasswordHelper.Password="{Binding Nurse.Nurse_re_pw, Mode=TwoWay}"/>
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Grid.ColumnSpan="2" 
+                                 w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding Nurse_RePw, Mode=TwoWay}"/>
                 </Grid>
                 <Grid Grid.Row="5" >
                     <Grid.ColumnDefinitions>

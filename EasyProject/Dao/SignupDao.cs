@@ -73,7 +73,7 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
 
-                        cmd.CommandText = "INSERT INTO NURSE(NURSE_NO, NURSE_NAME, NURSE_PW, DEPT_ID) VALUES(:no, :name, :pw, :dept_id)";
+                        cmd.CommandText = "INSERT INTO NURSE(NURSE_NO, NURSE_NAME, NURSE_PW, DEPT_ID) VALUES(:no, :name, :pw, (SELECT dept_id FROM DEPT WHERE dept_name = :dept_name))";
 
                         // INSERT INTO NURSE(NURSE_NO, NURSE_NAME, NURSE_PW, DEPT_ID) VALUES(:no, :name, :pw, :dept_id)
                         //파라미터 값 바인딩
@@ -81,31 +81,7 @@ namespace EasyProject.Dao
                         cmd.Parameters.Add(new OracleParameter("name", nurse_dto.Nurse_name));
                         //cmd.Parameters.Add(new OracleParameter("auth", "NORMAL")); // auth(회원 권한)은 테이블 default 제약에 의해 기본 NORMAL로 설정
                         cmd.Parameters.Add(new OracleParameter("pw", SHA256Hash.StringToHash(nurse_dto.Nurse_pw))); //비밀번호 암호화
-
-                        switch (dept_dto.Dept_name)
-                        {
-                            case "중환자실":
-                                cmd.Parameters.Add(new OracleParameter("dept_id", 1));
-                                break;
-                            case "응급실":
-                                cmd.Parameters.Add(new OracleParameter("dept_id", 2));
-                                break;
-                            case "병동":
-                                cmd.Parameters.Add(new OracleParameter("dept_id", 3));
-                                break;
-                            case "연구직":
-                                cmd.Parameters.Add(new OracleParameter("dept_id", 4));
-                                break;
-                            case "외래":
-                                cmd.Parameters.Add(new OracleParameter("dept_id", 5));
-                                break;
-                            case "검사실":
-                                cmd.Parameters.Add(new OracleParameter("dept_id", 6));
-                                break;
-                            case "수술실":
-                                cmd.Parameters.Add(new OracleParameter("dept_id", 7));
-                                break;
-                        }//switch-case
+                        cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
 
                         cmd.ExecuteNonQuery();
 
@@ -142,7 +118,7 @@ namespace EasyProject.Dao
 
                         if (reader.Read() == false)
                         {
-                            MessageBox.Show("회원가입처리를 진행합니다.");
+                            //MessageBox.Show("회원가입처리를 진행합니다.");
                         }
                         else
                         {
