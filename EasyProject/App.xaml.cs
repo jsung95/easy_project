@@ -24,6 +24,7 @@ namespace EasyProject
             Ioc.Default.ConfigureServices(new ServiceCollection()
                 .AddSingleton<ProductViewModel>()
                 .AddSingleton<LoginViewModel>()
+                .AddSingleton<SignupViewModel>()
                 .BuildServiceProvider());
 
             this.InitializeComponent();

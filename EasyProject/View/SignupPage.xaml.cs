@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EasyProject.ViewModel;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -43,16 +45,38 @@ namespace EasyProject
             //rePassword_PwBox.Password = "";
         }
         */
-        private void signUpBtn_Click(object sender, RoutedEventArgs e)
+        private async void signUpBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (password_PwBox.Password == rePassword_PwBox.Password)
+            await Task.Delay(1500);
+            var temp = Ioc.Default.GetService<SignupViewModel>();
+
+            if(temp.isSignup == true) //회원가입에 성공하면
+            {
+                Console.WriteLine("isSignup : " + temp.isSignup);
+                Console.WriteLine("회원가입 성공");
+
+                NavigationService.Navigate
+                    (
+                    new Uri("/View/LoginPage.xaml", UriKind.Relative) //로그인화면으로 이동
+                    );
+            }
+            else //회원가입에 실패하면
+            {
+                Console.WriteLine("isSignup : " + temp.isSignup);
+                Console.WriteLine("회원가입 실패");
+
+            }
+
+
+
+/*            if (password_PwBox.Password == rePassword_PwBox.Password)
             {
                 MessageBox.Show(name_TxtBox.Text + " " + id_TxtBox.Text + " " + password_PwBox.Password);
             }
             else
             {
                 MessageBox.Show("비밀번호가 맞지 않습니다.");
-            }
+            }*/
 
         }
     }
