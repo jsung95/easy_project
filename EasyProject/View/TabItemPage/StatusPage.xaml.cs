@@ -55,6 +55,7 @@ namespace EasyProject.View.TabItemPage
         {
             searchText_ComboBox.Items.Add("제품코드");
             searchText_ComboBox.Items.Add("제품명");
+            searchText_ComboBox.Items.Add("품목/종류");
             searchText_ComboBox.SelectedIndex = 0;
             
         }

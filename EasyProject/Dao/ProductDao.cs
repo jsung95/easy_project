@@ -722,6 +722,8 @@ namespace EasyProject.Dao
                                             "((:search_combo = '제품코드' AND D.dept_name = :dept_name ) AND (P.prod_code LIKE '%'||:search_text||'%')) " +
                                           "OR " +
                                             "((:search_combo = '제품명' AND D.dept_name = :dept_name ) AND (P.prod_name LIKE '%'||:search_text||'%')) " +
+                                          "OR " +
+                                            "((:search_combo = '품목/종류' AND D.dept_name = :dept_name ) AND (C.category_name LIKE '%'||:search_text||'%')) " +
                                           "AND D.dept_status != '폐지' " +
                                           "ORDER BY P.prod_expire, P.prod_name";
 
