@@ -93,7 +93,7 @@
                         <Label Content="부서" Foreground="#4472C4" Grid.Column="0" FontSize="15" FontWeight="Bold" HorizontalAlignment="center"  
                        VerticalAlignment="Center"/>
 
-                        <ComboBox Margin="10,25" Height="30" Width="70" Grid.Column="1" HorizontalAlignment="Center"  Name="Dept_comboBox" VerticalAlignment="Center"
+                        <ComboBox Margin="10,25" Height="30" Width="70" Grid.Column="1" HorizontalAlignment="Center"  x:Name="Dept_comboBox" VerticalAlignment="Center"
                                   ItemsSource="{Binding Depts}" SelectedItem="{Binding SelectedOutDept}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
@@ -155,7 +155,7 @@
                        VerticalAlignment="Center"  BorderThickness="0" Height="35" Width="70"  Foreground="White" Command="{Binding OutProductReset}"  Click="reset_Btn_Click"/>
                     
                     <Button x:Name="cancel_Btn" Content="취소" Grid.Column="3" Background="Gray" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
-                       VerticalAlignment="Center" Margin="0,0,0,0" BorderThickness="0" Height="35" Width="70" Cursor="Hand"  Foreground="White" Click="cancel_Btn_Click"/>
+                       VerticalAlignment="Center" Margin="0,0,0,0" BorderThickness="0" Height="35" Width="70" Cursor="Hand"  Foreground="White" Click="cancel_Btn_Click" Command="{Binding OutProductReset}"/>
 
                     <Button x:Name="signUp_Btn" Content="확인" Grid.Column="4" Background="#4472C4" FontSize="12"  HorizontalAlignment="Center"  
                        VerticalAlignment="Center" Margin="0,0,0,0" BorderThickness="0" Height="35" Width="70" Cursor="Hand"  Command="{Binding OutProductCommand}" Foreground="white" Click="signUp_Btn_Click">
