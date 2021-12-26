@@ -9,10 +9,8 @@
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      DataContext="{Binding PSVM, Source={StaticResource Locator}}"
       Title="OrderPage">
-    <Page.DataContext>
-        <vm:OrderViewModel/>
-    </Page.DataContext>
 
     <Grid Height="450" Width="800" >
         <materialDesign:Card  Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
@@ -41,13 +39,8 @@
                 <StackPanel  Margin="5" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Button x:Name="resetBtn"  Foreground="white" Background="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                         VerticalAlignment="Center" Margin="625,5,0,2.2" BorderThickness="0" Height="28" Width="58" Cursor="Hand" Click="resetBtn_Click" >
-                        <materialDesign:PackIcon Grid.Row="0" Kind="Restore" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding Command}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
+                            <materialDesign:PackIcon Grid.Row="0" Kind="Restore" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
+                        </Button>
                 </StackPanel>
 
             </Grid>
@@ -78,13 +71,17 @@
                     <Label Content="담당자" Foreground="#4472C4" Grid.Column="0" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
                     <TextBox x:Name="id_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="아이디" Grid.Column="1" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" />
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
+                             Text="{Binding SelectedUser.Nurse_name}"/>
 
                     <Label Content="부서" Grid.Column="2" Foreground="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
-                    <ComboBox x:Name="deptName_ComboBox" Grid.Column="3" HorizontalContentAlignment="Left" 
+                    <TextBox x:Name="dept_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="부서" Grid.Column="3" HorizontalContentAlignment="Left" 
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
+                             Text="{Binding SelectedUser.Dept_name}"/>
+                        <!--<ComboBox x:Name="deptName_ComboBox" Grid.Column="3" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30"
-                       ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept}">
+                       ItemsSource="{Binding Path=Depts}" >
                             <ComboBox.Resources>
                                 <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
                             </ComboBox.Resources>
@@ -95,13 +92,14 @@
                                     <TextBlock Text="{Binding Dept_name}"/>
                                 </StackPanel>
                             </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                            </ComboBox.ItemTemplate>
+                    </ComboBox>-->
 
                     <Label Content="연락처" Grid.Column="4" Foreground="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
                     <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="- 빼고입력" Grid.Column="5" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" />
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
+                             Text="{Binding SelectedUser.Dept_phone}"/>
 
                 </Grid>
 
@@ -134,7 +132,8 @@
                     <Label Content="신청 품목명" Foreground="#4472C4" Grid.Column="0" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
                     <TextBox x:Name="request_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="신청품목명" Grid.Column="1" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" />
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
+                             Text="{Binding SelectedProduct.Prod_name}"/>
 
                     <Label Content="용량" Foreground="#4472C4" Grid.Column="2" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>

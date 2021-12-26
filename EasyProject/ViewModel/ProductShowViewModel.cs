@@ -15,6 +15,7 @@ namespace EasyProject.ViewModel
         DeptDao dept_dao = new DeptDao();
         ProductDao product_dao = new ProductDao();
         CategoryDao category_dao = new CategoryDao();
+        UsersDao user_dao = new UsersDao();
 
         //로그인한 간호자(사용자) 정보를 담을 프로퍼티
         public NurseModel Nurse { get; set; }
@@ -95,7 +96,7 @@ namespace EasyProject.ViewModel
                 selectedProduct = value;
                 //OnPropertyChanged("SelectedProducts");
                 //Message.Send(SelectedProducts);
-                Console.WriteLine("==선택한 재고 정보==");
+/*                Console.WriteLine("==선택한 재고 정보==");
                 Console.WriteLine($"  Prod_code : {SelectedProduct.Prod_code}");
                 Console.WriteLine($"  Prod_name : {SelectedProduct.Prod_name}");
                 Console.WriteLine($"  Category_name : {SelectedProduct.Category_name}");
@@ -103,7 +104,7 @@ namespace EasyProject.ViewModel
                 Console.WriteLine($"  Imp_dept_count : {SelectedProduct.Imp_dept_count}");
                 Console.WriteLine($"  Prod_expire : {SelectedProduct.Prod_expire}");
                 Console.WriteLine($"  Prod_id : {SelectedProduct.Prod_id}");
-                Console.WriteLine($"  Imp_dept_id : {SelectedProduct.Imp_dept_id}");
+                Console.WriteLine($"  Imp_dept_id : {SelectedProduct.Imp_dept_id}");*/
                 SelectedProductList.Add(selectedProduct);
                 //Console.WriteLine(SelectedProductList[0].Prod_code);
             }
@@ -145,6 +146,8 @@ namespace EasyProject.ViewModel
             }
         }
 
+        // 발주 신청 페이지 바인딩
+        public UserModel SelectedUser { get; }
 
         public ProductShowViewModel()
         {
@@ -158,7 +161,9 @@ namespace EasyProject.ViewModel
             Nurse = App.nurse_dto;
             SelectedProductList = new List<ProductShowModel>();
             DashboardPrint();  //대시보드 프린트
-        }
+
+            SelectedUser = user_dao.GetUserInfoWithDept(Nurse);
+        }//Constructor
 
 
         private ActionCommand command;
