@@ -29,11 +29,13 @@ namespace EasyProject.View
             pwChangeBtn.Click += pwChangeBtn_Click;
         }
 
-        private void pwChangeBtn_Click(object sender, RoutedEventArgs e)
+        private async void pwChangeBtn_Click(object sender, RoutedEventArgs e)
         {
             var temp = Ioc.Default.GetService<PasswordChangeViewModel>();
-            temp.PasswordChange();
-            if (temp.IsChanged == true)
+            var pwChangeTask = Task.Run(() => temp.PasswordChange());
+            bool pwChangeResult = await pwChangeTask; // loginTask가 끝나면 결과를 loginResult에 할당
+            
+            if (pwChangeResult == true)
             {
                 NavigationService.Navigate( new Uri("/View/LoginPage.xaml", UriKind.Relative) ); //로그인 화면
             }

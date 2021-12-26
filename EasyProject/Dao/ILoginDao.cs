@@ -13,7 +13,7 @@ namespace EasyProject.Dao
         bool IdPasswordCheck(string nurse_no, string nurse_pw);
         bool IdPasswordCheck(NurseModel nurse_dto);
 
-        void PasswordChange(string nurse_no, string newPassword);
+        void PasswordChange(NurseModel nurse_dto, string newPassword);
     }//interface
 
 }//namespace
