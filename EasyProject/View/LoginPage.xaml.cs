@@ -30,14 +30,21 @@ namespace EasyProject
             searchBtn.Click += searchBtn_Click;
 
             id_TxtBox.Text = Properties.Settings.Default.LoginIDSave;
-            if(id_TxtBox.Text.Equals(""))
-            {
-
-            }
-            else
+            if (id_TxtBox.Text.Length > 0)
             {
                 id_TxtBox.Focus();
                 id_TxtBox.SelectionStart = id_TxtBox.Text.Length;
+            }
+
+            Console.WriteLine("Properties : " + Properties.Settings.Default.LoginIDSave);
+            Console.WriteLine("isChecked ? : " + Properties.Settings.Default.CheckBoxChecked);
+            if (Properties.Settings.Default.CheckBoxChecked == true)
+            {
+                id_Checkbox.IsChecked = true;
+            }
+            else
+            {
+                id_Checkbox.IsChecked = false;
             }
 
         }
@@ -81,11 +88,13 @@ namespace EasyProject
                 if(id_Checkbox.IsChecked == true)
                 {
                     Properties.Settings.Default.LoginIDSave = Convert.ToString(App.nurse_dto.Nurse_no);
+                    Properties.Settings.Default.CheckBoxChecked = true;
                     Properties.Settings.Default.Save();
                 }
                 else
                 {
                     Properties.Settings.Default.LoginIDSave = null;
+                    Properties.Settings.Default.CheckBoxChecked = false;
                     Properties.Settings.Default.Save();
                 }
 
