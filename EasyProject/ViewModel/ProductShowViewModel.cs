@@ -245,6 +245,10 @@ namespace EasyProject.ViewModel
             
             product_dao.ChangeProductInfo_IMP_DEPT_ForOut(InputOutCount, SelectedProduct);
             product_dao.ChangeProductInfo_ForOut(InputOutCount, SelectedProduct);
+
+            SelectedOutType = null;
+            SelectedOutDept = null;
+            InputOutCount = null;
         }
 
 

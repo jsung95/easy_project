@@ -117,8 +117,8 @@ namespace EasyProject.ViewModel
             Console.WriteLine("  DEPT ID : {0}", App.nurse_dto.Dept_id);
             
             //로그아웃 버튼 클릭 시에 프로그램 재시작
-            //System.Windows.Forms.Application.Restart();
-            //System.Windows.Application.Current.Shutdown();
+            System.Windows.Forms.Application.Restart();
+            System.Windows.Application.Current.Shutdown();
         }
 
 
