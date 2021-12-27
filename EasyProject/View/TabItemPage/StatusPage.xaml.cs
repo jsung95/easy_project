@@ -134,10 +134,5 @@ namespace EasyProject.View.TabItemPage
                 }
             }
         }
-
-        private void deptName_ComboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }
