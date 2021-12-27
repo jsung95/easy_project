@@ -172,7 +172,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions> -->
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text ="Records per page" Margin="5" VerticalAlignment="Center"/>
+                               
                                 <ComboBox Margin="5" SelectedIndex="0" Width="100" SelectedItem ="{Binding SelectedRecord, UpdateSourceTrigger=PropertyChanged}">
                                     <wookoa:Int32>10</wookoa:Int32>
                                     <wookoa:Int32>15</wookoa:Int32>
