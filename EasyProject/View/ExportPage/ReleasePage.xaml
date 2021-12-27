@@ -9,14 +9,9 @@
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      DataContext="{Binding PSVM, Source={StaticResource Locator}}"
       Title="ReleasePage">
-
-    <Page.DataContext>
-        <vm:ProductShowViewModel/>
-    </Page.DataContext>
     
-    
-
     <Grid Height="450" Width="700">
         <materialDesign:Card  Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
             <Grid Height="400" Width="700" Background="White" >
@@ -50,8 +45,20 @@
 
                 </Grid>
                 <Grid Grid.Row="1">
-                    
-
+                    <DataGrid x:Name="dataGrid" 
+                            HorizontalAlignment="Left" Margin="10 0"
+                            VerticalAlignment="Top" AutoGenerateColumns="False" 
+                            IsReadOnly="True" ColumnWidth="*"
+                            ItemsSource="{Binding SelectedProductList}" Cursor="Hand">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="0.7*" CanUserSort="false" IsReadOnly="True" />
+                            <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="0.7*" CanUserSort="false" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="0.8*" CanUserSort="false" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}" CanUserSort="false" Header="제품가격" Width="0.8*"  IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Imp_dept_count, StringFormat='{}{0:#,0} 개'}" CanUserSort="false" Header="수량" Width="0.5*" IsReadOnly="True" />
+                            <DataGridTextColumn Binding="{Binding Prod_expire,StringFormat='{}{0:yyyy년 MM월 dd일}'}"  Header="유통기한" Width="*" CanUserSort="false" IsReadOnly="True"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
 
                 <Grid Grid.Row="2">
@@ -86,7 +93,7 @@
                         <Label Content="부서" Foreground="#4472C4" Grid.Column="0" FontSize="15" FontWeight="Bold" HorizontalAlignment="center"  
                        VerticalAlignment="Center"/>
 
-                        <ComboBox Margin="10,25" Height="30" Width="70" Grid.Column="1" HorizontalAlignment="Center"  Name="Dept_comboBox" VerticalAlignment="Center"
+                        <ComboBox Margin="10,25" Height="30" Width="70" Grid.Column="1" HorizontalAlignment="Center"  x:Name="Dept_comboBox" VerticalAlignment="Center"
                                   ItemsSource="{Binding Depts}" SelectedItem="{Binding SelectedOutDept}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
@@ -126,7 +133,7 @@
                        VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Width="80"
                              Text="{Binding InputOutCount}"/>
                         <TextBox x:Name="mount_TxtBox_Hidden" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="1" HorizontalContentAlignment="Center" 
-                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Visibility="Hidden"/>
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Width="80" Visibility="Hidden"/>
 
                     </Grid>
 
@@ -148,7 +155,7 @@
                        VerticalAlignment="Center"  BorderThickness="0" Height="35" Width="70"  Foreground="White" Command="{Binding OutProductReset}"  Click="reset_Btn_Click"/>
                     
                     <Button x:Name="cancel_Btn" Content="취소" Grid.Column="3" Background="Gray" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
-                       VerticalAlignment="Center" Margin="0,0,0,0" BorderThickness="0" Height="35" Width="70" Cursor="Hand"  Foreground="White" Click="cancel_Btn_Click"/>
+                       VerticalAlignment="Center" Margin="0,0,0,0" BorderThickness="0" Height="35" Width="70" Cursor="Hand"  Foreground="White" Click="cancel_Btn_Click" Command="{Binding OutProductReset}"/>
 
                     <Button x:Name="signUp_Btn" Content="확인" Grid.Column="4" Background="#4472C4" FontSize="12"  HorizontalAlignment="Center"  
                        VerticalAlignment="Center" Margin="0,0,0,0" BorderThickness="0" Height="35" Width="70" Cursor="Hand"  Command="{Binding OutProductCommand}" Foreground="white" Click="signUp_Btn_Click">

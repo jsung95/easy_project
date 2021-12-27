@@ -17,7 +17,8 @@ namespace EasyProject.Dao
         //사용자 검색
         List<UserModel> SearchUser(string auth, string searchType, string name);
 
-
+        //사용자 정보 데이터 가져오기
+        UserModel GetUserInfoWithDept(NurseModel nurse_dto);
     }// interface
 
 }//namespace

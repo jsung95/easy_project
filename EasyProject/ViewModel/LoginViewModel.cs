@@ -37,19 +37,18 @@ namespace EasyProject.ViewModel
         }
 
 
-        private ActionCommand command;
-        public ICommand Command
-        {
-            get
-            {
-                if (command == null)
-                {
-                    command = new ActionCommand(Login);
-                }
-                return command;
-            }
-
-        }
+        //private ActionCommand command;
+        //public ICommand Command
+        //{
+        //    get
+        //    {
+        //        if (command == null)
+        //        {
+        //            command = new ActionCommand(Login);
+        //        }
+        //        return command;
+        //    }
+        //}
 
         private ActionCommand logout;
         public ICommand LogoutCommand
@@ -63,46 +62,44 @@ namespace EasyProject.ViewModel
                 return logout;
             }
         }
-
-        public bool isLogin { get; set; }
-        public void Login()
+        public bool Login()
         {
-            NurseModel result = dao.LoginUserInfo(Nurse);
+               bool idCheckResult = dao.IdPasswordCheck(Nurse); // id/pw 가 일치하는 지 확인
+               Console.WriteLine("Login() idCheckResult: " + idCheckResult);
+               if (idCheckResult == true) // 일치할 경우
+               {
+                    Console.WriteLine("id password check ok!");
+                    NurseModel result = dao.LoginUserInfo(Nurse); // 해당 사용자 정보를 NurseModel 객체에 넣는다.   
+                    App.nurse_dto.Nurse_no = result.Nurse_no;
+                    App.nurse_dto.Nurse_name = result.Nurse_name;
+                    App.nurse_dto.Nurse_auth = result.Nurse_auth;
+                    App.nurse_dto.Nurse_pw = result.Nurse_pw;
+                    App.nurse_dto.Dept_id = result.Dept_id;
 
-            if (dao.IdPasswordCheck(Nurse) == true)
-            {
-                Console.WriteLine("id password check ok!");
-                App.nurse_dto.Nurse_no = result.Nurse_no;
-                App.nurse_dto.Nurse_name = result.Nurse_name;
-                App.nurse_dto.Nurse_auth = result.Nurse_auth;
-                App.nurse_dto.Nurse_pw = result.Nurse_pw;
-                App.nurse_dto.Dept_id = result.Dept_id;
+                    Console.WriteLine("로그인 성공");
+                    Console.WriteLine("  Nurse NO : {0}", App.nurse_dto.Nurse_no);
+                    Console.WriteLine("  Nurse NAME : {0}", App.nurse_dto.Nurse_name);
+                    Console.WriteLine("  Nurse AUTH : {0}", App.nurse_dto.Nurse_auth);
+                    Console.WriteLine("  Nurse PW : {0}", App.nurse_dto.Nurse_pw);
+                    Console.WriteLine("  DEPT ID : {0}", App.nurse_dto.Dept_id);
 
-                Console.WriteLine("로그인 성공");
-                Console.WriteLine("  Nurse NO : {0}", App.nurse_dto.Nurse_no);
-                Console.WriteLine("  Nurse NAME : {0}", App.nurse_dto.Nurse_name);
-                Console.WriteLine("  Nurse AUTH : {0}", App.nurse_dto.Nurse_auth);
-                Console.WriteLine("  Nurse PW : {0}", App.nurse_dto.Nurse_pw);
-                Console.WriteLine("  DEPT ID : {0}", App.nurse_dto.Dept_id);
+                    return idCheckResult;
 
-                isLogin = true;
+               }
+               else
+               {
+                    Console.WriteLine("id password check fail!");
+                    Console.WriteLine("로그인 실패");
+                    Console.WriteLine("  Nurse NO : {0}", App.nurse_dto.Nurse_no);
+                    Console.WriteLine("  Nurse NAME : {0}", App.nurse_dto.Nurse_name);
+                    Console.WriteLine("  Nurse AUTH : {0}", App.nurse_dto.Nurse_auth);
+                    Console.WriteLine("  Nurse PW : {0}", App.nurse_dto.Nurse_pw);
+                    Console.WriteLine("  DEPT ID : {0}", App.nurse_dto.Dept_id);
 
-                
-            }
-            else
-            {
-                Console.WriteLine("id password check fail!");
-                Console.WriteLine("로그인 실패");
-                Console.WriteLine("  Nurse NO : {0}", App.nurse_dto.Nurse_no);
-                Console.WriteLine("  Nurse NAME : {0}", App.nurse_dto.Nurse_name);
-                Console.WriteLine("  Nurse AUTH : {0}", App.nurse_dto.Nurse_auth);
-                Console.WriteLine("  Nurse PW : {0}", App.nurse_dto.Nurse_pw);
-                Console.WriteLine("  DEPT ID : {0}", App.nurse_dto.Dept_id);
-
-                isLogin = false;
-            }
-
-        }
+                    return idCheckResult;
+               }
+         
+        }//Login
 
         public void Logout()
         {

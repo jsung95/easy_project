@@ -15,6 +15,7 @@ namespace EasyProject.ViewModel
         DeptDao dept_dao = new DeptDao();
         ProductDao product_dao = new ProductDao();
         CategoryDao category_dao = new CategoryDao();
+        UsersDao user_dao = new UsersDao();
 
         //로그인한 간호자(사용자) 정보를 담을 프로퍼티
         public NurseModel Nurse { get; set; }
@@ -85,16 +86,17 @@ namespace EasyProject.ViewModel
         }
 
         //선택한 1개의 제품 정보를 담을 객체
-        private static ProductShowModel selectedProduct;
-        public static ProductShowModel SelectedProduct 
+        private ProductShowModel selectedProduct;
+        public ProductShowModel SelectedProduct 
         {
             get { return selectedProduct; }
             set
             {
+                SelectedProductList.Clear(); // 이전에 담은 SelectedProduct를 리스트에서 지운다.
                 selectedProduct = value;
                 //OnPropertyChanged("SelectedProducts");
                 //Message.Send(SelectedProducts);
-                Console.WriteLine("==선택한 재고 정보==");
+/*                Console.WriteLine("==선택한 재고 정보==");
                 Console.WriteLine($"  Prod_code : {SelectedProduct.Prod_code}");
                 Console.WriteLine($"  Prod_name : {SelectedProduct.Prod_name}");
                 Console.WriteLine($"  Category_name : {SelectedProduct.Category_name}");
@@ -102,11 +104,12 @@ namespace EasyProject.ViewModel
                 Console.WriteLine($"  Imp_dept_count : {SelectedProduct.Imp_dept_count}");
                 Console.WriteLine($"  Prod_expire : {SelectedProduct.Prod_expire}");
                 Console.WriteLine($"  Prod_id : {SelectedProduct.Prod_id}");
-                Console.WriteLine($"  Imp_dept_id : {SelectedProduct.Imp_dept_id}");
-
+                Console.WriteLine($"  Imp_dept_id : {SelectedProduct.Imp_dept_id}");*/
+                SelectedProductList.Add(selectedProduct);
+                //Console.WriteLine(SelectedProductList[0].Prod_code);
             }
         }
-
+        public List<ProductShowModel> SelectedProductList { get; set; } // SelectedProduct를 DataGrid에서 사용하기 위한 List
         // 재고 출고 - 선택한 출고 유형 콤보박스를 담을 값
         private string selectedOutType;
         public string SelectedOutType 
@@ -143,6 +146,8 @@ namespace EasyProject.ViewModel
             }
         }
 
+        // 발주 신청 페이지 바인딩
+        public UserModel SelectedUser { get; }
 
         public ProductShowViewModel()
         {
@@ -154,9 +159,11 @@ namespace EasyProject.ViewModel
 
             //App.xaml.cs 에 로그인할 때 바인딩 된 로그인 정보 객체
             Nurse = App.nurse_dto;
-
+            SelectedProductList = new List<ProductShowModel>();
             DashboardPrint();  //대시보드 프린트
-        }
+
+            SelectedUser = user_dao.GetUserInfoWithDept(Nurse);
+        }//Constructor
 
 
         private ActionCommand command;
@@ -238,6 +245,10 @@ namespace EasyProject.ViewModel
             
             product_dao.ChangeProductInfo_IMP_DEPT_ForOut(InputOutCount, SelectedProduct);
             product_dao.ChangeProductInfo_ForOut(InputOutCount, SelectedProduct);
+
+            SelectedOutType = null;
+            SelectedOutDept = null;
+            InputOutCount = null;
         }
 
 
@@ -287,34 +298,37 @@ namespace EasyProject.ViewModel
 
             ChartValues<int> name = new ChartValues<int> { };            //y축들어갈 임시 값
 
-
-            List<ProductShowModel> list1 = product_dao.Prodtotal_Info();      //y축출력
-            //foreach (var item in list1)
-            //{
-            //    name.Add((int)item.Prod_total);
-            //}
-            for (int i = 0; i < 8; i++)
+            if(product_dao.Prodcode_Info().Count != 0)
             {
-                name.Add((int)list1[i].Prod_total);
+                List<ProductShowModel> list1 = product_dao.Prodtotal_Info();      //y축출력
+                                                                                  //foreach (var item in list1)
+                                                                                  //{
+                                                                                  //    name.Add((int)item.Prod_total);
+                                                                                  //}
+                for (int i = 0; i < 8; i++)
+                {
+                    name.Add((int)list1[i].Prod_total);
+                }
+
+
+                Values = new ChartValues<int> { };
+                SeriesCollection.Add(new ColumnSeries
+                {
+                    Title = "재고현황",   //+ i
+                    Values = name,
+
+                });
+
+                BarLabels = new List<string>() { };                           //x축출력
+                List<ProductShowModel> list = product_dao.Prodcode_Info();
+                foreach (var item in list)
+                {
+                    BarLabels.Add(item.Prod_code);
+                }
+
+                Formatter = value => value.ToString("N");   //문자열 10진수 변환
             }
 
-
-            Values = new ChartValues<int> { };
-            SeriesCollection.Add(new ColumnSeries
-            {
-                Title = "재고현황",   //+ i
-                Values = name,
-
-            });
-
-            BarLabels = new List<string>() { };                           //x축출력
-            List<ProductShowModel> list = product_dao.Prodcode_Info();
-            foreach (var item in list)
-            {
-                BarLabels.Add(item.Prod_code);
-            }
-
-            Formatter = value => value.ToString("N");   //문자열 10진수 변환
         }
 
 

@@ -22,7 +22,7 @@ namespace EasyProject.Model
             }
         } // Dept_name
 
-        public int? Dept_phone { get; set; }
+        public string Dept_phone { get; set; }
 
         public string Dept_status { get; set; }
 

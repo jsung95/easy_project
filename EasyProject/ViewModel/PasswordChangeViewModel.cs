@@ -18,6 +18,7 @@ namespace EasyProject.ViewModel
 
         public string Nurse_no { get; set; }
         public string Nurse_pw { get; set; }
+        public NurseModel Nurse { get; set; }
 
         private string newPassword;
         public string NewPassword
@@ -55,58 +56,73 @@ namespace EasyProject.ViewModel
 
         public PasswordChangeViewModel()
         {
+            Nurse = new NurseModel();
             NewPassword = "";
             re_NewPassword = "";
         }
 
-        public ActionCommand command;
+        //public ActionCommand command;
 
-        public ICommand Command
-        {
-            get
-            {
-                if (command == null)
-                {
-                    command = new ActionCommand(PasswordChange);
-                }
-                return command;
-            }
-        }
+        //public ICommand Command
+        //{
+        //    get
+        //    {
+        //        if (command == null)
+        //        {
+        //            command = new ActionCommand(PasswordChange);
+        //        }
+        //        return command;
+        //    }
+        //}
 
-        public void PasswordChange()
+        public bool PasswordChange()
         {
-            if(dao.IdPasswordCheck(Nurse_no, Nurse_pw) == true) // 현재 아이디/비번이 맞는 지 확인
+            bool pwChangeResult;
+            if (dao.IdPasswordCheck(Nurse) == true) // 현재 아이디/비번이 맞는 지 확인
             {
                 // 비밀번호 변경시 공백 입력 방지
                 if (NewPassword == "")
                 {
                     MessageBox.Show("새로운 비밀번호를 입력하세요!");
-                    return;
+                    pwChangeResult = false;    
+                    return pwChangeResult;
                 }
-                if (Re_NewPassword == "")
+                else if (Re_NewPassword == "")
                 {
                     MessageBox.Show("다시 입력란을 채워주세요!");
-                    return;
+                    pwChangeResult = false;
+                    return pwChangeResult;
                 }
-                if(NewPassword == Nurse_pw)
+                else if(NewPassword == Nurse.Nurse_pw)
                 {
                     MessageBox.Show("현재 비밀번호와 다른 비밀번호를 입력해주세요!");
-                    return;
+                    pwChangeResult = false;
+                    return pwChangeResult;
                 }
                 // 새 비밀번호와 다시입력 같은지 확인
-                if (NewPassword == Re_NewPassword)
+                else if (NewPassword == Re_NewPassword)
                 {
                     MessageBox.Show("비밀번호 변경.");
-                    dao.PasswordChange(Nurse_no, NewPassword);
+                    dao.PasswordChange(Nurse, NewPassword);
+                    //비밀번호 변경을 1회 진행하면서 바인딩 되어서 남겨진 데이터 초기화
+                    Nurse.Nurse_no = null;
+                    Nurse.Nurse_pw = null;
+
+                    pwChangeResult = true;
+                    return pwChangeResult;
                 }
                 else
                 {
                     MessageBox.Show("새 비밀번호가 일치하지 않습니다.");
+                    pwChangeResult = false;
+                    return pwChangeResult;
                 }
-            } 
+            }
             else
             {
                 MessageBox.Show("아이디나 비밀번호를 다시 확인해주세요.");
+                pwChangeResult = false;
+                return pwChangeResult;
             }
         }//PasswordChange
 

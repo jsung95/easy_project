@@ -47,12 +47,13 @@ namespace EasyProject
         */
         private async void signUpBtn_Click(object sender, RoutedEventArgs e)
         {
-            await Task.Delay(1500);
+            //await Task.Delay(1500);
             var temp = Ioc.Default.GetService<SignupViewModel>();
-
-            if(temp.isSignup == true) //회원가입에 성공하면
+            var signupTask = Task.Run(() => temp.SignupInsert());
+            bool signupResult = await signupTask; // signupTask 끝나면 결과를 signupResult에 할당
+            if (signupResult == true) //회원가입에 성공하면
             {
-                Console.WriteLine("isSignup : " + temp.isSignup);
+                Console.WriteLine("isSignup : " + signupResult);
                 Console.WriteLine("회원가입 성공");
 
                 NavigationService.Navigate
@@ -62,7 +63,7 @@ namespace EasyProject
             }
             else //회원가입에 실패하면
             {
-                Console.WriteLine("isSignup : " + temp.isSignup);
+                Console.WriteLine("isSignup : " + signupResult);
                 Console.WriteLine("회원가입 실패");
 
             }

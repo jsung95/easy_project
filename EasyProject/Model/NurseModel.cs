@@ -6,8 +6,8 @@ namespace EasyProject.Model
     public class NurseModel : Notifier
     {
         //
-        private int? nurse_no;
-        public int? Nurse_no
+        private string nurse_no;
+        public string Nurse_no
         {
             get { return nurse_no; }
             set

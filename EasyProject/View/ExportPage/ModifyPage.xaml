@@ -7,13 +7,10 @@
       xmlns:local="clr-namespace:EasyProject.View" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      DataContext="{Binding PSVM, Source={StaticResource Locator}}"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ModifyPage">
-
-    <Page.DataContext>
-        <vm:ProductShowViewModel/>
-    </Page.DataContext>
 
     <Grid Height="450" Width="800" >
         <materialDesign:Card  Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">

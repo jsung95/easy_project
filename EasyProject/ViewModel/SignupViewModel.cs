@@ -39,19 +39,19 @@ namespace EasyProject.ViewModel
             Depts = dao.GetDeptModels();
         }//생성자
 
-        private ActionCommand command;
-        public ICommand Command
-        {
-            get
-            {
-                if (command == null)
-                {
-                    command = new ActionCommand(SignupInsert);
-                }
-                return command;
-            }
+        //private ActionCommand command;
+        //public ICommand Command
+        //{
+        //    get
+        //    {
+        //        if (command == null)
+        //        {
+        //            command = new ActionCommand(SignupInsert);
+        //        }
+        //        return command;
+        //    }
 
-        }
+        //}
         private ActionCommand resetCommand;
         public ICommand ResetCommand
         {
@@ -68,11 +68,12 @@ namespace EasyProject.ViewModel
 
 
         // 회원가입 성공 유무를 체크하기 위한 프로퍼티
-        public bool isSignup { get; set; }
+        //public bool isSignup { get; set; }
 
-        public void SignupInsert()
+        public bool SignupInsert()
         {
-            Regex regex = new Regex(@"^[1-9]{8}$"); //아이디는 숫자 8자리
+            bool SignupResult;
+            Regex regex = new Regex(@"^[0-9]{8}$"); //아이디는 숫자 8자리
 
             if(regex.IsMatch(Convert.ToString(Nurse.Nurse_no)))
             {
@@ -88,36 +89,45 @@ namespace EasyProject.ViewModel
                         {
                             dao.SignUp(Nurse, SelectedDept); //회원가입
                             MessageBox.Show("회원가입 완료!");
-                            isSignup = true;
-
+                            
                             //회원가입을 1회 진행하면서 바인딩 되어서 남겨진 데이터 초기화
                             Nurse.Nurse_no = null;
                             Nurse.Nurse_name = null;
                             SelectedDept = null;
+
+                            SignupResult = true;
+                            return SignupResult;
                         }//if
                         else // 입력한 두 비밀번호가 다르다면 
                         {
                             MessageBox.Show("비밀번호가 맞지 않습니다.");
-                            isSignup = false;
-                        }//else
-
+                            SignupResult = false;
+                            return SignupResult;
+                        }//else                    
                     }//if
+                    else // 중복 있으면 ( Nurse.Nurse_no가 dao.IdCheck(Nurse)에 의해 null 값임 )
+                    {
+                        SignupResult = false;
+                        return SignupResult;
+                    }
+
                 }//if
                 else
                 {
                     MessageBox.Show("암호는 숫자, 문자 조합만 6자리 이상만 가능합니다.");
-                    isSignup = false;
+                    SignupResult = false;
+                    return SignupResult;
                 }//else
                 
             }//if
             else
             {
                 MessageBox.Show("사번은 숫자 8자리만 입력가능합니다.");
-                isSignup = false;
+                SignupResult = false;
+                return SignupResult;
             }//else
 
-
-        }
+        }//SignupResult
 
         public void ResetForm()
         {           

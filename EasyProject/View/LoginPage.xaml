@@ -51,7 +51,7 @@
             </Grid>
 
             <Grid Grid.Row="2" >
-                    <Button x:Name="loginBtn" Command="{Binding Command}" Content="로그인" Background="#4472C4" BorderThickness="0" FontSize="20" 
+                    <Button x:Name="loginBtn" Content="로그인" Background="#4472C4" BorderThickness="0" FontSize="20" 
                    Foreground="White" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Height="40" Margin="10" Width="300" Cursor="Hand">
                     <!--<i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">

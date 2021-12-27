@@ -30,14 +30,21 @@ namespace EasyProject
             searchBtn.Click += searchBtn_Click;
 
             id_TxtBox.Text = Properties.Settings.Default.LoginIDSave;
-            if(id_TxtBox.Text.Equals(""))
-            {
-
-            }
-            else
+            if (id_TxtBox.Text.Length > 0)
             {
                 id_TxtBox.Focus();
                 id_TxtBox.SelectionStart = id_TxtBox.Text.Length;
+            }
+
+            Console.WriteLine("Properties : " + Properties.Settings.Default.LoginIDSave);
+            Console.WriteLine("isChecked ? : " + Properties.Settings.Default.CheckBoxChecked);
+            if (Properties.Settings.Default.CheckBoxChecked == true)
+            {
+                id_Checkbox.IsChecked = true;
+            }
+            else
+            {
+                id_Checkbox.IsChecked = false;
             }
 
         }
@@ -65,25 +72,29 @@ namespace EasyProject
         }
         private async void loginBtn_Click(object sender, RoutedEventArgs e) //로그인 버튼 클릭 시
         {
-            await Task.Delay(1500);
+            //await Task.Delay(1500);
             var temp = Ioc.Default.GetService<LoginViewModel>();
-
-            if(temp.isLogin == true)
+            var loginTask = Task.Run(() => temp.Login());
+            bool LoginResult = await loginTask; // loginTask가 끝나면 결과를 loginResult에 할당
+            Console.WriteLine("LoginResult: " + LoginResult);
+            if(LoginResult == true)
             {
-                var button = sender as Button;
-                if (button != null)
-                {
-                    button.Command.Execute(null);
-                }
+                //var button = sender as Button;
+                //if (button != null)
+                //{
+                //    button.Command.Execute(null);
+                //}
 
                 if(id_Checkbox.IsChecked == true)
                 {
                     Properties.Settings.Default.LoginIDSave = Convert.ToString(App.nurse_dto.Nurse_no);
+                    Properties.Settings.Default.CheckBoxChecked = true;
                     Properties.Settings.Default.Save();
                 }
                 else
                 {
                     Properties.Settings.Default.LoginIDSave = null;
+                    Properties.Settings.Default.CheckBoxChecked = false;
                     Properties.Settings.Default.Save();
                 }
 

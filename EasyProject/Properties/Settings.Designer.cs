@@ -34,5 +34,17 @@ namespace EasyProject.Properties {
                 this["LoginIDSave"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CheckBoxChecked {
+            get {
+                return ((bool)(this["CheckBoxChecked"]));
+            }
+            set {
+                this["CheckBoxChecked"] = value;
+            }
+        }
     }
 }

@@ -14,5 +14,6 @@ namespace EasyProject
         public LoginViewModel LVM=> Ioc.Default.GetService<LoginViewModel>();
         public SignupViewModel SVM => Ioc.Default.GetService<SignupViewModel>();
         public ProductShowViewModel PSVM => Ioc.Default.GetService<ProductShowViewModel>();
+        public PasswordChangeViewModel PCVM => Ioc.Default.GetService<PasswordChangeViewModel>();
     }
 }

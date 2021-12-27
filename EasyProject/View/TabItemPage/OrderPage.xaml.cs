@@ -38,7 +38,7 @@ namespace EasyProject.View
         private void resetBtn_Click(object sender, RoutedEventArgs e)
         {
             id_TxtBox.Text = null;
-            deptName_ComboBox = null;
+            dept_TxtBox = null;
             phone_TxtBox.Text = null;
             request_TxtBox.Text = null;
             capacity_TxtBox.Text = null;

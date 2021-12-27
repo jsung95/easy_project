@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using EasyProject.ViewModel;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 
 namespace EasyProject.View
 {
@@ -55,6 +56,8 @@ namespace EasyProject.View
 
         private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var temp = Ioc.Default.GetService<ProductShowViewModel>();
+
             if (Type_comboBox.SelectedValue != null)
             {
                 if (Type_comboBox.SelectedValue.Equals("사용"))
@@ -70,11 +73,11 @@ namespace EasyProject.View
                 {
                     Dept_comboBox.Visibility = Visibility.Hidden;
 
-                    mount_TxtBox.Text = Convert.ToString(ProductShowViewModel.SelectedProduct.Imp_dept_count);
+                    mount_TxtBox.Text = Convert.ToString(temp.SelectedProduct.Imp_dept_count);
                     mount_TxtBox.Focus();
 
                     mount_TxtBox_Hidden.Visibility = Visibility.Visible;
-                    mount_TxtBox_Hidden.Text = Convert.ToString(ProductShowViewModel.SelectedProduct.Imp_dept_count);
+                    mount_TxtBox_Hidden.Text = Convert.ToString(temp.SelectedProduct.Imp_dept_count);
                     mount_TxtBox_Hidden.IsEnabled = false;
 
                     Console.WriteLine("ori : " + mount_TxtBox.Text);

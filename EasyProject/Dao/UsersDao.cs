@@ -45,7 +45,7 @@ namespace EasyProject.Dao
 
                         while (reader.Read())
                         {
-                            int? nurse_no = reader.GetInt32(0);
+                            string nurse_no = reader.GetString(0);
                             string nurse_name = reader.GetString(1);
                             string nurse_auth = reader.GetString(2);
                             string dept_name = reader.GetString(3);
@@ -102,7 +102,7 @@ namespace EasyProject.Dao
 
                         while (reader.Read())
                         {
-                            int? nurse_no = reader.GetInt32(0);
+                            string nurse_no = reader.GetString(0);
                             string nurse_name = reader.GetString(1);
                             string nurse_auth = reader.GetString(2);
                             string dept_name = reader.GetString(3);
@@ -229,7 +229,7 @@ namespace EasyProject.Dao
                         while (reader.Read())
                         {
 
-                            int? nurse_no = reader.GetInt32(0);
+                            string nurse_no = reader.GetString(0);
                             string nurse_name = reader.GetString(1);
                             string nurse_auth = reader.GetString(2);
                             string dept_name = reader.GetString(3);
@@ -266,7 +266,57 @@ namespace EasyProject.Dao
 
         }//SearchUser()
 
-        
+        public UserModel GetUserInfoWithDept(NurseModel nurse_dto)
+        {
+            UserModel user_dto = new UserModel();
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "SELECT N.nurse_no, N.nurse_name, N.nurse_auth, N.dept_id, D.dept_name, D.dept_phone " +
+                                          "FROM NURSE N " +
+                                          "INNER JOIN DEPT D " +
+                                          "ON N.dept_id = D.dept_id " +
+                                          "WHERE N.nurse_no = :nurse_no";
+
+                        cmd.Parameters.Add(new OracleParameter("nurse_no", nurse_dto.Nurse_no));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            user_dto.Nurse_no = reader.GetString(0);
+                            user_dto.Nurse_name = reader.GetString(1);
+                            user_dto.Nurse_auth = reader.GetString(2);
+                            user_dto.Dept_id = reader.GetInt32(3);
+                            user_dto.Dept_name = reader.GetString(4);
+                            user_dto.Dept_phone = reader.GetString(5);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return user_dto;
+
+        }//GetUserInfoWithDept()
+
+
     }//class
 
 }//namespace

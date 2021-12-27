@@ -37,7 +37,7 @@ namespace EasyProject.Dao
 
                         while (reader.Read())
                         {
-                            int? nurse_no = reader.GetInt32(0);
+                            string nurse_no = reader.GetString(0);
                             string nurse_name = reader.GetString(1);
                             string nurse_auth = reader.GetString(2);
                             string nurse_pw = reader.GetString(3);
@@ -124,7 +124,7 @@ namespace EasyProject.Dao
                         cmd.CommandText = "SELECT * FROM NURSE WHERE nurse_no = :no AND nurse_pw = :pw";
 
                         cmd.Parameters.Add(new OracleParameter("no", nurse_dto.Nurse_no));
-                        cmd.Parameters.Add(new OracleParameter("pw", nurse_dto.Nurse_pw));
+                        cmd.Parameters.Add(new OracleParameter("pw", SHA256Hash.StringToHash(nurse_dto.Nurse_pw)));
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
@@ -146,11 +146,10 @@ namespace EasyProject.Dao
             {
                 Console.WriteLine(e.Message);
             }//catch
-
             return result;
         }//IdPasswordCheck()
 
-        public void PasswordChange(string nurse_no, string newPassword)
+        public void PasswordChange(NurseModel nurse_dto, string newPassword)
         {
             try
             {
@@ -169,7 +168,7 @@ namespace EasyProject.Dao
                                           "WHERE nurse_no = :no";
 
                         cmd.Parameters.Add(new OracleParameter("newPW", SHA256Hash.StringToHash(newPassword))); // 비밀번호 암호화
-                        cmd.Parameters.Add(new OracleParameter("no", nurse_no));
+                        cmd.Parameters.Add(new OracleParameter("no", nurse_dto.Nurse_no));
 
                         cmd.ExecuteNonQuery();
                         Console.WriteLine("비번변경!");

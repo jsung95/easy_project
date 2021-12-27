@@ -28,7 +28,7 @@ namespace EasyProject.Dao
                     using (cmd)
                     {
                         cmd.Connection = conn;
-                        cmd.CommandText = "SELECT dept_name FROM DEPT";
+                        cmd.CommandText = "SELECT * FROM DEPT";
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
@@ -36,7 +36,10 @@ namespace EasyProject.Dao
                         {
                             DeptModel dto = new DeptModel()
                             {
-                                Dept_name = reader.GetString(0)
+                                Dept_id = reader.GetInt32(0),
+                                Dept_name = reader.GetString(1),
+                                Dept_phone = reader.GetString(2),
+                                Dept_status = reader.GetString(3)
                             };
 
                             list.Add(dto);
