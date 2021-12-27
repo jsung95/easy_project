@@ -88,7 +88,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
-                            <ComboBox Background="#FFE5E5E5" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Grid.Column="0" SelectedItem="{Binding NormalSearchType}" ItemsSource="{Binding SearchTypeList}" SelectedIndex="0"/>
+                            <ComboBox Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" Width="60" Grid.Column="0" SelectedItem="{Binding NormalSearchType}" ItemsSource="{Binding SearchTypeList}" SelectedIndex="0"/>
                         </Grid>
                         <Grid Grid.Column="1">
                             <TextBox  Grid.Column="0" Text="{Binding Normal_Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -108,7 +108,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
-                            <ComboBox Margin="5" HorizontalAlignment="Left"  Background="#FFE5E5E5" VerticalAlignment="Center" Width="120" SelectedItem="{Binding AdminSearchType}" ItemsSource="{Binding SearchTypeList}" SelectedIndex="0"/>
+                            <ComboBox Margin="5" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="60" SelectedItem="{Binding AdminSearchType}" ItemsSource="{Binding SearchTypeList}" SelectedIndex="0"/>
                         </Grid>
                         <Grid Grid.Column="1">
                             <TextBox  Grid.Column="0" Text="{Binding Admin_Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
