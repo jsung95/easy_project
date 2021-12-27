@@ -8,20 +8,21 @@
       xmlns:wookoa="clr-namespace:System;assembly=mscorlib"
       xmlns:vm ="clr-namespace:EasyProject.ViewModel" 
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-      xmlns:datapager="clr-namespace:Syncfusion.UI.Xaml.Controls.DataPager;assembly=Syncfusion.SfGrid.WPF"
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" 
+     
       mc:Ignorable="d"
       DataContext="{Binding PSVM, Source={StaticResource Locator}}"
       Title="StatusPage">
     <Page.Resources>
-        <!--<Style TargetType="DataGridColumnHeader">
-            <Setter Property="Background" Value="White"/>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="LightGray"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Height" Value="20"/>
-        </Style>-->
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
         
         <Style TargetType="DataGrid">
             <Setter Property="Background" Value="White"/>
@@ -32,8 +33,8 @@
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>          
-            
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="Cursor" Value="Hand" />
         </Style>
 
     </Page.Resources>
@@ -162,39 +163,49 @@
                             </DataGrid.Columns>
                         </DataGrid>
                         <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
+                            <!--<Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Button Height="23" HorizontalAlignment="Right" Grid.Column ="0" 
+                            </Grid.ColumnDefinitions> -->
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text ="Records per page" Margin="5" VerticalAlignment="Center"/>
+                                <ComboBox Margin="5" SelectedIndex="0" Width="100" SelectedItem ="{Binding SelectedRecord, UpdateSourceTrigger=PropertyChanged}">
+                                    <wookoa:Int32>10</wookoa:Int32>
+                                    <wookoa:Int32>15</wookoa:Int32>
+                                    <wookoa:Int32>20</wookoa:Int32>
+                                    <wookoa:Int32>25</wookoa:Int32>
+                                </ComboBox>
+                                <Button Height="23" HorizontalAlignment="Right"  Command="{Binding FirstCommand}"
                             Name="btnFirst" VerticalAlignment="Bottom" Width="40" Foreground="White" Background="#4472C4"
-                            Content="&lt;&lt;"  Opacity="0.75" Margin="5" />
+                            Content="&lt;&lt;" IsEnabled="{Binding IsFirstEnabled}" ToolTip="First page" Click="btnFirst_Click" Opacity="0.75" Margin="5" />
 
-                            <Button Height="23" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column ="1"  
-                            Name="btnPrev" Width="40"  Margin="5" Foreground="White" Background="#4472C4"
-                            Opacity="0.75" Content="&lt;"/>
+                                <Button Height="23" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                                    Name="btnPrev" Width="40" ToolTip="Previous page" IsEnabled="{Binding IsPreviousEnabled}"
+		                            Click="btnPrev_Click" Margin="5" Foreground="White" Background="#4472C4" Command="{Binding PreviousCommand}"
+                                    Opacity="0.75" Content="&lt;" Cursor="Hand"/>
+                                <TextBlock VerticalAlignment="Center">
+                                    <!--<TextBlock.Text>
+                                        <Multibinding StringFormat ="{{ } {0} of {1} ">
+                                            <Binding Path = "CurrentPage"/>
+                                            <Binding Path = "NumberOfPages"/>
+                                        </Multibinding>
+                                    </TextBlock.Text>-->
+                                </TextBlock>
 
-                            <Label x:Name="lblpageInformation" HorizontalContentAlignment="Center" 
-                            Grid.Column ="2" Margin="5"
-                            HorizontalAlignment="Center" Height="30" Width="100" 
-                            VerticalContentAlignment="Center" VerticalAlignment="Bottom"/>
-                     
+                                <Button Height="23" ToolTip="Next page" IsEnabled="{Binding IsNextEnabled}" HorizontalAlignment="Left"  Foreground="White" Background="#4472C4"
+                            Name="btnNext" VerticalAlignment="Bottom" Width="40" Margin="5" Command="{Binding NextCommand}"
+                            Content="&gt;" Click="btnNext_Click" Opacity="0.75" Cursor="Hand"/>
 
-                            <Button Height="23" HorizontalAlignment="Left" Grid.Column ="3" Foreground="White" Background="#4472C4"
-                            Name="btnNext" VerticalAlignment="Bottom" Width="40" Margin="5"
-                            Content="&gt;"  Opacity="0.75" Cursor="Hand"/>
+                                <Button Height="23" ToolTip="Last page" IsEnabled="{Binding IsLastEnabled}" HorizontalAlignment="Left"   Foreground="White" Background="#4472C4"
+                            VerticalAlignment="Bottom" Width="40" Name="btnLast" Margin="5" Command="{Binding LastCommand}"
+                            Click="btnLast_Click" Opacity="0.75" Content="&gt;&gt;" Cursor="Hand"/>
 
-                            <Button Height="23" HorizontalAlignment="Left"  Grid.Column ="4" Foreground="White" Background="#4472C4"
-                            VerticalAlignment="Bottom" Width="40" Name="btnLast" Margin="5"
-                             Opacity="0.75" Content="&gt;&gt;"/>
-
-                            <ComboBox x:Name="cbNumberOfRecords" HorizontalAlignment="Left"  Grid.Column ="5"
-                            VerticalAlignment="Top" Width="60"  SelectedIndex="0" 
-                            Opacity="0.75"/>
+                                
+                            </StackPanel>
 
                         </Grid>
                     </Grid>

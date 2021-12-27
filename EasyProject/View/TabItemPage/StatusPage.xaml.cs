@@ -10,7 +10,7 @@ using System.Windows.Navigation;
 using System.Windows.Media;
 using System.Collections;
 using EasyProject.Model;
-
+using System.ComponentModel;
 namespace EasyProject.View.TabItemPage
 {
     /// <summary>
@@ -69,9 +69,21 @@ namespace EasyProject.View.TabItemPage
         {
             //Navigate((int)PagingMode.First);
         }
+        private void btnPrev_Click(object sender, System.EventArgs e)
+        {
+            //Navigate((int)PagingMode.First);
+        }
+        private void btnLast_Click(object sender, System.EventArgs e)
+        {
+            //Navigate((int)PagingMode.First);
+        }
+        private void btnNext_Click(object sender, System.EventArgs e)
+        {
+            //Navigate((int)PagingMode.First);
+        }
 
         //    genericList.Add((object)Clipboard.GetData(DataFormats.CommaSeparatedValue));
-            
+
         //    //Student studentObj;
         //    //Random randomObj = new Random();
         //    //for (int i = 0; i < 1000; i++)

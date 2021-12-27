@@ -7,6 +7,9 @@ using System.Windows.Input;
 using Microsoft.Expression.Interactivity.Core;
 using LiveCharts;
 using LiveCharts.Wpf;
+using System.Linq;
+using Xamarin.Forms;
+using System.Windows.Data;
 
 namespace EasyProject.ViewModel
 {
@@ -333,7 +336,195 @@ namespace EasyProject.ViewModel
             }
 
         }
+        private ObservableCollection<ProductShowModel> LstOfRecords;
+        //private void LoadEmployee() //Read details
+        //{
+        //    foreach (var record in ReadCSV(@"~~.csv"))
+        //    {
+        //        var data = record.Split(',');
+        //        var empDetails = new EmployeeDetail
+        //        {
+        //            ID = data[0],
+        //            Name = data[1],
 
+        //            ,,,,,
+        //            이런식으로
+        //        };
+        //        LstOfRecords.Add(empDetails);
+        //    }
+        //    UpdateCollection(LstOfRecords.Take(SelectedRecord));
+        //    UpdateRecordCount();
+        //}
+        int RecordStartFrom = 0;
+        private void PreviousPage(object obj)
+        {
+            CurrentPage--;
+            RecordStartFrom = SelectedProductList.Count - SelectedRecord * (NumberOfPages * (CurrentPage - 1));
+            var recordsToShow = SelectedProductList.Skip(RecordStartFrom).Take(SelectedRecord);
+            UpdateCollection(recordsToShow);
+            UpdateEnableState();
+
+        }
+        private void LastPage(object obj)
+        {
+            //30 1->20, 2->10
+            //last page - 21 -30
+            //11-30=>30-20=10 -> 11-30
+
+            //fix
+            //20*(2-1)=20
+            //skip = 20
+            var recordsToskip = SelectedRecord * (NumberOfPages - 1);
+            UpdateCollection(SelectedProductList.Take(SelectedRecord));
+            CurrentPage = 1;
+            UpdateEnableState();
+        }
+        private void UpdateCollection(IEnumerable<ProductShowModel> enumerable)
+        {
+            SelectedProductList.Clear();
+            foreach (var item in enumerable)
+            {
+                SelectedProductList.Add(item);
+            }
+        }
+        //private void UpdateCollection(IEnumerable<ProductShowModel> enumerable)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        private void FirstPage(object obj)
+        {
+            UpdateCollection(SelectedProductList.Take(SelectedRecord));
+            CurrentPage = 1;
+            UpdateEnableState();
+        }
+        private void NextPage(object obj)
+        {
+            RecordStartFrom = CurrentPage * SelectedRecord;
+            var recordsToShow = SelectedProductList.Skip(RecordStartFrom).Take(SelectedRecord);
+            UpdateCollection(recordsToShow);
+            CurrentPage++;
+            UpdateEnableState();
+        }
+
+
+ 
+        private int _currentPage = 1;
+
+        public ICommand FirstCommand { get; set; }
+        public ICommand PreviousCommand { get; set; }
+        public ICommand NextCommand { get; set; }
+        public ICommand LastCommand { get; set; }
+
+        public int CurrentPage
+        {
+            get { return _currentPage; }
+            set
+            {
+                _currentPage = value;
+                OnPropertyChanged(nameof(CurrentPage));
+                UpdateEnableState();
+            }
+        }
+        private void UpdateEnableState()
+        {
+            IsFirstEnabled = CurrentPage > 1;
+            IsPreviousEnabled = CurrentPage > 1;
+            IsNextEnabled = CurrentPage < NumberOfPages;
+            IsLastEnabled = CurrentPage < NumberOfPages;
+        }
+
+        private int _numberOfPages = 10;
+
+        public int NumberOfPages
+        {
+            get { return _numberOfPages; }
+            set
+            {
+                _numberOfPages = value;
+                OnPropertyChanged(nameof(NumberOfPages));
+                UpdateEnableState();
+            }
+        }
+        private bool _isFirstEnabled;
+
+        public bool IsFirstEnabled
+        {
+            get { return _isFirstEnabled; }
+            set
+            {
+                _isFirstEnabled = value;
+                OnPropertyChanged(nameof(IsFirstEnabled));
+            }
+        }
+
+        private bool _isPreviousEnabled;
+
+        public bool IsPreviousEnabled
+        {
+            get { return _isPreviousEnabled; }
+            set
+            {
+                _isPreviousEnabled = value;
+                OnPropertyChanged(nameof(IsPreviousEnabled));
+            }
+        }
+        private bool _isLastEnabled;
+
+        public bool IsLastEnabled
+        {
+            get { return _isLastEnabled; }
+            set
+            {
+                _isLastEnabled = value;
+                OnPropertyChanged(nameof(IsLastEnabled));
+            }
+        }
+
+        private bool _isNextEnabled;
+
+        public bool IsNextEnabled
+        {
+            get { return _isNextEnabled; }
+            set
+            {
+                _isNextEnabled = value;
+                OnPropertyChanged(nameof(IsNextEnabled));
+            }
+        }
+
+        private int _selectedRecord = 10;
+
+        public int SelectedRecord
+        {
+            get { return _selectedRecord; }
+            set
+            {
+                _selectedRecord = value;
+                OnPropertyChanged(nameof(SelectedRecord));
+                UpdateRecordCount();
+            }
+        }
+        private void UpdateRecordCount()
+        {
+            NumberOfPages = (int)Math.Ceiling((double)SelectedProductList.Count / SelectedRecord);
+            NumberOfPages = NumberOfPages == 0 ? 1 : NumberOfPages;
+            UpdateCollection(SelectedProductList.Take(SelectedRecord));
+            CurrentPage = 1;
+        }
+
+        //public EmployeeViewModel()
+        //{
+        //   // EmployeeCollection = CollectionViewSource.GetDefaultView(SelectedProductList);
+        //    //employeeEntities = new EmployeeEntities();
+        //    //employeeContext = new EmployeeContext();
+        //    NextCommand = new Command((s) => true, NextPage);
+        //    FirstCommand = new Command((s) => true, FirstPage);
+        //    LastCommand = new Command((s) => true, LastPage);
+        //    PreviousCommand = new Command((s) => true, PreviousPage);
+        //    //LoadEmployee();
+        //    //EmployeeCollection.Filter = FilterByName;
+        //}
 
 
     }//class
