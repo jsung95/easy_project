@@ -9,6 +9,7 @@ using Microsoft.Win32;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Linq;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 
 namespace EasyProject.ViewModel
 {
@@ -291,6 +292,8 @@ namespace EasyProject.ViewModel
 
             Add_list.Insert(0, dto);
 
+            var temp = Ioc.Default.GetService<ProductShowViewModel>();
+            temp.Products = new ObservableCollection<ProductShowModel>(dao.GetProducts());
         }// ProductInsert
         public void ResetForm()
         {

@@ -51,13 +51,13 @@ namespace EasyProject
                     TabFrame.Source = new Uri("TabItemPage/StatusPage.xaml", UriKind.Relative);
                     break;
                 case 1:
-                    TabFrame.Source = new Uri("TabItemPage/InsertPage.xaml", UriKind.Relative);
+                    TabFrame.Source = new Uri("TabItemPage/GraphPage.xaml", UriKind.Relative);
                     break;
                 case 2:
-                    TabFrame.Source = new Uri("TabItemPage/IncomingOutgoingPageBtn.xaml", UriKind.Relative);
+                    TabFrame.Source = new Uri("TabItemPage/InsertPage.xaml", UriKind.Relative);
                     break;
                 case 3:
-                    TabFrame.Source = new Uri("TabItemPage/OrderPage.xaml", UriKind.Relative);
+                    TabFrame.Source = new Uri("TabItemPage/IncomingOutgoingPageBtn.xaml", UriKind.Relative);
                     break;
                 case 4:
                     TabFrame.Source = new Uri("TabItemPage/AuthorityPage.xaml", UriKind.Relative);

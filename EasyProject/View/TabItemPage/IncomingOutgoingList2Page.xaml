@@ -47,27 +47,53 @@
                 <Grid Grid.Row="0">
                     <Grid Grid.Column="0" >
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="0.2*"/>
+                            <RowDefinition Height="0.3*"/>
                             <RowDefinition Height="2*"/>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1.3*"/>
-                                <ColumnDefinition Width="1.5*"/>
-                                <ColumnDefinition Width="0.4*"/>
-                                <ColumnDefinition Width="0.7*"/>
+                                <ColumnDefinition Width="60*"/>
+                                <ColumnDefinition Width="320*"/>
+                                <ColumnDefinition Width="60*"/>
+                                <ColumnDefinition Width="120*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Border BorderBrush="#BEBEBE" BorderThickness="1" Grid.Column="3"  Width="95" Height="21" VerticalAlignment="Center" HorizontalAlignment="Center"  >
-                                <TextBlock Grid.Row="0" VerticalAlignment="Top" FontSize="10"
-                                Text="{Binding Source={x:Static wookoa:DateTime.Now}, StringFormat='{}{0:yy-MM-dd HH:mm:ss}', Mode=OneWay}" 
-                                Margin="0,2,0,0" Foreground="#4472C4" HorizontalAlignment="Center" Width="82" />
-                            </Border>
-                            <Button x:Name="resetBtn" Grid.Column="2" Foreground="#4472C4"  FontSize="12" 
-                                    FontWeight="Bold" HorizontalAlignment="Right"  Background="White"
-                                    VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="45" Cursor="Hand" >
-                                <materialDesign:PackIcon Grid.Column="2" Kind="Restore" VerticalAlignment="Center" HorizontalAlignment="Center" Height="15" Width="15" />
+                            <ComboBox x:Name="searchText_ComboBox" Margin="10 0" Height="30" Grid.Column="0" HorizontalContentAlignment="Left" 
+                       SelectedItem="{Binding SelectedSearchType}">
+                                <ComboBox.Resources>
+                                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+                                </ComboBox.Resources>
+                            </ComboBox>
+
+                            <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요" Grid.Column="1" HorizontalContentAlignment="Left" 
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
+                                     Text="{Binding TextForSearch}" Cursor="Hand"/>
+
+                            <Button x:Name="search_Btn" Grid.Column="2" Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White"
+                            VerticalAlignment="Center" Height="30"  Width="45" HorizontalAlignment="Left" 
+                                    Command="{Binding SearchCommand}" Cursor="Hand">
+                                <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
                             </Button>
+
+                            <Label Content="부서명" Foreground="#4472C4" Grid.Column="2" FontSize="12" 
+                       FontWeight="Bold" HorizontalAlignment="Right"  
+                       VerticalAlignment="Center"/>
+
+                            <ComboBox x:Name="deptName_ComboBox1" Height="30" Grid.Column="3" Margin="10 0" HorizontalContentAlignment="Left" 
+                       ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept}">
+                                <ComboBox.Resources>
+                                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+                                </ComboBox.Resources>
+
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Dept_name}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
                         </Grid>
 
                         <DataGrid x:Name="dataGrid2" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Top" ScrollViewer.CanContentScroll="True"         

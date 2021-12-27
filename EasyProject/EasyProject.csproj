@@ -206,6 +206,9 @@
     <Compile Include="View\TabItemPage\FileUploadPageFunction.xaml.cs">
       <DependentUpon>FileUploadPageFunction.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TabItemPage\GraphPage.xaml.cs">
+      <DependentUpon>GraphPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TabItemPage\IncomingOutgoingList1Page.xaml.cs">
       <DependentUpon>IncomingOutgoingList1Page.xaml</DependentUpon>
     </Compile>
@@ -263,6 +266,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TabItemPage\FileUploadPageFunction.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabItemPage\GraphPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
