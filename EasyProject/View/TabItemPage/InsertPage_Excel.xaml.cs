@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.IO;
 using Microsoft.Win32;
 using EasyProject.ViewModel;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -28,23 +29,42 @@ namespace EasyProject.View.TabItemPage
             InitializeComponent();
 
             fileUploadBtn.Click += fileUploadBtn_Click;
-
-            //this.DragEnter += new DragEventHandler(dragEnterHandler);
-            //this.DragLeave += new DragEventHandler(dragDropHandler);
-
-        }
-        void dragEnterHandler(object sender, DragEventArgs e){
-            if (e.Data.GetDataPresent(DataFormats.FileDrop)) 
-                e.Effects = DragDropEffects.Copy;
+            fileDownLoadBtn.Click += fileDownLoadBtn_Click;
         }
 
-        void dragDropHandler(object sender, DragEventArgs e){
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            foreach (string file in files)
-            {
-                //FileUploadPageFunction uploadPFunction = new FileUploadPageFunction(file);
-                //NavigationService.Navigate(uploadPFunction);
-            }
+        private void fileDownLoadBtn_Click(object sender, RoutedEventArgs e)
+        {
+            String result = "제품코드,제품명,품목/종류,유통기한,가격,수량\n";
+            result += "ex) A123,주사기,치과재료,2022-11-12,25000,10";
+            string today = String.Format(DateTime.Now.ToString("yyyyMMddhhmmss"));
+            string f_path = @"c:\temp\재고입력폼" + today + ".csv";
+            File.AppendAllText(f_path, result, UnicodeEncoding.UTF8);
+
+            Excel.Application excel_app = new Excel.Application();
+
+            // Make Excel visible (optional).
+            excel_app.Visible = true;
+
+            // Open the file.
+            excel_app.Workbooks.Open(
+                f_path,               // Filename
+                Type.Missing,
+                Type.Missing,
+
+                   Excel.XlFileFormat.xlCSV,   // Format
+                   Type.Missing,
+                   Type.Missing,
+                   Type.Missing,
+                   Type.Missing,
+
+                   ",",          // Delimiter
+                   Type.Missing,
+                   Type.Missing,
+                   Type.Missing,
+                   Type.Missing,
+                   Type.Missing,
+                   Type.Missing
+            );
         }
 
         private void fileUploadBtn_Click(object sender, RoutedEventArgs e)
