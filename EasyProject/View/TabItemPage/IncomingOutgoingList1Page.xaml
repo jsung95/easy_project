@@ -56,16 +56,6 @@
                                 <ColumnDefinition Width="0.7*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Border BorderBrush="#BEBEBE" BorderThickness="1" Grid.Column="3"  Width="95" Height="21" VerticalAlignment="Center" HorizontalAlignment="Center"  >
-                                <TextBlock Grid.Row="0" VerticalAlignment="Top" FontSize="10"
-                                Text="{Binding Source={x:Static wookoa:DateTime.Now}, StringFormat='{}{0:yy-MM-dd HH:mm:ss}', Mode=OneWay}" 
-                                Margin="0,2,0,0" Foreground="#4472C4" HorizontalAlignment="Center" Width="82" />
-                            </Border>
-                            <Button x:Name="resetBtn" Grid.Column="2" Foreground="#4472C4"  FontSize="12" 
-                                    FontWeight="Bold" HorizontalAlignment="Right"  Background="White"
-                                    VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="45" Cursor="Hand" >
-                                <materialDesign:PackIcon Grid.Column="2" Kind="Restore" VerticalAlignment="Center" HorizontalAlignment="Center" Height="15" Width="15" />
-                            </Button>
                         </Grid>
 
                         <DataGrid x:Name="dataGrid1" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Top" ScrollViewer.CanContentScroll="True"         
