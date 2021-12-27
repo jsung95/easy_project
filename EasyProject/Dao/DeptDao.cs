@@ -38,7 +38,7 @@ namespace EasyProject.Dao
                             {
                                 Dept_id = reader.GetInt32(0),
                                 Dept_name = reader.GetString(1),
-                                Dept_phone = reader.GetInt32(2),
+                                Dept_phone = reader.GetString(2),
                                 Dept_status = reader.GetString(3)
                             };
 

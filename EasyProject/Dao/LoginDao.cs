@@ -37,7 +37,7 @@ namespace EasyProject.Dao
 
                         while (reader.Read())
                         {
-                            int? nurse_no = reader.GetInt32(0);
+                            string nurse_no = reader.GetString(0);
                             string nurse_name = reader.GetString(1);
                             string nurse_auth = reader.GetString(2);
                             string nurse_pw = reader.GetString(3);

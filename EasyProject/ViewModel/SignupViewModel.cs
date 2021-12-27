@@ -73,7 +73,7 @@ namespace EasyProject.ViewModel
         public bool SignupInsert()
         {
             bool SignupResult;
-            Regex regex = new Regex(@"^[1-9]{8}$"); //아이디는 숫자 8자리
+            Regex regex = new Regex(@"^[0-9]{8}$"); //아이디는 숫자 8자리
 
             if(regex.IsMatch(Convert.ToString(Nurse.Nurse_no)))
             {

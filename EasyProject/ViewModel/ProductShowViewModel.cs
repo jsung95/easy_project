@@ -294,34 +294,37 @@ namespace EasyProject.ViewModel
 
             ChartValues<int> name = new ChartValues<int> { };            //y축들어갈 임시 값
 
-
-            List<ProductShowModel> list1 = product_dao.Prodtotal_Info();      //y축출력
-            //foreach (var item in list1)
-            //{
-            //    name.Add((int)item.Prod_total);
-            //}
-            for (int i = 0; i < 8; i++)
+            if(product_dao.Prodcode_Info().Count != 0)
             {
-                name.Add((int)list1[i].Prod_total);
+                List<ProductShowModel> list1 = product_dao.Prodtotal_Info();      //y축출력
+                                                                                  //foreach (var item in list1)
+                                                                                  //{
+                                                                                  //    name.Add((int)item.Prod_total);
+                                                                                  //}
+                for (int i = 0; i < 8; i++)
+                {
+                    name.Add((int)list1[i].Prod_total);
+                }
+
+
+                Values = new ChartValues<int> { };
+                SeriesCollection.Add(new ColumnSeries
+                {
+                    Title = "재고현황",   //+ i
+                    Values = name,
+
+                });
+
+                BarLabels = new List<string>() { };                           //x축출력
+                List<ProductShowModel> list = product_dao.Prodcode_Info();
+                foreach (var item in list)
+                {
+                    BarLabels.Add(item.Prod_code);
+                }
+
+                Formatter = value => value.ToString("N");   //문자열 10진수 변환
             }
 
-
-            Values = new ChartValues<int> { };
-            SeriesCollection.Add(new ColumnSeries
-            {
-                Title = "재고현황",   //+ i
-                Values = name,
-
-            });
-
-            BarLabels = new List<string>() { };                           //x축출력
-            List<ProductShowModel> list = product_dao.Prodcode_Info();
-            foreach (var item in list)
-            {
-                BarLabels.Add(item.Prod_code);
-            }
-
-            Formatter = value => value.ToString("N");   //문자열 10진수 변환
         }
 
 

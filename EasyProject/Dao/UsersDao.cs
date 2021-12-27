@@ -45,7 +45,7 @@ namespace EasyProject.Dao
 
                         while (reader.Read())
                         {
-                            int? nurse_no = reader.GetInt32(0);
+                            string nurse_no = reader.GetString(0);
                             string nurse_name = reader.GetString(1);
                             string nurse_auth = reader.GetString(2);
                             string dept_name = reader.GetString(3);
@@ -102,7 +102,7 @@ namespace EasyProject.Dao
 
                         while (reader.Read())
                         {
-                            int? nurse_no = reader.GetInt32(0);
+                            string nurse_no = reader.GetString(0);
                             string nurse_name = reader.GetString(1);
                             string nurse_auth = reader.GetString(2);
                             string dept_name = reader.GetString(3);
@@ -229,7 +229,7 @@ namespace EasyProject.Dao
                         while (reader.Read())
                         {
 
-                            int? nurse_no = reader.GetInt32(0);
+                            string nurse_no = reader.GetString(0);
                             string nurse_name = reader.GetString(1);
                             string nurse_auth = reader.GetString(2);
                             string dept_name = reader.GetString(3);
@@ -294,12 +294,12 @@ namespace EasyProject.Dao
 
                         while (reader.Read())
                         {
-                            user_dto.Nurse_no = reader.GetInt32(0);
+                            user_dto.Nurse_no = reader.GetString(0);
                             user_dto.Nurse_name = reader.GetString(1);
                             user_dto.Nurse_auth = reader.GetString(2);
                             user_dto.Dept_id = reader.GetInt32(3);
                             user_dto.Dept_name = reader.GetString(4);
-                            user_dto.Dept_phone = reader.GetInt32(5);
+                            user_dto.Dept_phone = reader.GetString(5);
                         }//while
 
                     }//using(cmd)
