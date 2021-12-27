@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Microsoft.Expression.Interactivity.Core;
 using LiveCharts;
 using LiveCharts.Wpf;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 
 namespace EasyProject.ViewModel
 {
@@ -252,6 +253,8 @@ namespace EasyProject.ViewModel
             InputOutCount = null;
 
             Products = new ObservableCollection<ProductShowModel>(product_dao.GetProducts());
+            var temp = Ioc.Default.GetService<ProductInOutViewModel>();
+            temp.showOutListByDept(); // 출고 시 출고 목록 갱신
         }
 
 

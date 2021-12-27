@@ -18,7 +18,8 @@ namespace EasyProject.View.TabItemPage
     /// </summary>
     /// 
     /// 
-    public partial class StatusPage : Page {
+    public partial class StatusPage : Page 
+    {
         //int pIndex = 1;
         //private int numberOf;
         public ChartValues<float> Values { get; set; }

@@ -24,10 +24,12 @@ namespace EasyProject.Dao
 
         // 입고테이블 조회
         List<ProductInOutModel> GetProductIn();
-
+        List<ProductInOutModel> GetProductIn(DeptModel dept_dto);
+        List<ProductInOutModel> GetProductIn(DeptModel dept_dto, string search_type, string search_text);
         // 출고테이블 조회
         List<ProductInOutModel> GetProductOut();
-
+        List<ProductInOutModel> GetProductOut(DeptModel dept_dto);
+        List<ProductInOutModel> GetProductOut(DeptModel dept_dto, string search_type, string search_text);
         // IMP_DEPT 테이블 추가
         void AddImpDept(ProductModel prod_dto, NurseModel nurse_dto);
 

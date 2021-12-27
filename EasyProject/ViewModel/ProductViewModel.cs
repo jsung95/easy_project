@@ -53,17 +53,17 @@ namespace EasyProject.ViewModel
         public NurseModel Nurse { get; set; }
 
         //입력한 재고 데이터를 담은 객체를 담아줄 옵저버블컬렉션 리스트
-        private ObservableCollection<ProductInOutModel> add_list;
-        public ObservableCollection<ProductInOutModel> Add_list { 
-            get
-            {
-                return add_list;    
-            }
-            set
-            {
-                SetProperty(ref add_list, value);
-            }
-                 }
+        public ObservableCollection<ProductInOutModel> Add_list { get; set; }  
+        //public ObservableCollection<ProductInOutModel> Add_list { 
+        //    get
+        //    {
+        //        return add_list;    
+        //    }
+        //    set
+        //    {
+        //        SetProperty(ref add_list, value);
+        //    }
+        //         }
 
         public List<ProductInOutModel> productDtoList { get; set; }
 
@@ -292,8 +292,11 @@ namespace EasyProject.ViewModel
 
             Add_list.Insert(0, dto);
 
-            var temp = Ioc.Default.GetService<ProductShowViewModel>();
-            temp.Products = new ObservableCollection<ProductShowModel>(dao.GetProducts());
+            var temp1 = Ioc.Default.GetService<ProductShowViewModel>();
+            temp1.Products = new ObservableCollection<ProductShowModel>(dao.GetProducts()); // 재고현황 리스트 갱신
+
+            var temp2 = Ioc.Default.GetService<ProductInOutViewModel>();
+            temp2.showInListByDept(); // 입고 목록 갱신
         }// ProductInsert
         public void ResetForm()
         {
