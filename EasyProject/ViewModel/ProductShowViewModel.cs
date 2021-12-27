@@ -203,6 +203,7 @@ namespace EasyProject.ViewModel
         {
             product_dao.ChangeProductInfo(SelectedProduct);
             product_dao.ChangeProductInfo_IMP_DEPT(SelectedProduct);
+            Products = new ObservableCollection<ProductShowModel>(product_dao.GetProducts());
         }
 
 
@@ -249,6 +250,8 @@ namespace EasyProject.ViewModel
             SelectedOutType = null;
             SelectedOutDept = null;
             InputOutCount = null;
+
+            Products = new ObservableCollection<ProductShowModel>(product_dao.GetProducts());
         }
 
 
