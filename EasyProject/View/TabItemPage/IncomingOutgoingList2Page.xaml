@@ -109,7 +109,15 @@
                                 <DataGridTextColumn Binding="{Binding Prod_out_date}"  Header="출고일" Width="*"  IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Prod_out_type}"  Header="출고유형" Width="0.7*"   IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Dept_name}"  Header="부서명" Width="*"  IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Nurse_name}"  Header="관리자명" Width="*"  IsReadOnly="True"/>                            </DataGrid.Columns>
+                                <DataGridTextColumn  Header="관리자명" Width="*"  IsReadOnly="True">
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding StringFormat="{}{0} ({1})">
+                                            <Binding Path="Nurse_name" />
+                                            <Binding Path="Dept_name" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>                           
+                            </DataGrid.Columns>
                             <DataGrid.RowStyle>
 
                                 <Style TargetType="{x:Type DataGridRow}">
