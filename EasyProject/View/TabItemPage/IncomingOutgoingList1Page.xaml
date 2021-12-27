@@ -34,7 +34,7 @@
         </Style>
     </Page.Resources>
 
-    <Grid Height="450" Width="1000"> 
+    <Grid Height="500" Width="1000"> 
         <materialDesign:Card Grid.Column="0"  UniformCornerRadius="20" Background="White" >
             <Grid>
                 <Grid.RowDefinitions>
