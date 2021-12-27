@@ -11,6 +11,7 @@ using System.Linq;
 using Xamarin.Forms;
 using System.Windows.Data;
 
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 namespace EasyProject.ViewModel
 {
     public class ProductShowViewModel : Notifier
@@ -255,6 +256,8 @@ namespace EasyProject.ViewModel
             InputOutCount = null;
 
             Products = new ObservableCollection<ProductShowModel>(product_dao.GetProducts());
+            var temp = Ioc.Default.GetService<ProductInOutViewModel>();
+            temp.showOutListByDept(); // 출고 시 출고 목록 갱신
         }
 
 

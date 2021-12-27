@@ -11,6 +11,7 @@ namespace EasyProject.Dao
 
         public List<ProductShowModel> GetProducts()
         {
+            Console.WriteLine("GetProducts !");
             List<ProductShowModel> list = new List<ProductShowModel>();
             try
             {
@@ -466,7 +467,184 @@ namespace EasyProject.Dao
 
             return list;
 
-        }//GetPorductIn
+        }//GetProductIn
+
+        public List<ProductInOutModel> GetProductIn(DeptModel dept_dto) // 오버로딩
+        {
+            List<ProductInOutModel> list = new List<ProductInOutModel>();
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_expire, P.prod_price, I.prod_in_count, N.nurse_name, I.prod_in_date, I.prod_in_from, I.prod_in_to, I.prod_in_type, D.dept_name " +
+                                          "FROM PRODUCT_IN I " +
+                                          "INNER JOIN PRODUCT P " +
+                                          "ON I.prod_id = P.prod_id " +
+                                          "INNER JOIN CATEGORY C " +
+                                          "ON P.category_id = C.category_id " +
+                                          "LEFT OUTER JOIN NURSE N " +
+                                          "ON I.nurse_no = N.nurse_no " +
+                                          "INNER JOIN DEPT D " +
+                                          "ON N.dept_id = D.dept_id " +
+                                          "WHERE D.dept_name = :name";
+
+                        cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
+                        Console.WriteLine("ProductDao - GetProductIn() 부서명 파라미터: " + dept_dto.Dept_name);
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string prod_code = reader.GetString(0);
+                            string prod_name = reader.GetString(1);
+                            string category_name = reader.GetString(2);
+                            DateTime prod_expire = reader.GetDateTime(3);
+                            int? prod_price = reader.GetInt32(4);
+                            int? prod_in_count = reader.GetInt32(5);
+                            string nurse_name = reader.GetString(6);
+                            DateTime prod_in_date = reader.GetDateTime(7);
+                            string prod_in_from = reader.GetString(8);
+                            string prod_in_to = reader.GetString(9);
+                            string prod_in_type = reader.GetString(10);
+                            string dept_name = reader.GetString(11);
+
+                            ProductInOutModel dto = new ProductInOutModel()
+                            {
+                                Prod_code = prod_code,
+                                Prod_name = prod_name,
+                                Category_name = category_name,
+                                Prod_expire = prod_expire,
+                                Prod_price = prod_price,
+                                Prod_in_count = prod_in_count,
+                                Nurse_name = nurse_name,
+                                Prod_in_date = prod_in_date,
+                                Prod_in_from = prod_in_from,
+                                Prod_in_to = prod_in_to,
+                                Prod_in_type = prod_in_type,
+                                Dept_name = dept_name
+                            };
+
+                            list.Add(dto);
+
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return list;
+
+        }//GetProductIn
+
+        public List<ProductInOutModel> GetProductIn(DeptModel dept_dto, string search_type, string search_text) // 오버로딩
+        {
+            List<ProductInOutModel> list = new List<ProductInOutModel>();
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_expire, P.prod_price, I.prod_in_count, N.nurse_name, I.prod_in_date, I.prod_in_from, I.prod_in_to, I.prod_in_type, D.dept_name " +
+                                          "FROM PRODUCT_IN I " +
+                                          "INNER JOIN PRODUCT P " +
+                                          "ON I.prod_id = P.prod_id " +
+                                          "INNER JOIN CATEGORY C " +
+                                          "ON P.category_id = C.category_id " +
+                                          "LEFT OUTER JOIN NURSE N " +
+                                          "ON I.nurse_no = N.nurse_no " +
+                                          "INNER JOIN DEPT D " +
+                                          "ON N.dept_id = D.dept_id " +
+                                          "WHERE " +
+                                            "((:search_combo = '제품코드' AND D.dept_name = :dept_name ) AND (P.prod_code LIKE '%'||:search_text||'%')) " +
+                                          "OR " +
+                                            "((:search_combo = '제품명' AND D.dept_name = :dept_name ) AND (P.prod_name LIKE '%'||:search_text||'%')) " +
+                                          "OR " +
+                                            "((:search_combo = '품목/종류' AND D.dept_name = :dept_name ) AND (C.category_name LIKE '%'||:search_text||'%')) " +
+                                          "AND D.dept_status != '폐지'";
+
+                        cmd.BindByName = true;
+
+                        cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
+                        cmd.Parameters.Add(new OracleParameter("search_combo", search_type));
+                        cmd.Parameters.Add(new OracleParameter("search_text", search_text));
+
+                        Console.WriteLine("dept_name : " + dept_dto.Dept_name);
+                        Console.WriteLine("search_combo : " + search_type);
+                        Console.WriteLine("search_text : " + search_text);
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string prod_code = reader.GetString(0);
+                            string prod_name = reader.GetString(1);
+                            string category_name = reader.GetString(2);
+                            DateTime prod_expire = reader.GetDateTime(3);
+                            int? prod_price = reader.GetInt32(4);
+                            int? prod_in_count = reader.GetInt32(5);
+                            string nurse_name = reader.GetString(6);
+                            DateTime prod_in_date = reader.GetDateTime(7);
+                            string prod_in_from = reader.GetString(8);
+                            string prod_in_to = reader.GetString(9);
+                            string prod_in_type = reader.GetString(10);
+                            string dept_name = reader.GetString(11);
+
+                            ProductInOutModel dto = new ProductInOutModel()
+                            {
+                                Prod_code = prod_code,
+                                Prod_name = prod_name,
+                                Category_name = category_name,
+                                Prod_expire = prod_expire,
+                                Prod_price = prod_price,
+                                Prod_in_count = prod_in_count,
+                                Nurse_name = nurse_name,
+                                Prod_in_date = prod_in_date,
+                                Prod_in_from = prod_in_from,
+                                Prod_in_to = prod_in_to,
+                                Prod_in_type = prod_in_type,
+                                Dept_name = dept_name
+                            };
+
+                            list.Add(dto);
+
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return list;
+
+        }//GetProductIn
 
         public List<ProductInOutModel> GetProductOut()
         {
@@ -496,6 +674,171 @@ namespace EasyProject.Dao
                                           "INNER JOIN DEPT D " +
                                           "ON N.dept_id = D.dept_id";
 
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string prod_code = reader.GetString(0);
+                            string prod_name = reader.GetString(1);
+                            string category_name = reader.GetString(2);
+                            int? prod_price = reader.GetInt32(3);
+                            int? prod_out_count = reader.GetInt32(4);
+                            DateTime prod_out_date = reader.GetDateTime(5);
+                            string prod_out_type = reader.GetString(6);
+                            string dept_name = reader.GetString(7);
+                            string nurse_name = reader.GetString(8);
+
+                            ProductInOutModel dto = new ProductInOutModel()
+                            {
+                                Prod_code = prod_code,
+                                Prod_name = prod_name,
+                                Category_name = category_name,
+                                Prod_price = prod_price,
+                                Prod_out_count = prod_out_count,
+                                Prod_out_date = prod_out_date,
+                                Prod_out_type = prod_out_type,
+                                Dept_name = dept_name,
+                                Nurse_name = nurse_name
+                            };
+
+                            list.Add(dto);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return list;
+
+        }//GetProductOut
+
+        public List<ProductInOutModel> GetProductOut(DeptModel dept_dto) // 오버로딩
+        {
+            List<ProductInOutModel> list = new List<ProductInOutModel>();
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, O.prod_out_count, O.prod_out_date, O.prod_out_type, D.dept_name, N.nurse_name " +
+                                          "FROM PRODUCT_OUT O " +
+                                          "INNER JOIN PRODUCT P " +
+                                          "ON O.prod_id = P.prod_id " +
+                                          "INNER JOIN CATEGORY C " +
+                                          "ON P.category_id = C.category_id " +
+                                          "LEFT OUTER JOIN NURSE N " +
+                                          "ON O.nurse_no = N.nurse_no " +
+                                          "INNER JOIN DEPT D " +
+                                          "ON N.dept_id = D.dept_id " +
+                                          "WHERE D.dept_name = :name";
+
+                        cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
+                        Console.WriteLine("ProductDao - GetProductOut() 부서명 파라미터: " + dept_dto.Dept_name);
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string prod_code = reader.GetString(0);
+                            string prod_name = reader.GetString(1);
+                            string category_name = reader.GetString(2);
+                            int? prod_price = reader.GetInt32(3);
+                            int? prod_out_count = reader.GetInt32(4);
+                            DateTime prod_out_date = reader.GetDateTime(5);
+                            string prod_out_type = reader.GetString(6);
+                            string dept_name = reader.GetString(7);
+                            string nurse_name = reader.GetString(8);
+
+                            ProductInOutModel dto = new ProductInOutModel()
+                            {
+                                Prod_code = prod_code,
+                                Prod_name = prod_name,
+                                Category_name = category_name,
+                                Prod_price = prod_price,
+                                Prod_out_count = prod_out_count,
+                                Prod_out_date = prod_out_date,
+                                Prod_out_type = prod_out_type,
+                                Dept_name = dept_name,
+                                Nurse_name = nurse_name
+                            };
+
+                            list.Add(dto);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return list;
+
+        }//GetProductOut
+
+        public List<ProductInOutModel> GetProductOut(DeptModel dept_dto, string search_type, string search_text)
+        {
+            List<ProductInOutModel> list = new List<ProductInOutModel>();
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, O.prod_out_count, O.prod_out_date, O.prod_out_type, D.dept_name, N.nurse_name " +
+                                          "FROM PRODUCT_OUT O " +
+                                          "INNER JOIN PRODUCT P " +
+                                          "ON O.prod_id = P.prod_id " +
+                                          "INNER JOIN CATEGORY C " +
+                                          "ON P.category_id = C.category_id " +
+                                          "LEFT OUTER JOIN NURSE N " +
+                                          "ON O.nurse_no = N.nurse_no " +
+                                          "INNER JOIN DEPT D " +
+                                          "ON N.dept_id = D.dept_id " +
+                                          "WHERE " +
+                                            "((:search_combo = '제품코드' AND D.dept_name = :dept_name ) AND (P.prod_code LIKE '%'||:search_text||'%')) " +
+                                          "OR " +
+                                            "((:search_combo = '제품명' AND D.dept_name = :dept_name ) AND (P.prod_name LIKE '%'||:search_text||'%')) " +
+                                          "OR " +
+                                            "((:search_combo = '품목/종류' AND D.dept_name = :dept_name ) AND (C.category_name LIKE '%'||:search_text||'%')) " +
+                                          "AND D.dept_status != '폐지'";
+
+                        cmd.BindByName = true;
+
+                        cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
+                        cmd.Parameters.Add(new OracleParameter("search_combo", search_type));
+                        cmd.Parameters.Add(new OracleParameter("search_text", search_text));
+
+                        Console.WriteLine("dept_name : " + dept_dto.Dept_name);
+                        Console.WriteLine("search_combo : " + search_type);
+                        Console.WriteLine("search_text : " + search_text);
+                    
                         OracleDataReader reader = cmd.ExecuteReader();
 
                         while (reader.Read())
