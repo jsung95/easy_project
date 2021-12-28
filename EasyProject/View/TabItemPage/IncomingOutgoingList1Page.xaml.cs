@@ -33,8 +33,12 @@ namespace EasyProject.View.TabItemPage
             ApplicationCommands.Copy.Execute(null, dataGrid1);
             dataGrid1.UnselectAllCells();
             String result = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
-            string today = String.Format(DateTime.Now.ToString("yyyyMMddhhmmss"));
-            string f_path = @"c:\temp\IncommingData" + today + ".csv";
+            string today = String.Format(DateTime.Now.ToString("yyyy/MM/dd"));
+            //Binding myBinding = new Binding();
+            //myBinding.Source = this;
+            //myBinding.Path = new PropertyPath("Dept_name");
+            String s = deptName_ComboBox1.Text;
+            string f_path = @"c:\temp\["+s+"]"+"입출고현황_" + today + ".csv";
             File.AppendAllText(f_path, result, UnicodeEncoding.UTF8);
 
             // Get the Excel application object.

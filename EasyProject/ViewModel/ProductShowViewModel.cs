@@ -348,7 +348,7 @@ namespace EasyProject.ViewModel
         //            Name = data[1],
 
         //            ,,,,,
-        //            이런식으로
+        //            이런식으로 
         //        };
         //        LstOfRecords.Add(empDetails);
         //    }
