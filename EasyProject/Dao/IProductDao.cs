@@ -43,6 +43,8 @@ namespace EasyProject.Dao
 
         // 재고 출고
         void OutProduct(int? InputOutCount, ProductShowModel prod_dto, NurseModel nurse_dto, string SelectedOutType, DeptModel dept_dto);
+        void OutProduct_FromTo(int? InputOutCount, ProductShowModel prod_dto, NurseModel nurse_dto, string SelectedOutType, DeptModel dept_dto);
+        void OutProduct_FromTo_IMP_DEPT(int? InputOutCount, ProductShowModel prod_dto, DeptModel dept_dto);
         void ChangeProductInfo_IMP_DEPT_ForOut(int? InputOutCount, ProductShowModel prod_dto);
         void ChangeProductInfo_ForOut(int? InputOutCount, ProductShowModel prod_dto);
 
