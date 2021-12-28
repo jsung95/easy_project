@@ -78,7 +78,7 @@
                        VerticalAlignment="Center"/>
 
                             <ComboBox x:Name="deptName_ComboBox1" Height="30" Grid.Column="3" Margin="10 0" HorizontalContentAlignment="Left" 
-                       ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept_Out}">
+                       ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept_Out}" DropDownClosed="OnDropDownOpened" >
                                 <ComboBox.Resources>
                                     <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
                                 </ComboBox.Resources>

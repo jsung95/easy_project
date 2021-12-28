@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using EasyProject.Model;
 using Excel = Microsoft.Office.Interop.Excel;
 
 
@@ -20,10 +21,22 @@ namespace EasyProject.View.TabItemPage
     /// </summary>
     public partial class IncomingOutgoingList1Page : Page
     {
+        public String userDept00 = null;
+        public bool isComboBoxDropDownOpened = false;
+
         public IncomingOutgoingList1Page()
         {
             InitializeComponent();
             export_btn.Click += Export_btn_Click;
+            userDept00 = (deptName_ComboBox1.SelectedValue as DeptModel).Dept_name;
+        }
+        private void OnDropDownOpened(object sender, EventArgs e)
+        {
+            isComboBoxDropDownOpened = true;
+
+            var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
+            var deptNameText = deptModelObject.Dept_name;
+            userDept00= deptNameText.ToString();
         }
 
         private void Export_btn_Click(object sender, RoutedEventArgs e)
@@ -34,11 +47,9 @@ namespace EasyProject.View.TabItemPage
             dataGrid1.UnselectAllCells();
             String result = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
             string today = String.Format(DateTime.Now.ToString("yyyy/MM/dd"));
-            //Binding myBinding = new Binding();
-            //myBinding.Source = this;
-            //myBinding.Path = new PropertyPath("Dept_name");
-            String s = deptName_ComboBox1.Text;
-            string f_path = @"c:\temp\["+s+"]"+"입출고현황_" + today + ".csv";
+
+            
+            string f_path = @"c:\temp\["+ userDept00 + "]"+"입고현황_" + today + ".csv";
             File.AppendAllText(f_path, result, UnicodeEncoding.UTF8);
 
             // Get the Excel application object.
