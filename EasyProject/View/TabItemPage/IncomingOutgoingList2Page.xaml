@@ -105,7 +105,7 @@
                                 <DataGridTextColumn Binding="{Binding Prod_out_count, StringFormat='{}{0:#,0} 개'}"  Header="수량" Width="0.5*"  IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Prod_out_date}"  Header="출고일" Width="*"  IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Prod_out_type}"  Header="출고유형" Width="0.7*"   IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Dept_name}"  Header="부서명" Width="*"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_out_to}"  Header="출고대상" Width="*"  IsReadOnly="True"/>
                                 <DataGridTextColumn  Header="관리자명" Width="*"  IsReadOnly="True">
                                     <DataGridTextColumn.Binding>
                                         <MultiBinding StringFormat="{}{0} ({1})">

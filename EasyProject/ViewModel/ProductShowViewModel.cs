@@ -313,7 +313,7 @@ namespace EasyProject.ViewModel
                                                                                   //}
                 for (int i = 0; i < 8; i++)
                 {
-                    name.Add((int)list1[i].Prod_total);
+                    //name.Add((int)list1[i].Prod_total);
                 }
 
 

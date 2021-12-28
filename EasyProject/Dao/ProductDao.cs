@@ -496,7 +496,7 @@ namespace EasyProject.Dao
                                           "ON I.nurse_no = N.nurse_no " +
                                           "INNER JOIN DEPT D " +
                                           "ON N.dept_id = D.dept_id " +
-                                          "WHERE D.dept_name = :name";
+                                          "WHERE I.prod_in_to = :name";
 
                         cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
                         Console.WriteLine("ProductDao - GetProductIn() 부서명 파라미터: " + dept_dto.Dept_name);
@@ -579,11 +579,11 @@ namespace EasyProject.Dao
                                           "INNER JOIN DEPT D " +
                                           "ON N.dept_id = D.dept_id " +
                                           "WHERE " +
-                                            "((:search_combo = '제품코드' AND D.dept_name = :dept_name ) AND (P.prod_code LIKE '%'||:search_text||'%')) " +
+                                            "((:search_combo = '제품코드' AND I.prod_in_to = :dept_name ) AND (P.prod_code LIKE '%'||:search_text||'%')) " +
                                           "OR " +
-                                            "((:search_combo = '제품명' AND D.dept_name = :dept_name ) AND (P.prod_name LIKE '%'||:search_text||'%')) " +
+                                            "((:search_combo = '제품명' AND I.prod_in_to = :dept_name ) AND (P.prod_name LIKE '%'||:search_text||'%')) " +
                                           "OR " +
-                                            "((:search_combo = '품목/종류' AND D.dept_name = :dept_name ) AND (C.category_name LIKE '%'||:search_text||'%')) " +
+                                            "((:search_combo = '품목/종류' AND I.prod_in_to = :dept_name ) AND (C.category_name LIKE '%'||:search_text||'%')) " +
                                           "AND D.dept_status != '폐지'";
 
                         cmd.BindByName = true;
@@ -663,7 +663,7 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
 
-                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, O.prod_out_count, O.prod_out_date, O.prod_out_type, D.dept_name, N.nurse_name " +
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, O.prod_out_count, O.prod_out_date, O.prod_out_type, D.dept_name, N.nurse_name, O.prod_out_from, O.prod_out_to " +
                                           "FROM PRODUCT_OUT O " +
                                           "INNER JOIN PRODUCT P " +
                                           "ON O.prod_id = P.prod_id " +
@@ -687,6 +687,8 @@ namespace EasyProject.Dao
                             string prod_out_type = reader.GetString(6);
                             string dept_name = reader.GetString(7);
                             string nurse_name = reader.GetString(8);
+                            string prod_out_from = reader.GetString(9);
+                            string prod_out_to = reader.GetString(10);
 
                             ProductInOutModel dto = new ProductInOutModel()
                             {
@@ -698,7 +700,9 @@ namespace EasyProject.Dao
                                 Prod_out_date = prod_out_date,
                                 Prod_out_type = prod_out_type,
                                 Dept_name = dept_name,
-                                Nurse_name = nurse_name
+                                Nurse_name = nurse_name,
+                                Prod_out_from = prod_out_from,
+                                Prod_out_to = prod_out_to
                             };
 
                             list.Add(dto);
@@ -735,7 +739,7 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
 
-                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, O.prod_out_count, O.prod_out_date, O.prod_out_type, D.dept_name, N.nurse_name " +
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, O.prod_out_count, O.prod_out_date, O.prod_out_type, D.dept_name, N.nurse_name, O.prod_out_from, O.prod_out_to " +
                                           "FROM PRODUCT_OUT O " +
                                           "INNER JOIN PRODUCT P " +
                                           "ON O.prod_id = P.prod_id " +
@@ -745,7 +749,7 @@ namespace EasyProject.Dao
                                           "ON O.nurse_no = N.nurse_no " +
                                           "INNER JOIN DEPT D " +
                                           "ON N.dept_id = D.dept_id " +
-                                          "WHERE D.dept_name = :name";
+                                          "WHERE O.prod_out_from = :name";
 
                         cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
                         Console.WriteLine("ProductDao - GetProductOut() 부서명 파라미터: " + dept_dto.Dept_name);
@@ -763,6 +767,8 @@ namespace EasyProject.Dao
                             string prod_out_type = reader.GetString(6);
                             string dept_name = reader.GetString(7);
                             string nurse_name = reader.GetString(8);
+                            string prod_out_from = reader.GetString(9);
+                            string prod_out_to = reader.GetString(10);
 
                             ProductInOutModel dto = new ProductInOutModel()
                             {
@@ -774,7 +780,9 @@ namespace EasyProject.Dao
                                 Prod_out_date = prod_out_date,
                                 Prod_out_type = prod_out_type,
                                 Dept_name = dept_name,
-                                Nurse_name = nurse_name
+                                Nurse_name = nurse_name,
+                                Prod_out_from = prod_out_from,
+                                Prod_out_to = prod_out_to
                             };
 
                             list.Add(dto);
@@ -811,7 +819,7 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
 
-                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, O.prod_out_count, O.prod_out_date, O.prod_out_type, D.dept_name, N.nurse_name " +
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, O.prod_out_count, O.prod_out_date, O.prod_out_type, D.dept_name, N.nurse_name, O.prod_out_from, O.prod_out_to " +
                                           "FROM PRODUCT_OUT O " +
                                           "INNER JOIN PRODUCT P " +
                                           "ON O.prod_id = P.prod_id " +
@@ -822,11 +830,11 @@ namespace EasyProject.Dao
                                           "INNER JOIN DEPT D " +
                                           "ON N.dept_id = D.dept_id " +
                                           "WHERE " +
-                                            "((:search_combo = '제품코드' AND D.dept_name = :dept_name ) AND (P.prod_code LIKE '%'||:search_text||'%')) " +
+                                            "((:search_combo = '제품코드' AND O.prod_out_from = :dept_name ) AND (P.prod_code LIKE '%'||:search_text||'%')) " +
                                           "OR " +
-                                            "((:search_combo = '제품명' AND D.dept_name = :dept_name ) AND (P.prod_name LIKE '%'||:search_text||'%')) " +
+                                            "((:search_combo = '제품명' AND O.prod_out_from = :dept_name ) AND (P.prod_name LIKE '%'||:search_text||'%')) " +
                                           "OR " +
-                                            "((:search_combo = '품목/종류' AND D.dept_name = :dept_name ) AND (C.category_name LIKE '%'||:search_text||'%')) " +
+                                            "((:search_combo = '품목/종류' AND O.prod_out_from = :dept_name ) AND (C.category_name LIKE '%'||:search_text||'%')) " +
                                           "AND D.dept_status != '폐지'";
 
                         cmd.BindByName = true;
@@ -852,6 +860,8 @@ namespace EasyProject.Dao
                             string prod_out_type = reader.GetString(6);
                             string dept_name = reader.GetString(7);
                             string nurse_name = reader.GetString(8);
+                            string prod_out_from = reader.GetString(9);
+                            string prod_out_to = reader.GetString(10);
 
                             ProductInOutModel dto = new ProductInOutModel()
                             {
@@ -863,7 +873,9 @@ namespace EasyProject.Dao
                                 Prod_out_date = prod_out_date,
                                 Prod_out_type = prod_out_type,
                                 Dept_name = dept_name,
-                                Nurse_name = nurse_name
+                                Nurse_name = nurse_name,
+                                Prod_out_from = prod_out_from,
+                                Prod_out_to = prod_out_to
                             };
 
                             list.Add(dto);
@@ -1387,12 +1399,37 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
 
-                        cmd.CommandText = "INSERT INTO IMP_DEPT(IMP_DEPT_COUNT, DEPT_ID, PROD_ID) " +
-                                          "VALUES(:count, :dept_id, :pord_id) ";
+                        /*                        cmd.CommandText = "INSERT INTO IMP_DEPT(IMP_DEPT_COUNT, DEPT_ID, PROD_ID) " +
+                                                                  "VALUES(:count, :dept_id, :pord_id) ";*/
+
+                        cmd.CommandText = "MERGE INTO IMP_DEPT A " +
+                                          "USING dual " +
+                                          "ON(:prod_id IN(SELECT prod_id FROM IMP_DEPT WHERE dept_id = :dept_id AND prod_id = :prod_id) " +
+                                          "   AND :dept_id IN(SELECT dept_id FROM IMP_DEPT WHERE dept_id = :dept_id AND prod_id = :prod_id)) " +
+                                          "WHEN MATCHED THEN " +
+                                          "UPDATE SET A.imp_dept_count = A.imp_dept_count + :count " +
+                                          "WHERE A.dept_id = :dept_id AND A.prod_id = :prod_id " +
+                                          "WHEN NOT MATCHED THEN " +
+                                          "INSERT(A.imp_dept_count, A.dept_id, A.prod_id) " +
+                                          "VALUES(:count, :dept_id, :prod_id)";
+
+                        cmd.Parameters.Add(new OracleParameter("pord_id", prod_dto.Prod_id));
+                        cmd.Parameters.Add(new OracleParameter("dept_id", dept_dto.Dept_id));
+                        cmd.Parameters.Add(new OracleParameter("pord_id", prod_dto.Prod_id));
+
+                        cmd.Parameters.Add(new OracleParameter("dept_id", dept_dto.Dept_id));
+                        cmd.Parameters.Add(new OracleParameter("dept_id", dept_dto.Dept_id));
+                        cmd.Parameters.Add(new OracleParameter("pord_id", prod_dto.Prod_id));
+
+                        cmd.Parameters.Add(new OracleParameter("count", InputOutCount));
+
+                        cmd.Parameters.Add(new OracleParameter("dept_id", dept_dto.Dept_id));
+                        cmd.Parameters.Add(new OracleParameter("pord_id", prod_dto.Prod_id));
 
                         cmd.Parameters.Add(new OracleParameter("count", InputOutCount));
                         cmd.Parameters.Add(new OracleParameter("dept_id", dept_dto.Dept_id));
                         cmd.Parameters.Add(new OracleParameter("pord_id", prod_dto.Prod_id));
+                        
 
 
                         cmd.ExecuteNonQuery();
