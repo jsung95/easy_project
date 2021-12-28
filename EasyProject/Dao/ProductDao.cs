@@ -1254,6 +1254,8 @@ namespace EasyProject.Dao
                         if (SelectedOutType.Equals("이관"))
                         {
                             cmd.Parameters.Add(new OracleParameter("out_to", dept_dto.Dept_name)); //출고된 곳은 콤보박스에서 선택한 부서로 출고
+                            OutProduct_FromTo(InputOutCount, prod_dto, nurse_dto, SelectedOutType, dept_dto); // 이관 시에 이관받은 부서에서 입고도 함께 진행
+                            OutProduct_FromTo_IMP_DEPT(InputOutCount, prod_dto, dept_dto); // 이관되어서 해당부서는 입고받았기 때문에 imp_dept 테이블에도 추가
                         }
                         else if (SelectedOutType.Equals("사용")) //출고된 곳이 '사용'이라면
                         {
@@ -1323,6 +1325,89 @@ namespace EasyProject.Dao
 
         }//GetNurseDeptName()
 
+
+
+
+
+        public void OutProduct_FromTo(int? InputOutCount, ProductShowModel prod_dto, NurseModel nurse_dto, string SelectedOutType, DeptModel dept_dto)
+        {
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "INSERT INTO PRODUCT_IN(PROD_IN_COUNT, PROD_ID, NURSE_NO, DEPT_ID, PROD_IN_FROM, PROD_IN_TO, PROD_IN_TYPE) " +
+                                          "VALUES(:count, :prod_id, :nurse_no, :dept_id, :in_from, :in_to, :in_type) ";
+
+                        cmd.Parameters.Add(new OracleParameter("count", InputOutCount));
+                        cmd.Parameters.Add(new OracleParameter("prod_id", prod_dto.Prod_id));
+                        cmd.Parameters.Add(new OracleParameter("nurse_no", nurse_dto.Nurse_no));
+                        cmd.Parameters.Add(new OracleParameter("dept_id", nurse_dto.Dept_id));
+
+                        cmd.Parameters.Add(new OracleParameter("in_from", GetNurseDeptName(nurse_dto))); // 출고한 사원 소속 부서
+                        cmd.Parameters.Add(new OracleParameter("in_to", dept_dto.Dept_name)); // 입고받은 부서명
+                        cmd.Parameters.Add(new OracleParameter("in_type", SelectedOutType));
+
+                        cmd.ExecuteNonQuery();
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+        }//OutPorduct_FromTo()
+
+
+
+        public void OutProduct_FromTo_IMP_DEPT(int? InputOutCount, ProductShowModel prod_dto, DeptModel dept_dto)
+        {
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "INSERT INTO IMP_DEPT(IMP_DEPT_COUNT, DEPT_ID, PROD_ID) " +
+                                          "VALUES(:count, :dept_id, :pord_id) ";
+
+                        cmd.Parameters.Add(new OracleParameter("count", InputOutCount));
+                        cmd.Parameters.Add(new OracleParameter("dept_id", dept_dto.Dept_id));
+                        cmd.Parameters.Add(new OracleParameter("pord_id", prod_dto.Prod_id));
+
+
+                        cmd.ExecuteNonQuery();
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+            
+        }//OutProduct_FromTo_IMP_DEPT
 
 
 
