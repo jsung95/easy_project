@@ -125,5 +125,13 @@ namespace EasyProject
         {
         
         }
+
+        private void password_PwBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                loginBtn_Click(sender, e);
+            }
+        }
     }
 }
