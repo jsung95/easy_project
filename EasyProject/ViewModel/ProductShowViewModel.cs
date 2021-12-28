@@ -336,6 +336,10 @@ namespace EasyProject.ViewModel
             }
 
         }
+        //*****************************************************************************
+        //*****************************************************************************
+        //여기서부터 paginaion 추가한 코드 내용
+
         //private ObservableCollection<ProductShowModel> LstOfRecords;
         //private void LoadEmployee() //Read details
         //{
@@ -387,11 +391,6 @@ namespace EasyProject.ViewModel
                 SelectedProductList.Add(item);
             }
         }
-        //private void UpdateCollection(IEnumerable<ProductShowModel> enumerable)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         private void FirstPage(object obj)
         {
             UpdateCollection(SelectedProductList.Take(SelectedRecord));
@@ -406,8 +405,6 @@ namespace EasyProject.ViewModel
             CurrentPage++;
             UpdateEnableState();
         }
-
-
  
         private int _currentPage = 1;
 
