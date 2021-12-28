@@ -11,6 +11,9 @@ using System.Windows.Media;
 using System.Collections;
 using EasyProject.Model;
 using System.ComponentModel;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using EasyProject.ViewModel;
+
 namespace EasyProject.View.TabItemPage
 {
     /// <summary>
@@ -26,9 +29,9 @@ namespace EasyProject.View.TabItemPage
         private enum PagingMode
         { First = 1, Next = 2, Previous = 3, Last = 4, PageCountChange = 5 };
 
-        List<object> myLst = new List<object>();
+        //List<object> myLst = new List<object>();
 
-        public String userDept = null;
+        //public String userDept = null;
 
         public bool isComboBoxDropDownOpened = false;
         //public WindowStartupLocation WindowStartupLocation { get; }
@@ -44,20 +47,20 @@ namespace EasyProject.View.TabItemPage
             //cbNumberOfRecords.SelectedItem = 10;
             //WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
 
-            deptName_ComboBox1.SelectedIndex = (int)App.nurse_dto.Dept_id - 1;
+            //deptName_ComboBox1.SelectedIndex = (int)App.nurse_dto.Dept_id - 1;
             this.Loaded += MainWindow_Loaded;
 
-            userDept = (deptName_ComboBox1.SelectedValue as DeptModel).Dept_name;
+            //userDept = (deptName_ComboBox1.SelectedValue as DeptModel).Dept_name;
 
 
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            searchText_ComboBox.Items.Add("제품코드");
-            searchText_ComboBox.Items.Add("제품명");
-            searchText_ComboBox.Items.Add("품목/종류");
-            searchText_ComboBox.SelectedIndex = 0;
+            //searchText_ComboBox.Items.Add("제품코드");
+            //searchText_ComboBox.Items.Add("제품명");
+            //searchText_ComboBox.Items.Add("품목/종류");
+            //searchText_ComboBox.SelectedIndex = 0;
             
         }
        
@@ -130,20 +133,21 @@ namespace EasyProject.View.TabItemPage
             isComboBoxDropDownOpened = true;
 
             var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
-            var deptNameText = deptModelObject.Dept_name;
-            var userText = userDept;
-
+            var deptNameText = deptModelObject.Dept_name; // 콤보박스에서 선택한 부서명
+            var temp = Ioc.Default.GetService<ProductShowViewModel>();
+            var userDept = temp.Depts[(int)App.nurse_dto.Dept_id - 1];  // 현재 사용자 소속 부서 객체
+            var userDeptName = userDept.Dept_name;
             if (isComboBoxDropDownOpened)
             {
 
-                if (deptNameText.Equals(userText) || userText == null)
+                if (deptNameText.Equals(userDeptName) || userDeptName == null)
                 {
-                    Console.WriteLine(userText + "같은 부서일때");
+                    Console.WriteLine(userDeptName + "같은 부서일때");
                     buttonColumn.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    Console.WriteLine(userText + "다른 부서일때");
+                    Console.WriteLine(userDeptName + "다른 부서일때");
                     buttonColumn.Visibility = Visibility.Hidden;
                 }
             }

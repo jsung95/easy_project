@@ -77,7 +77,6 @@ namespace EasyProject.ViewModel
 
             Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts());
             SelectedDept_In = Depts[(int)App.nurse_dto.Dept_id - 1];
-            Console.WriteLine("SelectedDept_In: " + SelectedDept_In.Dept_name);
 
             selectedSearchType_Out = SearchTypeList[0];
             SelectedDept_Out = Depts[(int)App.nurse_dto.Dept_id - 1];

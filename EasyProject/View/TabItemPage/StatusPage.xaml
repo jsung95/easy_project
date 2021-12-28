@@ -9,10 +9,10 @@
       xmlns:vm ="clr-namespace:EasyProject.ViewModel" 
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" 
-     
       mc:Ignorable="d"
       DataContext="{Binding PSVM, Source={StaticResource Locator}}"
       Title="StatusPage">
+
     <Page.Resources>
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="LightGray"/>
@@ -36,7 +36,6 @@
             <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
             <Setter Property="Cursor" Value="Hand" />
         </Style>
-
     </Page.Resources>
     <Grid Background="White">
         <materialDesign:Card  Height="450" Width="1200" UniformCornerRadius="20" Background="White">
@@ -60,7 +59,7 @@
                         <ColumnDefinition Width="120*"/>
                     </Grid.ColumnDefinitions>
 
-                    <ComboBox x:Name="searchText_ComboBox" Height="30" Grid.Column="0" HorizontalContentAlignment="Left" 
+                    <ComboBox x:Name="searchText_ComboBox" Height="30" Grid.Column="0" HorizontalContentAlignment="Left" ItemsSource="{Binding Path=SearchTypeList}"
                        SelectedItem="{Binding SelectedSearchType}">
                         <ComboBox.Resources>
                             <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
@@ -114,11 +113,11 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
 
-                        <i:Interaction.Triggers>
+                        <!--<i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
                                 <i:InvokeCommandAction Command="{Binding Command}" />
                             </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                        </i:Interaction.Triggers>-->
                     </ComboBox>
                     <!--<Button x:Name="resetBtn" Grid.Column="3" Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White"
                             VerticalAlignment="Center" Height="24" Cursor="Hand"  RenderTransformOrigin="-4.883,0.826" Width="45" >

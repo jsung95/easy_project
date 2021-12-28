@@ -10,6 +10,7 @@ using LiveCharts.Wpf;
 using System.Linq;
 using Xamarin.Forms;
 using System.Windows.Data;
+using System.Windows;
 
 namespace EasyProject.ViewModel
 {
@@ -53,7 +54,17 @@ namespace EasyProject.ViewModel
         public ObservableCollection<CategoryModel> Categories { get; set; }
 
         //선택한 부서를 담을 프로퍼티
-        public DeptModel SelectedDept { get; set; }
+        private DeptModel selectedDept;
+        public DeptModel SelectedDept
+        {
+            get { return selectedDept; }
+            set
+            {
+                selectedDept = value;
+                OnPropertyChanged("SelectedDept");                             
+                showListbyDept();               
+            }
+        }
 
         //선택한 카테고리명을 담을 프로퍼티
         private CategoryModel selectedCategory;
@@ -66,17 +77,32 @@ namespace EasyProject.ViewModel
                 OnPropertyChanged("SelectedCategory");
             }
         }
-
+        //검색 유형 프로퍼티
+        public string[] SearchTypeList { get; set; }
         //선택한 검색 콤보박스를 담을 프로퍼티
         public string SelectedSearchType { get; set; }
+        // 선택한 검색 유형 프로퍼티
 
-        //입력한 검색내용을 담을 프로퍼티
+        // 버튼 컬럼 투명도
+        //private Visibility buttonColumnVisibility;
+        //public Visibility ButtonColumnVisibility
+        //{
+        //    get { return buttonColumnVisibility; }
+        //    set
+        //    {
+        //        buttonColumnVisibility = value;
+        //        Console.WriteLine("ButtonColumnVisibility set : " + buttonColumnVisibility);
+        //        OnPropertyChanged("ButtonColumnVisibility");
+        //    }
+        //}
 
         // 대시보드 프로퍼티
         public ChartValues<int> Values { get; set; }
         public SeriesCollection SeriesCollection { get; set; }
         public List<string> BarLabels { get; set; }       //string[]
         public Func<double, string> Formatter { get; set; }
+
+        //입력한 검색내용을 담을 프로퍼티
         private string textForSearch;
         public string TextForSearch 
         {
@@ -154,11 +180,15 @@ namespace EasyProject.ViewModel
 
         public ProductShowViewModel()
         {
+            SearchTypeList = new[] { "제품코드", "제품명", "품목/종류" };
+            SelectedSearchType = SearchTypeList[0];
+
             Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts());
+            SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1];
 
             Products = new ObservableCollection<ProductShowModel>(product_dao.GetProducts());
-
             Categories = new ObservableCollection<CategoryModel>(category_dao.GetCategories());
+
 
             //App.xaml.cs 에 로그인할 때 바인딩 된 로그인 정보 객체
             Nurse = App.nurse_dto;
@@ -297,6 +327,25 @@ namespace EasyProject.ViewModel
             SelectedOutDept = null;
             InputOutCount = null;
         }
+
+        private void showListbyDept()
+        {
+            Products = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
+            //if (SelectedDept == Depts[(int)App.nurse_dto.Dept_id - 1])
+            //{
+            //    Console.WriteLine("소속 부서");
+            //    buttonColumnVisibility = Visibility.Visible;
+            //    Console.WriteLine(buttonColumnVisibility);
+            //}
+            //else
+            //{
+            //    Console.WriteLine("다른 부서");
+            //    buttonColumnVisibility = Visibility.Hidden;
+            //    Console.WriteLine(buttonColumnVisibility);
+            //}
+        }
+
         public void DashboardPrint()                       //대시보드 출력(x축:제품code, y축:수량) 
         {
             SeriesCollection = new SeriesCollection();   //대시보드 틀
@@ -335,7 +384,7 @@ namespace EasyProject.ViewModel
                 Formatter = value => value.ToString("N");   //문자열 10진수 변환
             }
 
-        }
+        }//DashboardPrint
         //*****************************************************************************
         //*****************************************************************************
         //여기서부터 paginaion 추가한 코드 내용
