@@ -30,13 +30,13 @@
         </Grid>
         <Grid>
             <ComboBox x:Name="deptName_ComboBox1" HorizontalContentAlignment="Left" 
-                       ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept}"  HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Height="30" Width="259" Margin="0,1,247,418.6"  Background="Black" Foreground="Beige" TextBlock.FontSize="10">
+                       ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept}"  HorizontalAlignment="Right"  Height="30" Width="259"  TextBlock.FontSize="10" Margin="0,68,312,351.6">
                 <ComboBox.Resources>
                     <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
                 </ComboBox.Resources>
                 <ComboBox.RenderTransform>
                     <TransformGroup>
-                        <ScaleTransform ScaleY="-1"/>
+                        <ScaleTransform ScaleY="+1"/>
                         <SkewTransform/>
                         <RotateTransform/>
                         <TranslateTransform/>

@@ -95,10 +95,10 @@
                              Style="{DynamicResource WatermarkTextBox}" Tag ="검색명을 입력해주세요" FontSize="10" Height="25"  Grid.ColumnSpan="2" Margin="5" Cursor="Hand" />
                         </Grid>
                         <Grid Grid.Column="2">
-                            <Button  Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White" Height="25" 
+                            <!--<Button  Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White" Height="25" 
                              Command="{Binding NormalSearchCommand}" Margin="10" Cursor="Hand">
                                 <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
-                            </Button>
+                            </Button>-->
                         </Grid>
                     </Grid>
                     <Grid Grid.Column="2">
@@ -115,10 +115,10 @@
                              Style="{DynamicResource WatermarkTextBox}" Tag ="검색명을 입력해주세요" FontSize="10" Height="25"  Grid.ColumnSpan="2" Margin="5" Cursor="Hand" />
                         </Grid>
                         <Grid Grid.Column="2">
-                            <Button  Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White" Height="25" 
+                            <!--<Button  Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White" Height="25" 
                              Command="{Binding AdminSearchCommand}" Margin="10" Cursor="Hand">
                                 <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
-                            </Button>
+                            </Button>-->
                         </Grid>
                     </Grid>
                 </Grid>
