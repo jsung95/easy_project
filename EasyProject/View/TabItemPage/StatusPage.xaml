@@ -209,12 +209,12 @@
                                     </Button.Style>
                                 </Button>
                                 <TextBlock VerticalAlignment="Center">
-                                    <!--<TextBlock.Text>
-                                        <Multibinding StringFormat ="{{ } {0} of {1} ">
-                                            <Binding Path = "CurrentPage"/>
-                                            <Binding Path = "NumberOfPages"/>
-                                        </Multibinding>
-                                    </TextBlock.Text>-->
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} of {1}">
+                                            <Binding Path="CurrentPage" />
+                                            <Binding Path="NumberOfPages" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
                                 </TextBlock>
 
                                 <Button Height="23" ToolTip="Next page" HorizontalAlignment="Left"  Foreground="White" Background="#4472C4"
