@@ -153,6 +153,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Dao\CategoryDao.cs" />
+    <Compile Include="Dao\DashBoardDao.cs" />
     <Compile Include="Dao\CommonDBConn.cs" />
     <Compile Include="Dao\DeptDao.cs" />
     <Compile Include="Dao\ICategoryDao.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="Model\UserModel.cs" />
     <Compile Include="Util\PasswordHelper.cs" />
     <Compile Include="Util\SHA256Hash.cs" />
+    <Compile Include="ViewModel\DashBoardViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\OrderViewModel.cs" />
     <Compile Include="ViewModel\PasswordChangeViewModel.cs" />
