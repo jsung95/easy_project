@@ -11,6 +11,7 @@ using System.Linq;
 using Xamarin.Forms;
 using System.Windows.Data;
 using System.Windows;
+using System.ComponentModel;
 
 namespace EasyProject.ViewModel
 {
@@ -35,6 +36,7 @@ namespace EasyProject.ViewModel
                 OnPropertyChanged("Products");
             }
         }
+
 
         //부서 목록 콤보박스, 부서 리스트 출력
         public ObservableCollection<DeptModel> Depts { get; set; }
@@ -61,16 +63,16 @@ namespace EasyProject.ViewModel
             set
             {
                 selectedDept = value;
-                OnPropertyChanged("SelectedDept");                             
-                showListbyDept();               
+                OnPropertyChanged("SelectedDept");
+                showListbyDept();
             }
         }
 
         //선택한 카테고리명을 담을 프로퍼티
         private CategoryModel selectedCategory;
-        public CategoryModel SelectedCategory 
+        public CategoryModel SelectedCategory
         {
-            get { return selectedCategory; } 
+            get { return selectedCategory; }
             set
             {
                 selectedCategory = value;
@@ -104,19 +106,19 @@ namespace EasyProject.ViewModel
 
         //입력한 검색내용을 담을 프로퍼티
         private string textForSearch;
-        public string TextForSearch 
+        public string TextForSearch
         {
             get { return textForSearch; }
             set
             {
-                textForSearch = value; 
-                OnPropertyChanged("TextForSearch"); 
+                textForSearch = value;
+                OnPropertyChanged("TextForSearch");
             }
         }
 
         //선택한 1개의 제품 정보를 담을 객체
         private ProductShowModel selectedProduct;
-        public ProductShowModel SelectedProduct 
+        public ProductShowModel SelectedProduct
         {
             get { return selectedProduct; }
             set
@@ -125,15 +127,15 @@ namespace EasyProject.ViewModel
                 selectedProduct = value;
                 //OnPropertyChanged("SelectedProducts");
                 //Message.Send(SelectedProducts);
-/*                Console.WriteLine("==선택한 재고 정보==");
-                Console.WriteLine($"  Prod_code : {SelectedProduct.Prod_code}");
-                Console.WriteLine($"  Prod_name : {SelectedProduct.Prod_name}");
-                Console.WriteLine($"  Category_name : {SelectedProduct.Category_name}");
-                Console.WriteLine($"  Prod_price : {SelectedProduct.Prod_price}");
-                Console.WriteLine($"  Imp_dept_count : {SelectedProduct.Imp_dept_count}");
-                Console.WriteLine($"  Prod_expire : {SelectedProduct.Prod_expire}");
-                Console.WriteLine($"  Prod_id : {SelectedProduct.Prod_id}");
-                Console.WriteLine($"  Imp_dept_id : {SelectedProduct.Imp_dept_id}");*/
+                /*                Console.WriteLine("==선택한 재고 정보==");
+                                Console.WriteLine($"  Prod_code : {SelectedProduct.Prod_code}");
+                                Console.WriteLine($"  Prod_name : {SelectedProduct.Prod_name}");
+                                Console.WriteLine($"  Category_name : {SelectedProduct.Category_name}");
+                                Console.WriteLine($"  Prod_price : {SelectedProduct.Prod_price}");
+                                Console.WriteLine($"  Imp_dept_count : {SelectedProduct.Imp_dept_count}");
+                                Console.WriteLine($"  Prod_expire : {SelectedProduct.Prod_expire}");
+                                Console.WriteLine($"  Prod_id : {SelectedProduct.Prod_id}");
+                                Console.WriteLine($"  Imp_dept_id : {SelectedProduct.Imp_dept_id}");*/
                 SelectedProductList.Add(selectedProduct);
                 //Console.WriteLine(SelectedProductList[0].Prod_code);
             }
@@ -141,7 +143,7 @@ namespace EasyProject.ViewModel
         public List<ProductShowModel> SelectedProductList { get; set; } // SelectedProduct를 DataGrid에서 사용하기 위한 List
         // 재고 출고 - 선택한 출고 유형 콤보박스를 담을 값
         private string selectedOutType;
-        public string SelectedOutType 
+        public string SelectedOutType
         {
             get { return selectedOutType; }
             set
@@ -153,7 +155,7 @@ namespace EasyProject.ViewModel
 
         // 재고 출고 - 선택한 출고(이관) 부서를 담을 프로퍼티
         private DeptModel selectedOutDept;
-        public DeptModel SelectedOutDept 
+        public DeptModel SelectedOutDept
         {
             get { return selectedOutDept; }
             set
@@ -165,7 +167,7 @@ namespace EasyProject.ViewModel
 
         // 재고 출고 - 입력한 출고 수량을 담을 프로퍼티
         private int? inputOutCount;
-        public int? InputOutCount 
+        public int? InputOutCount
         {
             get { return inputOutCount; }
             set
@@ -177,6 +179,7 @@ namespace EasyProject.ViewModel
 
         // 발주 신청 페이지 바인딩
         public UserModel SelectedUser { get; }
+        public ICollectionView EmployeeCollection { get; private set; }
 
         public ProductShowViewModel()
         {
@@ -196,7 +199,67 @@ namespace EasyProject.ViewModel
             DashboardPrint();  //대시보드 프린트
 
             SelectedUser = user_dao.GetUserInfoWithDept(Nurse);
+
+            //EmployeeCollection = CollectionViewSource.GetDefaultView(LstEmPloyeeDetail);
+            //employeeEntities = new EmployeeEntities();
+            //employeeContext = new EmployeeContext();
+
+            LoadEmployee();
+            //UpdateRecordCount();
+            //EmployeeCollection.Filter = FilterByName;
         }//Constructor
+
+        private ActionCommand nextCommand;
+        public ICommand NextCommand
+        {
+            get
+            {
+                if (nextCommand == null)
+                {
+                    nextCommand = new ActionCommand(NextPage);
+                }
+                return nextCommand;
+            }//get
+        }
+
+        private ActionCommand firstCommand;
+        public ICommand FirstCommand
+        {
+            get
+            {
+                if (firstCommand == null)
+                {
+                    firstCommand = new ActionCommand(FirstPage);
+                }
+                return firstCommand;
+            }//get
+        }
+
+        private ActionCommand lastCommand;
+        public ICommand LastCommand
+        {
+            get
+            {
+                if (lastCommand == null)
+                {
+                    lastCommand = new ActionCommand(LastPage);
+                }
+                return lastCommand;
+            }//get
+        }
+
+        private ActionCommand previouCommand;
+        public ICommand PreviousCommand
+        {
+            get
+            {
+                if (previouCommand == null)
+                {
+                    previouCommand = new ActionCommand(PreviousPage);
+                }
+                return previouCommand;
+            }//get
+        }
 
 
         private ActionCommand command;
@@ -215,6 +278,12 @@ namespace EasyProject.ViewModel
         public void GetProductsByDept()
         {
             Products = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
+            LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
+            UpdateCollection(LstOfRecords.Take(SelectedRecord));
+            UpdateRecordCount();
+
             ComboboxChanged = true;
         }
 
@@ -256,7 +325,7 @@ namespace EasyProject.ViewModel
         public void SearchProducts()
         {
             Products = new ObservableCollection<ProductShowModel>(product_dao.SearchProducts(SelectedDept, SelectedSearchType, TextForSearch));
-            
+
         }
 
 
@@ -276,7 +345,7 @@ namespace EasyProject.ViewModel
         public void OutProduct()
         {
             product_dao.OutProduct(InputOutCount, SelectedProduct, Nurse, SelectedOutType, SelectedOutDept);
-            
+
             product_dao.ChangeProductInfo_IMP_DEPT_ForOut(InputOutCount, SelectedProduct);
             product_dao.ChangeProductInfo_ForOut(InputOutCount, SelectedProduct);
 
@@ -353,7 +422,7 @@ namespace EasyProject.ViewModel
 
             ChartValues<int> name = new ChartValues<int> { };            //y축들어갈 임시 값
 
-            if(product_dao.Prodcode_Info().Count != 0)
+            if (product_dao.Prodcode_Info().Count != 0)
             {
                 List<ProductShowModel> list1 = product_dao.Prodtotal_Info();      //y축출력
                                                                                   //foreach (var item in list1)
@@ -389,32 +458,23 @@ namespace EasyProject.ViewModel
         //*****************************************************************************
         //여기서부터 paginaion 추가한 코드 내용
 
-        //private ObservableCollection<ProductShowModel> LstOfRecords;
-        //private void LoadEmployee() //Read details
-        //{
-        //    foreach (var record in ReadCSV(@"~~.csv"))
-        //    {
-        //        var data = record.Split(',');
-        //        var empDetails = new EmployeeDetail
-        //        {
-        //            ID = data[0],
-        //            Name = data[1],
+        private ObservableCollection<ProductShowModel> LstOfRecords;
+        private void LoadEmployee() //Read details
+        {
 
-        //            ,,,,,
-        //            이런식으로 
-        //        };
-        //        LstOfRecords.Add(empDetails);
-        //    }
-        //    UpdateCollection(LstOfRecords.Take(SelectedRecord));
-        //    UpdateRecordCount();
-        //}
+            //LstOfRecords.Add(empDetails);
+            LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
+            UpdateCollection(LstOfRecords.Take(SelectedRecord));
+            UpdateRecordCount();
+        }
         int RecordStartFrom = 0;
         private void PreviousPage(object obj)
         {
             CurrentPage--;
-            RecordStartFrom = SelectedProductList.Count - SelectedRecord * (NumberOfPages * (CurrentPage - 1));
-            var recordsToShow = SelectedProductList.Skip(RecordStartFrom).Take(SelectedRecord);
-            UpdateCollection(recordsToShow);
+            RecordStartFrom = LstOfRecords.Count - SelectedRecord * (NumberOfPages - (CurrentPage - 1));
+            var recorsToShow = LstOfRecords.Skip(RecordStartFrom).Take(SelectedRecord);
+            UpdateCollection(recorsToShow);
             UpdateEnableState();
 
         }
@@ -428,39 +488,39 @@ namespace EasyProject.ViewModel
             //20*(2-1)=20
             //skip = 20
             var recordsToskip = SelectedRecord * (NumberOfPages - 1);
-            UpdateCollection(SelectedProductList.Take(SelectedRecord));
-            CurrentPage = 1;
-            UpdateEnableState();
-        }
-        private void UpdateCollection(IEnumerable<ProductShowModel> enumerable)
-        {
-            SelectedProductList.Clear();
-            foreach (var item in enumerable)
+            UpdateCollection(LstOfRecords.Skip(recordsToskip));
+            CurrentPage = LstOfRecords.Count / SelectedRecord ;
+            if(LstOfRecords.Count % SelectedRecord > 0)
             {
-                SelectedProductList.Add(item);
+                CurrentPage++;
             }
+            //MessageBox.Show(CurrentPage + "페이지");
+            UpdateEnableState();
         }
         private void FirstPage(object obj)
         {
-            UpdateCollection(SelectedProductList.Take(SelectedRecord));
+            UpdateCollection(LstOfRecords.Take(SelectedRecord));
             CurrentPage = 1;
             UpdateEnableState();
         }
         private void NextPage(object obj)
         {
             RecordStartFrom = CurrentPage * SelectedRecord;
-            var recordsToShow = SelectedProductList.Skip(RecordStartFrom).Take(SelectedRecord);
+            var recordsToShow = LstOfRecords.Skip(RecordStartFrom).Take(SelectedRecord);
             UpdateCollection(recordsToShow);
             CurrentPage++;
             UpdateEnableState();
         }
- 
-        private int _currentPage = 1;
 
-        public ICommand FirstCommand { get; set; }
-        public ICommand PreviousCommand { get; set; }
-        public ICommand NextCommand { get; set; }
-        public ICommand LastCommand { get; set; }
+        private void UpdateCollection(IEnumerable<ProductShowModel> enumerable)
+        {
+            Products.Clear();
+            foreach (var item in enumerable)
+            {
+                Products.Add(item);
+            }
+        }
+        private int _currentPage = 1;
 
         public int CurrentPage
         {
@@ -553,24 +613,13 @@ namespace EasyProject.ViewModel
         }
         private void UpdateRecordCount()
         {
-            NumberOfPages = (int)Math.Ceiling((double)SelectedProductList.Count / SelectedRecord);
+            NumberOfPages = (int)Math.Ceiling((double)LstOfRecords.Count / SelectedRecord);
             NumberOfPages = NumberOfPages == 0 ? 1 : NumberOfPages;
-            UpdateCollection(SelectedProductList.Take(SelectedRecord));
+            UpdateCollection(LstOfRecords.Take(SelectedRecord));
             CurrentPage = 1;
         }
 
-        //public EmployeeViewModel()
-        //{
-        //   // EmployeeCollection = CollectionViewSource.GetDefaultView(SelectedProductList);
-        //    //employeeEntities = new EmployeeEntities();
-        //    //employeeContext = new EmployeeContext();
-        //    NextCommand = new Command((s) => true, NextPage);
-        //    FirstCommand = new Command((s) => true, FirstPage);
-        //    LastCommand = new Command((s) => true, LastPage);
-        //    PreviousCommand = new Command((s) => true, PreviousPage);
-        //    //LoadEmployee();
-        //    //EmployeeCollection.Filter = FilterByName;
-        //}
+
 
 
     }//class
