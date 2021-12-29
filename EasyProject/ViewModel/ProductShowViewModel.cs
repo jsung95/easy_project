@@ -427,7 +427,7 @@ namespace EasyProject.ViewModel
                 {
                     //name.Add((int)list1[i].Prod_total);
                 }
-
+                
 
                 Values = new ChartValues<int> { };
                 SeriesCollection.Add(new ColumnSeries
