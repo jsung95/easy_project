@@ -25,7 +25,7 @@ namespace EasyProject.View.TabItemPage
         {
             InitializeComponent();
 
-            deptName_ComboBox1.SelectedIndex = (int)App.nurse_dto.Dept_id - 1;
+            //deptName_ComboBox1.SelectedIndex = (int)App.nurse_dto.Dept_id - 1;
 
 
 
