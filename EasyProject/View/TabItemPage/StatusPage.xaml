@@ -180,28 +180,72 @@
                                 </ComboBox>
                                 <Button Height="23" HorizontalAlignment="Right"  Command="{Binding FirstCommand}"
                             Name="btnFirst" VerticalAlignment="Bottom" Width="40" Foreground="White" Background="#4472C4"
-                            Content="&lt;&lt;" IsEnabled="{Binding IsFirstEnabled}" ToolTip="First page" Opacity="0.75" Margin="5" />
+                            Content="&lt;&lt;" ToolTip="First page" Click="btnFirst_Click" Opacity="0.75" Margin="5">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="IsEnabled" Value="false"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsFirstEnabled}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="True"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
 
                                 <Button Height="23" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
-                                    Name="btnPrev" Width="40" ToolTip="Previous page" IsEnabled="{Binding IsPreviousEnabled}"
-		                            Margin="5" Foreground="White" Background="#4472C4" Command="{Binding PreviousCommand}"
-                                    Opacity="0.75" Content="&lt;" Cursor="Hand"/>
+                                    Name="btnPrev" Width="40" ToolTip="Previous page" 
+		                            Click="btnPrev_Click" Margin="5" Foreground="White" Background="#4472C4" Command="{Binding PreviousCommand}"
+                                    Opacity="0.75" Content="&lt;" Cursor="Hand">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="IsEnabled" Value="false"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsPreviousEnabled}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="True"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
                                 <TextBlock VerticalAlignment="Center">
-                                    <!--<TextBlock.Text>
-                                        <Multibinding StringFormat ="{{ } {0} of {1} ">
-                                            <Binding Path = "CurrentPage"/>
-                                            <Binding Path = "NumberOfPages"/>
-                                        </Multibinding>
-                                    </TextBlock.Text>-->
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} of {1}">
+                                            <Binding Path="CurrentPage" />
+                                            <Binding Path="NumberOfPages" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
                                 </TextBlock>
 
-                                <Button Height="23" ToolTip="Next page" IsEnabled="{Binding IsNextEnabled}" HorizontalAlignment="Left"  Foreground="White" Background="#4472C4"
+                                <Button Height="23" ToolTip="Next page" HorizontalAlignment="Left"  Foreground="White" Background="#4472C4"
                             Name="btnNext" VerticalAlignment="Bottom" Width="40" Margin="5" Command="{Binding NextCommand}"
-                            Content="&gt;" Opacity="0.75" Cursor="Hand"/>
+                            Content="&gt;" Opacity="0.75" Cursor="Hand">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="IsEnabled" Value="false"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsNextEnabled}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="True"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
 
-                                <Button Height="23" ToolTip="Last page" IsEnabled="{Binding IsLastEnabled}" HorizontalAlignment="Left"   Foreground="White" Background="#4472C4"
+                                <Button Height="23" ToolTip="Last page" HorizontalAlignment="Left"   Foreground="White" Background="#4472C4"
                             VerticalAlignment="Bottom" Width="40" Name="btnLast" Margin="5" Command="{Binding LastCommand}"
-                            Opacity="0.75" Content="&gt;&gt;" Cursor="Hand"/>
+                            Click="btnLast_Click" Opacity="0.75" Content="&gt;&gt;" Cursor="Hand">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="IsEnabled" Value="false"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsLastEnabled}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="True"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
 
                                 
                             </StackPanel>
