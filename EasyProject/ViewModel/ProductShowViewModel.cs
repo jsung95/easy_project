@@ -489,11 +489,7 @@ namespace EasyProject.ViewModel
             //skip = 20
             var recordsToskip = SelectedRecord * (NumberOfPages - 1);
             UpdateCollection(LstOfRecords.Skip(recordsToskip));
-            CurrentPage = LstOfRecords.Count / SelectedRecord;
-            if (LstOfRecords.Count % SelectedRecord > 0)
-            {
-                CurrentPage++;
-            }
+            CurrentPage = NumberOfPages;
             //MessageBox.Show(CurrentPage + "페이지");
             UpdateEnableState();
         }
