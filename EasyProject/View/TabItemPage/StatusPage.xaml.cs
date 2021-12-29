@@ -61,7 +61,23 @@ namespace EasyProject.View.TabItemPage
             //searchText_ComboBox.Items.Add("제품명");
             //searchText_ComboBox.Items.Add("품목/종류");
             //searchText_ComboBox.SelectedIndex = 0;
-            
+            var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
+            var deptNameText = deptModelObject.Dept_name; // 콤보박스에서 선택한 부서명
+            var temp = Ioc.Default.GetService<ProductShowViewModel>();
+            var userDept = temp.Depts[(int)App.nurse_dto.Dept_id - 1];  // 현재 사용자 소속 부서 객체
+            var userDeptName = userDept.Dept_name;
+
+            if (deptNameText.Equals(userDeptName) || userDeptName == null)
+            {
+                Console.WriteLine(userDeptName + "같은 부서일때");
+                buttonColumn.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Console.WriteLine(userDeptName + "다른 부서일때");
+                buttonColumn.Visibility = Visibility.Hidden;
+            }
+
         }
        
         private void RowButton_Click(object sender, RoutedEventArgs e)
@@ -131,7 +147,7 @@ namespace EasyProject.View.TabItemPage
         private void OnDropDownOpened(object sender, EventArgs e)
         {
             isComboBoxDropDownOpened = true;
-
+            
             var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
             var deptNameText = deptModelObject.Dept_name; // 콤보박스에서 선택한 부서명
             var temp = Ioc.Default.GetService<ProductShowViewModel>();
