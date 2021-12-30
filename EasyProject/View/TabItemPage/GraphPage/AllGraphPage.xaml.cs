@@ -13,15 +13,16 @@ using EasyProject.Model;
 using System.ComponentModel;
 
 
-namespace EasyProject.View.TabItemPage
+namespace EasyProject.View.TabItemPage.GraphPage
+
 {
     /// <summary>
     /// GraphPage.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class GraphPage : Page
+    public partial class AllGraphPage : Page
     {
         public String userDept = null;
-        public GraphPage()
+        public AllGraphPage()
         {
             InitializeComponent();
 

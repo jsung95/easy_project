@@ -208,8 +208,14 @@
     <Compile Include="View\TabItemPage\FileUploadPageFunction.xaml.cs">
       <DependentUpon>FileUploadPageFunction.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TabItemPage\GraphPage.xaml.cs">
-      <DependentUpon>GraphPage.xaml</DependentUpon>
+    <Compile Include="View\TabItemPage\GraphPage\ChoiceGraphPage.xaml.cs">
+      <DependentUpon>ChoiceGraphPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TabItemPage\GraphPage\AllGraphPage.xaml.cs">
+      <DependentUpon>AllGraphPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TabItemPage\GraphTabPage.xaml.cs">
+      <DependentUpon>GraphTabPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TabItemPage\IncomingOutgoingList1Page.xaml.cs">
       <DependentUpon>IncomingOutgoingList1Page.xaml</DependentUpon>
@@ -271,7 +277,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\TabItemPage\GraphPage.xaml">
+    <Page Include="View\TabItemPage\GraphPage\ChoiceGraphPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabItemPage\GraphPage\AllGraphPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabItemPage\GraphTabPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -396,6 +410,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.3.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.3.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

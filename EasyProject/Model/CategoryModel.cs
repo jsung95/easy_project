@@ -9,7 +9,17 @@ namespace EasyProject.Model
     public class CategoryModel
     {
         public int? Category_id { get; set; }
-        public string Category_name { get; set;}
+        private string category_name;
+        public string Category_name
+        {
+            get { return category_name; }
+            set
+            {
+                category_name = value;
+                //OnPropertyChanged("category_name");
+            }
+
+        }
 
     }//class
 

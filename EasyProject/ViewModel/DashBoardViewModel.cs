@@ -18,6 +18,7 @@ namespace EasyProject.ViewModel
         DeptDao dept_dao = new DeptDao();
         ProductDao product_dao = new ProductDao();
         DashBoardDao dashboard_dao = new DashBoardDao();
+        CategoryDao category_dao = new CategoryDao();
 
         //부서 목록 콤보박스, 부서 대시보드 출력
         public ObservableCollection<DeptModel> Depts { get; set; }
@@ -31,6 +32,20 @@ namespace EasyProject.ViewModel
             {
                 selectedDept = value;
                 DashboardPrint(selectedDept);
+            }
+        }
+
+        //카테고리 목록 콤보박스, 카테고리 대시보드 출력
+        public ObservableCollection<CategoryModel> category { get; set; }
+        //선택할 카테고리를 담을 프로퍼티
+        private CategoryModel selectedCategory;
+        public CategoryModel SelectedCategory
+        {
+            get { return selectedCategory; }
+            set
+            {
+                selectedCategory = value;
+                //DashboardPrint(SelectedCategory);
             }
         }
 
@@ -82,9 +97,12 @@ namespace EasyProject.ViewModel
 
         public DashBoardViewModel()
         {
-            
+
             Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts());
             SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1];
+            category = new ObservableCollection<CategoryModel>(category_dao.GetCategories());
+            //SelectedCategory = category[(int)App.category_dto.Category_id - 1];
+            //DashboardPrint(selectedDept);
         }
         //public void DashboardPrint()                       //대시보드 출력(x축:제품code, y축:수량) 
         //{
@@ -158,7 +176,7 @@ namespace EasyProject.ViewModel
             //}
             Values = new ChartValues<int> { };
 
-            SeriesCollection1.Add(new ColumnSeries
+            SeriesCollection1.Add(new RowSeries
             {
                 Title = "재고현황",   //+ i
                 Values = name,

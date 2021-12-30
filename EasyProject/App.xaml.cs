@@ -18,7 +18,7 @@ namespace EasyProject
     public partial class App : Application
     {
         public static NurseModel nurse_dto = null;
-
+        public static CategoryModel category_dto = null;
         public App()
         {
             Ioc.Default.ConfigureServices(new ServiceCollection()
