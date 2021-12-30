@@ -10,6 +10,8 @@ using Excel = Microsoft.Office.Interop.Excel;
 using System.Linq;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using System.IO;
+using System.Text;
 
 namespace EasyProject.ViewModel
 {
@@ -122,15 +124,42 @@ namespace EasyProject.ViewModel
             {
                 if (listCommand == null)
                 {
-                    listCommand = new ActionCommand(ExcelReader);
+                    listCommand = new ActionCommand(FileReader);
                 }
                 return listCommand;
             }//get
 
         }//ListCommand
+        private void FileReader()
+        {
+            string fileExtension = Path.GetExtension(openFileDialog);
+            
+            if (fileExtension == ".csv")
+            {
+                CsvReader();
+            }
+            else
+            {
+                ExcelReader();
+            }
+        }
+
+        //csv로 입력받은 여러개의 제품들에 대한 처리 
+        private void CsvReader()
+        {
+            Console.WriteLine(Path.GetExtension(openFileDialog));
+
+            StreamReader sr = new StreamReader(openFileDialog, Encoding.GetEncoding("euc-kr"));
+            while (!sr.EndOfStream)
+            {
+                string s = sr.ReadLine();
+                string[] temp = s.Split(',');        // Split() 메서드를 이용하여 ',' 구분하여 잘라냄
+                Console.WriteLine("{0},{1},{2}", temp[0], temp[1], temp[2]);
+            }
+
+        }
 
         //excel로 입력받은 여러개의 제품들에 대한 처리 
-
         private void ExcelReader()
         {
             Excel.Application xlApp;
@@ -206,7 +235,10 @@ namespace EasyProject.ViewModel
             {
                 Console.WriteLine(ex.Message);
             }
+
+
         }
+        
 
         private ProductShowModel SetProductObject(ref ProductShowModel Product, ref Excel.Range range, int rCnt, int cCnt)
         {

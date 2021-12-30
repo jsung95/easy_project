@@ -458,8 +458,10 @@ namespace EasyProject.ViewModel
         //*****************************************************************************
         //여기서부터 paginaion 추가한 코드 내용
 
+        
+
         private ObservableCollection<ProductShowModel> LstOfRecords;
-        private void LoadEmployee() //Read details
+        public void LoadEmployee() //Read details
         {
 
             //LstOfRecords.Add(empDetails);
