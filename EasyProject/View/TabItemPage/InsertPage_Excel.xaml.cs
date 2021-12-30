@@ -70,7 +70,7 @@ namespace EasyProject.View.TabItemPage
         private void fileUploadBtn_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "엑셀 파일 (*.xls)|*.xls|엑셀 파일 (*.xlsx)|*.xlsx";
+            openFileDialog.Filter = "csv 파일 (*.csv)|*.csv|엑셀 파일 (*.xls)|*.xls|엑셀 파일 (*.xlsx)|*.xlsx";
 
             if (openFileDialog.ShowDialog() == true)
             {

@@ -26,7 +26,7 @@ namespace EasyProject.ViewModel
         public NurseModel Nurse { get; set; }
 
         //재고 목록 조회해서 담을 옵저버블컬렉션 리스트 프로퍼티
-        private ObservableCollection<ProductShowModel> products = new ObservableCollection<ProductShowModel>();
+        private ObservableCollection<ProductShowModel> products;
         public ObservableCollection<ProductShowModel> Products
         {
             get { return products; }
@@ -183,13 +183,14 @@ namespace EasyProject.ViewModel
 
         public ProductShowViewModel()
         {
+            Products = new ObservableCollection<ProductShowModel>();
             SearchTypeList = new[] { "제품코드", "제품명", "품목/종류" };
             SelectedSearchType = SearchTypeList[0];
 
             Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts());
             SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1];
 
-            //Products = new ObservableCollection<ProductShowModel>(product_dao.GetProducts());
+            
             Categories = new ObservableCollection<CategoryModel>(category_dao.GetCategories());
 
 
@@ -306,6 +307,10 @@ namespace EasyProject.ViewModel
             product_dao.ChangeProductInfo(SelectedProduct);
             product_dao.ChangeProductInfo_IMP_DEPT(SelectedProduct);
             Products = new ObservableCollection<ProductShowModel>(product_dao.GetProducts());
+
+            //LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.SearchProducts(SelectedDept, SelectedSearchType, TextForSearch));
+            //UpdateCollection(LstOfRecords.Take(SelectedRecord));
+            //UpdateRecordCount();
         }
 
 
@@ -324,8 +329,9 @@ namespace EasyProject.ViewModel
 
         public void SearchProducts()
         {
-            Products = new ObservableCollection<ProductShowModel>(product_dao.SearchProducts(SelectedDept, SelectedSearchType, TextForSearch));
-
+            LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.SearchProducts(SelectedDept, SelectedSearchType, TextForSearch));
+            UpdateCollection(LstOfRecords.Take(SelectedRecord));
+            UpdateRecordCount();
         }
 
 
@@ -458,8 +464,10 @@ namespace EasyProject.ViewModel
         //*****************************************************************************
         //여기서부터 paginaion 추가한 코드 내용
 
+        
+
         private ObservableCollection<ProductShowModel> LstOfRecords;
-        private void LoadEmployee() //Read details
+        public void LoadEmployee() //Read details
         {
 
             //LstOfRecords.Add(empDetails);

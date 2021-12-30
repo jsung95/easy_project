@@ -54,7 +54,6 @@ namespace EasyProject.View.TabItemPage
 
 
         }
-
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             //searchText_ComboBox.Items.Add("제품코드");
@@ -77,6 +76,8 @@ namespace EasyProject.View.TabItemPage
                 Console.WriteLine(userDeptName + "다른 부서일때");
                 buttonColumn.Visibility = Visibility.Hidden;
             }
+
+            ((ProductShowViewModel)(this.DataContext)).LoadEmployee();
 
         }
        
