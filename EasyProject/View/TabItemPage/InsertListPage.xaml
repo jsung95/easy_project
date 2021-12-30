@@ -55,7 +55,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Binding="{Binding Prod_expire}"  Header="유통기한" Width="2.5*"  IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Prod_expire, StringFormat='yyyy-MM-dd'}"  Header="유통기한" Width="2.5*"  IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding Prod_in_count, StringFormat='{}{0:#,0} 개'}"  Header="수량" Width="*"  IsReadOnly="True">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
