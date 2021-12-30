@@ -13,6 +13,10 @@ namespace EasyProject.Model
         public int? Dept_id { get; set; }
         public int? Prod_id { get; set; }
 
+
+        //table에는 없지만 편의상(그래프 그릴려고) 만듬 
+        public string dept_name { get; set; }
+
     }//class
 
 }//namespace

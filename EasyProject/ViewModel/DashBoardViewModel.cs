@@ -64,8 +64,9 @@ namespace EasyProject.ViewModel
         //    }
         //}
         private SeriesCollection seriesCollection1;
+        private SeriesCollection seriesCollection2;
 
-        public SeriesCollection SeriesCollection1
+        public SeriesCollection SeriesCollection1               //그래프 큰 틀 만드는거
         {
             get { return seriesCollection1; }
             set
@@ -74,8 +75,22 @@ namespace EasyProject.ViewModel
                 OnPropertyChanged("SeriesCollection1");
             }
         }
+
+        public SeriesCollection SeriesCollection2               //그래프 큰 틀 만드는거
+        {
+            get { return seriesCollection2; }
+            set
+            {
+                seriesCollection2 = value;
+                OnPropertyChanged("SeriesCollection2");
+            }
+        }
+
         public List<string> BarLabels1 { get; set; }       //string[]
         public Func<double, string> Formatter1 { get; set; }
+
+        public List<string> BarLabels2 { get; set; }       //string[]
+        public Func<double, string> Formatter2 { get; set; }
 
         //private ActionCommand command;
         //public ICommand Command
@@ -98,8 +113,8 @@ namespace EasyProject.ViewModel
         public DashBoardViewModel()
         {
 
-            Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts());
-            SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1];
+            Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts());   //dept_od를 가져온다
+            SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1];  // 
             category = new ObservableCollection<CategoryModel>(category_dao.GetCategories());
             //SelectedCategory = category[(int)App.category_dto.Category_id - 1];
             //DashboardPrint(selectedDept);
