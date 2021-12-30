@@ -325,8 +325,9 @@ namespace EasyProject.ViewModel
 
         public void SearchProducts()
         {
-            Products = new ObservableCollection<ProductShowModel>(product_dao.SearchProducts(SelectedDept, SelectedSearchType, TextForSearch));
-
+            LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.SearchProducts(SelectedDept, SelectedSearchType, TextForSearch));
+            UpdateCollection(LstOfRecords.Take(SelectedRecord));
+            UpdateRecordCount();
         }
 
 
