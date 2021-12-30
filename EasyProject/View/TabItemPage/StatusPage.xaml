@@ -140,11 +140,23 @@
                             IsReadOnly="True" ColumnWidth="*"
                             ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" SelectionMode="Extended" SelectionUnit="FullRow" Cursor="Hand">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="1.5*" CanUserSort="false" IsReadOnly="True" />
+                                <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="1.5*" CanUserSort="false"  IsReadOnly="True" />
                                 <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="1.5*" CanUserSort="false" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="1.5*" CanUserSort="false" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}" CanUserSort="true" Header="제품가격" Width="1*"  IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Imp_dept_count, StringFormat='{}{0:#,0} 개'}" CanUserSort="true" Header="수량" Width="1*" IsReadOnly="True" />
+                                <DataGridTextColumn Binding="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}" CanUserSort="true" Header="제품가격" Width="1*"  IsReadOnly="True">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Imp_dept_count, StringFormat='{}{0:#,0} 개'}" CanUserSort="true" Header="수량" Width="1*" IsReadOnly="True">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding Prod_expire}"  Header="유통기한" Width="3*" CanUserSort="true" IsReadOnly="True"/>
 
                                 <DataGridTemplateColumn x:Name="buttonColumn" Header="신청" Width="*" IsReadOnly="True" Visibility="Visible">
