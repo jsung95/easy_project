@@ -26,7 +26,7 @@ namespace EasyProject.ViewModel
         public NurseModel Nurse { get; set; }
 
         //재고 목록 조회해서 담을 옵저버블컬렉션 리스트 프로퍼티
-        private ObservableCollection<ProductShowModel> products;
+        private ObservableCollection<ProductShowModel> products = new ObservableCollection<ProductShowModel>();
         public ObservableCollection<ProductShowModel> Products
         {
             get { return products; }
@@ -189,7 +189,7 @@ namespace EasyProject.ViewModel
             Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts());
             SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1];
 
-            Products = new ObservableCollection<ProductShowModel>(product_dao.GetProducts());
+            //Products = new ObservableCollection<ProductShowModel>(product_dao.GetProducts());
             Categories = new ObservableCollection<CategoryModel>(category_dao.GetCategories());
 
 
@@ -204,7 +204,7 @@ namespace EasyProject.ViewModel
             //employeeEntities = new EmployeeEntities();
             //employeeContext = new EmployeeContext();
 
-            LoadEmployee();
+            //LoadEmployee();
             //UpdateRecordCount();
             //EmployeeCollection.Filter = FilterByName;
         }//Constructor
@@ -262,7 +262,7 @@ namespace EasyProject.ViewModel
         }
 
 
-        private ActionCommand command;
+        /*private ActionCommand command;
         public ICommand Command
         {
             get
@@ -285,7 +285,7 @@ namespace EasyProject.ViewModel
             UpdateRecordCount();
 
             ComboboxChanged = true;
-        }
+        }*/
 
 
         private ActionCommand changeProductCommand;
@@ -399,8 +399,8 @@ namespace EasyProject.ViewModel
 
         private void showListbyDept()
         {
-            Products = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
-
+            //Products = new ObservableCollection<ProductShowModel>();
+            LoadEmployee();
             //if (SelectedDept == Depts[(int)App.nurse_dto.Dept_id - 1])
             //{
             //    Console.WriteLine("소속 부서");
@@ -510,7 +510,11 @@ namespace EasyProject.ViewModel
 
         private void UpdateCollection(IEnumerable<ProductShowModel> enumerable)
         {
-            Products.Clear();
+            if(Products != null)
+            {
+                Products.Clear();
+            }
+            
             foreach (var item in enumerable)
             {
                 Products.Add(item);
