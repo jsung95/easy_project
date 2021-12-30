@@ -157,7 +157,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding Prod_expire}"  Header="유통기한" Width="3*" CanUserSort="true" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_expire, StringFormat='yyyy-MM-dd'}"  Header="유통기한" Width="3*" CanUserSort="true" IsReadOnly="True"/>
 
                                 <DataGridTemplateColumn x:Name="buttonColumn" Header="신청" Width="*" IsReadOnly="True" Visibility="Visible">
 

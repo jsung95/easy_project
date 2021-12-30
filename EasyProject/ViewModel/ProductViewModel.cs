@@ -147,7 +147,9 @@ namespace EasyProject.ViewModel
         //csv로 입력받은 여러개의 제품들에 대한 처리 
         private void CsvReader()
         {
-            StreamReader sr = new StreamReader(openFileDialog, Encoding.GetEncoding("euc-kr"));
+            
+            //StreamReader sr = new StreamReader(openFileDialog, Encoding.GetEncoding("euc-kr"));
+            StreamReader sr = new StreamReader(openFileDialog, UnicodeEncoding.UTF8);
             sr.ReadLine();
             while (!sr.EndOfStream)
             {
