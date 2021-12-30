@@ -52,17 +52,6 @@ namespace EasyProject.ViewModel
 
         // 대시보드 프로퍼티
         public ChartValues<int> Values { get; set; }
-        //private SeriesCollection seriesCollection1;
-        //public SeriesCollection SeriesCollection1
-        //{
-        //    get { return seriesCollection1; }
-
-        //    set
-        //    {
-        //        seriesCollection1 = value;
-        //        OnPropertyChanged("SeriesCollection1");
-        //    }
-        //}
         private SeriesCollection seriesCollection1;
         private SeriesCollection seriesCollection2;
 
@@ -76,7 +65,8 @@ namespace EasyProject.ViewModel
             }
         }
 
-        public SeriesCollection SeriesCollection2               //그래프 큰 틀 만드는거
+        // 부서별 출고 유형 그래프 (기간 선택 가능) -----------------------------------
+        public SeriesCollection SeriesCollection2               
         {
             get { return seriesCollection2; }
             set
@@ -86,29 +76,38 @@ namespace EasyProject.ViewModel
             }
         }
 
+        public DateTime selectedStartDate;
+        public DateTime SelectedStartDate
+        {
+            get { return selectedStartDate; }
+            set
+            {
+                selectedStartDate = value;
+                OnPropertyChanged("SelectedStartDate");
+                DashboardPrint2();
+            }
+        }
+        public DateTime selectedEndDate;
+        public DateTime SelectedEndDate
+        {
+            get { return selectedEndDate; }
+            set
+            {
+                selectedEndDate = value;
+                OnPropertyChanged("SelectedEndDate");
+                DashboardPrint2();
+            }
+        }
+        public List<string> BarLabels2 { get; set; }       //string[] : 컬럼명 
+        public Func<double, string> Formatter2 { get; set; }
+        //부서별 출고 유형 그래프 (기간 선택 가능) 끝----------------------------------------------------------------------
+
+
         public List<string> BarLabels1 { get; set; }       //string[]
         public Func<double, string> Formatter1 { get; set; }
 
-        public List<string> BarLabels2 { get; set; }       //string[]
-        public Func<double, string> Formatter2 { get; set; }
-
-        //private ActionCommand command;
-        //public ICommand Command
-        //{
-        //    get
-        //    {
-        //        if (command == null)
-        //        {
-        //            command = new ActionCommand(GetProductsByDept);
-        //        }
-        //        return command;
-        //    }//get
-        //}
-        //public void GetProductsByDept()
-        //{
-        //    Products = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
-        //    ComboboxChanged = true;
-        //}
+       
+        
 
         public DashBoardViewModel()
         {
@@ -116,51 +115,12 @@ namespace EasyProject.ViewModel
             Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts());   //dept_od를 가져온다
             SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1];  // 
             category = new ObservableCollection<CategoryModel>(category_dao.GetCategories());
-            //SelectedCategory = category[(int)App.category_dto.Category_id - 1];
-            //DashboardPrint(selectedDept);
+
+            //부서별 출고 유형 그래프 (기간 선택 가능)
+            SelectedStartDate = DateTime.Today.AddDays(-7);
+            SelectedEndDate = DateTime.Today;
         }
-        //public void DashboardPrint()                       //대시보드 출력(x축:제품code, y축:수량) 
-        //{
-        //    Console.WriteLine("DashboardPrint() !!");
-        //    SeriesCollection1 = new SeriesCollection();   //대시보드 틀
-
-
-        //    ChartValues<int> name = new ChartValues<int> { };            //y축들어갈 임시 값
-
-        //    if (dashboard_dao.Prodcode_Info().Count != 0)
-        //    {
-        //        ObservableCollection<ProductShowModel> list1 = dashboard_dao.Prodtotal_Info();      //y축출력
-        //                                                                                            //foreach (var item in list1)
-        //                                                                                            //{
-        //                                                                                            //    name.Add((int)item.Prod_total);
-        //                                                                                            //}
-        //        for (int i = 0; i < 8; i++)
-        //        {
-        //            name.Add((int)list1[i].Prod_total);
-        //            Console.WriteLine("Prod_total: " + list1[i].Prod_total);
-        //        }
-
-
-        //        Values = new ChartValues<int> { };
-        //        SeriesCollection1.Add(new ColumnSeries
-        //        {
-        //            Title = "재고현황",   //+ i
-        //            Values = name,
-
-        //        });
-
-        //        BarLabels1 = new ObservableCollection<string>() { };                           //x축출력
-        //        ObservableCollection<ProductShowModel> list = dashboard_dao.Prodcode_Info();
-        //        foreach (var item in list)
-        //        {
-        //            BarLabels1.Add(item.Prod_code);
-        //            Console.WriteLine("item.Prod_code : " + item.Prod_code);
-        //        }
-
-        //        Formatter1 = value => value.ToString("N");   //문자열 10진수 변환
-        //    }
-
-        //}
+        
         public void DashboardPrint(DeptModel selected)                       //대시보드 출력(x축:제품code, y축:수량) 
         {
             ChartValues<int> name = new ChartValues<int>();   //y축들어갈 임시 값
@@ -204,7 +164,55 @@ namespace EasyProject.ViewModel
             Formatter1 = value => value.ToString("N");   //문자열 10진수 변환
         }//dashboardprint
 
+        // 부서별 출고 유형 그래프 (기간 선택 가능) (VIEW : 좌측하단 위치)------------------------------------------------------------------------------------------------------------
+        public void DashboardPrint2()                       //대시보드 출력(x축:제품code, y축:수량) 
+        {
 
+            Console.WriteLine("DashboardPrint2");
+            SeriesCollection2 = new SeriesCollection();
+            Values = new ChartValues<int> { }; // 컬럼의 수치 ( y 축 )
+            ChartValues<int> useCases = new ChartValues<int>(); // 사용 횟수를 담을 변수
+            ChartValues<int> transferCases = new ChartValues<int>(); // 이관 횟수를 담을 변수
+            ChartValues<int> discardCases = new ChartValues<int>(); // 폐기 횟수를 담을 변수
+            BarLabels2 = new List<string>() { }; // 컬럼의 이름 ( x 축 )
+            List<ProductInOutModel> datas = dashboard_dao.ReleaseCases_Info(SelectedStartDate, SelectedEndDate); // 부서별 출고 유형/횟수 정보
+            foreach (var item in datas) // 부서명 Labels에 넣기
+            {
+                BarLabels2.Add(item.Dept_name);
+            }
+
+            foreach (var item in datas)
+            {
+                useCases.Add((int)item.prod_use_cases);
+                transferCases.Add((int)item.prod_transferOut_cases);
+                discardCases.Add((int)item.prod_discard_cases);
+            }
+
+            //adding series updates and animates the chart
+
+            SeriesCollection2.Add(new StackedColumnSeries // 부서별 사용 횟수
+            {
+                Title = "사용 횟수",
+                Values = useCases,
+                StackMode = StackMode.Values
+            });
+
+            SeriesCollection2.Add(new StackedColumnSeries // 부서별 이관 횟수
+            {
+                Title = "이관 횟수",
+                Values = transferCases,
+                StackMode = StackMode.Values
+            });
+
+            SeriesCollection2.Add(new StackedColumnSeries // 부서별 출고 횟수
+            {
+                Title = "폐기 횟수",
+                Values = discardCases,
+                StackMode = StackMode.Values
+            });
+
+            Formatter2 = value => value.ToString("N");   //문자열 10진수 변환
+        }//dashboardprint2 ---------------------------------------------------------------------------------------------------
 
 
     }//class
