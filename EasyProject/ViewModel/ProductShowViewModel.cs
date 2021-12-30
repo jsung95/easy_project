@@ -307,6 +307,10 @@ namespace EasyProject.ViewModel
             product_dao.ChangeProductInfo(SelectedProduct);
             product_dao.ChangeProductInfo_IMP_DEPT(SelectedProduct);
             Products = new ObservableCollection<ProductShowModel>(product_dao.GetProducts());
+
+            //LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.SearchProducts(SelectedDept, SelectedSearchType, TextForSearch));
+            //UpdateCollection(LstOfRecords.Take(SelectedRecord));
+            //UpdateRecordCount();
         }
 
 

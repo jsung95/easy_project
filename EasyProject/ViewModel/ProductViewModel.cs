@@ -147,15 +147,51 @@ namespace EasyProject.ViewModel
         //csv로 입력받은 여러개의 제품들에 대한 처리 
         private void CsvReader()
         {
-            Console.WriteLine(Path.GetExtension(openFileDialog));
-
             StreamReader sr = new StreamReader(openFileDialog, Encoding.GetEncoding("euc-kr"));
+            sr.ReadLine();
             while (!sr.EndOfStream)
             {
                 string s = sr.ReadLine();
-                string[] temp = s.Split(',');        // Split() 메서드를 이용하여 ',' 구분하여 잘라냄
-                Console.WriteLine("{0},{1},{2}", temp[0], temp[1], temp[2]);
+                string[] temp = s.Split(',');
+
+                var product = new ProductShowModel();
+
+                for (int cCnt = 0; cCnt <= 5; cCnt++)
+                {
+                    product = SetProductObjectForCsv(ref product,cCnt,temp[cCnt]);
+                }
+                excelProductList.Add(product);
             }
+
+            foreach (ProductShowModel elem in excelProductList)
+            {
+                //MessageBox.Show(product.Prod_code+".."+product.Prod_name+
+                //   ".." + product.Category_name+".."+product.Prod_expire
+                //   + ".." + product.Prod_price + ".." + product.Prod_total);
+
+                dao.AddProductForExcel(elem, elem.Category_name);
+                dao.StoredProductForExcel(elem, Nurse);
+                dao.AddImpDeptForExcel(elem, Nurse);
+
+                // 현재 사용자가 추가 입고 내역을 담을 임시 객체
+                ProductInOutModel productDto = new ProductInOutModel();
+
+                // 새로 입고 시 Add_list(사용자의 입고 내역 목록) 업데이트
+                productDto.Prod_in_date = DateTime.Now;
+                productDto.Prod_code = elem.Prod_code;
+                productDto.Prod_name = elem.Prod_name;
+                productDto.Category_name = elem.Category_name;
+                productDto.Prod_expire = elem.Prod_expire;
+                productDto.Prod_price = elem.Prod_price;
+                productDto.Prod_in_count = elem.Prod_total;
+                productDto.Nurse_name = Nurse.Nurse_name;
+
+                //productDtoList.Insert(0, productDto);
+                Add_list.Insert(0, productDto);
+                //Add_list.Add(productDto);
+                Console.WriteLine(Add_list.Count + "개");
+            }
+
 
         }
 
@@ -238,7 +274,38 @@ namespace EasyProject.ViewModel
 
 
         }
-        
+        private ProductShowModel SetProductObjectForCsv(ref ProductShowModel Product, int columnNum, string columnText)
+        {
+
+            switch (columnNum)
+            {
+                case 0:
+                    Product.Prod_code = (string)(columnText);
+                    break;
+
+                case 1:
+                    Product.Prod_name = (string)(columnText);
+                    break;
+
+                case 2:
+                    Product.Category_name = (string)(columnText);
+                    break;
+
+                case 3:
+                    Product.Prod_expire = Convert.ToDateTime(columnText);
+                    break;
+
+                case 4:
+                    Product.Prod_price = Int32.Parse(columnText);
+                    break;
+
+                case 5:
+                    Product.Prod_total = Int32.Parse(columnText);
+                    break;
+
+            }
+            return Product;
+        }
 
         private ProductShowModel SetProductObject(ref ProductShowModel Product, ref Excel.Range range, int rCnt, int cCnt)
         {
