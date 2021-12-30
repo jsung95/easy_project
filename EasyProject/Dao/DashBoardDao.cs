@@ -149,61 +149,62 @@ namespace EasyProject.Dao
             return list;
         }///Prodcodetotal_info
 
-        //public List<ImpDeptModel> Dept_Category_Mount(CategoryModel SelectedCategory)               //code total 리스트
-        //{
-        //    List<ImpDeptModel> list = new List<ImpDeptModel>();
-        //    try
-        //    {
-        //        OracleConnection conn = new OracleConnection(connectionString);
-        //        OracleCommand cmd = new OracleCommand();
+        public List<ImpDeptModel> Dept_Category_Mount(CategoryModel SelectedCategory)               //code total 리스트
+        {
+            List<ImpDeptModel> list = new List<ImpDeptModel>();
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
 
-        //        using (conn)
-        //        {
-        //            conn.Open();
+                using (conn)
+                {
+                    conn.Open();
 
-        //            using (cmd)
-        //            {
-        //                cmd.Connection = conn;
-        //                cmd.CommandText = "SELECT D.dept_name, SUM(I.imp_dept_count) " +
-        //                    "FROM IMP_DEPT I " +
-        //                    "INNER JOIN PRODUCT P " +
-        //                    "ON I.prod_id = P.prod_id " +
-        //                    "INNER JOIN CATEGORY C " +
-        //                    "ON P.category_id = C.category_id " +
-        //                    "INNER JOIN DEPT D " +
-        //                    "ON I.dept_id = D.dept_id " +
-        //                    "where c.category_name = :category_name " +
-        //                    "GROUP BY C.category_name, D.dept_name";
-                 
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT C.category_name, D.dept_name, SUM(I.imp_dept_count) " +
+                            "FROM IMP_DEPT I " +
+                            "INNER JOIN PRODUCT P " +
+                            "ON I.prod_id = P.prod_id " +
+                            "INNER JOIN CATEGORY C " +
+                            "ON P.category_id = C.category_id " +
+                            "INNER JOIN DEPT D " +
+                            "ON I.dept_id = D.dept_id " +
+                            "where c.category_name = :category_name " +
+                            "GROUP BY C.category_name, D.dept_name";
 
-        //                cmd.Parameters.Add(new OracleParameter("category_name", SelectedCategory.Category_name)); //category_name
-        //                //cmd.Parameters.Add(new OracleParameter("total", prod_dto.Prod_total));
 
-        //                OracleDataReader reader = cmd.ExecuteReader();
+                        cmd.Parameters.Add(new OracleParameter("category_name", SelectedCategory.Category_name)); //category_name
+                        //cmd.Parameters.Add(new OracleParameter("total", prod_dto.Prod_total));
 
-        //                while (reader.Read())
-        //                {
-        //                    string Dept_name = reader.GetString(0);
-        //                    int? SUM_dept = reader.GetInt32(1);
-        //                    ProductShowModel dto = new ProductShowModel()
-        //                    {
-        //                        Prod_code = Prod_code,
-        //                        Prod_total = Prod_total
-        //                    };
-        //                    list.Add(dto);
-        //                }//while
+                        OracleDataReader reader = cmd.ExecuteReader();
 
-        //            }//using(cmd)
+                        while (reader.Read())
+                        {
+                            string Dept_name = reader.GetString(1);
+                            int? SUM_dept = reader.GetInt32(2);
+                            ImpDeptModel dto = new ImpDeptModel()
+                            {
+                                dept_name = Dept_name,
+                               Imp_dept_count = SUM_dept
+                            };
 
-        //        }//using(conn)
+                            list.Add(dto);
+                        }//while
 
-        //    }//try
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e.Message);
-        //    }//catch
-        //    return list;
-        //}///Prodcodetotal_info
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+            return list;
+        }///Prodcodetotal_info
 
         public List<ProductShowModel> Prodexpiretotal_Info(DeptModel SelectedDept, CategoryModel SelectedCategory)               //code total 리스트
         {
