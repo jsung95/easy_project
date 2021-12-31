@@ -368,36 +368,44 @@ namespace EasyProject.ViewModel
 
         public void ProductInsert()
         {
+
+            if (!dao.IsProductDuplicateCheck(Product))
+            {
+                //재고입력
+                dao.AddProduct(Product, SelectedCategory);
+
+                //입고테이블에 추가
+                dao.StoredProduct(Product, Nurse);
+
+                //IMP_DEPT 테이블에 추가
+                dao.AddImpDept(Product, Nurse);
+
+                // 현재 사용자가 추가 입고 내역을 담을 임시 객체
+                ProductInOutModel dto = new ProductInOutModel();
+
+                // 새로 입고 시 Add_list(사용자의 입고 내역 목록) 업데이트
+                dto.Prod_in_date = DateTime.Now;
+                dto.Prod_code = Product.Prod_code;
+                dto.Prod_name = Product.Prod_name;
+                dto.Category_name = SelectedCategory.Category_name;
+                dto.Prod_expire = Product.Prod_expire;
+                dto.Prod_price = Product.Prod_price;
+                dto.Prod_in_count = Product.Prod_total;
+                dto.Nurse_name = Nurse.Nurse_name;
+
+                Add_list.Insert(0, dto);
+
+                var temp1 = Ioc.Default.GetService<ProductShowViewModel>();
+                temp1.Products = new ObservableCollection<ProductShowModel>(dao.GetProducts()); // 재고현황 리스트 갱신
+
+                var temp2 = Ioc.Default.GetService<ProductInOutViewModel>();
+                temp2.showInListByDept(); // 입고 목록 갱신
+            }
+            else
+            {
+                Console.WriteLine("안됩니다. 중복되어서요!");
+            }
             
-            //재고입력
-            dao.AddProduct(Product, SelectedCategory);
-
-            //입고테이블에 추가
-            dao.StoredProduct(Product, Nurse);
-
-            //IMP_DEPT 테이블에 추가
-            dao.AddImpDept(Product, Nurse);
-
-            // 현재 사용자가 추가 입고 내역을 담을 임시 객체
-            ProductInOutModel dto = new ProductInOutModel();
-
-            // 새로 입고 시 Add_list(사용자의 입고 내역 목록) 업데이트
-            dto.Prod_in_date = DateTime.Now;
-            dto.Prod_code = Product.Prod_code;
-            dto.Prod_name = Product.Prod_name;
-            dto.Category_name = SelectedCategory.Category_name;
-            dto.Prod_expire = Product.Prod_expire;
-            dto.Prod_price = Product.Prod_price;
-            dto.Prod_in_count = Product.Prod_total;
-            dto.Nurse_name = Nurse.Nurse_name;
-
-            Add_list.Insert(0, dto);
-
-            var temp1 = Ioc.Default.GetService<ProductShowViewModel>();
-            temp1.Products = new ObservableCollection<ProductShowModel>(dao.GetProducts()); // 재고현황 리스트 갱신
-
-            var temp2 = Ioc.Default.GetService<ProductInOutViewModel>();
-            temp2.showInListByDept(); // 입고 목록 갱신
         }// ProductInsert
         public void ResetForm()
         {
