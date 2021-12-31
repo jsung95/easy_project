@@ -10,83 +10,9 @@
       Title="ChoiceGraphPage">
 
     <Grid>
-        <Grid>
-            <lvc:CartesianChart x:Name="chart" BorderThickness="2" Series="{Binding SeriesCollection4}" 
-                             LegendLocation="Top" Height="288" VerticalAlignment="Bottom" Margin="46,0,127,63.6"  >
-                <!--Series="{Binding SeriesCollection}"-->
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis LabelFormatter="{Binding Formatter}" Title="수량" />
-                    <!-- LabelFormatter="{Binding Formatter}" 바인딩-->
-                </lvc:CartesianChart.AxisY>
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Labels="{Binding BarLabels}" Title="부서별" />
-                    <!--Labels="{Binding BarLabels}" 바인딩-->
-                </lvc:CartesianChart.AxisX>
-            </lvc:CartesianChart>
-        </Grid>
-        <!--<Grid>
-            <ComboBox x:Name="deptName_ComboBox1" HorizontalContentAlignment="Left" 
-                       ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept}"  HorizontalAlignment="Right"  Height="30" Width="259"  TextBlock.FontSize="10" Margin="0,68,312,351.6">
-                <ComboBox.Resources>
-                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
-                </ComboBox.Resources>
-                <ComboBox.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform ScaleY="+1"/>
-                        <SkewTransform/>
-                        <RotateTransform/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </ComboBox.RenderTransform>
-
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Dept_name}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-
-                -->
-        <!--<i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding Command}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>-->
-        <!--
-            </ComboBox>
-        </Grid>-->
-        <Grid>
-            <ComboBox x:Name="CategoryName_ComboBox1" HorizontalContentAlignment="Left" 
-                       ItemsSource="{Binding Path=category}" SelectedItem="{Binding SelectedCategory}"  HorizontalAlignment="Right"  Height="30" Width="259"  TextBlock.FontSize="10" Margin="0,66,36,353.6" >
-                <ComboBox.Resources>
-                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
-                </ComboBox.Resources>
-                <ComboBox.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform ScaleY="+1"/>
-                        <SkewTransform/>
-                        <RotateTransform/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </ComboBox.RenderTransform>
-
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Category_name}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-
-                <!--<i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding cCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>-->
-
-            </ComboBox>
-        </Grid>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Hello World!" FontSize="100">
+            
+        </TextBlock>
 
     </Grid>
 </Page>

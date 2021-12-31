@@ -13,7 +13,7 @@
       DataContext="{Binding DBVM, Source={StaticResource Locator}}"
       d:DesignHeight="500" d:DesignWidth="1200"
       Title="AllGraphPage">
-    
+
     <Grid Height="480" Width="1200" VerticalAlignment="
           top">
         <materialDesign:Card  Margin ="10,10,10,10" UniformCornerRadius="20" Background="White" >
@@ -38,36 +38,36 @@
                         </Grid.RowDefinitions>
 
                         <Grid Grid.Row="0">
-                       
-                                <ComboBox x:Name="deptName_ComboBox1" HorizontalContentAlignment="Left" 
+
+                            <ComboBox x:Name="deptName_ComboBox1" HorizontalContentAlignment="Left" 
                        ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept}"  HorizontalAlignment="Right"  Height="20" Width="150"  TextBlock.FontSize="10" >
-                                    <ComboBox.Resources>
-                                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
-                                    </ComboBox.Resources>
-                                    <ComboBox.RenderTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform ScaleY="+1"/>
-                                            <SkewTransform/>
-                                            <RotateTransform/>
-                                            <TranslateTransform/>
-                                        </TransformGroup>
-                                    </ComboBox.RenderTransform>
+                                <ComboBox.Resources>
+                                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+                                </ComboBox.Resources>
+                                <ComboBox.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleY="+1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ComboBox.RenderTransform>
 
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{Binding Dept_name}"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Dept_name}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
 
-                                    <!--<i:Interaction.Triggers>
+                                <!--<i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
                                             <i:InvokeCommandAction Command="{Binding Command}" />
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>-->
-                                </ComboBox>
-                          
+                            </ComboBox>
+
                         </Grid>
 
                         <Grid Grid.Row="1">
@@ -84,7 +84,7 @@
                                 </lvc:CartesianChart.AxisX>
                             </lvc:CartesianChart>
                         </Grid>
-                       
+
 
 
                     </Grid>
@@ -142,7 +142,55 @@
                     </Grid>
 
                     <Grid Grid.Column="2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.1*"/>
+                                <RowDefinition Height="0.9*"/>
+                            </Grid.RowDefinitions>
 
+                            <Grid Grid.Row="0">
+                                <Grid>
+                                    <ComboBox x:Name="CategoryName_ComboBox1" HorizontalContentAlignment="Right" 
+                       ItemsSource="{Binding Path=category}" SelectedItem="{Binding SelectedCategory}"  HorizontalAlignment="Left"  Height="20" Width="149"  TextBlock.FontSize="10" Margin="213,2,0,2" >
+                                        <ComboBox.Resources>
+                                            <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+                                        </ComboBox.Resources>
+                                        <ComboBox.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform ScaleY="+1"/>
+                                                <SkewTransform/>
+                                                <RotateTransform/>
+                                                <TranslateTransform/>
+                                            </TransformGroup>
+                                        </ComboBox.RenderTransform>
+
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Category_name}"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid>
+                                    <lvc:CartesianChart x:Name="chart" BorderThickness="2" Series="{Binding SeriesCollection4}" 
+                             LegendLocation="Top" Height="180" Width="330"  VerticalAlignment="Center" >
+                                        <!--Series="{Binding SeriesCollection}"-->
+                                        <lvc:CartesianChart.AxisY>
+                                            <lvc:Axis LabelFormatter="{Binding Formatter}" Title="수량" />
+                                            <!-- LabelFormatter="{Binding Formatter}" 바인딩-->
+                                        </lvc:CartesianChart.AxisY>
+                                        <lvc:CartesianChart.AxisX>
+                                            <lvc:Axis Labels="{Binding BarLabels}" Title="부서별" />
+                                            <!--Labels="{Binding BarLabels}" 바인딩-->
+                                        </lvc:CartesianChart.AxisX>
+                                    </lvc:CartesianChart>
+                                </Grid>
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                 </Grid>
@@ -302,13 +350,13 @@
                             <Grid>
 
                             </Grid>
-                            
+
                         </Grid>
                     </Grid>
                 </Grid>
 
             </Grid>
         </materialDesign:Card>
-      
+
     </Grid>
 </Page>

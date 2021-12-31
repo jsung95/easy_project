@@ -159,7 +159,7 @@ namespace EasyProject.ViewModel
             Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts());   //dept_od를 가져온다
             SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1];  // 
             category = new ObservableCollection<CategoryModel>(category_dao.GetCategoriesvalues());
-
+            SelectedCategory = category[0];
             //부서별 출고 유형별 빈도 그래프 (기간 선택 가능 * 초기 설정 : 현재날짜로부터 1주일)
             SelectedStartDate1 = DateTime.Today.AddDays(-7);
             SelectedEndDate1 = DateTime.Today;
