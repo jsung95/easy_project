@@ -95,6 +95,50 @@ namespace EasyProject.Dao
             return category_id;
         }//GetCategoryID
 
+        public List<CategoryModel> GetCategoriesvalues()
+        {
+            List<CategoryModel> list = new List<CategoryModel>();
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT * FROM CATEGORY";
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            CategoryModel dto = new CategoryModel()
+                            {
+                                Category_id = reader.GetInt32(0),
+                                Category_name = reader.GetString(1)
+                            };
+
+                            list.Add(dto);
+                        }//while
+
+                    }//using(cmd)
+
+                }//conn
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return list;
+
+        }//GetCategoris()
 
     }//class
 
