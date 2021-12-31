@@ -157,6 +157,7 @@
     <Compile Include="Dao\CommonDBConn.cs" />
     <Compile Include="Dao\DeptDao.cs" />
     <Compile Include="Dao\ICategoryDao.cs" />
+    <Compile Include="Dao\IDashBoardDao.cs" />
     <Compile Include="Dao\IDeptDao.cs" />
     <Compile Include="Dao\ILoginDao.cs" />
     <Compile Include="Dao\IOrderDao.cs" />

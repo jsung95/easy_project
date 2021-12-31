@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 
 namespace EasyProject.Dao
 {
-    public class DashBoardDao : CommonDBConn
+    public class DashBoardDao : CommonDBConn, IDashBoardDao
     {
         public ObservableCollection<ProductShowModel> Prodcode_Info()     //prodcode 
         {
@@ -150,7 +150,7 @@ namespace EasyProject.Dao
         }///Prodcodetotal_info
 
         //카테고리별 --부서별/제품총수량 그래프 Dao
-        public List<ImpDeptModel> Dept_Category_Mount(CategoryModel SelectedCategory)               
+        public List<ImpDeptModel> Dept_Category_Mount(CategoryModel SelectedCategory)
         {
             List<ImpDeptModel> list = new List<ImpDeptModel>();
             try
@@ -165,7 +165,7 @@ namespace EasyProject.Dao
                     using (cmd)
                     {
                         cmd.Connection = conn;
-                        cmd.CommandText = "D.dept_name, SUM(I.imp_dept_count) " +
+                        cmd.CommandText = "SELECT C.category_name, D.dept_name, SUM(I.imp_dept_count) " +
                             "FROM IMP_DEPT I " +
                             "INNER JOIN PRODUCT P " +
                             "ON I.prod_id = P.prod_id " +
@@ -184,12 +184,12 @@ namespace EasyProject.Dao
 
                         while (reader.Read())
                         {
-                            string Dept_name = reader.GetString(0);
-                            int? SUM_dept = reader.GetInt32(1);
+                            string Dept_name = reader.GetString(1);
+                            int? SUM_dept = reader.GetInt32(2);
                             ImpDeptModel dto = new ImpDeptModel()
                             {
                                 dept_name = Dept_name,
-                               Imp_dept_count = SUM_dept
+                                Imp_dept_count = SUM_dept
                             };
 
                             list.Add(dto);
@@ -205,7 +205,7 @@ namespace EasyProject.Dao
                 Console.WriteLine(e.Message);
             }//catch
             return list;
-        }///Prodcodetotal_info
+        }///Dept_Category_Mount
 
         public List<ProductShowModel> Prodexpiretotal_Info(DeptModel SelectedDept, CategoryModel SelectedCategory)               //code total 리스트
         {
@@ -367,5 +367,62 @@ namespace EasyProject.Dao
             }//catch
             return list;
         }//orderCases_Info
+
+
+
+        public List<ProductInOutModel> GetDiscardTotalCount(DeptModel dept_dto)
+        {
+            List<ProductInOutModel> list = new List<ProductInOutModel>();
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT P.prod_name , O.prod_out_count, O.prod_out_count * P.prod_price " +
+                                          "FROM product_out O " +
+                                          "INNER JOIN product P " +
+                                          "ON O.prod_id = P.prod_id " +
+                                          "INNER JOIN dept D " +
+                                          "ON O.dept_id = D.dept_id " +
+                                          "WHERE O.prod_out_type = '폐기'" +
+                                          "AND D.dept_name = :dept_name";
+
+                        cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            ProductInOutModel dto = new ProductInOutModel()
+                            {
+                                Prod_name = reader.GetString(0),
+                                Prod_out_count = reader.GetInt32(1),
+                                Prod_price = reader.GetInt32(2)
+                            };
+                            list.Add(dto);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+            return list;
+        }//GetDiscardTotalCount
+
+
+
     }//class
 }//namespace
