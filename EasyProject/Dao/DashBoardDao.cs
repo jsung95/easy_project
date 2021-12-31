@@ -149,7 +149,8 @@ namespace EasyProject.Dao
             return list;
         }///Prodcodetotal_info
 
-        public List<ImpDeptModel> Dept_Category_Mount(CategoryModel SelectedCategory)               //code total 리스트
+        //카테고리별 --부서별/제품총수량 그래프 Dao
+        public List<ImpDeptModel> Dept_Category_Mount(CategoryModel SelectedCategory)               
         {
             List<ImpDeptModel> list = new List<ImpDeptModel>();
             try
@@ -164,7 +165,7 @@ namespace EasyProject.Dao
                     using (cmd)
                     {
                         cmd.Connection = conn;
-                        cmd.CommandText = "SELECT C.category_name, D.dept_name, SUM(I.imp_dept_count) " +
+                        cmd.CommandText = "D.dept_name, SUM(I.imp_dept_count) " +
                             "FROM IMP_DEPT I " +
                             "INNER JOIN PRODUCT P " +
                             "ON I.prod_id = P.prod_id " +
@@ -183,8 +184,8 @@ namespace EasyProject.Dao
 
                         while (reader.Read())
                         {
-                            string Dept_name = reader.GetString(1);
-                            int? SUM_dept = reader.GetInt32(2);
+                            string Dept_name = reader.GetString(0);
+                            int? SUM_dept = reader.GetInt32(1);
                             ImpDeptModel dto = new ImpDeptModel()
                             {
                                 dept_name = Dept_name,
