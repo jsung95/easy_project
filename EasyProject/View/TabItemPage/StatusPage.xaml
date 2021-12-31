@@ -9,11 +9,12 @@
       xmlns:vm ="clr-namespace:EasyProject.ViewModel" 
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" 
-      mc:Ignorable="d"
+      mc:Ignorable="d" 
       DataContext="{Binding PSVM, Source={StaticResource Locator}}"
       Title="StatusPage">
 
     <Page.Resources>
+       
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="LightGray"/>
             <Setter Property="FontSize" Value="12"/>
@@ -23,7 +24,7 @@
             <Setter Property="Height" Value="20"/>
             <Setter Property="Cursor" Value="Hand"/>
         </Style>
-        
+
         <Style TargetType="DataGrid">
             <Setter Property="Background" Value="White"/>
             <Setter Property="VerticalGridLinesBrush" Value="#4472C4"/>
@@ -65,7 +66,7 @@
                             <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
                         </ComboBox.Resources>
                     </ComboBox>
-                    
+
                     <Grid Grid.Column="1" Margin="10 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="6*"/>
@@ -137,8 +138,7 @@
                         <DataGrid x:Name="dataGrid" 
                             HorizontalAlignment="Left" Margin="10 0"
                             VerticalAlignment="Top" AutoGenerateColumns="False" 
-                            IsReadOnly="True" ColumnWidth="*"
-                            ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" SelectionMode="Extended" SelectionUnit="FullRow" Cursor="Hand">
+                            IsReadOnly="True" ColumnWidth="*" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" SelectionMode="Extended" SelectionUnit="FullRow" Cursor="Hand">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="1.5*" CanUserSort="false"  IsReadOnly="True" />
                                 <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="1.5*" CanUserSort="false" IsReadOnly="True"/>
@@ -159,14 +159,137 @@
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding Prod_expire, StringFormat='yyyy-MM-dd'}"  Header="유통기한" Width="3*" CanUserSort="true" IsReadOnly="True"/>
 
-                                <DataGridTemplateColumn x:Name="buttonColumn" Header="신청" Width="*" IsReadOnly="True" Visibility="Visible">
+                                <DataGridTextColumn Binding="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}" CanUserSort="true" Header="제품가격" Width="1*"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Imp_dept_count, StringFormat='{}{0:#,0} 개'}" CanUserSort="true" Header="수량" Width="1*" IsReadOnly="True" />
+                                <DataGridTextColumn Binding="{Binding Prod_expire}"  Header="유통기한" Width="3*" CanUserSort="true" IsReadOnly="True"/>
 
+                                <DataGridTemplateColumn x:Name="buttonColumn" Header="신청" Width="3*" IsReadOnly="True" Visibility="Visible">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button x:Name="goDialog_Btn" Grid.Column="3" Foreground="#4472C4"  FontSize="12" FontWeight="Bold" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand"
-                                                VerticalAlignment="Center" Height="45"  Width="45" HorizontalAlignment="Center" Click="goDialog_Btn_Click">
-                                                <materialDesign:PackIcon  Kind="Input" VerticalAlignment="Center" HorizontalAlignment="Center" Height="15" Width="15"/>
-                                            </Button>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Button x:Name="goDialog_Btn" Foreground="#4472C4"  FontSize="12" FontWeight="Bold" Background="{x:Null}"  Cursor="Hand"
+                                                    VerticalAlignment="Center" Height="45"  Width="45" HorizontalAlignment="Center" Click="goDialog_Btn_Click">
+                                                    <materialDesign:PackIcon  Kind="Input" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
+                                                </Button>
+                                                <StackPanel Orientation="Horizontal">
+                                                        <materialDesign:PopupBox StaysOpen="True" IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
+                                                        <materialDesign:PopupBox.ToggleContent>
+                                                            <materialDesign:PackIcon  Kind="Input" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
+                                                        </materialDesign:PopupBox.ToggleContent>
+                                                        <Grid Width="250" Height="270" Margin="8,8,8,8">
+                                                                <Grid.Resources>
+                                                                    <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
+                                                                    <Setter Property="Margin" Value="8,8,10,8" />
+                                                                    </Style>
+                                                                    <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+                                                                    <Setter Property="materialDesign:HintAssist.IsFloating" Value="True" />
+                                                                    <Setter Property="Margin" Value="8,8,8,8" />
+                                                                    </Style>
+                                                                </Grid.Resources>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="0.6*" />
+                                                                    <RowDefinition Height="*" />
+                                                                    <RowDefinition Height="*" />
+                                                                    <RowDefinition Height="*" />
+                                                                    <RowDefinition Height="0.8*" />
+                                                                </Grid.RowDefinitions>
+                                                            <TextBlock  Grid.Row="0" Style="{StaticResource MaterialDesignHeadline6TextBlock}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                                        FontWeight="SemiBold" FontSize="20" Text="출고" />
+                                                            <Grid Grid.Row="1">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" Text="유형" />
+                                                                <ComboBox Grid.Column="1" Height="30" Width="70" MaxDropDownHeight="200" HorizontalAlignment="Left"  Name="Type_comboBox" VerticalAlignment="Center"
+                                                                    SelectedValue="{Binding SelectedOutType}" SelectedValuePath="Content" >
+                                                                    <ComboBoxItem Content="사용" />
+                                                                    <ComboBoxItem Content="이관" />
+                                                                    <ComboBoxItem Content="폐기" />
+                                                                </ComboBox>
+                                                            </Grid>
+                                                            <Grid Grid.Row="2">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11"  Text="부서" />
+                                                                <ComboBox Grid.Column="1" Height="30" Width="70"  HorizontalAlignment="Left" x:Name="Dept_comboBox" VerticalAlignment="Center"
+                                                                          ItemsSource="{Binding DataContext.Depts, RelativeSource={RelativeSource FindAncestor, AncestorType=x:Type }}"  SelectedItem="{Binding SelectedOutDept}">
+                                                                    <ComboBox.ItemTemplate>
+                                                                        <DataTemplate>
+                                                                            <StackPanel Orientation="Horizontal">
+                                                                                <TextBlock Text="{Binding Dept_name}"/>
+                                                                            </StackPanel>
+                                                                        </DataTemplate>
+                                                                    </ComboBox.ItemTemplate>
+                                                                </ComboBox>
+                                                            </Grid>
+                                                            <Grid Grid.Row="3">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <TextBlock  Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" Text="수량" />
+                                                                <TextBox x:Name="mount_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Left"
+                                                                    VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Width="80"
+                                                                    Text="{Binding InputOutCount}"/>
+                                                            </Grid>
+                                                            <Grid Grid.Row="4">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <Button x:Name="reset_Btn" Grid.Column="0"  Content="초기화"  FontSize="8"  HorizontalAlignment="Center"  Click="reset_Btn_Click"
+                                                                   VerticalAlignment="Center"  BorderThickness="0" Height="30" Width="55"  Foreground="White" Command="{Binding OutProductReset}" Cursor="Hand">
+                                                                    <Button.Style>
+                                                                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                                                            <Setter  Property="Background" Value="Red" />
+                                                                        </Style>
+                                                                    </Button.Style>
+                                                                </Button>
+                                                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                                                    <Button x:Name="cancel_Btn" Content="취소" Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}" 
+                                                                            FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"  
+                                                                            VerticalAlignment="Center"  BorderThickness="0" Height="28" Width="55" Cursor="Hand"  Foreground="White" >
+                                                                        <Button.Style>
+                                                                            <Style TargetType="Button"  BasedOn="{StaticResource {x:Type Button}}">
+                                                                                <Setter  Property="Background" Value="Gray" />
+                                                                            </Style>
+                                                                        </Button.Style>
+                                                                    </Button>
+
+                                                                    <Button x:Name="signUp_Btn" Margin="5,0,0,0" Content="확인"  FontSize="10"  HorizontalAlignment="Center"  
+                                                                    VerticalAlignment="Center"  BorderThickness="0" Height="28" Width="55" Cursor="Hand"  Command="{Binding OutProductCommand}" Foreground="white" >
+                                                                        <Button.Style>
+                                                                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                                                                <Setter  Property="Background" Value="#4472C4" />
+                                                                            </Style>
+                                                                        </Button.Style>
+                                                                    </Button>
+                                                                </StackPanel>
+                                                            </Grid>
+                                                            
+                                                                
+                                                                
+                                                    
+                                                               
+                                                            
+                                                                <!--<StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                    <Button Content="_Save" Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}" />
+                                                                    <Button Content="_Cancel" Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}">
+                                                                        <Button.Style>
+                                                                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                                                                <Setter  Property="Foreground" Value="Red" />
+                                                                            </Style>
+                                                                        </Button.Style>
+                                                                    </Button>
+                                                                </StackPanel>-->
+                                                            </Grid>
+                                                        </materialDesign:PopupBox>
+                                                    </StackPanel>
+
+                                            </StackPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
 
@@ -183,7 +306,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions> -->
                             <StackPanel Orientation="Horizontal">
-                               
+
                                 <ComboBox Margin="5" SelectedIndex="0" Width="100" SelectedItem ="{Binding SelectedRecord, UpdateSourceTrigger=PropertyChanged}">
                                     <wookoa:Int32>10</wookoa:Int32>
                                     <wookoa:Int32>15</wookoa:Int32>
@@ -192,7 +315,7 @@
                                 </ComboBox>
                                 <Button Height="23" HorizontalAlignment="Right"  Command="{Binding FirstCommand}"
                             Name="btnFirst" VerticalAlignment="Bottom" Width="40" Foreground="White" Background="#4472C4"
-                            Content="&lt;&lt;" ToolTip="First page" Click="btnFirst_Click" Opacity="0.75" Margin="5">
+                            Content="&lt;&lt;" ToolTip="First page"  Opacity="0.75" Margin="5">
                                     <Button.Style>
                                         <Style TargetType="Button">
                                             <Setter Property="IsEnabled" Value="false"></Setter>
@@ -207,7 +330,7 @@
 
                                 <Button Height="23" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
                                     Name="btnPrev" Width="40" ToolTip="Previous page" 
-		                            Click="btnPrev_Click" Margin="5" Foreground="White" Background="#4472C4" Command="{Binding PreviousCommand}"
+                                   Margin="5" Foreground="White" Background="#4472C4" Command="{Binding PreviousCommand}"
                                     Opacity="0.75" Content="&lt;" Cursor="Hand">
                                     <Button.Style>
                                         <Style TargetType="Button">
@@ -246,7 +369,7 @@
 
                                 <Button Height="23" ToolTip="Last page" HorizontalAlignment="Left"   Foreground="White" Background="#4472C4"
                             VerticalAlignment="Bottom" Width="40" Name="btnLast" Margin="5" Command="{Binding LastCommand}"
-                            Click="btnLast_Click" Opacity="0.75" Content="&gt;&gt;" Cursor="Hand">
+                             Opacity="0.75" Content="&gt;&gt;" Cursor="Hand">
                                     <Button.Style>
                                         <Style TargetType="Button">
                                             <Setter Property="IsEnabled" Value="false"></Setter>
@@ -259,7 +382,7 @@
                                     </Button.Style>
                                 </Button>
 
-                                
+
                             </StackPanel>
 
                         </Grid>

@@ -31,6 +31,9 @@ namespace EasyProject.Model
         public string Prod_out_from { get; set; }
         public string Prod_out_to { get; set; }
         public string Prod_out_type { get; set; }
+        public int? prod_use_cases { get; set; } // 사용 횟수
+        public int? prod_transferOut_cases { get; set; } // 이관 횟수
+        public int? prod_discard_cases { get; set; } // 폐기 횟수
 
         //NURSE
         public string Nurse_name { get; set; }
