@@ -18,6 +18,7 @@ namespace EasyProject.ViewModel
     public class ProductViewModel : ObservableObject
     {
         ProductDao dao = new ProductDao();
+        CategoryDao categoryDao = new CategoryDao();
 
         private string openFileDialog;
         public string OpenFileDialog { 
@@ -30,6 +31,17 @@ namespace EasyProject.ViewModel
             {
                 this.openFileDialog = value;
                 OnPropertyChanged("OpenFileDialog");
+            }
+        }
+
+        private bool isDuplicatedProduct = false;
+        public bool IsDuplicatedProduct
+        {
+            get { return isDuplicatedProduct; }
+            set
+            {
+                isDuplicatedProduct = value;
+                OnPropertyChanged("IsDuplicatedProduct");
             }
         }
 
@@ -368,6 +380,7 @@ namespace EasyProject.ViewModel
 
         public void ProductInsert()
         {
+            Product.Category_id = categoryDao.GetCategoryID(SelectedCategory.Category_name);
 
             if (!dao.IsProductDuplicateCheck(Product))
             {
@@ -404,6 +417,7 @@ namespace EasyProject.ViewModel
             else
             {
                 Console.WriteLine("안됩니다. 중복되어서요!");
+                isDuplicatedProduct = true;
             }
             
         }// ProductInsert
