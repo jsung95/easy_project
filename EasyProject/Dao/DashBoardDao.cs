@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 
 namespace EasyProject.Dao
 {
-    public class DashBoardDao : CommonDBConn
+    public class DashBoardDao : CommonDBConn, IDashBoardDao
     {
         public ObservableCollection<ProductShowModel> Prodcode_Info()     //prodcode 
         {
@@ -367,5 +367,62 @@ namespace EasyProject.Dao
             }//catch
             return list;
         }//orderCases_Info
+
+
+
+        public List<ProductInOutModel> GetDiscardTotalCount(DeptModel dept_dto)
+        {
+            List<ProductInOutModel> list = new List<ProductInOutModel>();
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT P.prod_name , O.prod_out_count, O.prod_out_count * P.prod_price " +
+                                          "FROM product_out O " +
+                                          "INNER JOIN product P " +
+                                          "ON O.prod_id = P.prod_id " +
+                                          "INNER JOIN dept D " +
+                                          "ON O.dept_id = D.dept_id " +
+                                          "WHERE O.prod_out_type = '폐기'" +
+                                          "AND D.dept_name = :dept_name";
+
+                        cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            ProductInOutModel dto = new ProductInOutModel()
+                            {
+                                Prod_name = reader.GetString(0),
+                                Prod_out_count = reader.GetInt32(1),
+                                Prod_price = reader.GetInt32(2)
+                            };
+                            list.Add(dto);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+            return list;
+        }//GetDiscardTotalCount
+
+
+
     }//class
 }//namespace

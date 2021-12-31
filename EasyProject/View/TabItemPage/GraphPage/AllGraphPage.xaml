@@ -90,7 +90,55 @@
                     </Grid>
 
                     <Grid Grid.Column="1">
-                        
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.1*"/>
+                            <RowDefinition Height="0.9*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+
+                            <ComboBox x:Name="deptName_ComboBox_Pie" HorizontalContentAlignment="Left" 
+                       ItemsSource="{Binding Path=Depts_Pie}" SelectedItem="{Binding SelectedDept_Pie}"  HorizontalAlignment="Right"  Height="20" Width="150"  TextBlock.FontSize="10" >
+                                <ComboBox.Resources>
+                                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+                                </ComboBox.Resources>
+                                <ComboBox.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleY="+1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </ComboBox.RenderTransform>
+
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Dept_name}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding Command}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+
+                        </Grid>
+
+                        <Grid Grid.Row="1">
+                            <lvc:PieChart LegendLocation="Right" Series="{Binding SeriesCollection_Pie}" InnerRadius="30">
+                                <!--lvc:PieChart.ChartLegend>
+                                    <lvc:DefaultLegend BulletSize="15" TextBlock.FontSize="8"/>
+                                </lvc:PieChart.ChartLegend>
+                                <lvc:PieChart.DataTooltip>
+                                    <lvc:DefaultTooltip BulletSize="50"/>
+                                </lvc:PieChart.DataTooltip-->
+
+                            </lvc:PieChart>
+                        </Grid>
                     </Grid>
 
                     <Grid Grid.Column="2">

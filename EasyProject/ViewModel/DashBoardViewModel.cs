@@ -154,6 +154,10 @@ namespace EasyProject.ViewModel
             //부서별 입고 유형별 빈도 그래프 (기간 선택 가능 * 초기 설정 : 현재날짜로부터 1주일)
             SelectedStartDate2 = DateTime.Today.AddDays(-7);
             SelectedEndDate2 = DateTime.Today;
+
+            //파이차트
+            Depts_Pie = new ObservableCollection<DeptModel>(dept_dao.GetDepts());   //dept_od를 가져온다
+            SelectedDept_Pie = Depts_Pie[(int)App.nurse_dto.Dept_id - 1];  // 
         }
         
         public void DashboardPrint(DeptModel selected)                       //대시보드 출력(x축:제품code, y축:수량) 
@@ -290,5 +294,63 @@ namespace EasyProject.ViewModel
             Formatter = value => value.ToString("N");   //문자열 10진수 변환
         }//dashboardprint3 ---------------------------------------------------------------------------------------------------
 
+
+
+
+        #region 파이 차트
+        //부서 목록 콤보박스, 부서 대시보드 출력
+        public ObservableCollection<DeptModel> Depts_Pie { get; set; }
+
+        //선택한 부서를 담을 프로퍼티
+        private DeptModel selectedDept_Pie;
+        public DeptModel SelectedDept_Pie
+        {
+            get { return selectedDept_Pie; }
+            set
+            {
+                selectedDept_Pie = value;
+                DashboardPrint_Pie();
+            }
+        }
+
+        private SeriesCollection seriesCollection_Pie;
+        public SeriesCollection SeriesCollection_Pie
+        {
+            get { return seriesCollection_Pie; }
+            set
+            {
+                seriesCollection_Pie = value;
+                OnPropertyChanged("SeriesCollection_Pie");
+            }
+        }
+
+        public void DashboardPrint_Pie()
+        {
+            List<ProductInOutModel> list = dashboard_dao.GetDiscardTotalCount(SelectedDept_Pie);
+
+
+
+
+            SeriesCollection_Pie = new SeriesCollection();
+
+
+            foreach (var item in list)
+            {
+                //Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} ({1:C})", item.Prod_name, chartPoint.Participation);
+                Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0:#,0}개 ({1:#,0}￦)", item.Prod_out_count, item.Prod_price);
+                SeriesCollection_Pie.Add(new PieSeries
+                {
+                    Title = item.Prod_name,
+                    Values = new ChartValues<int> { (int)item.Prod_out_count },
+                    DataLabels = true,
+                    LabelPoint = labelPoint
+                });
+
+            }//foreache
+
+
+
+        }//DashboardPrint_Pie
+        #endregion
     }//class
 }//namespace
