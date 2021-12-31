@@ -55,7 +55,7 @@ namespace EasyProject.Dao
 
         }//GetCategoris()
 
-        public int GetCategoryID(CategoryModel category_dto)
+        public int GetCategoryID(string category_name)
         {
             int category_id = 0;
 
@@ -73,7 +73,7 @@ namespace EasyProject.Dao
                         cmd.Connection = conn;
                         cmd.CommandText = "SELECT category_id FROM CATEGORY WHERE category_name = :category_name";
 
-                        cmd.Parameters.Add(new OracleParameter("category_name", category_dto.Category_name));
+                        cmd.Parameters.Add(new OracleParameter("category_name", category_name));
 
                         OracleDataReader reader = cmd.ExecuteReader();
 

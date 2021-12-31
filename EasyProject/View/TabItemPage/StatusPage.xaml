@@ -13,8 +13,7 @@
       DataContext="{Binding PSVM, Source={StaticResource Locator}}"
       Title="StatusPage">
 
-    <Page.Resources>
-       
+    <Page.Resources>       
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="LightGray"/>
             <Setter Property="FontSize" Value="12"/>
@@ -80,7 +79,7 @@
                         <Grid Grid.Column="1">
                             <Button x:Name="search_Btn" Grid.Column="3" Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White"
                             VerticalAlignment="Center" Height="30"  Width="45" HorizontalAlignment="Left" 
-                                    Command="{Binding SearchCommand}" Cursor="Hand">
+                             Command="{Binding SearchCommand}" Cursor="Hand">
                                 <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
                                 <!--<Button.Style>
                                     <Style TargetType="Button">
@@ -159,9 +158,9 @@
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding Prod_expire, StringFormat='yyyy-MM-dd'}"  Header="유통기한" Width="3*" CanUserSort="true" IsReadOnly="True"/>
 
-                                <DataGridTextColumn Binding="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}" CanUserSort="true" Header="제품가격" Width="1*"  IsReadOnly="True"/>
+                                <!--<DataGridTextColumn Binding="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}" CanUserSort="true" Header="제품가격" Width="1*"  IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Imp_dept_count, StringFormat='{}{0:#,0} 개'}" CanUserSort="true" Header="수량" Width="1*" IsReadOnly="True" />
-                                <DataGridTextColumn Binding="{Binding Prod_expire}"  Header="유통기한" Width="3*" CanUserSort="true" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_expire}"  Header="유통기한" Width="3*" CanUserSort="true" IsReadOnly="True"/>-->
 
                                 <DataGridTemplateColumn x:Name="buttonColumn" Header="신청" Width="3*" IsReadOnly="True" Visibility="Visible">
                                     <DataGridTemplateColumn.CellTemplate>
