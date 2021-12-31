@@ -49,10 +49,13 @@ namespace EasyProject.ViewModel
             }
         }
 
-        // 대시보드 프로퍼티
+        // LiveChart 공통 프로퍼티
         public ChartValues<int> Values { get; set; }
+        public List<string> BarLabels { get; set; }       //string[]
+        public Func<double, string> Formatter { get; set; }
+
+        // DashboardPrint() 그래프
         private SeriesCollection seriesCollection1;
-       
         public SeriesCollection SeriesCollection1               //그래프 큰 틀 만드는거
         {
             get { return seriesCollection1; }
@@ -63,12 +66,9 @@ namespace EasyProject.ViewModel
             }
         }
 
-        public List<string> BarLabels1 { get; set; }       //string[]
-        public Func<double, string> Formatter1 { get; set; }
+       
 
         // 부서별 출고 유형 그래프 (기간 선택 가능) -----------------------------------
-        public ChartValues<int> Values2 { get; set; }
-
         private SeriesCollection seriesCollection2;
         public SeriesCollection SeriesCollection2               
         {
@@ -102,13 +102,9 @@ namespace EasyProject.ViewModel
                 DashboardPrint2();
             }
         }
-        public List<string> BarLabels2 { get; set; }       //string[] : 컬럼명 
-        public Func<double, string> Formatter2 { get; set; }
         //------------------------------------------------------------------------------------------------------------
 
-        // 부서별 입고 유형 그래프 (기간 선택 가능) -----------------------------------
-        public ChartValues<int> Values3 { get; set; }
-        
+        // 부서별 입고 유형 그래프 (기간 선택 가능) -----------------------------------    
         private SeriesCollection seriesCollection3;
         public SeriesCollection SeriesCollection3
         {
@@ -142,8 +138,6 @@ namespace EasyProject.ViewModel
                 DashboardPrint3();
             }
         }
-        public List<string> BarLabels3 { get; set; }       //string[] : 컬럼명 
-        public Func<double, string> Formatter3 { get; set; }
         //------------------------------------------------------------------------------------------------------------------
            
         public DashBoardViewModel()
@@ -197,12 +191,12 @@ namespace EasyProject.ViewModel
                 Title = "재고현황",   //+ i
                 Values = name,
             });
-            BarLabels1 = new List<string>() { };                           //x축출력
+            BarLabels = new List<string>() { };                           //x축출력
             foreach (var item in list_xy)
             {
-                BarLabels1.Add(item.Prod_code);
+                BarLabels.Add(item.Prod_code);
             }
-            Formatter1 = value => value.ToString("N");   //문자열 10진수 변환
+            Formatter = value => value.ToString("N");   //문자열 10진수 변환
         }//dashboardprint
 
         // 부서별 출고 유형별 빈도 그래프 (기간 선택 가능) (VIEW : 좌측하단 위치)------------------------------------------------------------------------------------------------------------
@@ -211,15 +205,15 @@ namespace EasyProject.ViewModel
 
             Console.WriteLine("DashboardPrint2");
             SeriesCollection2 = new SeriesCollection();
-            Values2 = new ChartValues<int> { }; // 컬럼의 수치 ( y 축 )
+            Values = new ChartValues<int> { }; // 컬럼의 수치 ( y 축 )
             ChartValues<int> useCases = new ChartValues<int>(); // 사용 횟수를 담을 변수
             ChartValues<int> transferCases = new ChartValues<int>(); // 이관 횟수를 담을 변수
             ChartValues<int> discardCases = new ChartValues<int>(); // 폐기 횟수를 담을 변수
-            BarLabels2 = new List<string>() { }; // 컬럼의 이름 ( x 축 )
+            BarLabels = new List<string>() { }; // 컬럼의 이름 ( x 축 )
             List<ProductInOutModel> datas = dashboard_dao.ReleaseCases_Info(SelectedStartDate1, SelectedEndDate1); // 부서별 출고 유형/횟수 정보
             foreach (var item in datas) // 부서명 Labels에 넣기
             {
-                BarLabels2.Add(item.Dept_name);
+                BarLabels.Add(item.Dept_name);
             }
 
             foreach (var item in datas)
@@ -252,7 +246,7 @@ namespace EasyProject.ViewModel
                 StackMode = StackMode.Values
             });
 
-            Formatter2 = value => value.ToString("N");   //문자열 10진수 변환
+            Formatter = value => value.ToString("N");   //문자열 10진수 변환
         }//dashboardprint2 ---------------------------------------------------------------------------------------------------
 
         // 부서별 입고 유형별 빈도 그래프 (기간 선택 가능) (VIEW : 우측하단 위치)------------------------------------------------------------------------------------------------------------
@@ -261,14 +255,14 @@ namespace EasyProject.ViewModel
 
             Console.WriteLine("DashboardPrint3");
             SeriesCollection3 = new SeriesCollection();
-            Values3 = new ChartValues<int> { }; // 컬럼의 수치 ( y 축 )
+            Values = new ChartValues<int> { }; // 컬럼의 수치 ( y 축 )
             ChartValues<int> transferCases = new ChartValues<int>(); // 이관 횟수를 담을 변수
             ChartValues<int> orderCases = new ChartValues<int>(); // 발주 횟수를 담을 변수
-            BarLabels3 = new List<string>() { }; // 컬럼의 이름 ( x 축 )
+            BarLabels = new List<string>() { }; // 컬럼의 이름 ( x 축 )
             List<ProductInOutModel> datas = dashboard_dao.incomingCases_Info(SelectedStartDate2, SelectedEndDate2); // 부서별 출고 유형/횟수 정보
             foreach (var item in datas) // 부서명 Labels에 넣기
             {
-                BarLabels3.Add(item.Dept_name);
+                BarLabels.Add(item.Dept_name);
             }
 
             foreach (var item in datas)
@@ -293,7 +287,7 @@ namespace EasyProject.ViewModel
                 StackMode = StackMode.Values
             });
 
-            Formatter3 = value => value.ToString("N");   //문자열 10진수 변환
+            Formatter = value => value.ToString("N");   //문자열 10진수 변환
         }//dashboardprint3 ---------------------------------------------------------------------------------------------------
 
     }//class

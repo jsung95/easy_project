@@ -61,11 +61,11 @@
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
 
-                                    <i:Interaction.Triggers>
+                                    <!--<i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
                                             <i:InvokeCommandAction Command="{Binding Command}" />
                                         </i:EventTrigger>
-                                    </i:Interaction.Triggers>
+                                    </i:Interaction.Triggers>-->
                                 </ComboBox>
                           
                         </Grid>
@@ -75,11 +75,11 @@
                              LegendLocation="Top" Width="350" Height="180" VerticalAlignment="Center"   HorizontalAlignment="Center" >
                                 <!--Series="{Binding SeriesCollection}"-->
                                 <lvc:CartesianChart.AxisY>
-                                    <lvc:Axis LabelFormatter="{Binding Formatter1}" Title="수량" />
+                                    <lvc:Axis LabelFormatter="{Binding Formatter}" Title="수량" />
                                     <!-- LabelFormatter="{Binding Formatter}" 바인딩-->
                                 </lvc:CartesianChart.AxisY>
                                 <lvc:CartesianChart.AxisX>
-                                    <lvc:Axis Labels="{Binding BarLabels1}" Title="제품코드" />
+                                    <lvc:Axis Labels="{Binding BarLabels}" Title="제품코드" />
                                     <!--Labels="{Binding BarLabels}" 바인딩-->
                                 </lvc:CartesianChart.AxisX>
                             </lvc:CartesianChart>
@@ -112,12 +112,12 @@
                              LegendLocation="Top" Height="288" VerticalAlignment="Bottom" Margin="46,0,127,63.6"  >
                                     <!--Series="{Binding SeriesCollection}"-->
                                     <lvc:CartesianChart.AxisY>
-                                        <lvc:Axis LabelFormatter="{Binding Formatter2}" Title="출고 유형별 빈도" />
+                                        <lvc:Axis LabelFormatter="{Binding Formatter}" Title="출고 유형별 빈도" />
                                         <!-- LabelFormatter="{Binding Formatter}" 바인딩-->
                                     </lvc:CartesianChart.AxisY>
                                     <lvc:CartesianChart.AxisX>
-                                        <lvc:Axis   Title="부서" 
-                                Labels="{Binding BarLabels2}"/>
+                                        <lvc:Axis    
+                                Labels="{Binding BarLabels}"/>
                                         <!--Labels="{Binding BarLabels}" 바인딩-->
                                     </lvc:CartesianChart.AxisX>
                                 </lvc:CartesianChart>
@@ -189,12 +189,12 @@
                              LegendLocation="Top" Height="288" VerticalAlignment="Bottom" Margin="46,0,127,63.6"  >
                                     <!--Series="{Binding SeriesCollection}"-->
                                     <lvc:CartesianChart.AxisY>
-                                        <lvc:Axis LabelFormatter="{Binding Formatter3}" Title="입고 유형별 빈도" />
+                                        <lvc:Axis LabelFormatter="{Binding Formatter}" Title="입고 유형별 빈도" />
                                         <!-- LabelFormatter="{Binding Formatter}" 바인딩-->
                                     </lvc:CartesianChart.AxisY>
                                     <lvc:CartesianChart.AxisX>
-                                        <lvc:Axis   Title="부서" 
-                                Labels="{Binding BarLabels3}"/>
+                                        <lvc:Axis   
+                                Labels="{Binding BarLabels}"/>
                                         <!--Labels="{Binding BarLabels}" 바인딩-->
                                     </lvc:CartesianChart.AxisX>
                                 </lvc:CartesianChart>
