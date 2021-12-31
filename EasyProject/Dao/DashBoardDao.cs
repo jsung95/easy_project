@@ -311,5 +311,60 @@ namespace EasyProject.Dao
             }//catch
             return list;
         }//ReleaseCases_Info
+
+        public List<ProductInOutModel> incomingCases_Info(DateTime startDate, DateTime endDate)
+        {
+            List<ProductInOutModel> list = new List<ProductInOutModel>();
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT prod_in_to, " +
+                                          "COUNT(CASE WHEN prod_in_type = '이관' THEN 1 END), " +
+                                          "COUNT(CASE WHEN prod_in_type = '발주' THEN 1 END) " +                                         
+                                          "FROM product_in " +
+                                          "WHERE prod_in_date > :startDate " +
+                                          "AND prod_in_date < :endDate + 1 " +
+                                          "GROUP BY prod_in_to";
+
+                        cmd.Parameters.Add(new OracleParameter("startDate", startDate));
+                        cmd.Parameters.Add(new OracleParameter("endDate", endDate));
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string dept_name = reader.GetString(0);                            
+                            int? prod_transferIn_cases = reader.GetInt32(1);
+                            int? prod_order_cases = reader.GetInt32(2);
+
+                            ProductInOutModel dto = new ProductInOutModel()
+                            {
+                                Dept_name = dept_name,
+                                prod_transferIn_cases = prod_transferIn_cases,
+                                prod_order_cases = prod_order_cases
+                            };
+                            list.Add(dto);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+            return list;
+        }//orderCases_Info
     }//class
 }//namespace

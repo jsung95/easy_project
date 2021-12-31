@@ -13,7 +13,7 @@ namespace EasyProject.Dao
         List<CategoryModel> GetCategories();
 
         //카테고리 이름으로 카테고리 번호 가져오기
-        int GetCategoryID(CategoryModel category_dto);
+        int GetCategoryID(string category_name);
     }//interface
 
 }//namespace

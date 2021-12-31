@@ -84,6 +84,59 @@ namespace EasyProject.Dao
 
         }//GetProduct()
 
+        public bool IsProductDuplicateCheck(ProductModel product_dto)
+        {
+            bool isDuplicated = false;
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT prod_code " +
+                                          "FROM PRODUCT " +
+                                          "WHERE prod_code = :prod_code " +
+                                          "AND prod_name = :prod_name " +
+                                          "AND category_id = :category_id " +
+                                          "AND prod_price = :prod_price " +
+                                          "AND prod_expire = :prod_expire ";
+                        cmd.Parameters.Add(new OracleParameter("prod_code", product_dto.Prod_code));
+                        cmd.Parameters.Add(new OracleParameter("prod_name", product_dto.Prod_name));
+                        cmd.Parameters.Add(new OracleParameter("category_id", product_dto.Category_id));
+                        cmd.Parameters.Add(new OracleParameter("prod_price", product_dto.Prod_price));
+                        cmd.Parameters.Add(new OracleParameter("prod_expire", product_dto.Prod_expire));
+                        Console.WriteLine(product_dto.Prod_expire);
+                        Console.WriteLine(product_dto.Category_id+"카페고리id");
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.Read() == false)
+                        {
+                            //없는 제품을 추가하려고 하는 경우(access)
+                            isDuplicated = false;
+                        }
+                        else
+                        {
+                            //이미 입력된 제품을 추가하려고 하는 경우(deny)
+                            isDuplicated = true;
+                        }
+                    }//using(cmd)
+                }//using (conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return isDuplicated;
+
+        }//IdCheck
+
 
         public List<ProductShowModel> GetProductsByDept(DeptModel dept_dto)
         {

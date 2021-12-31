@@ -11,7 +11,8 @@ using System.Windows.Media;
 using System.Collections;
 using EasyProject.Model;
 using System.ComponentModel;
-
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using EasyProject.ViewModel;
 
 namespace EasyProject.View.TabItemPage.GraphPage
 
@@ -25,13 +26,17 @@ namespace EasyProject.View.TabItemPage.GraphPage
         public AllGraphPage()
         {
             InitializeComponent();
-
+            this.Loaded += MainWindow_Loaded;
             //deptName_ComboBox1.SelectedIndex = (int)App.nurse_dto.Dept_id - 1;
-
-
-
         }
 
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            var temp = Ioc.Default.GetService<DashBoardViewModel>();
+            //temp.DashboardPrint();
+            temp.DashboardPrint2();
+            temp.DashboardPrint3();
 
+        }
     }
 }
