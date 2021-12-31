@@ -74,7 +74,7 @@ namespace EasyProject.ViewModel
         {
             bool SignupResult;
 
-            if (Nurse.Nurse_name == null || Nurse.Nurse_no == null || Nurse.Nurse_pw == null || Nurse_RePw == null || SelectedDept.Dept_name == null)
+            if (Nurse.Nurse_name == null || Nurse.Nurse_no == null || Nurse.Nurse_pw == null || Nurse_RePw == null || SelectedDept == null)
             {
                 MessageBox.Show("정보를 모두 입력해주세요.");
                 SignupResult = false;
