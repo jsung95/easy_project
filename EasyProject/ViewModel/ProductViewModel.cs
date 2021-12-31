@@ -45,6 +45,17 @@ namespace EasyProject.ViewModel
             }
         }
 
+        private string duplicatedProductString;
+        public string DuplicatedProductString
+        {
+            get { return duplicatedProductString; }
+            set
+            {
+                duplicatedProductString = value;
+                OnPropertyChanged("DuplicatedProductString");
+            }
+        }
+
         public ObservableCollection<CategoryModel> Categories { get; set; }
 
         //선택한 카테고리를 담을 프로퍼티
@@ -142,6 +153,26 @@ namespace EasyProject.ViewModel
             }//get
 
         }//ListCommand
+
+        private ActionCommand snackBarCommand;
+        public ICommand SnackBarCommand
+        {
+            get
+            {
+                if (snackBarCommand == null)
+                {
+                    snackBarCommand = new ActionCommand(CloseSnackBar);
+                }
+                return snackBarCommand;
+            }//get
+
+        }//ListCommand
+
+        private void CloseSnackBar()
+        {
+            IsDuplicatedProduct = false;
+        }
+
         private void FileReader()
         {
             string fileExtension = Path.GetExtension(openFileDialog);
@@ -380,6 +411,7 @@ namespace EasyProject.ViewModel
 
         public void ProductInsert()
         {
+            
             Product.Category_id = categoryDao.GetCategoryID(SelectedCategory.Category_name);
 
             if (!dao.IsProductDuplicateCheck(Product))
@@ -416,8 +448,10 @@ namespace EasyProject.ViewModel
             }
             else
             {
-                Console.WriteLine("안됩니다. 중복되어서요!");
-                isDuplicatedProduct = true;
+                DuplicatedProductString = Product.Prod_code + "(" + Product.Prod_name + ") / " +
+                    SelectedCategory.Category_name + "/" + Product.Prod_expire + "/" + Product.Prod_price + "는 이미 존재하여 재고 입력이 불가합니다.";
+                Console.WriteLine(DuplicatedProductString);
+                IsDuplicatedProduct = true;
             }
             
         }// ProductInsert

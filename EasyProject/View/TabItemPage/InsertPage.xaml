@@ -6,10 +6,11 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:EasyProject.View"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="500" d:DesignWidth="800"
+      DataContext="{Binding PVM, Source={StaticResource Locator}}"
       Title="InsertPage" Cursor="Hand">
 
-    <Grid>
+    <Grid Height="500">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="9*"/>
@@ -29,6 +30,8 @@
             <TextBlock Text="추가된 목록" Grid.Column="2" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13"></TextBlock>
         </Grid>
 
+        
+
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
@@ -39,18 +42,32 @@
             <Frame x:Name="InsertListPageFrame" Grid.Column="1" Source="InsertListPage.xaml"/>
         </Grid>
 
-        <!--<materialDesign:Card Grid.Column="1" Margin="10,10,10,10" UniformCornerRadius="20">
-            <Calendar x:Name="calendarForSelect" Margin="-1 -4 -1 0" IsTodayHighlighted="True" Background="White" >
-            <Calendar.Resources>
-                <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="Gray" />
-                <SolidColorBrush x:Key="MaterialDesignBody" Color="Gray" />
-            </Calendar.Resources>
-        </Calendar>
-        </materialDesign:Card> -->
+        <Grid Grid.Row="1">
+            <materialDesign:Snackbar x:Name="Snackbar"  Background="#Ea4a2d" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+                <materialDesign:SnackbarMessage ActionContent="닫기" ActionCommand="{Binding SnackBarCommand}">
+                    <materialDesign:SnackbarMessage.Style>
+                        <Style TargetType="materialDesign:SnackbarMessage">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsDuplicatedProduct}" Value="True">
+                                    <Setter Property="Content" Value="{Binding DuplicatedProductString}"></Setter>
+                                </DataTrigger>
+                                
+                            </Style.Triggers>
+                        </Style>
+                    </materialDesign:SnackbarMessage.Style>
+                </materialDesign:SnackbarMessage>
 
-        <Grid Grid.Column="1">
-            
+                <materialDesign:Snackbar.Style>
+                    <Style TargetType="materialDesign:Snackbar">
+                        <Setter Property="IsActive" Value="False"></Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsDuplicatedProduct}" Value="True">
+                                <Setter Property="IsActive" Value="True"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </materialDesign:Snackbar.Style>
+            </materialDesign:Snackbar>
         </Grid>
-
     </Grid>
 </Page>
