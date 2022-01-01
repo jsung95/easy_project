@@ -381,7 +381,7 @@ namespace EasyProject.ViewModel
         }
 
 
-        private ActionCommand outProductCommand;
+/*        private ActionCommand outProductCommand;
         public ICommand OutProductCommand
         {
             get
@@ -392,7 +392,7 @@ namespace EasyProject.ViewModel
                 }
                 return outProductCommand;
             }//get
-        }
+        }*/
 
         public void OutProduct()
         {
