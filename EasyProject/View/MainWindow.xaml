@@ -18,7 +18,6 @@
                 <ColumnDefinition Width="10*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-
             <TextBlock Text="재고관리 프로그램"  Grid.Column="0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" FontFamily="Champagne &amp; Limousines" Width="191" Margin="10,0,0,0"/>
 
             <Grid Grid.Column="2">
@@ -31,11 +30,9 @@
                     </Button>
                     <Button Click="btn_close" HorizontalAlignment="Center" Grid.Column="4" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}">
                         <materialDesign:PackIcon Kind="Power" Foreground="white"/>
-                    </Button>
-                    
+                    </Button>                    
                 </StackPanel>
-            </Grid>
-            
+            </Grid>            
         </Grid>
         <Grid Grid.Row="1">
             <Frame NavigationUIVisibility="Hidden" Source="LoginPage.xaml"/>

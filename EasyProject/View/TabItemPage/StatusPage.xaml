@@ -213,8 +213,12 @@
                                                                     <ColumnDefinition Width="*"/>
                                                                 </Grid.ColumnDefinitions>
                                                                 <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11"  Text="부서" />
-                                                                <ComboBox Grid.Column="1" Height="30" Width="70"  HorizontalAlignment="Left" x:Name="Dept_comboBox" VerticalAlignment="Center"
-                                                                          ItemsSource="{Binding DataContext.Depts, RelativeSource={RelativeSource FindAncestor, AncestorType=x:Type }}"  SelectedItem="{Binding SelectedOutDept}">
+                                                                <ComboBox Grid.Column="1" Height="30" Width="70"  HorizontalAlignment="Left" x:Name="Dept_comboBox" 
+                                                                          VerticalAlignment="Center"
+                                                                          ItemsSource="{Binding DataContext.Depts, 
+                                                                          RelativeSource={RelativeSource TemplatedParent}}" 
+                                                                          
+                                                                          SelectedValue="{Binding SelectedOutDept, UpdateSourceTrigger=PropertyChanged}">
                                                                     <ComboBox.ItemTemplate>
                                                                         <DataTemplate>
                                                                             <StackPanel Orientation="Horizontal">
@@ -380,10 +384,7 @@
                                         </Style>
                                     </Button.Style>
                                 </Button>
-
-
                             </StackPanel>
-
                         </Grid>
                     </Grid>
                     <Grid Grid.Column="1">
@@ -399,7 +400,7 @@
                                 </Grid>
                                 <Grid>
                                     <lvc:CartesianChart x:Name="chart" BorderThickness="2" Series="{Binding SeriesCollection}" 
-                             LegendLocation="Top" Height="229" VerticalAlignment="Bottom" Margin="0,0,25.8,204.6"  >
+                                        LegendLocation="Top" Height="229" VerticalAlignment="Bottom" Margin="0,0,25.8,204.6"  >
                                         <!--Series="{Binding SeriesCollection}"-->
                                         <lvc:CartesianChart.AxisY>
                                             <lvc:Axis LabelFormatter="{Binding Formatter}" Title="수량" />

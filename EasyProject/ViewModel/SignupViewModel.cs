@@ -122,7 +122,7 @@ namespace EasyProject.ViewModel
                     }//if
                     else
                     {
-                        MessageBox.Show("암호는 숫자, 문자 조합만 6자리 이상만 가능합니다.");
+                        MessageBox.Show("비밀번호는 숫자, 문자 조합만 6자리 이상만 가능합니다.");
                         SignupResult = false;
                         return SignupResult;
                     }//else
