@@ -204,37 +204,62 @@ namespace EasyProject.ViewModel
                 for (int cCnt = 0; cCnt <= 5; cCnt++)
                 {
                     product = SetProductObjectForCsv(ref product,cCnt,temp[cCnt]);
+
+                    ProductModel productModel = new ProductModel();
+                    productModel.Prod_code = product.Prod_code;
+                    productModel.Prod_name = product.Prod_name;
+                    productModel.Category_id = categoryDao.GetCategoryID(product.Category_name);
+                    productModel.Prod_expire = product.Prod_expire;
+                    productModel.Prod_price = product.Prod_price;
+
+                    Console.WriteLine(product.Category_name+"////카테고리명////");
+                    if (!dao.IsProductDuplicateCheck(productModel))
+                    {
+                        //Console.WriteLine(productModel.Prod_code + productModel.Prod_name +
+                        //    productModel.Category_id.ToString()+productModel.Prod_price);
+                        Console.WriteLine("중복이 아니다. ");
+                        excelProductList.Add(product);
+                    }
+                    else
+                    {
+                        DuplicatedProductString = "이미 존재하는 재고 입력은 불가합니다.";
+                        Console.WriteLine("중복이다.");
+                        IsDuplicatedProduct = true;
+                        excelProductList = null;
+                    }
                 }
-                excelProductList.Add(product);
             }
 
-            foreach (ProductShowModel elem in excelProductList)
+            if (excelProductList != null)
             {
-                //MessageBox.Show(product.Prod_code+".."+product.Prod_name+
-                //   ".." + product.Category_name+".."+product.Prod_expire
-                //   + ".." + product.Prod_price + ".." + product.Prod_total);
+                foreach (ProductShowModel elem in excelProductList)
+                {
+                    //MessageBox.Show(product.Prod_code+".."+product.Prod_name+
+                    //   ".." + product.Category_name+".."+product.Prod_expire
+                    //   + ".." + product.Prod_price + ".." + product.Prod_total);
 
-                dao.AddProductForExcel(elem, elem.Category_name);
-                dao.StoredProductForExcel(elem, Nurse);
-                dao.AddImpDeptForExcel(elem, Nurse);
+                    dao.AddProductForExcel(elem, elem.Category_name);
+                    dao.StoredProductForExcel(elem, Nurse);
+                    dao.AddImpDeptForExcel(elem, Nurse);
 
-                // 현재 사용자가 추가 입고 내역을 담을 임시 객체
-                ProductInOutModel productDto = new ProductInOutModel();
+                    // 현재 사용자가 추가 입고 내역을 담을 임시 객체
+                    ProductInOutModel productDto = new ProductInOutModel();
 
-                // 새로 입고 시 Add_list(사용자의 입고 내역 목록) 업데이트
-                productDto.Prod_in_date = DateTime.Now;
-                productDto.Prod_code = elem.Prod_code;
-                productDto.Prod_name = elem.Prod_name;
-                productDto.Category_name = elem.Category_name;
-                productDto.Prod_expire = elem.Prod_expire;
-                productDto.Prod_price = elem.Prod_price;
-                productDto.Prod_in_count = elem.Prod_total;
-                productDto.Nurse_name = Nurse.Nurse_name;
+                    // 새로 입고 시 Add_list(사용자의 입고 내역 목록) 업데이트
+                    productDto.Prod_in_date = DateTime.Now;
+                    productDto.Prod_code = elem.Prod_code;
+                    productDto.Prod_name = elem.Prod_name;
+                    productDto.Category_name = elem.Category_name;
+                    productDto.Prod_expire = elem.Prod_expire;
+                    productDto.Prod_price = elem.Prod_price;
+                    productDto.Prod_in_count = elem.Prod_total;
+                    productDto.Nurse_name = Nurse.Nurse_name;
 
-                //productDtoList.Insert(0, productDto);
-                Add_list.Insert(0, productDto);
-                //Add_list.Add(productDto);
-                Console.WriteLine(Add_list.Count + "개");
+                    //productDtoList.Insert(0, productDto);
+                    Add_list.Insert(0, productDto);
+                    //Add_list.Add(productDto);
+                    Console.WriteLine(Add_list.Count + "개");
+                }
             }
 
 
@@ -265,52 +290,76 @@ namespace EasyProject.ViewModel
                     for (cCnt = 1; cCnt <= range.Columns.Count; cCnt++)
                     {
                         product = SetProductObject(ref product, ref range, rCnt, cCnt);
+
+                        ProductModel productModel = new ProductModel();
+                        productModel.Prod_code = product.Prod_code;
+                        productModel.Prod_name = product.Prod_name;
+                        productModel.Category_id = categoryDao.GetCategoryID(product.Category_name);
+                        productModel.Prod_expire = product.Prod_expire;
+                        productModel.Prod_price = product.Prod_price;
+
+                        if (!dao.IsProductDuplicateCheck(productModel))
+                        {
+                            Console.WriteLine("{0}, {1}, {2}, {3}, {4}, {5}", productModel.Prod_code, productModel.Prod_name,
+                                productModel.Category_id, productModel.Prod_expire, productModel.Prod_price);
+                            Console.WriteLine("중복이 아니다. ");
+                            excelProductList.Add(product);
+                        }
+                        else
+                        {
+                            DuplicatedProductString = "이미 존재하는 재고 입력은 불가합니다.";
+                            Console.WriteLine("중복이다.");
+                            IsDuplicatedProduct = true;
+                            excelProductList = null;
+                        }
+
                     }
-                    excelProductList.Add(product);
-                    //MessageBox.Show(excelProductList.Count + "개");
-
                 }
 
-                foreach (ProductShowModel elem in excelProductList)
+                if (excelProductList != null)
                 {
-                    //MessageBox.Show(product.Prod_code+".."+product.Prod_name+
-                    //   ".." + product.Category_name+".."+product.Prod_expire
-                    //   + ".." + product.Prod_price + ".." + product.Prod_total);
+                    foreach (ProductShowModel elem in excelProductList)
+                    {
+                        //MessageBox.Show(product.Prod_code+".."+product.Prod_name+
+                        //   ".." + product.Category_name+".."+product.Prod_expire
+                        //   + ".." + product.Prod_price + ".." + product.Prod_total);
 
-                    dao.AddProductForExcel(elem, elem.Category_name);
-                    dao.StoredProductForExcel(elem, Nurse);
-                    dao.AddImpDeptForExcel(elem, Nurse);
+                        dao.AddProductForExcel(elem, elem.Category_name);
+                        dao.StoredProductForExcel(elem, Nurse);
+                        dao.AddImpDeptForExcel(elem, Nurse);
 
-                    // 현재 사용자가 추가 입고 내역을 담을 임시 객체
-                    ProductInOutModel productDto = new ProductInOutModel();
+                        // 현재 사용자가 추가 입고 내역을 담을 임시 객체
+                        ProductInOutModel productDto = new ProductInOutModel();
 
-                    // 새로 입고 시 Add_list(사용자의 입고 내역 목록) 업데이트
-                    productDto.Prod_in_date = DateTime.Now;
-                    productDto.Prod_code = elem.Prod_code;
-                    productDto.Prod_name = elem.Prod_name;
-                    productDto.Category_name = elem.Category_name;
-                    productDto.Prod_expire = elem.Prod_expire;
-                    productDto.Prod_price = elem.Prod_price;
-                    productDto.Prod_in_count = elem.Prod_total;
-                    productDto.Nurse_name = Nurse.Nurse_name;
+                        // 새로 입고 시 Add_list(사용자의 입고 내역 목록) 업데이트
+                        productDto.Prod_in_date = DateTime.Now;
+                        productDto.Prod_code = elem.Prod_code;
+                        productDto.Prod_name = elem.Prod_name;
+                        productDto.Category_name = elem.Category_name;
+                        productDto.Prod_expire = elem.Prod_expire;
+                        productDto.Prod_price = elem.Prod_price;
+                        productDto.Prod_in_count = elem.Prod_total;
+                        productDto.Nurse_name = Nurse.Nurse_name;
 
-                    //productDtoList.Insert(0, productDto);
-                    Add_list.Insert(0, productDto);
-                    //Add_list.Add(productDto);
-                    Console.WriteLine(Add_list.Count + "개");
+                        //productDtoList.Insert(0, productDto);
+                        Add_list.Insert(0, productDto);
+                        //Add_list.Add(productDto);
+                        Console.WriteLine(Add_list.Count + "개");
+                    }
+
+                    //var ob2list = Add_list.ToList();
+                    //ob2list.AddRange(productDtoList);
+                    //Add_list = new ObservableCollection<ProductInOutModel>(ob2list);
+
+                    xlWorkBook.Close(true, null, null);
+                    xlApp.Quit();
+
+                    releaseObject(xlWorkSheet);
+                    releaseObject(xlWorkBook);
+                    releaseObject(xlApp);
+
+
                 }
-
-                //var ob2list = Add_list.ToList();
-                //ob2list.AddRange(productDtoList);
-                //Add_list = new ObservableCollection<ProductInOutModel>(ob2list);
-
-                xlWorkBook.Close(true, null, null);
-                xlApp.Quit();
-
-                releaseObject(xlWorkSheet);
-                releaseObject(xlWorkBook);
-                releaseObject(xlApp);
-
             }
             catch (Exception ex)
             {
