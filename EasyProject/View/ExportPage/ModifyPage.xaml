@@ -113,14 +113,14 @@
 
                     <TextBox x:Name="price_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="가격" Grid.Column="4" HorizontalContentAlignment="Center" 
                        VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" 
-                             Text="{Binding SelectedProduct.Prod_price}"/>
+                             Text="{Binding SelectedProduct.Prod_price}" PreviewTextInput="price_TxtBox_PreviewTextInput"/>
 
                     <Label Content="수량" Foreground="#4472C4" Grid.Column="5" FontSize="12" FontWeight="Bold" HorizontalAlignment="center"  
                        VerticalAlignment="Center"/>
 
                     <TextBox x:Name="mount_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="6" HorizontalContentAlignment="Center" 
                        VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" 
-                             Text="{Binding SelectedProduct.Imp_dept_count}"/>
+                             Text="{Binding SelectedProduct.Imp_dept_count}" PreviewTextInput="mount_TxtBox_PreviewTextInput"/>
 
                 </Grid>
 
@@ -139,9 +139,37 @@
                     <Button x:Name="cancel_Btn" Content="취소" Grid.Column="3" Background="Gray" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="35" Width="70" Cursor="Hand"  Foreground="White" Click="cancel_Btn_Click"/>
 
-                    <Button x:Name="signUp_Btn" Content="확인" Grid.Column="4" Background="#4472C4" FontSize="12"  HorizontalAlignment="Left"  
-                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="35" Width="70" Cursor="Hand"  Command="{Binding ChangeProductCommand}" Foreground="white" Click="signUp_Btn_Click">
+                    <Button x:Name="modifyUp_Btn" Content="확인" Grid.Column="4" Background="#4472C4" FontSize="12"  HorizontalAlignment="Left"  
+                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="35" Width="70" Cursor="Hand"  Foreground="white" Click="modify_Btn_Click">
                     </Button>
+                </Grid>
+
+                <Grid Grid.Row="4">
+                    <materialDesign:Snackbar x:Name="Snackbar"  Background="#Ea4a2d" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+                        <materialDesign:SnackbarMessage ActionContent="닫기" ActionCommand="{Binding SnackBarCommand}">
+                            <materialDesign:SnackbarMessage.Style>
+                                <Style TargetType="materialDesign:SnackbarMessage">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsEmptyProduct}" Value="True">
+                                            <Setter Property="Content" Value="{Binding ErrorProductString}"></Setter>
+                                        </DataTrigger>
+
+                                    </Style.Triggers>
+                                </Style>
+                            </materialDesign:SnackbarMessage.Style>
+                        </materialDesign:SnackbarMessage>
+
+                        <materialDesign:Snackbar.Style>
+                            <Style TargetType="materialDesign:Snackbar">
+                                <Setter Property="IsActive" Value="False"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsEmptyProduct}" Value="True">
+                                        <Setter Property="IsActive" Value="True"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </materialDesign:Snackbar.Style>
+                    </materialDesign:Snackbar>
                 </Grid>
 
             </Grid>

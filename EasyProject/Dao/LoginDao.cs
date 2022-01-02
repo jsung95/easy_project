@@ -185,6 +185,84 @@ namespace EasyProject.Dao
 
         }//PasswordChange
 
+        
+        public void Login_Logging(NurseModel nurse_dto)
+        {
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection  = conn;
+                        cmd.CommandText = "INSERT INTO LOGIN_LOG (login_log_ip, login_log_nation, nurse_no, nurse_name, nurse_auth, dept_id, dept_name) " +
+                                          "VALUES ((SELECT SYS_CONTEXT('USERENV', 'IP_ADDRESS') FROM dual), (SELECT SYS_CONTEXT('USERENV', 'NLS_TERRITORY') FROM dual), " +
+                                          ":nurse_no, :nurse_name, :nurse_auth, :dept_id, (SELECT dept_name FROM dept WHERE dept_id = :dept_id)) ";
+
+                        cmd.Parameters.Add(new OracleParameter("nurse_no", nurse_dto.Nurse_no));
+                        cmd.Parameters.Add(new OracleParameter("nurse_name", nurse_dto.Nurse_name));
+                        cmd.Parameters.Add(new OracleParameter("nurse_auth", nurse_dto.Nurse_auth));
+                        cmd.Parameters.Add(new OracleParameter("dept_id", nurse_dto.Dept_id));
+                        cmd.Parameters.Add(new OracleParameter("dept_id", nurse_dto.Dept_id));
+
+                        cmd.ExecuteNonQuery();
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+        }//Login_Logging
+
+
+        public void Logout_Logging(NurseModel nurse_dto)
+        {
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "INSERT INTO LOGOUT_LOG (logout_log_ip, logout_log_nation, nurse_no, nurse_name, nurse_auth, dept_id, dept_name) " +
+                                          "VALUES ((SELECT SYS_CONTEXT('USERENV', 'IP_ADDRESS') FROM dual), (SELECT SYS_CONTEXT('USERENV', 'NLS_TERRITORY') FROM dual), " +
+                                          ":nurse_no, :nurse_name, :nurse_auth, :dept_id, (SELECT dept_name FROM dept WHERE dept_id = :dept_id)) ";
+
+                        cmd.Parameters.Add(new OracleParameter("nurse_no", nurse_dto.Nurse_no));
+                        cmd.Parameters.Add(new OracleParameter("nurse_name", nurse_dto.Nurse_name));
+                        cmd.Parameters.Add(new OracleParameter("nurse_auth", nurse_dto.Nurse_auth));
+                        cmd.Parameters.Add(new OracleParameter("dept_id", nurse_dto.Dept_id));
+                        cmd.Parameters.Add(new OracleParameter("dept_id", nurse_dto.Dept_id));
+
+                        cmd.ExecuteNonQuery();
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+        }//Logout_Logging
+
 
     }//class
 

@@ -90,7 +90,7 @@
                             <ColumnDefinition Width="0.5*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Content="부서" Foreground="#4472C4" Grid.Column="0" FontSize="15" FontWeight="Bold" HorizontalAlignment="center"  
+                        <Label x:Name="dept_Label" Content="부서" Foreground="#4472C4" Grid.Column="0" FontSize="15" FontWeight="Bold" HorizontalAlignment="center"  
                        VerticalAlignment="Center"/>
 
                         <ComboBox Margin="10,25" Height="30" Width="70" Grid.Column="1" HorizontalAlignment="Center"  x:Name="Dept_comboBox" VerticalAlignment="Center"
@@ -131,7 +131,7 @@
 
                         <TextBox x:Name="mount_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="1" HorizontalContentAlignment="Center" 
                        VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Width="80"
-                             Text="{Binding InputOutCount}"/>
+                             Text="{Binding InputOutCount}" PreviewTextInput="mount_TxtBox_PreviewTextInput"/>
                         <TextBox x:Name="mount_TxtBox_Hidden" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="1" HorizontalContentAlignment="Center" 
                        VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Width="80" Visibility="Hidden"/>
 
@@ -157,10 +157,38 @@
                     <Button x:Name="cancel_Btn" Content="취소" Grid.Column="3" Background="Gray" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
                        VerticalAlignment="Center" Margin="0,0,0,0" BorderThickness="0" Height="35" Width="70" Cursor="Hand"  Foreground="White" Click="cancel_Btn_Click" Command="{Binding OutProductReset}"/>
 
-                    <Button x:Name="signUp_Btn" Content="확인" Grid.Column="4" Background="#4472C4" FontSize="12"  HorizontalAlignment="Center"  
-                       VerticalAlignment="Center" Margin="0,0,0,0" BorderThickness="0" Height="35" Width="70" Cursor="Hand"  Command="{Binding OutProductCommand}" Foreground="white" Click="signUp_Btn_Click">
+                    <Button x:Name="release_Btn" Content="확인" Grid.Column="4" Background="#4472C4" FontSize="12"  HorizontalAlignment="Center"  
+                       VerticalAlignment="Center" Margin="0,0,0,0" BorderThickness="0" Height="35" Width="70" Cursor="Hand" Foreground="white" Click="release_Btn_Click">
                     </Button>
                     
+                </Grid>
+
+                <Grid Grid.Row="3">
+                    <materialDesign:Snackbar x:Name="Snackbar"  Background="#Ea4a2d" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+                        <materialDesign:SnackbarMessage ActionContent="닫기" ActionCommand="{Binding SnackBarCommand}" Width="619">
+                            <materialDesign:SnackbarMessage.Style>
+                                <Style TargetType="materialDesign:SnackbarMessage">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsEmptyProduct}" Value="True">
+                                            <Setter Property="Content" Value="{Binding ErrorProductString}"></Setter>
+                                        </DataTrigger>
+
+                                    </Style.Triggers>
+                                </Style>
+                            </materialDesign:SnackbarMessage.Style>
+                        </materialDesign:SnackbarMessage>
+
+                        <materialDesign:Snackbar.Style>
+                            <Style TargetType="materialDesign:Snackbar">
+                                <Setter Property="IsActive" Value="False"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsEmptyProduct}" Value="True">
+                                        <Setter Property="IsActive" Value="True"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </materialDesign:Snackbar.Style>
+                    </materialDesign:Snackbar>
                 </Grid>
 
             </Grid>

@@ -10,7 +10,7 @@ namespace EasyProject.Model
     {
 
         public string Prod_code { get; set; }
-        public string Prod_name { get; set; } 
+        public string Prod_name { get; set; }
         public string Category_name { get; set; }
         public int? Prod_price { get; set; }
         public int? Prod_total { get; set; }
@@ -18,6 +18,7 @@ namespace EasyProject.Model
         public DateTime Prod_expire { get; set; }
         public int? Prod_id { get; set; }
         public int? Imp_dept_id { get; set; }
+        public int? Prod_remainexpire { get; set; }
     }//class
 
 }//namespace

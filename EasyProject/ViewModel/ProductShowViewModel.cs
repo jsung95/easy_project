@@ -289,7 +289,8 @@ namespace EasyProject.ViewModel
         }*/
 
 
-        private ActionCommand changeProductCommand;
+
+/*        private ActionCommand changeProductCommand;
         public ICommand ChangeProductCommand
         {
             get
@@ -300,18 +301,63 @@ namespace EasyProject.ViewModel
                 }
                 return changeProductCommand;
             }//get
-        }
+        }*/
 
-        public void ChangeProductInfo()
+        public void ChangeProductInfo() //재고수정 확인 버튼 클릭 시에 동작하는 메소드
         {
             product_dao.ChangeProductInfo(SelectedProduct);
             product_dao.ChangeProductInfo_IMP_DEPT(SelectedProduct);
             Products = new ObservableCollection<ProductShowModel>(product_dao.GetProducts());
-
             //LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.SearchProducts(SelectedDept, SelectedSearchType, TextForSearch));
             //UpdateCollection(LstOfRecords.Take(SelectedRecord));
             //UpdateRecordCount();
         }
+
+
+        // ==================== 스넥바 snackbar =======================
+        //============================================================
+        private bool isEmptyProduct = false;
+        public bool IsEmptyProduct
+        {
+            get { return isEmptyProduct; }
+            set
+            {
+                isEmptyProduct = value;
+                OnPropertyChanged("IsEmptyProduct");
+            }
+        }
+
+        private string errorProductString;
+        public string ErrorProductString
+        {
+            get { return errorProductString; }
+            set
+            {
+                errorProductString = value;
+                OnPropertyChanged("ErrorProductString");
+            }
+        }
+
+        private ActionCommand snackBarCommand;
+        public ICommand SnackBarCommand
+        {
+            get
+            {
+                if (snackBarCommand == null)
+                {
+                    snackBarCommand = new ActionCommand(CloseSnackBar);
+                }
+                return snackBarCommand;
+            }//get
+
+        }//SnackBarCommand
+
+        private void CloseSnackBar()
+        {
+            IsEmptyProduct = false;
+        }
+        //============================================================
+        //============================================================
 
 
         private ActionCommand searchCommand;
@@ -335,7 +381,7 @@ namespace EasyProject.ViewModel
         }
 
 
-        private ActionCommand outProductCommand;
+/*        private ActionCommand outProductCommand;
         public ICommand OutProductCommand
         {
             get
@@ -346,7 +392,7 @@ namespace EasyProject.ViewModel
                 }
                 return outProductCommand;
             }//get
-        }
+        }*/
 
         public void OutProduct()
         {

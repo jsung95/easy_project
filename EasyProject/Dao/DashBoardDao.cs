@@ -331,7 +331,7 @@ namespace EasyProject.Dao
                         cmd.Connection = conn;
                         cmd.CommandText = "SELECT prod_in_to, " +
                                           "COUNT(CASE WHEN prod_in_type = '이관' THEN 1 END), " +
-                                          "COUNT(CASE WHEN prod_in_type = '발주' THEN 1 END) " +                                         
+                                          "COUNT(CASE WHEN prod_in_type = '발주' THEN 1 END) " +
                                           "FROM product_in " +
                                           "WHERE prod_in_date > :startDate " +
                                           "AND prod_in_date < :endDate + 1 " +
@@ -343,7 +343,7 @@ namespace EasyProject.Dao
 
                         while (reader.Read())
                         {
-                            string dept_name = reader.GetString(0);                            
+                            string dept_name = reader.GetString(0);
                             int? prod_transferIn_cases = reader.GetInt32(1);
                             int? prod_order_cases = reader.GetInt32(2);
 
@@ -421,6 +421,68 @@ namespace EasyProject.Dao
             }//catch
             return list;
         }//GetDiscardTotalCount
+        public List<ProductShowModel> Get_Prod_Code_Get_By_Expire(DeptModel SelectedDept, CategoryModel SelectedCategory)
+        {
+            Console.WriteLine("dept : " + SelectedDept.Dept_name);
+            Console.WriteLine("dept : " + SelectedDept.Dept_id);
+            Console.WriteLine("cate : " + SelectedCategory.Category_name);
+            Console.WriteLine("cate : " + SelectedCategory.Category_id);
+            Console.WriteLine("!!!");
+            List<ProductShowModel> list = new List<ProductShowModel>();
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT prod_code, TO_DATE(TO_CHAR(prod_expire, 'YYYYMMDD')) - TO_DATE(TO_CHAR(CURRENT_DATE, 'YYYYMMDD')) " +
+                                          "FROM PRODUCT P " +
+                                          "INNER JOIN CATEGORY C " +
+                                          "ON P.category_id = C.category_id " +
+                                          "INNER JOIN IMP_DEPT I " +
+                                          "ON P.prod_id = I.prod_id " +
+                                          "WHERE I.dept_id = :dept_id and C.category_name = :category_name " +
+                                          "order by TO_DATE(TO_CHAR(prod_expire, 'YYYYMMDD')) - TO_DATE(TO_CHAR(CURRENT_DATE, 'YYYYMMDD')) asc";
+
+
+                        cmd.Parameters.Add(new OracleParameter("dept_id", SelectedDept.Dept_id));
+                        cmd.Parameters.Add(new OracleParameter("category_name", SelectedCategory.Category_name));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+                        Console.WriteLine(reader.Read() + "응응");
+                        while (reader.Read())
+                        {
+                            string Prod_code = reader.GetString(0);
+                            string Prod_remainexpire = reader.GetString(1);  //남는유통기한
+                            Console.WriteLine("@ dao st: " + Prod_code);
+                            Console.WriteLine("@ dao do: " + Prod_remainexpire);
+                            ProductShowModel dto = new ProductShowModel()
+                            {
+                                Prod_code = Prod_code,
+                                Prod_remainexpire = Convert.ToInt32(Prod_remainexpire),
+
+
+                            };
+                            list.Add(dto);
+                        }//while
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return list;
+        }//Get_Prod_Code_Get_By_Expire()
 
 
 
