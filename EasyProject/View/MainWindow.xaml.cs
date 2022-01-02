@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Oracle.ManagedDataAccess.Client;
+using EasyProject.ViewModel;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using Microsoft.Expression.Interactivity.Core;
 
 namespace EasyProject
 {
@@ -32,6 +35,8 @@ namespace EasyProject
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;  //화면버튼
             this.Loaded += new RoutedEventHandler(Window1_Loaded);
             this.MouseLeftButtonDown += MainWindow_MouseLeftButtonDown;    //드래그 무브
+
+            this.DataContext = this;
         }
         void MainWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)       //드래그 무브
         {
@@ -66,7 +71,18 @@ namespace EasyProject
 
         private void btn_close(object sender, RoutedEventArgs e)       //버튼 창닫기
         {
-            Window.GetWindow(this).Close();
+            var temp = Ioc.Default.GetService<LoginViewModel>();
+
+            if (temp.idCheckResult) //만약 로그인에 성공했던 상태라면
+            {
+                temp.Logout_For_QuitProgram(); //로그아웃 로깅 데이터를 추가하고
+                Window.GetWindow(this).Close(); //프로그램 종료
+            }
+            else
+            {
+                Window.GetWindow(this).Close();
+            }
+
         }
 
         private void btn_minimize(object sender, RoutedEventArgs e)       //화면 내리기
@@ -97,5 +113,36 @@ namespace EasyProject
             }
 
         }
+
+
+        private ActionCommand exit_Command;
+        public ICommand Exit_Command
+        {
+            get
+            {
+                if (exit_Command == null)
+                {
+                    exit_Command = new ActionCommand(exit_Program);
+                }
+                return exit_Command;
+            }
+        }
+
+        private void exit_Program()       //버튼 창닫기
+        {
+            var temp = Ioc.Default.GetService<LoginViewModel>();
+
+            if (temp.idCheckResult) //만약 로그인에 성공했던 상태라면
+            {
+                temp.Logout_For_QuitProgram(); //로그아웃 로깅 데이터를 추가하고
+                Window.GetWindow(this).Close(); //프로그램 종료
+            }
+            else
+            {
+                Window.GetWindow(this).Close();
+            }
+
+        }
+
     }
 }

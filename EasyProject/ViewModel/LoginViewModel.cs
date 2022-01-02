@@ -50,6 +50,10 @@ namespace EasyProject.ViewModel
         //    }
         //}
 
+        
+        public bool idCheckResult { get; set; }
+
+
         private ActionCommand logout;
         public ICommand LogoutCommand
         {
@@ -64,12 +68,15 @@ namespace EasyProject.ViewModel
         }
         public bool Login()
         {
-               bool idCheckResult = dao.IdPasswordCheck(Nurse); // id/pw 가 일치하는 지 확인
+               idCheckResult = dao.IdPasswordCheck(Nurse); // id/pw 가 일치하는 지 확인
                Console.WriteLine("Login() idCheckResult: " + idCheckResult);
                if (idCheckResult == true) // 일치할 경우
                {
                     Console.WriteLine("id password check ok!");
                     NurseModel result = dao.LoginUserInfo(Nurse); // 해당 사용자 정보를 NurseModel 객체에 넣는다.   
+
+                    dao.Login_Logging(result); //로깅 데이터도 추가
+
                     App.nurse_dto.Nurse_no = result.Nurse_no;
                     App.nurse_dto.Nurse_name = result.Nurse_name;
                     App.nurse_dto.Nurse_auth = result.Nurse_auth;
@@ -103,6 +110,8 @@ namespace EasyProject.ViewModel
 
         public void Logout()
         {
+            dao.Logout_Logging(App.nurse_dto); //로깅 데이터도 추가
+
             App.nurse_dto.Nurse_no = null;
             App.nurse_dto.Nurse_name = null;
             App.nurse_dto.Nurse_auth = null;
@@ -119,6 +128,11 @@ namespace EasyProject.ViewModel
             //로그아웃 버튼 클릭 시에 프로그램 재시작
             System.Windows.Forms.Application.Restart();
             System.Windows.Application.Current.Shutdown();
+        }
+
+        public void Logout_For_QuitProgram()
+        {
+            dao.Logout_Logging(App.nurse_dto); //로깅 데이터도 추가
         }
 
 

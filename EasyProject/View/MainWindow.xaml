@@ -7,6 +7,9 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="재고 관리 프로그램" BorderBrush="LightGray" BorderThickness="2" Height="600" Width="1300" WindowStyle="None"  AllowsTransparency="True" ResizeMode="CanResizeWithGrip">
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Alt" Key="F4" Command="{Binding Exit_Command}"/>
+    </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
