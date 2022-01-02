@@ -37,6 +37,7 @@ namespace EasyProject.View.TabItemPage
             this.Loaded += MainWindow_Loaded;
 
         }
+
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             //searchText_ComboBox.Items.Add("제품코드");
@@ -110,6 +111,36 @@ namespace EasyProject.View.TabItemPage
                     buttonColumn.Visibility = Visibility.Hidden;
                 }
             }
+        }
+
+        private void DataGridCheckboxClick(object sender, RoutedEventArgs e)
+        {
+            if(DataGridCheckbox.IsChecked == true)
+            {
+                //DataAndGraphGrid.ColumnDefinitions.Add(DataGridColumn);
+                DataGridColumn.Width = new GridLength(1.8, GridUnitType.Star);
+            }
+            else
+            {
+                DataGridColumn.Width = new GridLength(0);
+            }
+        }
+
+        private void GraphCheckboxClick(object sender, RoutedEventArgs e)
+        {
+            if (GraphCheckbox.IsChecked == true)
+            {
+                GraphColumn.Width = new GridLength(1, GridUnitType.Star);
+            }
+            else
+            {
+                GraphColumn.Width = new GridLength(0);
+            }
+        }
+
+        private void GraphCheckboxUnChecked(object sender, RoutedEventArgs e)
+        {
+            GraphCard.Visibility = Visibility.Visible;
         }
         //private void reset_Btn_Click(object sender , RoutedEvent e)
         //{
