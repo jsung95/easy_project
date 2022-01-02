@@ -37,56 +37,55 @@
             <Setter Property="Cursor" Value="Hand" />
         </Style>
     </Page.Resources>
-    <Grid Background="White">
-        <materialDesign:Card  Height="450" Width="1200" UniformCornerRadius="20" Background="White">
-            <Grid Height="400" Width="1100" Background="White" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0.2*"/>
-                    <RowDefinition Height="0.3*"/>
-                    <RowDefinition Height="2*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Background="#4472C4">
+    <Grid Height="500" Width="1200" Background="White" VerticalAlignment="Top" HorizontalAlignment="Center">
+        <Grid Background="White" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0"/>
+                <RowDefinition Height="0.3*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <!--<Grid Grid.Row="0" Background="#4472C4">
                     <TextBlock FontWeight="Bold" FontSize="17" TextAlignment="Center" 
                           HorizontalAlignment="Center" Margin="7" VerticalAlignment="center">
                     <Run Foreground="White" Text="재고 현황" IsEnabled="False"/>
                     </TextBlock>
-                </Grid>
-                <Grid Grid.Row="1" Margin="10 0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="60*"/>
-                        <ColumnDefinition Width="320*"/>
-                        <ColumnDefinition Width="40*"/>
-                        <ColumnDefinition Width="60*"/>
-                        <ColumnDefinition Width="60*"/>
-                        <ColumnDefinition Width="60*"/>
-                    </Grid.ColumnDefinitions>
+                </Grid>-->
+            <Grid Grid.Row="1" Margin="10 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60*"/>
+                    <ColumnDefinition Width="320*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="60*"/>
+                    <ColumnDefinition Width="60*"/>
+                    <ColumnDefinition Width="60*"/>
+                </Grid.ColumnDefinitions>
 
-                    <ComboBox x:Name="searchText_ComboBox" Height="30" Grid.Column="0" HorizontalContentAlignment="Left" ItemsSource="{Binding Path=SearchTypeList}"
+                <ComboBox x:Name="searchText_ComboBox" Height="30" Grid.Column="0" HorizontalContentAlignment="Left" ItemsSource="{Binding Path=SearchTypeList}"
                        SelectedItem="{Binding SelectedSearchType}">
-                        <ComboBox.Resources>
-                            <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
-                        </ComboBox.Resources>
-                    </ComboBox>
+                    <ComboBox.Resources>
+                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+                    </ComboBox.Resources>
+                </ComboBox>
 
-                    <CheckBox x:Name="DataGridCheckbox" Style="{StaticResource MaterialDesignFilterChipOutlineCheckBox}" Grid.Column="4" HorizontalAlignment="Right" IsChecked="True" Content="표보기" Cursor="Hand" Click="DataGridCheckboxClick"></CheckBox>
-                    <CheckBox x:Name="GraphCheckbox" Style="{StaticResource MaterialDesignFilterChipOutlineCheckBox}" Grid.Column="5" HorizontalAlignment="Right" IsChecked="True" Content="그래프보기" Cursor="Hand" Click="GraphCheckboxClick"></CheckBox>
+                <CheckBox x:Name="DataGridCheckbox" Style="{StaticResource MaterialDesignFilterChipOutlineCheckBox}" Grid.Column="4" HorizontalAlignment="Right" IsChecked="True" Content="표보기" Cursor="Hand" Click="DataGridCheckboxClick"></CheckBox>
+                <CheckBox x:Name="GraphCheckbox" Style="{StaticResource MaterialDesignFilterChipOutlineCheckBox}" Grid.Column="5" HorizontalAlignment="Right" IsChecked="True" Content="그래프보기" Cursor="Hand" Click="GraphCheckboxClick"></CheckBox>
 
-                    <Grid Grid.Column="1" Margin="10 0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="6*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0">
-                            <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요" Grid.Column="5" HorizontalContentAlignment="Left" 
+                <Grid Grid.Column="1" Margin="10 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요" Grid.Column="5" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
                                      Text="{Binding TextForSearch}" Cursor="Hand"/>
-                        </Grid>
-                        <Grid Grid.Column="1">
-                            <Button x:Name="search_Btn" Grid.Column="3" Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White"
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Button x:Name="search_Btn" Grid.Column="3" Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White"
                             VerticalAlignment="Center" Height="30"  Width="45" HorizontalAlignment="Left" 
                              Command="{Binding SearchCommand}" Cursor="Hand">
-                                <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
-                                <!--<Button.Style>
+                            <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
+                            <!--<Button.Style>
                                     <Style TargetType="Button">
                                         <Setter Property="Visibility" Value="Visible"></Setter>
                                         <Style.Triggers>
@@ -96,194 +95,194 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Button.Style>-->
-                            </Button>
-                        </Grid>
-
+                        </Button>
                     </Grid>
-                    <Label Content="부서명" Foreground="#4472C4" Grid.Column="2" FontSize="12" 
+
+                </Grid>
+                <Label Content="부서명" Foreground="#4472C4" Grid.Column="2" FontSize="12" 
                        FontWeight="Bold" HorizontalAlignment="Right"  
                        VerticalAlignment="Center" Margin="10"/>
 
-                    <ComboBox x:Name="deptName_ComboBox1" Height="30" Grid.Column="3" HorizontalContentAlignment="Left" 
+                <ComboBox x:Name="deptName_ComboBox1" Height="30" Grid.Column="3" HorizontalContentAlignment="Left" 
                        ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept}" DropDownClosed="OnDropDownOpened">
-                        <ComboBox.Resources>
-                            <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
-                        </ComboBox.Resources>
+                    <ComboBox.Resources>
+                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+                    </ComboBox.Resources>
 
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Dept_name}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Dept_name}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
 
-                        <!--<i:Interaction.Triggers>
+                    <!--<i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
                                 <i:InvokeCommandAction Command="{Binding Command}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>-->
-                    </ComboBox>
-                    <!--<Button x:Name="resetBtn" Grid.Column="3" Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White"
+                </ComboBox>
+                <!--<Button x:Name="resetBtn" Grid.Column="3" Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White"
                             VerticalAlignment="Center" Height="24" Cursor="Hand"  RenderTransformOrigin="-4.883,0.826" Width="45" >
                         <materialDesign:PackIcon  Kind="Restore" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
                     </Button>-->
-                </Grid>
-                <Grid x:Name="DataAndGraphGrid" Grid.Row="2" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition x:Name="DataGridColumn" Width="1.8*"/>
-                        <ColumnDefinition x:Name="GraphColumn" Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid x:Name="DataGridGrid" Grid.Column="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="2*"/>
-                            <RowDefinition Height="0.2*"/>
-                        </Grid.RowDefinitions>
-                        <DataGrid x:Name="dataGrid" 
+            </Grid>
+            <Grid x:Name="DataAndGraphGrid" Grid.Row="2" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="DataGridColumn" Width="1.8*"/>
+                    <ColumnDefinition x:Name="GraphColumn" Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid x:Name="DataGridGrid" Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="0.2*"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid x:Name="dataGrid" 
                             HorizontalAlignment="Left" Margin="10 0"
                             VerticalAlignment="Top" AutoGenerateColumns="False" 
                             IsReadOnly="True" ColumnWidth="*" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" SelectionMode="Extended" SelectionUnit="FullRow" Cursor="Hand">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="1.5*" CanUserSort="false"  IsReadOnly="True" />
-                                <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="1.5*" CanUserSort="false" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="1.5*" CanUserSort="false" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}" CanUserSort="true" Header="제품가격" Width="1*"  IsReadOnly="True">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="HorizontalAlignment" Value="Right" />
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding Imp_dept_count, StringFormat='{}{0:#,0} 개'}" CanUserSort="true" Header="수량" Width="1*" IsReadOnly="True">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="HorizontalAlignment" Value="Right" />
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding Prod_expire, StringFormat='yyyy-MM-dd'}"  Header="유통기한" Width="3*" CanUserSort="true" IsReadOnly="True"/>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="1.5*" CanUserSort="false"  IsReadOnly="True" />
+                            <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="1.5*" CanUserSort="false" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="1.5*" CanUserSort="false" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}" CanUserSort="true" Header="제품가격" Width="1*"  IsReadOnly="True">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding Imp_dept_count, StringFormat='{}{0:#,0} 개'}" CanUserSort="true" Header="수량" Width="1*" IsReadOnly="True">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding Prod_expire, StringFormat='yyyy-MM-dd'}"  Header="유통기한" Width="3*" CanUserSort="true" IsReadOnly="True"/>
 
-                                <!--<DataGridTextColumn Binding="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}" CanUserSort="true" Header="제품가격" Width="1*"  IsReadOnly="True"/>
+                            <!--<DataGridTextColumn Binding="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}" CanUserSort="true" Header="제품가격" Width="1*"  IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Imp_dept_count, StringFormat='{}{0:#,0} 개'}" CanUserSort="true" Header="수량" Width="1*" IsReadOnly="True" />
                                 <DataGridTextColumn Binding="{Binding Prod_expire}"  Header="유통기한" Width="3*" CanUserSort="true" IsReadOnly="True"/>-->
 
-                                <DataGridTemplateColumn x:Name="buttonColumn" Header="신청" Width="3*" IsReadOnly="True" Visibility="Visible">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                <Button x:Name="goDialog_Btn" Foreground="#4472C4"  FontSize="12" FontWeight="Bold" Background="{x:Null}"  Cursor="Hand"
+                            <DataGridTemplateColumn x:Name="buttonColumn" Header="신청" Width="3*" IsReadOnly="True" Visibility="Visible">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Button x:Name="goDialog_Btn" Foreground="#4472C4"  FontSize="12" FontWeight="Bold" Background="{x:Null}"  Cursor="Hand"
                                                     VerticalAlignment="Center" Height="45"  Width="45" HorizontalAlignment="Center" Click="goDialog_Btn_Click">
-                                                    <materialDesign:PackIcon  Kind="Input" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                                                </Button>
-                                                <StackPanel Orientation="Horizontal">
-                                                        <materialDesign:PopupBox StaysOpen="True" IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
-                                                        <materialDesign:PopupBox.ToggleContent>
-                                                            <materialDesign:PackIcon  Kind="Input" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
-                                                        </materialDesign:PopupBox.ToggleContent>
-                                                        <Grid Width="250" Height="270" Margin="8,8,8,8">
-                                                                <Grid.Resources>
-                                                                    <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
-                                                                    <Setter Property="Margin" Value="8,8,10,8" />
-                                                                    </Style>
-                                                                    <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
-                                                                    <Setter Property="materialDesign:HintAssist.IsFloating" Value="True" />
-                                                                    <Setter Property="Margin" Value="8,8,8,8" />
-                                                                    </Style>
-                                                                </Grid.Resources>
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition Height="0.6*" />
-                                                                    <RowDefinition Height="*" />
-                                                                    <RowDefinition Height="*" />
-                                                                    <RowDefinition Height="*" />
-                                                                    <RowDefinition Height="0.8*" />
-                                                                </Grid.RowDefinitions>
-                                                            <TextBlock  Grid.Row="0" Style="{StaticResource MaterialDesignHeadline6TextBlock}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                <materialDesign:PackIcon  Kind="Input" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
+                                            </Button>
+                                            <StackPanel Orientation="Horizontal">
+                                                <materialDesign:PopupBox StaysOpen="True" IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
+                                                    <materialDesign:PopupBox.ToggleContent>
+                                                        <materialDesign:PackIcon  Kind="Input" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
+                                                    </materialDesign:PopupBox.ToggleContent>
+                                                    <Grid Width="250" Height="270" Margin="8,8,8,8">
+                                                        <Grid.Resources>
+                                                            <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
+                                                                <Setter Property="Margin" Value="8,8,10,8" />
+                                                            </Style>
+                                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+                                                                <Setter Property="materialDesign:HintAssist.IsFloating" Value="True" />
+                                                                <Setter Property="Margin" Value="8,8,8,8" />
+                                                            </Style>
+                                                        </Grid.Resources>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="0.6*" />
+                                                            <RowDefinition Height="*" />
+                                                            <RowDefinition Height="*" />
+                                                            <RowDefinition Height="*" />
+                                                            <RowDefinition Height="0.8*" />
+                                                        </Grid.RowDefinitions>
+                                                        <TextBlock  Grid.Row="0" Style="{StaticResource MaterialDesignHeadline6TextBlock}" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                                         FontWeight="SemiBold" FontSize="20" Text="출고" />
-                                                            <Grid Grid.Row="1">
-                                                                <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                </Grid.ColumnDefinitions>
-                                                                <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" Text="유형" />
-                                                                <ComboBox Grid.Column="1" Height="30" Width="70" MaxDropDownHeight="200" HorizontalAlignment="Left"  Name="Type_comboBox" VerticalAlignment="Center"
+                                                        <Grid Grid.Row="1">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" Text="유형" />
+                                                            <ComboBox Grid.Column="1" Height="30" Width="70" MaxDropDownHeight="200" HorizontalAlignment="Left"  Name="Type_comboBox" VerticalAlignment="Center"
                                                                     SelectedValue="{Binding SelectedOutType}" SelectedValuePath="Content" >
-                                                                    <ComboBoxItem Content="사용" />
-                                                                    <ComboBoxItem Content="이관" />
-                                                                    <ComboBoxItem Content="폐기" />
-                                                                </ComboBox>
-                                                            </Grid>
-                                                            <Grid Grid.Row="2">
-                                                                <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                </Grid.ColumnDefinitions>
-                                                                <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11"  Text="부서" />
-                                                                <ComboBox Grid.Column="1" Height="30" Width="70"  HorizontalAlignment="Left" x:Name="Dept_comboBox" 
+                                                                <ComboBoxItem Content="사용" />
+                                                                <ComboBoxItem Content="이관" />
+                                                                <ComboBoxItem Content="폐기" />
+                                                            </ComboBox>
+                                                        </Grid>
+                                                        <Grid Grid.Row="2">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11"  Text="부서" />
+                                                            <ComboBox Grid.Column="1" Height="30" Width="70"  HorizontalAlignment="Left" x:Name="Dept_comboBox" 
                                                                           VerticalAlignment="Center"
                                                                           ItemsSource="{Binding DataContext.Depts, 
                                                                           RelativeSource={RelativeSource TemplatedParent}}" 
                                                                           
                                                                           SelectedValue="{Binding SelectedOutDept, UpdateSourceTrigger=PropertyChanged}">
-                                                                    <ComboBox.ItemTemplate>
-                                                                        <DataTemplate>
-                                                                            <StackPanel Orientation="Horizontal">
-                                                                                <TextBlock Text="{Binding Dept_name}"/>
-                                                                            </StackPanel>
-                                                                        </DataTemplate>
-                                                                    </ComboBox.ItemTemplate>
-                                                                </ComboBox>
-                                                            </Grid>
-                                                            <Grid Grid.Row="3">
-                                                                <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                </Grid.ColumnDefinitions>
-                                                                <TextBlock  Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" Text="수량" />
-                                                                <TextBox x:Name="mount_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Left"
+                                                                <ComboBox.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <TextBlock Text="{Binding Dept_name}"/>
+                                                                        </StackPanel>
+                                                                    </DataTemplate>
+                                                                </ComboBox.ItemTemplate>
+                                                            </ComboBox>
+                                                        </Grid>
+                                                        <Grid Grid.Row="3">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock  Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" Text="수량" />
+                                                            <TextBox x:Name="mount_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Left"
                                                                     VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Width="80"
                                                                     Text="{Binding InputOutCount}"/>
-                                                            </Grid>
-                                                            <Grid Grid.Row="4">
-                                                                <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                </Grid.ColumnDefinitions>
-                                                                <Button x:Name="reset_Btn" Grid.Column="0"  Content="초기화"  FontSize="8"  HorizontalAlignment="Center"  Click="reset_Btn_Click"
+                                                        </Grid>
+                                                        <Grid Grid.Row="4">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Button x:Name="reset_Btn" Grid.Column="0"  Content="초기화"  FontSize="8"  HorizontalAlignment="Center"  Click="reset_Btn_Click"
                                                                    VerticalAlignment="Center"  BorderThickness="0" Height="30" Width="55"  Foreground="White" Command="{Binding OutProductReset}" Cursor="Hand">
+                                                                <Button.Style>
+                                                                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                                                        <Setter  Property="Background" Value="Red" />
+                                                                    </Style>
+                                                                </Button.Style>
+                                                            </Button>
+                                                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                                                <Button x:Name="cancel_Btn" Content="취소" Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}" 
+                                                                            FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"  
+                                                                            VerticalAlignment="Center"  BorderThickness="0" Height="28" Width="55" Cursor="Hand"  Foreground="White" >
                                                                     <Button.Style>
-                                                                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                                                                            <Setter  Property="Background" Value="Red" />
+                                                                        <Style TargetType="Button"  BasedOn="{StaticResource {x:Type Button}}">
+                                                                            <Setter  Property="Background" Value="Gray" />
                                                                         </Style>
                                                                     </Button.Style>
                                                                 </Button>
-                                                                <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                                                    <Button x:Name="cancel_Btn" Content="취소" Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}" 
-                                                                            FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"  
-                                                                            VerticalAlignment="Center"  BorderThickness="0" Height="28" Width="55" Cursor="Hand"  Foreground="White" >
-                                                                        <Button.Style>
-                                                                            <Style TargetType="Button"  BasedOn="{StaticResource {x:Type Button}}">
-                                                                                <Setter  Property="Background" Value="Gray" />
-                                                                            </Style>
-                                                                        </Button.Style>
-                                                                    </Button>
 
-                                                                    <Button x:Name="signUp_Btn" Margin="5,0,0,0" Content="확인"  FontSize="10"  HorizontalAlignment="Center"  
+                                                                <Button x:Name="signUp_Btn" Margin="5,0,0,0" Content="확인"  FontSize="10"  HorizontalAlignment="Center"  
                                                                     VerticalAlignment="Center"  BorderThickness="0" Height="28" Width="55" Cursor="Hand"  Command="{Binding OutProductCommand}" Foreground="white" >
-                                                                        <Button.Style>
-                                                                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                                                                                <Setter  Property="Background" Value="#4472C4" />
-                                                                            </Style>
-                                                                        </Button.Style>
-                                                                    </Button>
-                                                                </StackPanel>
-                                                            </Grid>
-                                                            
-                                                                
-                                                                
-                                                    
-                                                               
-                                                            
-                                                                <!--<StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                    <Button.Style>
+                                                                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                                                            <Setter  Property="Background" Value="#4472C4" />
+                                                                        </Style>
+                                                                    </Button.Style>
+                                                                </Button>
+                                                            </StackPanel>
+                                                        </Grid>
+
+
+
+
+
+
+                                                        <!--<StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
                                                                     <Button Content="_Save" Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}" />
                                                                     <Button Content="_Cancel" Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}">
                                                                         <Button.Style>
@@ -293,19 +292,19 @@
                                                                         </Button.Style>
                                                                     </Button>
                                                                 </StackPanel>-->
-                                                            </Grid>
-                                                        </materialDesign:PopupBox>
-                                                    </StackPanel>
-
+                                                    </Grid>
+                                                </materialDesign:PopupBox>
                                             </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
 
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <Grid Grid.Row="1">
-                            <!--<Grid.ColumnDefinitions>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Grid Grid.Row="1">
+                        <!--<Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
@@ -313,116 +312,115 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions> -->
-                            <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
 
-                                <ComboBox Margin="5" SelectedIndex="0" Width="100" SelectedItem ="{Binding SelectedRecord, UpdateSourceTrigger=PropertyChanged}">
-                                    <wookoa:Int32>10</wookoa:Int32>
-                                    <wookoa:Int32>15</wookoa:Int32>
-                                    <wookoa:Int32>20</wookoa:Int32>
-                                    <wookoa:Int32>25</wookoa:Int32>
-                                </ComboBox>
-                                <Button Height="23" HorizontalAlignment="Right"  Command="{Binding FirstCommand}"
+                            <ComboBox Margin="5" SelectedIndex="0" Width="100" SelectedItem ="{Binding SelectedRecord, UpdateSourceTrigger=PropertyChanged}">
+                                <wookoa:Int32>10</wookoa:Int32>
+                                <wookoa:Int32>15</wookoa:Int32>
+                                <wookoa:Int32>20</wookoa:Int32>
+                                <wookoa:Int32>25</wookoa:Int32>
+                            </ComboBox>
+                            <Button Height="23" HorizontalAlignment="Right"  Command="{Binding FirstCommand}"
                             Name="btnFirst" VerticalAlignment="Bottom" Width="40" Foreground="White" Background="#4472C4"
                             Content="&lt;&lt;" ToolTip="First page"  Opacity="0.75" Margin="5">
-                                    <Button.Style>
-                                        <Style TargetType="Button">
-                                            <Setter Property="IsEnabled" Value="false"></Setter>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsFirstEnabled}" Value="True">
-                                                    <Setter Property="IsEnabled" Value="True"></Setter>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="IsEnabled" Value="false"></Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsFirstEnabled}" Value="True">
+                                                <Setter Property="IsEnabled" Value="True"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
 
-                                <Button Height="23" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                            <Button Height="23" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
                                     Name="btnPrev" Width="40" ToolTip="Previous page" 
                                    Margin="5" Foreground="White" Background="#4472C4" Command="{Binding PreviousCommand}"
                                     Opacity="0.75" Content="&lt;" Cursor="Hand">
-                                    <Button.Style>
-                                        <Style TargetType="Button">
-                                            <Setter Property="IsEnabled" Value="false"></Setter>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsPreviousEnabled}" Value="True">
-                                                    <Setter Property="IsEnabled" Value="True"></Setter>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
-                                <TextBlock VerticalAlignment="Center">
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} of {1}">
-                                            <Binding Path="CurrentPage" />
-                                            <Binding Path="NumberOfPages" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="IsEnabled" Value="false"></Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsPreviousEnabled}" Value="True">
+                                                <Setter Property="IsEnabled" Value="True"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                            <TextBlock VerticalAlignment="Center">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} of {1}">
+                                        <Binding Path="CurrentPage" />
+                                        <Binding Path="NumberOfPages" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
 
-                                <Button Height="23" ToolTip="Next page" HorizontalAlignment="Left"  Foreground="White" Background="#4472C4"
+                            <Button Height="23" ToolTip="Next page" HorizontalAlignment="Left"  Foreground="White" Background="#4472C4"
                             Name="btnNext" VerticalAlignment="Bottom" Width="40" Margin="5" Command="{Binding NextCommand}"
                             Content="&gt;" Opacity="0.75" Cursor="Hand">
-                                    <Button.Style>
-                                        <Style TargetType="Button">
-                                            <Setter Property="IsEnabled" Value="false"></Setter>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsNextEnabled}" Value="True">
-                                                    <Setter Property="IsEnabled" Value="True"></Setter>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="IsEnabled" Value="false"></Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsNextEnabled}" Value="True">
+                                                <Setter Property="IsEnabled" Value="True"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
 
-                                <Button Height="23" ToolTip="Last page" HorizontalAlignment="Left"   Foreground="White" Background="#4472C4"
+                            <Button Height="23" ToolTip="Last page" HorizontalAlignment="Left"   Foreground="White" Background="#4472C4"
                             VerticalAlignment="Bottom" Width="40" Name="btnLast" Margin="5" Command="{Binding LastCommand}"
                              Opacity="0.75" Content="&gt;&gt;" Cursor="Hand">
-                                    <Button.Style>
-                                        <Style TargetType="Button">
-                                            <Setter Property="IsEnabled" Value="false"></Setter>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsLastEnabled}" Value="True">
-                                                    <Setter Property="IsEnabled" Value="True"></Setter>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
-                            </StackPanel>
-                        </Grid>
-                    </Grid>
-                    <Grid Grid.Column="1">
-                        <materialDesign:Card x:Name="GraphCard" Margin="0 0" UniformCornerRadius="20">
-                            <StackPanel>
-                                <Grid>
-                                    <TextBlock Margin="20" HorizontalAlignment="Left" FontWeight="SemiBold" Text="그래프 테스트" FontSize="18"/>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <TextBlock FontWeight="ExtraBold" FontSize="14" Text="&#xF06C;" Foreground="#42A5F4"
-                                        VerticalAlignment="Center" FontFamily="wingdings" />
-                                        <TextBlock Text="재고현황" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="14" Margin="5 0 10 0" />
-                                    </StackPanel>
-                                </Grid>
-                                <Grid>
-                                    <lvc:CartesianChart x:Name="chart" BorderThickness="2" Series="{Binding SeriesCollection}" 
-                                        LegendLocation="Top" Height="229" VerticalAlignment="Bottom" Margin="0,0,25.8,204.6"  >
-                                        <!--Series="{Binding SeriesCollection}"-->
-                                        <lvc:CartesianChart.AxisY>
-                                            <lvc:Axis LabelFormatter="{Binding Formatter}" Title="수량" />
-                                            <!-- LabelFormatter="{Binding Formatter}" 바인딩-->
-                                        </lvc:CartesianChart.AxisY>
-                                        <lvc:CartesianChart.AxisX>
-                                            <lvc:Axis Labels="{Binding BarLabels}" Title="제품코드" />
-                                            <!--Labels="{Binding BarLabels}" 바인딩-->
-                                        </lvc:CartesianChart.AxisX>
-                                    </lvc:CartesianChart>
-                                </Grid>
-                            </StackPanel>
-                        </materialDesign:Card>
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="IsEnabled" Value="false"></Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsLastEnabled}" Value="True">
+                                                <Setter Property="IsEnabled" Value="True"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </StackPanel>
                     </Grid>
                 </Grid>
-
+                <Grid Grid.Column="1">
+                    <materialDesign:Card x:Name="GraphCard" Margin="0 0" UniformCornerRadius="20">
+                        <StackPanel>
+                            <Grid>
+                                <TextBlock Margin="20" HorizontalAlignment="Left" FontWeight="SemiBold" Text="그래프 테스트" FontSize="18"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <TextBlock FontWeight="ExtraBold" FontSize="14" Text="&#xF06C;" Foreground="#42A5F4"
+                                        VerticalAlignment="Center" FontFamily="wingdings" />
+                                    <TextBlock Text="재고현황" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="14" Margin="5 0 10 0" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid>
+                                <lvc:CartesianChart x:Name="chart" BorderThickness="2" Series="{Binding SeriesCollection}" 
+                                        LegendLocation="Top" Height="229" VerticalAlignment="Bottom" Margin="0,0,25.8,204.6"  >
+                                    <!--Series="{Binding SeriesCollection}"-->
+                                    <lvc:CartesianChart.AxisY>
+                                        <lvc:Axis LabelFormatter="{Binding Formatter}" Title="수량" />
+                                        <!-- LabelFormatter="{Binding Formatter}" 바인딩-->
+                                    </lvc:CartesianChart.AxisY>
+                                    <lvc:CartesianChart.AxisX>
+                                        <lvc:Axis Labels="{Binding BarLabels}" Title="제품코드" />
+                                        <!--Labels="{Binding BarLabels}" 바인딩-->
+                                    </lvc:CartesianChart.AxisX>
+                                </lvc:CartesianChart>
+                            </Grid>
+                        </StackPanel>
+                    </materialDesign:Card>
+                </Grid>
             </Grid>
-        </materialDesign:Card>
+
+        </Grid>
     </Grid>
 </Page>
