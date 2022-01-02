@@ -22,6 +22,7 @@ namespace EasyProject.ViewModel
 
         //부서 목록 콤보박스, 부서 대시보드 출력
         public ObservableCollection<DeptModel> Depts { get; set; }
+        public ObservableCollection<DeptModel> Depts1 { get; set; }
 
         //선택한 부서를 담을 프로퍼티
         private DeptModel selectedDept;
@@ -31,12 +32,21 @@ namespace EasyProject.ViewModel
             set
             {
                 selectedDept = value;
-                DashboardPrint(selectedDept);
+            }
+        }
+        private DeptModel selectedDept1;
+        public DeptModel SelectedDept1
+        {
+            get { return selectedDept1; }
+            set
+            {
+                selectedDept1 = value;
             }
         }
 
         //카테고리 목록 콤보박스, 카테고리 대시보드 출력
         public ObservableCollection<CategoryModel> category { get; set; }
+        public ObservableCollection<CategoryModel> category1 { get; set; }
         //선택할 카테고리를 담을 프로퍼티
         private CategoryModel selectedCategory;
         public CategoryModel SelectedCategory
@@ -48,11 +58,23 @@ namespace EasyProject.ViewModel
                 DashboardPrint4(selectedCategory);
             }
         }
+        private CategoryModel selectedCategory1;
+        public CategoryModel SelectedCategory1
+        {
+            get { return selectedCategory1; }
+            set
+            {
+                selectedCategory1 = value;
+            }
+        }
 
         // LiveChart 공통 프로퍼티
         public ChartValues<int> Values { get; set; }
         public List<string> BarLabels { get; set; }       //string[]
         public Func<double, string> Formatter { get; set; }
+        public ChartValues<int> Values1 { get; set; }
+        public List<string> BarLabels1 { get; set; }       //string[]
+        public Func<double, string> Formatter1 { get; set; }
 
         // DashboardPrint() 그래프
         private SeriesCollection seriesCollection1;
@@ -66,11 +88,11 @@ namespace EasyProject.ViewModel
             }
         }
 
-       
+
 
         // 부서별 출고 유형 그래프 (기간 선택 가능) -----------------------------------
         private SeriesCollection seriesCollection2;
-        public SeriesCollection SeriesCollection2               
+        public SeriesCollection SeriesCollection2
         {
             get { return seriesCollection2; }
             set
@@ -160,6 +182,8 @@ namespace EasyProject.ViewModel
             SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1];  // 
             category = new ObservableCollection<CategoryModel>(category_dao.GetCategoriesvalues());
             SelectedCategory = category[0];
+
+
             //부서별 출고 유형별 빈도 그래프 (기간 선택 가능 * 초기 설정 : 현재날짜로부터 1주일)
             SelectedStartDate1 = DateTime.Today.AddDays(-7);
             SelectedEndDate1 = DateTime.Today;
@@ -171,8 +195,77 @@ namespace EasyProject.ViewModel
             //파이차트
             Depts_Pie = new ObservableCollection<DeptModel>(dept_dao.GetDepts());   //dept_od를 가져온다
             SelectedDept_Pie = Depts_Pie[(int)App.nurse_dto.Dept_id - 1];  // 
+
+            //첫 번째 대쉬보드 시작
+            Depts1 = new ObservableCollection<DeptModel>(dept_dao.GetDepts());
+            SelectedDept1 = Depts1[(int)App.nurse_dto.Dept_id - 1];
+            category1 = new ObservableCollection<CategoryModel>(category_dao.GetCategoriesvalues());
+            SelectedCategory1 = category1[1];
+            DashboardPrint1(SelectedDept1, SelectedCategory1);
+
         }
-        
+
+        private ActionCommand command;
+        public ICommand Command
+        {
+            get
+            {
+                if (command == null)
+                {
+                    command = new ActionCommand(Dashprint1);
+                }
+                return command;
+            }//get
+
+        }//Command
+
+        public void Dashprint1()
+        {
+            DashboardPrint1(SelectedDept1, SelectedCategory1);
+        }
+
+
+        public void DashboardPrint1(DeptModel selected_dept, CategoryModel selected_category)
+        {
+            SeriesCollection1 = new SeriesCollection();   //대시보드 틀
+
+            ChartValues<double> name = new ChartValues<double>();   //y축들어갈 임시 값
+            Console.WriteLine("DashboardPrint");
+
+            List<ProductShowModel> list_xy = dashboard_dao.Get_Prod_Code_Get_By_Expire(selected_dept, selected_category);
+            Console.WriteLine(selected_dept.Dept_name);
+            Console.WriteLine(selected_category.Category_name);
+            foreach (var item in list_xy)
+            {
+                name.Add((double)item.Prod_remainexpire);
+                Console.WriteLine("유통기한 남은 일수 :  " + (double)item.Prod_remainexpire);
+            }
+            Values = new ChartValues<int> { };
+
+            SeriesCollection1.Add(new RowSeries
+            {
+                Title = "재고현황",   //+ i
+                Values = name,
+                DataLabels = true,
+                LabelPoint = point => point.X + "일 "
+                //제품code
+            });
+            BarLabels1 = new List<string>() { };                           //x축출력
+            foreach (var item in list_xy)
+            {
+                BarLabels1.Add(item.Prod_code);                 //유통기한
+                //Console.WriteLine("제품코드: " + BarLabels1[1] + BarLabels1[2] + BarLabels1[3] + BarLabels1[4]);
+            }
+            for (int i = 0; i < BarLabels1.Count; i++)
+            {
+                Console.WriteLine("barlabels -- " + BarLabels1[i]);
+            }
+
+
+
+            Formatter1 = value => value.ToString("N");   //문자열 10진수 변환
+            //DataContext = this;
+        }
         public void DashboardPrint(DeptModel selected)                       //대시보드 출력(x축:제품code, y축:수량) 
         {
             ChartValues<int> name = new ChartValues<int>();   //y축들어갈 임시 값
@@ -217,7 +310,7 @@ namespace EasyProject.ViewModel
         }//dashboardprint
 
         // 부서별 출고 유형별 빈도 그래프 (기간 선택 가능) (VIEW : 좌측하단 위치)------------------------------------------------------------------------------------------------------------
-        public void DashboardPrint2()                       
+        public void DashboardPrint2()
         {
 
             Console.WriteLine("DashboardPrint2");
@@ -267,7 +360,7 @@ namespace EasyProject.ViewModel
         }//dashboardprint2 ---------------------------------------------------------------------------------------------------
 
         // 부서별 입고 유형별 빈도 그래프 (기간 선택 가능) (VIEW : 우측하단 위치)------------------------------------------------------------------------------------------------------------
-        public void DashboardPrint3()                      
+        public void DashboardPrint3()
         {
 
             Console.WriteLine("DashboardPrint3");
