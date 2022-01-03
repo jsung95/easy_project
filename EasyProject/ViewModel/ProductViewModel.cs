@@ -312,7 +312,6 @@ namespace EasyProject.ViewModel
                             IsDuplicatedProduct = true;
                             excelProductList = null;
                         }
-
                     }
                 }
 
