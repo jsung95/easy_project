@@ -19,9 +19,14 @@
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
-                <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="0.3*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="1">
                     <ComboBox x:Name="CategoryName_ComboBox1"
-                       ItemsSource="{Binding Path=category}" SelectedItem="{Binding SelectedCategory}"  HorizontalAlignment="Center"  Height="40" Width="182"  TextBlock.FontSize="10">
+                       ItemsSource="{Binding Path=category}" SelectedItem="{Binding SelectedCategory}"  VerticalAlignment="Bottom" HorizontalAlignment="Center"  Height="30" Width="182"  TextBlock.FontSize="10">
                         <ComboBox.Resources>
                             <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
                         </ComboBox.Resources>
@@ -43,12 +48,16 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                 </Grid>
+                <Grid Grid.Column="2">
+                    
+                    
+                </Grid>
             </Grid>
 
             <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Grid>
                     <lvc:CartesianChart x:Name="chart" BorderThickness="2" Series="{Binding SeriesCollection4}" 
-                             LegendLocation="Top" Height="180" Width="330"  VerticalAlignment="Center" >
+                             LegendLocation="Top" Height="300" Width="400"  VerticalAlignment="Center" >
                         <!--Series="{Binding SeriesCollection}"-->
                         <lvc:CartesianChart.AxisY>
                             <lvc:Axis LabelFormatter="{Binding Formatter}" Title="수량" />
