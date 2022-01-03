@@ -56,6 +56,17 @@ namespace EasyProject.ViewModel
             }
         }
 
+        private string addCategoryName;
+        public string AddCategoryName
+        {
+            get { return addCategoryName; }
+            set
+            {
+                addCategoryName = value;
+                OnPropertyChanged("AddCategoryName");
+            }
+        }
+
         public ObservableCollection<CategoryModel> Categories { get; set; }
 
         //선택한 카테고리를 담을 프로퍼티
@@ -465,11 +476,33 @@ namespace EasyProject.ViewModel
 
         public void ProductInsert()
         {
+            if (SelectedCategory.Category_name.Equals("직접 입력"))
+            {
+                if (AddCategoryName != null)
+                {
+                    if (categoryDao.IsExistsCategory(AddCategoryName))
+                    {
+                        Console.WriteLine(AddCategoryName+"이미 있음 ");
+                        DuplicatedProductString = "이미 기존에 있는 카테고리입니다.";
+                        IsDuplicatedProduct = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine(AddCategoryName + "없음 ");
+                        categoryDao.AddCategory(AddCategoryName);
+                        DuplicatedProductString = "카테고리가 추가되었습니다.";
+                        IsDuplicatedProduct = true;
+                    }
+                }
+
+            }
+
             if (Product.Prod_code == null || Product.Prod_name == null || SelectedCategory == null || Product.Prod_expire == null || Product.Prod_price == null || Product.Prod_total == null)
             {
                 DuplicatedProductString = "입력할 제품의 정보를 모두 기입해주세요.";
                 IsDuplicatedProduct = true;
             }//if
+            
             else
             {
                 Product.Category_id = categoryDao.GetCategoryID(SelectedCategory.Category_name);

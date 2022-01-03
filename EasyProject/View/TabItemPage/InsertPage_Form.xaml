@@ -69,7 +69,7 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <TextBox x:Name="categoryName_TextBox" Grid.Column="2" HorizontalContentAlignment="Left" 
+                    <TextBox x:Name="categoryName_TextBox" Grid.Column="2" HorizontalContentAlignment="Left" Text="{Binding AddCategoryName}"
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="0,0,20,0" Height="30">
                         <TextBox.Style>
                             <Style TargetType="TextBox">
