@@ -9,7 +9,7 @@ using Oracle.ManagedDataAccess.Client;
 
 namespace EasyProject.Dao
 {
-    public class CategoryDao : CommonDBConn, ICategoryDao
+    public class CategoryDao : CommonDBConn
     {
         public List<CategoryModel> GetCategories()
         {
@@ -139,6 +139,84 @@ namespace EasyProject.Dao
             return list;
 
         }//GetCategoris()
+
+
+
+
+        public bool IsExistsCategory(string Category_name)
+        {
+            bool result = false;
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT * FROM category WHERE category_name = :category_name ";
+
+                        cmd.Parameters.Add(new OracleParameter("category_name", Category_name));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.Read())
+                        {
+                            result = true;
+                        }
+                        else
+                        {
+                            result = false;
+                        }//if-else
+                    }//using(cmd)
+                }//using(conn)
+
+            }//try
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return result;
+
+        }//IsExistsCategory
+
+
+        public void AddCategory(string Category_name)
+        {
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "INSERT INTO CATEGORY (category_name) " +
+                                          "VALUES (:category_name) ";
+
+                        cmd.Parameters.Add(new OracleParameter("category_name", Category_name));
+
+                        cmd.ExecuteNonQuery();
+
+                    }//using(cmd)
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+        }//AddCategory
+
 
     }//class
 

@@ -215,6 +215,12 @@
     <Compile Include="View\TabItemPage\GraphPage\AllGraphPage.xaml.cs">
       <DependentUpon>AllGraphPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TabItemPage\GraphPage\DeptCate_GraphPage.xaml.cs">
+      <DependentUpon>DeptCate_GraphPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TabItemPage\GraphPage\TestGraphPage.xaml.cs">
+      <DependentUpon>TestGraphPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TabItemPage\GraphTabPage.xaml.cs">
       <DependentUpon>GraphTabPage.xaml</DependentUpon>
     </Compile>
@@ -283,6 +289,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TabItemPage\GraphPage\AllGraphPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabItemPage\GraphPage\DeptCate_GraphPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabItemPage\GraphPage\TestGraphPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

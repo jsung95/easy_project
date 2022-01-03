@@ -14,6 +14,13 @@ namespace EasyProject.Dao
 
         //카테고리 이름으로 카테고리 번호 가져오기
         int GetCategoryID(string category_name);
+
+        // = 카테고리 추가 =
+        //기존에 존재하는 카테고리인지 판별 
+        bool IsExistsCategory(CategoryModel category_dto);
+        //카테고리 추가
+        void AddCategory(CategoryModel category_dto);
+
     }//interface
 
 }//namespace
