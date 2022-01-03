@@ -21,6 +21,7 @@
                 <Button Uid="1" Height="40" Width="150" Click="TabButtonClick" ToolTip="그래프현황" Foreground="#ff2196f3" Content="그래프현황" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand"/>
                 <Button Uid="2" Height="40" Width="150" Click="TabButtonClick" ToolTip="재고입력" Foreground="#ff2196f3" Content="재고입력" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" />
                 <Button Uid="3" Height="40" Width="150" Click="TabButtonClick" ToolTip="입출고현황" Foreground="#ff2196f3" Content="입출고현황" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" />
+                <Button Uid="3" Height="40" Width="150" Click="TabButtonClick" ToolTip="입출고현황" Foreground="#ff2196f3" Content="신규 발주신청" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" />
                 <Button Uid="4" Height="40" Width="150" Click="TabButtonClick" ToolTip="권한부여" Foreground="#ff2196f3" Content="권한부여" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" />
             </StackPanel>
  
