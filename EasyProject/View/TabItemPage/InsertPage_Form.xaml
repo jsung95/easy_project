@@ -56,7 +56,7 @@
                     <TextBlock  Text="품목/종류" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13"></TextBlock>
                     <ComboBox x:Name="categoryName_ComboBox" Grid.Column="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="0,0,20,0" Height="30" 
-                              ItemsSource="{Binding Path=Categories}" SelectedItem="{Binding SelectedCategory}">
+                       ItemsSource="{Binding Path=Categories}" SelectedItem="{Binding SelectedCategory}">
                         <ComboBox.Resources>
                             <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
                         </ComboBox.Resources>

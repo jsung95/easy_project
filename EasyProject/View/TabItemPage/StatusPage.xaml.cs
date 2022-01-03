@@ -23,27 +23,21 @@ namespace EasyProject.View.TabItemPage
     {
         public ChartValues<float> Values { get; set; }
 
-
-        //public String userDept = null;
-
         public bool isComboBoxDropDownOpened = false;
-   
-
-        //public WindowStartupLocation WindowStartupLocation { get; }
 
         public StatusPage()
         {
             InitializeComponent();
+            //dept_Label.Visibility = Visibility.Hidden;
+            //Dept_comboBox.Visibility = Visibility.Hidden;
+
             this.Loaded += MainWindow_Loaded;
 
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //searchText_ComboBox.Items.Add("제품코드");
-            //searchText_ComboBox.Items.Add("제품명");
-            //searchText_ComboBox.Items.Add("품목/종류");
-            //searchText_ComboBox.SelectedIndex = 0;
+            
             var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
             var deptNameText = deptModelObject.Dept_name; // 콤보박스에서 선택한 부서명
             var temp = Ioc.Default.GetService<ProductShowViewModel>();
@@ -144,7 +138,7 @@ namespace EasyProject.View.TabItemPage
         }
         private void reset_Btn_Click(object sender, RoutedEvent e)
         {
-            //mount_TxtBox_Hidden.Text = "";
+            //mount_TxtBox.Text = "";
         }
 
         private void cancel_Btn_Click(object sender, RoutedEventArgs e)
