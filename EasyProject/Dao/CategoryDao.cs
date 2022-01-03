@@ -9,7 +9,7 @@ using Oracle.ManagedDataAccess.Client;
 
 namespace EasyProject.Dao
 {
-    public class CategoryDao : CommonDBConn, ICategoryDao
+    public class CategoryDao : CommonDBConn
     {
         public List<CategoryModel> GetCategories()
         {
@@ -143,7 +143,7 @@ namespace EasyProject.Dao
 
 
 
-        public bool IsExistsCategory(CategoryModel category_dto)
+        public bool IsExistsCategory(string Category_name)
         {
             bool result = false;
             try
@@ -160,17 +160,17 @@ namespace EasyProject.Dao
                         cmd.Connection = conn;
                         cmd.CommandText = "SELECT * FROM category WHERE category_name = :category_name ";
 
-                        cmd.Parameters.Add(new OracleParameter("category_name", category_dto.Category_name));
+                        cmd.Parameters.Add(new OracleParameter("category_name", Category_name));
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
                         if (reader.Read())
                         {
-                            result = false;
+                            result = true;
                         }
                         else
                         {
-                            result = true;
+                            result = false;
                         }//if-else
                     }//using(cmd)
                 }//using(conn)
@@ -186,7 +186,7 @@ namespace EasyProject.Dao
         }//IsExistsCategory
 
 
-        public void AddCategory(CategoryModel category_dto)
+        public void AddCategory(string Category_name)
         {
             try
             {
@@ -203,7 +203,7 @@ namespace EasyProject.Dao
                         cmd.CommandText = "INSERT INTO CATEGORY (category_name) " +
                                           "VALUES (:category_name) ";
 
-                        cmd.Parameters.Add(new OracleParameter("category_name", category_dto.Category_name));
+                        cmd.Parameters.Add(new OracleParameter("category_name", Category_name));
 
                         cmd.ExecuteNonQuery();
 

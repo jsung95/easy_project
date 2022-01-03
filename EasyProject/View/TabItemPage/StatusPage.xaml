@@ -60,45 +60,12 @@
                     <ColumnDefinition Width="60*"/>
                 </Grid.ColumnDefinitions>
 
-                <ComboBox x:Name="searchText_ComboBox" Height="30" Grid.Column="0" HorizontalContentAlignment="Left" 
-                       ItemsSource="{Binding Path=SearchTypeList}"
-                       SelectedItem="{Binding SelectedSearchType}">
-                    <ComboBox.Resources>
-                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
-                    </ComboBox.Resources>
-                </ComboBox>
+
 
                 <CheckBox x:Name="DataGridCheckbox" Style="{StaticResource MaterialDesignFilterChipOutlineCheckBox}" Grid.Column="4" HorizontalAlignment="Right" IsChecked="True" Content="표보기" Cursor="Hand" Click="DataGridCheckboxClick"></CheckBox>
                 <CheckBox x:Name="GraphCheckbox" Style="{StaticResource MaterialDesignFilterChipOutlineCheckBox}" Grid.Column="5" HorizontalAlignment="Right" IsChecked="True" Content="그래프보기" Cursor="Hand" Click="GraphCheckboxClick"></CheckBox>
 
-                <Grid Grid.Column="1" Margin="10 0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="6*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요" Grid.Column="5" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
-                                     Text="{Binding TextForSearch}" Cursor="Hand"/>
-                    </Grid>
-                    <Grid Grid.Column="1">
-                        <Button x:Name="search_Btn" Grid.Column="3" Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White"
-                            VerticalAlignment="Center" Height="30"  Width="45" HorizontalAlignment="Left" 
-                             Command="{Binding SearchCommand}" Cursor="Hand">
-                            <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
-                            <!--<Button.Style>
-                                    <Style TargetType="Button">
-                                        <Setter Property="Visibility" Value="Visible"></Setter>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ComboboxChanged}" Value="True">
-                                                <Setter Property="Visibility" Value="Hidden"></Setter>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>-->
-                        </Button>
-                    </Grid>
-                </Grid>
+                
                 <Label Content="부서명" Foreground="#4472C4" Grid.Column="2" FontSize="12" 
                        FontWeight="Bold" HorizontalAlignment="Right"  
                        VerticalAlignment="Center" Margin="10"/>
@@ -135,10 +102,59 @@
                 </Grid.ColumnDefinitions>
                 <Grid x:Name="DataGridGrid" Grid.Column="0">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="0.3*"/>
                         <RowDefinition Height="2*"/>
                         <RowDefinition Height="0.2*"/>
+                        
                     </Grid.RowDefinitions>
-                    <DataGrid x:Name="dataGrid" 
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60*"/>
+                            <ColumnDefinition Width="320*"/>
+
+                        </Grid.ColumnDefinitions>
+
+                        <ComboBox x:Name="searchText_ComboBox" Height="30" Grid.Column="0" Margin="10" HorizontalContentAlignment="Left" ItemsSource="{Binding Path=SearchTypeList}"
+                       SelectedItem="{Binding SelectedSearchType}">
+                            <ComboBox.Resources>
+                                <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+                            </ComboBox.Resources>
+                        </ComboBox>
+
+                       
+
+                        <Grid Grid.Column="1" Margin="10 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="6*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요" Grid.Column="5" HorizontalContentAlignment="Left" 
+                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
+                                     Text="{Binding TextForSearch}" Cursor="Hand"/>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <Button x:Name="search_Btn" Grid.Column="3" Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White"
+                            VerticalAlignment="Center" Height="30"  Width="45" HorizontalAlignment="Left" 
+                             Command="{Binding SearchCommand}" Cursor="Hand">
+                                    <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
+                                    <!--<Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ComboboxChanged}" Value="True">
+                                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>-->
+                                </Button>
+                            </Grid>
+
+                        </Grid>
+                    </Grid>
+                    
+                    <DataGrid x:Name="dataGrid" Grid.Row="1"
                             HorizontalAlignment="Left" Margin="10 0"
                             VerticalAlignment="Top" AutoGenerateColumns="False" 
                             IsReadOnly="True" ColumnWidth="*" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" SelectionMode="Extended" SelectionUnit="FullRow" Cursor="Hand">
@@ -396,7 +412,7 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Row="2">
                         <!--<Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>

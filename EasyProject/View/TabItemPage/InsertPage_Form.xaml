@@ -50,8 +50,8 @@
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="1.5*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock  Text="품목/종류" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13"></TextBlock>
                     <ComboBox x:Name="categoryName_ComboBox" Grid.Column="1" HorizontalContentAlignment="Left" 
@@ -60,7 +60,7 @@
                         <ComboBox.Resources>
                             <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
                         </ComboBox.Resources>
-                        
+
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -69,8 +69,19 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <TextBox Grid.Column="2" VerticalAlignment="Center" IsEnabled="False"
-                             HorizontalAlignment="Center" Width="80" Margin="10" ></TextBox>
+                    <TextBox x:Name="categoryName_TextBox" Grid.Column="2" HorizontalContentAlignment="Left" Text="{Binding AddCategoryName}"
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="0,0,20,0" Height="30">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
+                                <Setter Property="IsEnabled" Value="False"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedCategory.Category_name}" Value="직접 입력">
+                                        <Setter Property="IsEnabled" Value="True"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
                 </Grid>
 
                 <Grid Grid.Row="3">
