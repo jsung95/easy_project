@@ -23,6 +23,7 @@ namespace EasyProject.ViewModel
         //부서 목록 콤보박스, 부서 대시보드 출력
         public ObservableCollection<DeptModel> Depts { get; set; }
         public ObservableCollection<DeptModel> Depts1 { get; set; }
+        public ObservableCollection<DeptModel> Depts11 { get; set; }
 
         //선택한 부서를 담을 프로퍼티
         private DeptModel selectedDept;
@@ -43,10 +44,23 @@ namespace EasyProject.ViewModel
                 selectedDept1 = value;
             }
         }
+        private DeptModel selectedDept11;
+        public DeptModel SelectedDept11
+        {
+            get { return selectedDept11; }
+            set
+            {
+                selectedDept11 = value;
+                OnPropertyChanged("SelectedCategory11");
+                //DashboardPrint11(selectedDept11, selectedCategory11);
+
+            }
+        }
 
         //카테고리 목록 콤보박스, 카테고리 대시보드 출력
         public ObservableCollection<CategoryModel> category { get; set; }
         public ObservableCollection<CategoryModel> category1 { get; set; }
+        public ObservableCollection<CategoryModel> Category11 { get; set; }
         //선택할 카테고리를 담을 프로퍼티
         private CategoryModel selectedCategory;
         public CategoryModel SelectedCategory
@@ -67,7 +81,40 @@ namespace EasyProject.ViewModel
                 selectedCategory1 = value;
             }
         }
+        private CategoryModel selectedCategory11;
+        public CategoryModel SelectedCategory11
+        {
+            get { return selectedCategory11; }
+            set
+            {
+                selectedCategory11 = value;
+                OnPropertyChanged("SelectedCategory11");
+                //DashboardPrint11(selectedDept11, selectedCategory11);
 
+            }
+        }
+        private ChartValues<int> values11;
+        public ChartValues<int> Values11
+        {
+            get { return values11; }
+            set
+            {
+                values11 = value;
+                OnPropertyChanged("values11");
+
+            }
+        }
+        private List<string> barLabels11;
+        public List<string> BarLabels11
+        {
+            get { return barLabels11; }
+            set
+            {
+                barLabels11 = value;
+                OnPropertyChanged("barLabels11");
+
+            }
+        }
         // LiveChart 공통 프로퍼티
         public ChartValues<int> Values { get; set; }
         public List<string> BarLabels { get; set; }       //string[]
@@ -75,6 +122,7 @@ namespace EasyProject.ViewModel
         public ChartValues<int> Values1 { get; set; }
         public List<string> BarLabels1 { get; set; }       //string[]
         public Func<double, string> Formatter1 { get; set; }
+        public Func<double, string> Formatter11 { get; set; }
 
         // DashboardPrint() 그래프
         private SeriesCollection seriesCollection1;
@@ -87,7 +135,17 @@ namespace EasyProject.ViewModel
                 OnPropertyChanged("SeriesCollection1");
             }
         }
+        private SeriesCollection seriesCollection11;
+        public SeriesCollection SeriesCollection11               //그래프 큰 틀 만드는거
+        {
+            get { return seriesCollection11; }
+            set
+            {
+                seriesCollection11 = value;
+                OnPropertyChanged("SeriesCollection11");
 
+            }
+        }
 
 
         // 부서별 출고 유형 그래프 (기간 선택 가능) -----------------------------------
@@ -196,12 +254,14 @@ namespace EasyProject.ViewModel
             Depts_Pie = new ObservableCollection<DeptModel>(dept_dao.GetDepts());   //dept_od를 가져온다
             SelectedDept_Pie = Depts_Pie[(int)App.nurse_dto.Dept_id - 1];  // 
 
-            //첫 번째 대쉬보드 시작
-            Depts1 = new ObservableCollection<DeptModel>(dept_dao.GetDepts());
-            SelectedDept1 = Depts1[(int)App.nurse_dto.Dept_id - 1];
-            category1 = new ObservableCollection<CategoryModel>(category_dao.GetCategoriesvalues());
-            SelectedCategory1 = category1[1];
-            DashboardPrint1(SelectedDept1, SelectedCategory1);
+            
+
+            //11대시보드
+            Depts11 = new ObservableCollection<DeptModel>(dept_dao.GetDepts());
+            SelectedDept11 = Depts11[(int)App.nurse_dto.Dept_id];
+            Category11 = new ObservableCollection<CategoryModel>(category_dao.GetCategoriesvalues());
+            SelectedCategory11 = Category11[1];
+            DashboardPrint11(SelectedDept11, SelectedCategory11);
 
         }
 
@@ -212,19 +272,50 @@ namespace EasyProject.ViewModel
             {
                 if (command == null)
                 {
-                    command = new ActionCommand(Dashprint1);
+                    command = new ActionCommand(Dashprint11);
                 }
                 return command;
             }//get
 
         }//Command
 
-        public void Dashprint1()
+        public void Dashprint11()
         {
-            DashboardPrint1(SelectedDept1, SelectedCategory1);
+            DashboardPrint11(SelectedDept11, SelectedCategory11);
         }
 
+        public void DashboardPrint11(DeptModel selected_dept, CategoryModel selected_category)                       //대시보드 출력(x축:제품code, y축:수량) 
+        {
+            ChartValues<int> name = new ChartValues<int>();   //y축들어갈 임시 값
+            Console.WriteLine("DashboardPrint11");
+            SeriesCollection11 = new SeriesCollection();   //대시보드 틀
+            //Console.WriteLine(selected.Dept_id); 
+            List<ProductShowModel> list_xyz = dashboard_dao.Dept_Category_Mount3(selected_dept, selected_category);
+            Console.WriteLine(selected_dept.Dept_name);
+            Console.WriteLine(selected_category.Category_name);
+            foreach (var item in list_xyz)
+            {
+                name.Add((int)item.Prod_remainexpire);
+                Console.WriteLine("PROD_REMAINEXPIRE" + (int)item.Prod_remainexpire);
+            }
 
+            Values = new ChartValues<int> { };
+
+            SeriesCollection11.Add(new RowSeries
+            {
+                Title = "총 수량",   //+ i
+                Values = name,
+                DataLabels = true,
+                LabelPoint = point => point.X + "일 "
+            });
+            BarLabels11 = new List<string>() { };                           //x축출력
+            foreach (var item in list_xyz)
+            {
+                BarLabels11.Add(item.Prod_code);
+                Console.WriteLine("Prod_code" + item.Prod_code);
+            }
+            Formatter11 = value => value.ToString("N");   //문자열 10진수 변환
+        }//dashboardprint4
         public void DashboardPrint1(DeptModel selected_dept, CategoryModel selected_category)
         {
             SeriesCollection1 = new SeriesCollection();   //대시보드 틀

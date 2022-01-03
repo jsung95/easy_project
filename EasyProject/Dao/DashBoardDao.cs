@@ -483,7 +483,65 @@ namespace EasyProject.Dao
 
             return list;
         }//Get_Prod_Code_Get_By_Expire()
+        public List<ProductShowModel> Dept_Category_Mount3(DeptModel SelectedDept, CategoryModel SelectedCategory)
+        {
+            Console.WriteLine("start");
+            List<ProductShowModel> list = new List<ProductShowModel>();
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
 
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT prod_code, TO_CHAR(TO_DATE(TO_CHAR(prod_expire, 'YYYYMMDD')) - TO_DATE(TO_CHAR(CURRENT_DATE, 'YYYYMMDD'))) " +
+                            "FROM PRODUCT P " +
+                            "INNER JOIN CATEGORY C " +
+                            "ON P.Category_id = c.category_id " +
+                            "INNER JOIN IMP_DEPT I " +
+                            "ON P.prod_id = I.prod_id " +
+                            "INNER JOIN DEPT D " +
+                            "ON I.dept_id = D.dept_id " +
+                            "WHERE d.dept_name= :dept_name and C.category_name = :category_name " +
+                            "order by TO_CHAR(TO_DATE(TO_CHAR(prod_expire, 'YYYYMMDD')) - TO_DATE(TO_CHAR(CURRENT_DATE, 'YYYYMMDD'))) asc";
+
+
+                        cmd.Parameters.Add(new OracleParameter("dept_name", SelectedDept.Dept_name));
+                        cmd.Parameters.Add(new OracleParameter("category_name", SelectedCategory.Category_name)); //category_name
+
+                        //cmd.Parameters.Add(new OracleParameter("total", prod_dto.Prod_total));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string Prod_code = reader.GetString(0);
+                            string Prod_remainexpire = reader.GetString(1);
+                            ProductShowModel dto = new ProductShowModel()
+                            {
+                                Prod_code = Prod_code,
+                                Prod_remainexpire = Convert.ToInt32(Prod_remainexpire)
+                            };
+
+                            list.Add(dto);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+            return list;
+        }///Dept_Category_Mount
 
 
     }//class
