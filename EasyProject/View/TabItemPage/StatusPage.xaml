@@ -131,16 +131,6 @@
                             VerticalAlignment="Center" Height="30"  Width="45" HorizontalAlignment="Left" 
                              Command="{Binding SearchCommand}" Cursor="Hand">
                                     <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
-                                    <!--<Button.Style>
-                                    <Style TargetType="Button">
-                                        <Setter Property="Visibility" Value="Visible"></Setter>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ComboboxChanged}" Value="True">
-                                                <Setter Property="Visibility" Value="Hidden"></Setter>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>-->
                                 </Button>
                             </Grid>
 
@@ -285,9 +275,9 @@
                                             <StackPanel Orientation="Horizontal">
                                                 <materialDesign:PopupBox StaysOpen="True" IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window }}">
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon  Kind="CallReceived" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="50"/>
+                                                        <materialDesign:PackIcon  Kind="Input" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="50"/>
                                                     </materialDesign:PopupBox.ToggleContent>
-                                                    <Grid Width="550" Height="500" Margin="8,8,8,8">
+                                                    <Grid Width="550" Height="500" Margin="8,8,8,8" >
                                                         <Grid.Resources>
                                                             <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
                                                                 <Setter Property="Margin" Value="8,8,10,8" />
@@ -438,9 +428,6 @@
                                                         </Grid>
                                                         <Grid Grid.Row="4">
                                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                                <Button x:Name="submitBtn" Content="제출"  Foreground="#4472C4" Background="white" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
-                                                                VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderThickness="0" Height="28" Width="58" Cursor="Hand" />
-
                                                                 <Button x:Name="printBtn" Content="인쇄"  Foreground="#4472C4" Background="white" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                                                                 VerticalAlignment="Center"  BorderThickness="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  Height="28" Width="58" Cursor="Hand" Margin="5" />
                                                             </StackPanel>
@@ -452,7 +439,7 @@
                                             <StackPanel Orientation="Horizontal">
                                                 <materialDesign:PopupBox StaysOpen="True" IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon  Kind="Input" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
+                                                        <materialDesign:PackIcon  Kind="CallReceived" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
                                                     </materialDesign:PopupBox.ToggleContent>
                                                     <Grid Width="250" Height="270" Margin="8,8,8,8">
                                                         <Grid.Resources>
