@@ -18,6 +18,7 @@ namespace EasyProject.Dao
 
         // 재고입력 - 제품 입력
         void AddProduct(ProductModel prod_dto, CategoryModel category_dto);
+        void AddProduct(ProductModel prod_dto, string category_name); //오버로딩
 
         // 입고테이블에 추가
         void StoredProduct(ProductModel prod_dto, NurseModel nurse_dto);
@@ -47,6 +48,11 @@ namespace EasyProject.Dao
         void OutProduct_FromTo_IMP_DEPT(int? InputOutCount, ProductShowModel prod_dto, DeptModel dept_dto);
         void ChangeProductInfo_IMP_DEPT_ForOut(int? InputOutCount, ProductShowModel prod_dto);
         void ChangeProductInfo_ForOut(int? InputOutCount, ProductShowModel prod_dto);
+
+
+        //제품 중복검사
+        bool IsProductDuplicateCheck(ProductModel product_dto, CategoryModel category_dto);
+        bool IsProductDuplicateCheck(ProductModel product_dto, string category_name); //오버로딩
 
     }//interface
 
