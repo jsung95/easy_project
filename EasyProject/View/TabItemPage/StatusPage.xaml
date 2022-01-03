@@ -390,8 +390,8 @@
                     </Grid>
                 </Grid>
                 <Grid Grid.Column="1">
-                    <materialDesign:Card x:Name="GraphCard" Margin="0 0" UniformCornerRadius="20">
-                        <StackPanel>
+                    <materialDesign:Card x:Name="GraphCard" Margin="0 0" UniformCornerRadius="20" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <!--<StackPanel>
                             <Grid>
                                 <TextBlock Margin="20" HorizontalAlignment="Left" FontWeight="SemiBold" Text="그래프 테스트" FontSize="18"/>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -403,18 +403,20 @@
                             <Grid>
                                 <lvc:CartesianChart x:Name="chart" BorderThickness="2" Series="{Binding SeriesCollection}" 
                                         LegendLocation="Top" Height="229" VerticalAlignment="Bottom" Margin="0,0,25.8,204.6"  >
-                                    <!--Series="{Binding SeriesCollection}"-->
+                                    --><!--Series="{Binding SeriesCollection}"--><!--
                                     <lvc:CartesianChart.AxisY>
                                         <lvc:Axis LabelFormatter="{Binding Formatter}" Title="수량" />
-                                        <!-- LabelFormatter="{Binding Formatter}" 바인딩-->
+                                        --><!-- LabelFormatter="{Binding Formatter}" 바인딩--><!--
                                     </lvc:CartesianChart.AxisY>
                                     <lvc:CartesianChart.AxisX>
                                         <lvc:Axis Labels="{Binding BarLabels}" Title="제품코드" />
-                                        <!--Labels="{Binding BarLabels}" 바인딩-->
+                                        --><!--Labels="{Binding BarLabels}" 바인딩--><!--
                                     </lvc:CartesianChart.AxisX>
                                 </lvc:CartesianChart>
                             </Grid>
-                        </StackPanel>
+                        </StackPanel>-->
+                        <Frame x:Name="Status_GraphFrame" NavigationUIVisibility="Hidden" Source="/View/TabItemPage/GraphPage/DeptCate_GraphPage.xaml"  Height="430" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        
                     </materialDesign:Card>
                 </Grid>
             </Grid>
