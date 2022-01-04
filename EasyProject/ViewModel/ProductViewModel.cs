@@ -225,45 +225,28 @@ namespace EasyProject.ViewModel
                     ProductModel productModel = new ProductModel();
                     productModel.Prod_code = product.Prod_code;
                     productModel.Prod_name = product.Prod_name;
-                    //productModel.Category_id = categoryDao.GetCategoryID(product.Category_name);
+                    productModel.Category_id = categoryDao.GetCategoryID(product.Category_name);
                     productModel.Prod_expire = product.Prod_expire;
                     productModel.Prod_price = product.Prod_price;
 
                     Console.WriteLine(product.Category_name + "////카테고리명////");
-                    if (SelectedCategory.Category_name.Equals("직접 입력"))
+
+
+                    if (!dao.IsProductDuplicateCheck(productModel))
                     {
-                        if (!dao.IsProductDuplicateCheck(productModel, AddCategoryName))
-                        {
-                            //Console.WriteLine(productModel.Prod_code + productModel.Prod_name +
-                            //    productModel.Category_id.ToString()+productModel.Prod_price);
-                            Console.WriteLine("중복이 아니다. ");
-                            excelProductList.Add(product);
-                        }
-                        else
-                        {
-                            DuplicatedProductString = "이미 존재하는 재고 입력은 불가합니다.";
-                            Console.WriteLine("중복이다.");
-                            IsDuplicatedProduct = true;
-                            excelProductList = null;
-                        }
+                        //Console.WriteLine(productModel.Prod_code + productModel.Prod_name +
+                        //    productModel.Category_id.ToString()+productModel.Prod_price);
+                        Console.WriteLine("중복이 아니다. ");
+                        excelProductList.Add(product);
                     }
                     else
                     {
-                        if (!dao.IsProductDuplicateCheck(productModel, SelectedCategory))
-                        {
-                            //Console.WriteLine(productModel.Prod_code + productModel.Prod_name +
-                            //    productModel.Category_id.ToString()+productModel.Prod_price);
-                            Console.WriteLine("중복이 아니다. ");
-                            excelProductList.Add(product);
-                        }
-                        else
-                        {
-                            DuplicatedProductString = "이미 존재하는 재고 입력은 불가합니다.";
-                            Console.WriteLine("중복이다.");
-                            IsDuplicatedProduct = true;
-                            excelProductList = null;
-                        }
+                        DuplicatedProductString = "이미 존재하는 재고 입력은 불가합니다.";
+                        Console.WriteLine("중복이다.");
+                        IsDuplicatedProduct = true;
+                        excelProductList = null;
                     }
+
 
                 }
             }
