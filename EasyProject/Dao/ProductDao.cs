@@ -1778,52 +1778,9 @@ namespace EasyProject.Dao
             }//catch
             return list;
         }///product_info
-        public List<ProductShowModel> Prodtotal_Info()               //total
-        {
-            List<ProductShowModel> list = new List<ProductShowModel>();
-            try
-            {
-                OracleConnection conn = new OracleConnection(connectionString);
-                OracleCommand cmd = new OracleCommand();
+        
 
-                using (conn)
-                {
-                    conn.Open();
-
-                    using (cmd)
-                    {
-                        cmd.Connection = conn;
-                        cmd.CommandText = "select sum(prod_total) from product group by prod_code";
-                        //cmd.CommandText = "SELECT * FROM NURSE WHERE nurse_no = :no AND nurse_pw = :pw";
-
-                        //cmd.Parameters.Add(new OracleParameter("p_code", prod_dto.Prod_code));
-                        //cmd.Parameters.Add(new OracleParameter("total", prod_dto.Prod_total));
-
-                        OracleDataReader reader = cmd.ExecuteReader();
-
-                        while (reader.Read())
-                        {
-                            int? Prod_total = reader.GetInt32(0);
-                            ProductShowModel dto = new ProductShowModel()
-                            {
-                                Prod_total = Prod_total
-                            };
-                            list.Add(dto);
-                        }//while
-
-                    }//using(cmd)
-
-                }//using(conn)
-
-            }//try
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }//catch
-            return list;
-        }///product_info
-
-        public List<ProductShowModel> Dept_Category_Mount3(DeptModel SelectedDept, CategoryModel SelectedCategory)
+        public List<ProductShowModel> Get_Dept_Category_RemainExpire(DeptModel SelectedDept, CategoryModel SelectedCategory)
         {
             Console.WriteLine("start");
             List<ProductShowModel> list = new List<ProductShowModel>();
@@ -1881,12 +1838,12 @@ namespace EasyProject.Dao
                 Console.WriteLine(e.Message);
             }//catch
             return list;
-        }///Dept_Category_Mount
-  
+        }///Get_Dept_Category_RemainExpire
 
 
-}//class
 
-    
+    }//class
+
+
 
 }//namespace
