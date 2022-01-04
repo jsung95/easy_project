@@ -102,12 +102,12 @@ namespace EasyProject.Dao
                                           "FROM PRODUCT " +
                                           "WHERE prod_code = :prod_code " +
                                           "AND prod_name = :prod_name " +
-                                          "AND category_id = :category_id " +
+                                          "AND category_id = (SELECT category_id FROM category WHERE category_name = :category_name) " +
                                           "AND prod_price = :prod_price " +
                                           "AND prod_expire = TO_DATE(:expire, 'YYYYMMDD') ";
                         cmd.Parameters.Add(new OracleParameter("prod_code", product_dto.Prod_code));
                         cmd.Parameters.Add(new OracleParameter("prod_name", product_dto.Prod_name));
-                        cmd.Parameters.Add(new OracleParameter("category_id", product_dto.Category_id));
+                        cmd.Parameters.Add(new OracleParameter("category_name", cateogry_dto.Category_name));
                         cmd.Parameters.Add(new OracleParameter("prod_price", product_dto.Prod_price));
                         //cmd.Parameters.Add(new OracleParameter("prod_expire", product_dto.Prod_expire));
 
@@ -176,12 +176,12 @@ namespace EasyProject.Dao
                                           "FROM PRODUCT " +
                                           "WHERE prod_code = :prod_code " +
                                           "AND prod_name = :prod_name " +
-                                          "AND category_id = :category_id " +
+                                          "AND category_id = (SELECT category_id FROM category WHERE category_name = :category_name) " +
                                           "AND prod_price = :prod_price " +
                                           "AND prod_expire = TO_DATE(:expire, 'YYYYMMDD') ";
                         cmd.Parameters.Add(new OracleParameter("prod_code", product_dto.Prod_code));
                         cmd.Parameters.Add(new OracleParameter("prod_name", product_dto.Prod_name));
-                        cmd.Parameters.Add(new OracleParameter("category_id", category_name));
+                        cmd.Parameters.Add(new OracleParameter("category_name", category_name));
                         cmd.Parameters.Add(new OracleParameter("prod_price", product_dto.Prod_price));
                         //cmd.Parameters.Add(new OracleParameter("prod_expire", product_dto.Prod_expire));
 
