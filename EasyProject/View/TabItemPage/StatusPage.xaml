@@ -325,10 +325,10 @@
                                                                     </Button.Style>
                                                                 </Button>
 
-                                                                <Button x:Name="productReleas_Btn" Margin="5,0,0,0" Content="확인"  FontSize="10"  HorizontalAlignment="Center"  
+                                                                <Button x:Name="productReleas_Btn" Margin="5,0,0,0" Content="확인"  FontSize="10"  HorizontalAlignment="Center" IsEnabled="{Binding PSVM.SelectedProduct.IsEnabled, Source={StaticResource Locator}}"
                                                                     VerticalAlignment="Center"  BorderThickness="0" Height="28" Width="55" Cursor="Hand" Foreground="white" Command="{Binding PSVM.OutProductCommand, Source={StaticResource Locator}}">
                                                                     <Button.Style>
-                                                                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                                                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}" >
                                                                             <Setter  Property="Background" Value="#4472C4" />
                                                                         </Style>
                                                                     </Button.Style>
@@ -740,5 +740,30 @@
             </Grid>
 
         </Grid>
+        <materialDesign:Snackbar x:Name="Snackbar"  Background="#Ea4a2d" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+            <materialDesign:SnackbarMessage ActionContent="닫기" ActionCommand="{Binding SnackBarCommand}" Width="619">
+                <materialDesign:SnackbarMessage.Style>
+                    <Style TargetType="materialDesign:SnackbarMessage">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsInOutEnabled}" Value="True">
+                                <Setter Property="Content" Value="{Binding ErrorProductString}"></Setter>
+                            </DataTrigger>
+
+                        </Style.Triggers>
+                    </Style>
+                </materialDesign:SnackbarMessage.Style>
+            </materialDesign:SnackbarMessage>
+
+            <materialDesign:Snackbar.Style>
+                <Style TargetType="materialDesign:Snackbar">
+                    <Setter Property="IsActive" Value="False"></Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsInOutEnabled}" Value="True">
+                            <Setter Property="IsActive" Value="True"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </materialDesign:Snackbar.Style>
+        </materialDesign:Snackbar>
     </Grid>
 </Page>

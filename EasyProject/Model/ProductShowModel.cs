@@ -40,6 +40,7 @@ namespace EasyProject.Model
             set
             {
                 selectedOutType = value;
+                IsEnabled = true;
                 Console.WriteLine("SelectedOutType 변경합니다! : " + selectedOutType);
                 if (selectedOutType == "사용")
                 {
@@ -108,6 +109,18 @@ namespace EasyProject.Model
             {
                 inputOutCount = value;
                 OnPropertyChanged("InputOutCount");
+            }
+        }
+
+        //재고 출고 - 확인 버튼 활성화/비활성화 프로퍼티
+        private bool isEnabled;
+        public bool IsEnabled
+        {
+            get { return isEnabled; }
+            set
+            {
+                isEnabled = value;
+                OnPropertyChanged("IsEnabled");
             }
         }
     }//class

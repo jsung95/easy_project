@@ -509,6 +509,16 @@ namespace EasyProject.ViewModel
                 OnPropertyChanged("IsEmptyProduct");
             }
         }
+        private bool isInOutEnabled = false;          // 재고출입고
+        public bool IsInOutEnabled
+        {
+            get { return isInOutEnabled; }
+            set
+            {
+                isInOutEnabled = value;
+                OnPropertyChanged("IsInOutEnabled");
+            }
+        }
 
         private bool isEditButtonClicked = false;
         public bool IsEditButtonClicked
@@ -548,7 +558,8 @@ namespace EasyProject.ViewModel
 
         private void CloseSnackBar()
         {
-            IsEmptyProduct = false;
+            //IsEmptyProduct = false;
+            IsInOutEnabled = false;
         }
         //============================================================
         //============================================================
@@ -591,9 +602,128 @@ namespace EasyProject.ViewModel
         public void OutProduct()
         {
             Console.WriteLine("OutProduct() 실행!");
-            product_dao.OutProduct(SelectedProduct, Nurse);
-            product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
-            product_dao.ChangeProductInfo_ForOut(SelectedProduct);
+            if(SelectedProduct.SelectedOutType == "사용")  // 출고타입이 사용일 때  *출고 타입을 선택하지 않은 경우는 확인 버튼이 비활성화되어 있음
+            {
+                if (SelectedProduct.InputOutCount == null) // null 입력할 경우
+                {
+                    ErrorProductString = "제품 사용 수량을 입력해주세요.";
+                    IsInOutEnabled = true;                   
+                }
+                else if (SelectedProduct.InputOutCount.GetType() != typeof(Int32)) // int 타입이 아닌 자료형을 입력할 경우
+                {
+                    ErrorProductString = "제품 사용 수량에는 숫자를 입력해주세요.";
+                    IsInOutEnabled = true;                   
+                }
+                else if(SelectedProduct.InputOutCount == 0 ) //0을 입력할 경우
+                {
+                    ErrorProductString = "제품 사용 수량에는 0 이상을 입력해주세요.";
+                    IsInOutEnabled = true;                   
+                }
+                else if(SelectedProduct.InputOutCount > SelectedProduct.Imp_dept_count) // 현재 재고 수량보다 많은 숫자를 입력할 경우
+                {
+                    ErrorProductString = $"{SelectedProduct.Prod_name}의 현재 수량이 {SelectedProduct.InputOutCount}보다 적습니다.";
+                    IsInOutEnabled = true;                    
+                }
+                else if (SelectedProduct.InputOutCount == SelectedProduct.Imp_dept_count) // 현재 재고 수량을 모두 사용할 경우
+                {
+                    product_dao.OutProduct(SelectedProduct, Nurse);
+                    product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
+                    product_dao.ChangeProductInfo_ForOut(SelectedProduct);
+                    ErrorProductString = $"{SelectedProduct.Prod_name}을(를) 모두 사용하였습니다.";
+                    IsInOutEnabled = true;
+                }
+                else
+                {
+                    product_dao.OutProduct(SelectedProduct, Nurse);
+                    product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
+                    product_dao.ChangeProductInfo_ForOut(SelectedProduct);
+                    ErrorProductString = $"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 사용하였습니다.";
+                    IsInOutEnabled = true;
+                }
+            }
+            else if(SelectedProduct.SelectedOutType == "이관") // 출고타입이 이관일 때  *출고 타입을 선택하지 않은 경우는 확인 버튼이 비활성화되어 있음
+            {
+                if (SelectedProduct.InputOutCount == null) // null 입력할 경우
+                {
+                    ErrorProductString = "제품 이관 수량을 입력해주세요.";
+                    IsInOutEnabled = true;
+                }
+                else if (SelectedProduct.SelectedOutDept == null) // 부서 선택하지 않을 경우
+                {
+                    ErrorProductString = "제품을 이관할 부서를 선택해주세요.";
+                    IsInOutEnabled = true;
+                }
+                else if (SelectedProduct.InputOutCount.GetType() != typeof(Int32)) // int 타입이 아닌 자료형을 입력할 경우
+                {
+                    ErrorProductString = "제품 이관 수량에는 숫자를 입력해주세요.";
+                    IsInOutEnabled = true;
+                }
+                else if (SelectedProduct.InputOutCount == 0) //0을 입력할 경우
+                {
+                    ErrorProductString = "제품 이관 수량에는 0 이상을 입력해주세요.";
+                    IsInOutEnabled = true;
+                }
+                else if (SelectedProduct.InputOutCount > SelectedProduct.Imp_dept_count) // 현재 재고 수량보다 많은 숫자를 입력할 경우
+                {
+                    ErrorProductString = $"{SelectedProduct.Prod_name}의 현재 수량이 {SelectedProduct.InputOutCount}보다 적습니다.";
+                    IsInOutEnabled = true;
+                }
+                else if (SelectedProduct.InputOutCount == SelectedProduct.Imp_dept_count) // 현재 재고 수량을 모두 이관할 경우
+                {
+                    product_dao.OutProduct(SelectedProduct, Nurse);
+                    product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
+                    product_dao.ChangeProductInfo_ForOut(SelectedProduct);
+                    ErrorProductString = $"{SelectedProduct.Prod_name}을(를) 모두 {SelectedProduct.SelectedOutDept.Dept_name}으로 이관하였습니다.";
+                    IsInOutEnabled = true;
+                }
+                else
+                {
+                    product_dao.OutProduct(SelectedProduct, Nurse);
+                    product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
+                    product_dao.ChangeProductInfo_ForOut(SelectedProduct);
+                    ErrorProductString = $"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 {SelectedProduct.SelectedOutDept.Dept_name}으로 이관하였습니다.";
+                    IsInOutEnabled = true;
+                }
+            }
+            if (SelectedProduct.SelectedOutType == "폐기")  // 출고타입이 폐기일 때  *출고 타입을 선택하지 않은 경우는 확인 버튼이 비활성화되어 있음
+            {
+                if (SelectedProduct.InputOutCount == null) // null 입력할 경우
+                {
+                    ErrorProductString = "제품 폐기 수량을 입력해주세요.";
+                    IsInOutEnabled = true;
+                }
+                else if (SelectedProduct.InputOutCount.GetType() != typeof(Int32)) // int 타입이 아닌 자료형을 입력할 경우
+                {
+                    ErrorProductString = "제품 폐기 수량에는 숫자를 입력해주세요.";
+                    IsInOutEnabled = true;
+                }
+                else if (SelectedProduct.InputOutCount == 0) //0을 입력할 경우
+                {
+                    ErrorProductString = "제품 폐기 수량에는 0 이상을 입력해주세요.";
+                    IsInOutEnabled = true;
+                }
+                else if (SelectedProduct.InputOutCount > SelectedProduct.Imp_dept_count) // 현재 재고 수량보다 많은 숫자를 입력할 경우
+                {
+                    ErrorProductString = $"{SelectedProduct.Prod_name}의 현재 수량이 {SelectedProduct.InputOutCount}보다 적습니다.";
+                    IsInOutEnabled = true;
+                }
+                else if (SelectedProduct.InputOutCount == SelectedProduct.Imp_dept_count) // 현재 재고 수량을 모두 폐기할 경우
+                {
+                    product_dao.OutProduct(SelectedProduct, Nurse);
+                    product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
+                    product_dao.ChangeProductInfo_ForOut(SelectedProduct);
+                    ErrorProductString = $"{SelectedProduct.Prod_name}을(를) 모두 폐기하였습니다.";
+                    IsInOutEnabled = true;
+                }
+                else
+                {
+                    product_dao.OutProduct(SelectedProduct, Nurse);
+                    product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
+                    product_dao.ChangeProductInfo_ForOut(SelectedProduct);
+                    ErrorProductString = $"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 폐기하였습니다.";
+                    IsInOutEnabled = true;
+                }
+            }
 
             SelectedProduct.SelectedOutType = null;
             SelectedProduct.SelectedOutDept = null;

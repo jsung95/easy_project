@@ -149,7 +149,7 @@ namespace EasyProject.ViewModel
 
             foreach (var item in Normals_searched)
             {
-                if (item.IsChecked)
+                if (item.IsChecked)// item.IsChecked = true -> 권한 변경할 객체들 
                 {
                     item.IsChecked = false;
                     Admins_searched.Add(item); // 화면에 보이는 Admin_searched 목록에 있는 리스트                   
