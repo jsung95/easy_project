@@ -24,7 +24,7 @@
                     <ColumnDefinition Width="0.3*"/>
                     <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="1">
+                <!--<Grid Grid.Column="1">
                     <ComboBox x:Name="CategoryName_ComboBox1"
                        ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept}"  VerticalAlignment="Bottom" HorizontalAlignment="Center"  Height="30" Width="182"  TextBlock.FontSize="10">
                         <ComboBox.Resources>
@@ -47,7 +47,7 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                </Grid>
+                </Grid>-->
                 <Grid Grid.Column="2">
                     <Button x:Name="rightBtn"  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                         VerticalAlignment="Bottom"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Background="{x:Null}" Click="rightBtn_Click">
