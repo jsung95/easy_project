@@ -74,13 +74,13 @@ namespace EasyProject.View.TabItemPage
             MessageBox.Show("버튼을 클릭했습니다.");
         }
 
-        private void goDialog_Btn_Click(object sender, RoutedEventArgs e)
+        /*private void goDialog_Btn_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate
                 (
                 new Uri("/View/ExportPage/DialogPage.xaml", UriKind.Relative)
                 );
-        }
+        }*/
 
         private void OnDropDownOpened(object sender, EventArgs e)
         {

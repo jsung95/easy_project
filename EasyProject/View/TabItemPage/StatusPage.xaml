@@ -176,8 +176,19 @@
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                             <Button x:Name="goDialog_Btn" Foreground="#4472C4"  FontSize="12" FontWeight="Bold" Background="{x:Null}"  Cursor="Hand"
-                                                    VerticalAlignment="Center" Height="45"  Width="45" HorizontalAlignment="Center" Click="goDialog_Btn_Click">
-                                                <materialDesign:PackIcon  Kind="LeadPencil" VerticalAlignment="Center" HorizontalAlignment="Center" Height="17" Width="17"/>
+                                                    VerticalAlignment="Center" Height="45"  Width="45" HorizontalAlignment="Center" Command="{Binding PSVM.ProductEditCommand, Source={StaticResource Locator}}">
+                                                <materialDesign:PackIcon VerticalAlignment="Center" HorizontalAlignment="Center" Height="17" Width="17">
+                                                    <materialDesign:PackIcon.Style>
+                                                        <Style TargetType="materialDesign:PackIcon">
+                                                            <Setter Property="Kind" Value="LeadPencil"></Setter>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding PSVM.IsEditButtonClicked, Source={StaticResource Locator}}" Value="True">
+                                                                    <Setter Property="Kind" Value="Check"></Setter>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </materialDesign:PackIcon.Style>
+                                                </materialDesign:PackIcon>
                                             </Button>
                                             <StackPanel Orientation="Horizontal">
                                                 <materialDesign:PopupBox StaysOpen="True" IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
@@ -559,7 +570,7 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Row="2">
 
                         <StackPanel Orientation="Horizontal">
 

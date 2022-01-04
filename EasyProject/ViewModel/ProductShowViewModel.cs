@@ -79,6 +79,7 @@ namespace EasyProject.ViewModel
                 OnPropertyChanged("SelectedCategory");
             }
         }
+
         //검색 유형 프로퍼티
         public string[] SearchTypeList { get; set; }
         //선택한 검색 콤보박스를 담을 프로퍼티
@@ -223,6 +224,19 @@ namespace EasyProject.ViewModel
             }//get
         }
 
+        private ActionCommand productEditCommand;
+        public ICommand ProductEditCommand
+        {
+            get
+            {
+                if (productEditCommand == null)
+                {
+                    productEditCommand = new ActionCommand(EditProduct);
+                }
+                return productEditCommand;
+            }//get
+        }
+
         private ActionCommand firstCommand;
         public ICommand FirstCommand
         {
@@ -313,6 +327,14 @@ namespace EasyProject.ViewModel
             //UpdateRecordCount();
         }
 
+        public void EditProduct()
+        {
+            Console.WriteLine("재고수정을 하고자합니다. ////////////////////////////////");
+            IsEditButtonClicked = true;
+
+
+        }
+
 
         // ==================== 스넥바 snackbar =======================
         //============================================================
@@ -324,6 +346,18 @@ namespace EasyProject.ViewModel
             {
                 isEmptyProduct = value;
                 OnPropertyChanged("IsEmptyProduct");
+            }
+        }
+
+
+        private bool isEditButtonClicked = false;
+        public bool IsEditButtonClicked
+        {
+            get { return isEditButtonClicked; }
+            set
+            {
+                isEditButtonClicked = value;
+                OnPropertyChanged("IsEditButtonClicked");
             }
         }
 
