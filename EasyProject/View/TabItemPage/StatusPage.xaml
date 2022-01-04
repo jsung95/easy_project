@@ -546,16 +546,9 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Row="2">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
-                        <StackPanel Orientation="Horizontal">
-
-                            <ComboBox Margin="5" SelectedIndex="0" Width="100" SelectedItem ="{Binding SelectedRecord, UpdateSourceTrigger=PropertyChanged}">
-                                <wookoa:Int32>10</wookoa:Int32>
-                                <wookoa:Int32>15</wookoa:Int32>
-                                <wookoa:Int32>20</wookoa:Int32>
-                                <wookoa:Int32>25</wookoa:Int32>
-                            </ComboBox>
                             <Button Height="23" HorizontalAlignment="Right"  Command="{Binding FirstCommand}"
                             Name="btnFirst" VerticalAlignment="Bottom" Width="40" Foreground="White" Background="#4472C4"
                             Content="&lt;&lt;" ToolTip="First page"  Opacity="0.75" Margin="5">
@@ -586,7 +579,7 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
-                            <TextBlock VerticalAlignment="Center">
+                            <TextBlock VerticalAlignment="Center" Margin="7">
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}{0} of {1}">
                                         <Binding Path="CurrentPage" />
@@ -624,6 +617,12 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
+                            <ComboBox Margin="5" SelectedIndex="0" Width="100" SelectedItem ="{Binding SelectedRecord, UpdateSourceTrigger=PropertyChanged}">
+                                <wookoa:Int32>10</wookoa:Int32>
+                                <wookoa:Int32>15</wookoa:Int32>
+                                <wookoa:Int32>20</wookoa:Int32>
+                                <wookoa:Int32>25</wookoa:Int32>
+                            </ComboBox>
                         </StackPanel>
                     </Grid>
                 </Grid>
