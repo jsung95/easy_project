@@ -199,9 +199,19 @@
 
                 <Grid Grid.Row="1">
                     <Grid Grid.Column="0" >
-                        <Button x:Name="export_btn" Height="26" HorizontalAlignment="Center" Grid.Column ="2" Foreground="White" Background="#4472C4"
-                                VerticalAlignment="Center" Width="140"  FontSize="13" Margin="0,0,0,10"
-                                Content="excel to export"  Opacity="0.75" Cursor="Hand"/>
+                       
+                            <Button x:Name="export_btn" Height="26" HorizontalAlignment="Center" Grid.Column ="2" Foreground="White" Background="#4472C4"
+                                VerticalAlignment="Center" Width="150"  FontSize="13" Margin="0,0,0,10" 
+                                  Opacity="0.75" Cursor="Hand">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="MicrosoftExcel"  HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" />
+                                <TextBlock Text="DownLoad" Margin="3,0,0,0" Foreground="White" FontWeight="Bold"></TextBlock>
+                            </StackPanel>
+                                
+                            </Button>
+                            
+                       
+                        
                     </Grid>
                 </Grid>
             </Grid>
