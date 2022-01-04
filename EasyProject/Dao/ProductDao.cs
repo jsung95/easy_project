@@ -105,12 +105,30 @@ namespace EasyProject.Dao
                                           "AND prod_name = :prod_name " +
                                           "AND category_id = :category_id " +
                                           "AND prod_price = :prod_price " +
-                                          "AND prod_expire = :prod_expire ";
+                                          "AND prod_expire = TO_DATE(:expire, 'YYYYMMDD') ";
                         cmd.Parameters.Add(new OracleParameter("prod_code", product_dto.Prod_code));
                         cmd.Parameters.Add(new OracleParameter("prod_name", product_dto.Prod_name));
                         cmd.Parameters.Add(new OracleParameter("category_id", product_dto.Category_id));
                         cmd.Parameters.Add(new OracleParameter("prod_price", product_dto.Prod_price));
-                        cmd.Parameters.Add(new OracleParameter("prod_expire", product_dto.Prod_expire));
+                        //cmd.Parameters.Add(new OracleParameter("prod_expire", product_dto.Prod_expire));
+
+                        // 날짜형식을 -> String 타입으로 변경 후 바인딩
+                        string month = product_dto.Prod_expire.Month.ToString();
+                        if (product_dto.Prod_expire.Month < 10)
+                        {
+                            month = "0" + product_dto.Prod_expire.Month.ToString();
+                        }// 선택한 월이 1자리 라면 앞에 0을 붙임
+
+                        string day = product_dto.Prod_expire.Day.ToString();
+                        if (product_dto.Prod_expire.Day < 10)
+                        {
+                            day = "0" + product_dto.Prod_expire.Day.ToString();
+                        }// 선택한 일이 1자리 라면 앞에 0을 붙임
+
+                        string expire = product_dto.Prod_expire.Year.ToString() + month + day;
+                        Console.WriteLine("Insert DATE : {0}", expire);
+                        cmd.Parameters.Add(new OracleParameter("expire", expire));
+
 
                         Console.WriteLine(product_dto.Prod_expire);
                         Console.WriteLine(product_dto.Category_id + "카페고리id");
