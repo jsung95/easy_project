@@ -141,6 +141,18 @@ namespace EasyProject.ViewModel
                 //Console.WriteLine(SelectedProductList[0].Prod_code);
             }
         }
+
+        private int selectedProductIndex;
+        public int SelectedProductIndex
+        {
+            get { return selectedProductIndex; }
+            set
+            {
+                selectedProductIndex = value;
+                OnPropertyChanged("SelectedProductIndex");
+            }
+        }
+
         public List<ProductShowModel> SelectedProductList { get; set; } // SelectedProduct를 DataGrid에서 사용하기 위한 List
         // 재고 출고 - 선택한 출고 유형 콤보박스를 담을 값
         private string selectedOutType;
@@ -329,10 +341,27 @@ namespace EasyProject.ViewModel
 
         public void EditProduct()
         {
-            Console.WriteLine("재고수정을 하고자합니다. ////////////////////////////////");
-            IsEditButtonClicked = true;
 
+            //var selectedProductRowNumber = LstOfRecords.IndexOf(SelectedProduct);
+            //Console.WriteLine(selectedProductRowNumber+"번째 제품의 재고수정 버튼을 클릭하였습니다.");
 
+            //Console.WriteLine(selectedProductRowNumber + "리스트에 있는 몇번째 ?");
+            //Console.WriteLine(SelectedProductIndex + "데이터그리드에 있는 몇번째 ?");
+
+            //if (selectedProductRowNumber == SelectedProductIndex + SelectedRecord * (CurrentPage - 1))
+            //{
+            //    Console.WriteLine("정답!");
+            //    IsEditButtonClicked = true;
+            //}
+            
+            Console.WriteLine(SelectedProduct.Prod_code);
+            product_dao.ChangeProductInfo(SelectedProduct);
+            product_dao.ChangeProductInfo_IMP_DEPT(SelectedProduct);
+
+            LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProducts());
+            UpdateCollection(LstOfRecords.Take(SelectedRecord));
+            //첫페이지 말고 다음 페이지에서 재고수정할때 성공은 되는데 첫페이지로 돌아감 해결하기
+            UpdateRecordCount();
         }
 
 
@@ -348,7 +377,6 @@ namespace EasyProject.ViewModel
                 OnPropertyChanged("IsEmptyProduct");
             }
         }
-
 
         private bool isEditButtonClicked = false;
         public bool IsEditButtonClicked

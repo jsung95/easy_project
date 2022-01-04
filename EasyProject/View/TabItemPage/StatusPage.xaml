@@ -139,18 +139,82 @@
                     
                     <DataGrid x:Name="dataGrid" Grid.Row="1"
                             HorizontalAlignment="Left" Margin="10 0"
-                            VerticalAlignment="Top" AutoGenerateColumns="False" 
+                            VerticalAlignment="Top" AutoGenerateColumns="False"
                             IsReadOnly="True" ColumnWidth="*" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" SelectionMode="Extended" SelectionUnit="FullRow" Cursor="Hand">
+                        <!--SelectedIndex="{Binding SelectedProductIndex}" -->
+                        <DataGrid.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="LightBlue"/>
+                                        <!--<DataTrigger Binding="{Binding PSVM.IsEditButtonClicked, Source={StaticResource Locator}}" Value="True">
+                                                <Setter Property="Background" Value="Yellow"/>
+                                            </DataTrigger>-->
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.CellStyle>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="1.5*" CanUserSort="false"  IsReadOnly="True" />
-                            <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="1.5*" CanUserSort="false" IsReadOnly="True"/>
-                            <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="1.5*" CanUserSort="false" IsReadOnly="True"/>
+
+                            <DataGridTemplateColumn Header="제품코드" Width="1.5*" CanUserSort="false" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Prod_code}"></TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding PSVM.SelectedProduct.Prod_code, Source={StaticResource Locator}}"></TextBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+
+                                <DataGridTemplateColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="IsEditing" Value="True"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTemplateColumn.CellStyle>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="1.5*" CanUserSort="false" IsReadOnly="True">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="IsEditing" Value="True"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="1.5*" CanUserSort="false" IsReadOnly="True">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="IsEditing" Value="True"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
                             <DataGridTextColumn Binding="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}" CanUserSort="true" Header="제품가격" Width="1*"  IsReadOnly="True">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Right" />
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="IsEditing" Value="True"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
                             </DataGridTextColumn>
                             <DataGridTextColumn Binding="{Binding Imp_dept_count, StringFormat='{}{0:#,0} 개'}" CanUserSort="true" Header="수량" Width="1*" IsReadOnly="True">
                                 <DataGridTextColumn.ElementStyle>
@@ -167,17 +231,8 @@
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                             <Button x:Name="goDialog_Btn" Foreground="#4472C4"  FontSize="12" FontWeight="Bold" Background="{x:Null}"  Cursor="Hand"
                                                     VerticalAlignment="Center" Height="45"  Width="45" HorizontalAlignment="Center" Command="{Binding PSVM.ProductEditCommand, Source={StaticResource Locator}}">
-                                                <materialDesign:PackIcon VerticalAlignment="Center" HorizontalAlignment="Center" Height="17" Width="17">
-                                                    <materialDesign:PackIcon.Style>
-                                                        <Style TargetType="materialDesign:PackIcon">
-                                                            <Setter Property="Kind" Value="LeadPencil"></Setter>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding PSVM.IsEditButtonClicked, Source={StaticResource Locator}}" Value="True">
-                                                                    <Setter Property="Kind" Value="Check"></Setter>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </materialDesign:PackIcon.Style>
+                                                <materialDesign:PackIcon Kind="LeadPencil" VerticalAlignment="Center" HorizontalAlignment="Center" Height="17" Width="17">
+                                                    
                                                 </materialDesign:PackIcon>
                                             </Button>
                                             <StackPanel Orientation="Horizontal">
