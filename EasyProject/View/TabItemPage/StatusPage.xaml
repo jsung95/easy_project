@@ -340,20 +340,20 @@
                                                                         VerticalAlignment="Center" Margin="10,0,0,0" Width="80"/>
                                                                 <TextBox x:Name="id_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="아이디" Grid.Column="1" HorizontalContentAlignment="Left" 
                                                                         VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
-                                                                        Text="{Binding SelectedUser.Nurse_name}"/>
+                                                                        Text="{Binding PSVM.SelectedUser.Nurse_name , Source={StaticResource Locator}}"/>
 
                                                                 <Label Content="부서" Grid.Column="2" Foreground="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                                                                         VerticalAlignment="Center" Margin="10,0,0,0"/>
                                                                 <TextBox x:Name="dept_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="부서" Grid.Column="3" HorizontalContentAlignment="Left" 
                                                                         VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
-                                                                        Text="{Binding SelectedUser.Dept_name}"/>
+                                                                        Text="{Binding PSVM.SelectedUser.Dept_name, Source={StaticResource Locator}}"/>
 
 
                                                                 <Label Content="연락처" Grid.Column="4" Foreground="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                                                                        VerticalAlignment="Center" Margin="10,0,0,0" Width="80"/>
                                                                 <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="- 빼고입력" Grid.Column="5" HorizontalContentAlignment="Left" 
                                                                         VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Width="120"
-                                                                        Text="{Binding SelectedUser.Dept_phone}"/>
+                                                                        Text="{Binding PSVM.SelectedUser.Dept_phone, Source={StaticResource Locator}}"/>
 
                                                             </Grid>
                                                         </Grid>
@@ -380,14 +380,12 @@
                                                                         <ColumnDefinition Width="100*"/>
                                                                         <ColumnDefinition Width="75*"/>
                                                                         <ColumnDefinition Width="170*"/>
-
-
-                                                                    </Grid.ColumnDefinitions>
+                                                                </Grid.ColumnDefinitions>
                                                                     <Label Content="신청 품목명" Foreground="#4472C4" Grid.Column="0" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                                                                            VerticalAlignment="Center" Margin="10,0,0,0"/>
                                                                     <TextBox x:Name="request_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="신청품목명" Grid.Column="1" HorizontalContentAlignment="Left" 
                                                                            VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="5,0,5,0" Height="30" 
-                                                                           Text="{Binding SelectedProduct.Prod_name}"/>
+                                                                           Text="{Binding PSVM.SelectedProduct.Prod_name, Source={StaticResource Locator}}"/>
 
                                                                     <Label Content="용량" Foreground="#4472C4" Grid.Column="2" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                                                                            VerticalAlignment="Center" Margin="7,0,0,0"/>
@@ -465,12 +463,14 @@
                                                                 <ColumnDefinition Width="*"/>
                                                                 <ColumnDefinition Width="*"/>
                                                             </Grid.ColumnDefinitions>
-                                                            <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" Text="유형" />
-                                                            <ComboBox Grid.Column="1" Height="30" Width="70" MaxDropDownHeight="200" HorizontalAlignment="Left"  Name="Type_comboBox2" VerticalAlignment="Center"
+                                                            <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                                                       FontSize="11" Text="유형" />
+                                                            <ComboBox Grid.Column="1" Height="30" Width="70" MaxDropDownHeight="200" 
+                                                                      HorizontalAlignment="Left"  Name="Type_comboBox2" VerticalAlignment="Center"
                                                                     SelectedValue="{Binding SelectedOutType}" SelectedValuePath="Content" >
+                                                                <ComboBoxItem Content="발주" />
                                                                 <ComboBoxItem Content="사용" />
                                                                 <ComboBoxItem Content="이관" />
-                                                                <ComboBoxItem Content="폐기" />
                                                             </ComboBox>
                                                         </Grid>
                                                         <Grid Grid.Row="2">
