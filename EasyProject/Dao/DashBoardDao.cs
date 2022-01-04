@@ -150,7 +150,7 @@ namespace EasyProject.Dao
         }///Prodcodetotal_info
 
         //카테고리별 --부서별/제품총수량 그래프 Dao
-        public List<ImpDeptModel> Dept_Category_Mount(DeptModel SelectedDept)
+        public List<ImpDeptModel> Dept_Category_Mount(CategoryModel SelectedCategory)
         {
             List<ImpDeptModel> list = new List<ImpDeptModel>();
             try
@@ -165,7 +165,7 @@ namespace EasyProject.Dao
                     using (cmd)
                     {
                         cmd.Connection = conn;
-                        cmd.CommandText = "SELECT D.dept_name, C.category_name, SUM(I.imp_dept_count) " +
+                        cmd.CommandText = "SELECT C.category_name, D.dept_name, SUM(I.imp_dept_count) " +
                             "FROM IMP_DEPT I " +
                             "INNER JOIN PRODUCT P " +
                             "ON I.prod_id = P.prod_id " +
@@ -173,24 +173,22 @@ namespace EasyProject.Dao
                             "ON P.category_id = C.category_id " +
                             "INNER JOIN DEPT D " +
                             "ON I.dept_id = D.dept_id " +
-                            "where d.dept_name = :dept_name " +
+                            "where c.category_name = :category_name " +
                             "GROUP BY C.category_name, D.dept_name";
 
 
-
-
-                        cmd.Parameters.Add(new OracleParameter("category_name", SelectedDept.Dept_name)); //category_name
+                        cmd.Parameters.Add(new OracleParameter("category_name", SelectedCategory.Category_name)); //category_name
                         //cmd.Parameters.Add(new OracleParameter("total", prod_dto.Prod_total));
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
                         while (reader.Read())
                         {
-                            string Category_name = reader.GetString(1);
+                            string Dept_name = reader.GetString(1);
                             int? SUM_dept = reader.GetInt32(2);
                             ImpDeptModel dto = new ImpDeptModel()
                             {
-                                Cateogry_name = Category_name,
+                                dept_name = Dept_name,
                                 Imp_dept_count = SUM_dept
                             };
 
