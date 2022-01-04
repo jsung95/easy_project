@@ -24,5 +24,13 @@ namespace EasyProject.View.TabItemPage.GraphPage
         {
             InitializeComponent();
         }
+
+        private void rightBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate
+                (
+                new Uri("/View/TabItemPage/GraphPage/RemainExpire_GraphPage.xaml", UriKind.Relative) //재고현황화면 --테스트
+                );
+        }
     }
 }
