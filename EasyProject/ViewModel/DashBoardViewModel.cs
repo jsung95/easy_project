@@ -426,7 +426,7 @@ namespace EasyProject.ViewModel
             BarLabels = new List<string>() { };                           //x축출력
             foreach (var item in list_xy)
             {
-                BarLabels.Add(item.dept_name);
+                BarLabels.Add(item.Dept_name);
             }
             Formatter = value => value.ToString("N");   //문자열 10진수 변환
         }//dashboardprint4

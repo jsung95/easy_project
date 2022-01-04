@@ -188,7 +188,7 @@ namespace EasyProject.Dao
                             int? SUM_dept = reader.GetInt32(2);
                             ImpDeptModel dto = new ImpDeptModel()
                             {
-                                dept_name = Dept_name,
+                                Dept_name = Dept_name,
                                 Imp_dept_count = SUM_dept
                             };
 

@@ -7,7 +7,7 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       mc:Ignorable="d" 
-      DataContext="{Binding DBVM, Source={StaticResource Locator}}"
+      DataContext="{Binding PSVM, Source={StaticResource Locator}}"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DeptCate_GraphPage">
 
@@ -24,9 +24,9 @@
                     <ColumnDefinition Width="0.3*"/>
                     <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="1">
+                <!--<Grid Grid.Column="1">
                     <ComboBox x:Name="CategoryName_ComboBox1"
-                       ItemsSource="{Binding Path=category}" SelectedItem="{Binding SelectedCategory}"  VerticalAlignment="Bottom" HorizontalAlignment="Center"  Height="30" Width="182"  TextBlock.FontSize="10">
+                       ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept}"  VerticalAlignment="Bottom" HorizontalAlignment="Center"  Height="30" Width="182"  TextBlock.FontSize="10">
                         <ComboBox.Resources>
                             <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
                         </ComboBox.Resources>
@@ -42,12 +42,12 @@
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Category_name}"/>
+                                    <TextBlock Text="{Binding Dept_name}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                </Grid>
+                </Grid>-->
                 <Grid Grid.Column="2">
                     <Button x:Name="rightBtn"  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                         VerticalAlignment="Bottom"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Background="{x:Null}" Click="rightBtn_Click">
@@ -58,7 +58,7 @@
 
             <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Grid>
-                    <lvc:CartesianChart x:Name="chart" BorderThickness="2" Series="{Binding SeriesCollection4}" 
+                    <lvc:CartesianChart x:Name="chart" BorderThickness="2" Series="{Binding SeriesCollection2}" 
                              LegendLocation="Top" Height="300" Width="400"  VerticalAlignment="Center" >
                         <!--Series="{Binding SeriesCollection}"-->
                         <lvc:CartesianChart.AxisY>
@@ -66,7 +66,7 @@
                             <!-- LabelFormatter="{Binding Formatter}" 바인딩-->
                         </lvc:CartesianChart.AxisY>
                         <lvc:CartesianChart.AxisX>
-                            <lvc:Axis Labels="{Binding BarLabels}" Title="부서별" />
+                            <lvc:Axis Labels="{Binding BarLabels2}" Title="부서별" />
                             <!--Labels="{Binding BarLabels}" 바인딩-->
                         </lvc:CartesianChart.AxisX>
                     </lvc:CartesianChart>
