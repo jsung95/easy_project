@@ -410,7 +410,7 @@ namespace EasyProject.ViewModel
                     break;
 
                 case 3:
-                    Product.Prod_expire = Convert.ToDateTime(columnText);
+                    Product.Prod_expire = Convert.ToDateTime(columnText.Substring(0,10));
                     break;
 
                 case 4:
@@ -445,7 +445,7 @@ namespace EasyProject.ViewModel
                     break;
 
                 case "유통기한":
-                    Product.Prod_expire = Convert.ToDateTime(GetCellText(range, rCnt, 4));
+                    Product.Prod_expire = Convert.ToDateTime(GetCellText(range, rCnt, 4).Substring(0,10));
                     break;
 
                 case "가격":
