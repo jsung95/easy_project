@@ -68,6 +68,7 @@ namespace EasyProject.ViewModel
                 selectedDept = value;
                 OnPropertyChanged("SelectedDept");
                 showListbyDept();
+                DashboardPrint2(selectedDept);
             }
         }
 
@@ -106,6 +107,17 @@ namespace EasyProject.ViewModel
                 OnPropertyChanged("SeriesCollection1");
             }
         }
+
+        private SeriesCollection seriesCollection2;
+        public SeriesCollection SeriesCollection2               //부서별 카테고리//제품총수량 그래프 큰 틀 
+        {
+            get { return seriesCollection2; }
+            set
+            {
+                seriesCollection2 = value;
+                OnPropertyChanged("SeriesCollection2");
+            }
+        }
         //검색 유형 프로퍼티
         public string[] SearchTypeList { get; set; }
         //선택한 검색 콤보박스를 담을 프로퍼티
@@ -132,6 +144,7 @@ namespace EasyProject.ViewModel
         public Func<double, string> Formatter { get; set; }
         public Func<double, string> Formatter1 { get; set; }
 
+        
         //대시보드 동적 프로퍼티
         private ChartValues<int> values1;
         public ChartValues<int> Values1
@@ -152,6 +165,17 @@ namespace EasyProject.ViewModel
             {
                 barLabels1 = value;
                 OnPropertyChanged("barLabels1");
+
+            }
+        }
+        public List<string> barLabels2 { get; set; }
+        public List<string> BarLabels2
+        {
+            get { return barLabels2; }
+            set
+            {
+                barLabels2 = value;
+                OnPropertyChanged("barLabels2");
 
             }
         }
@@ -744,6 +768,49 @@ namespace EasyProject.ViewModel
         }
 
 
+        //부서별   카테고리//제품총수량 그래프
+         public void DashboardPrint2(DeptModel selected)                       //대시보드 출력(x축:제품code, y축:수량) 
+        {
+            ChartValues<int> mount = new ChartValues<int>();   //y축들어갈 임시 값
+            Console.WriteLine("DashboardPrint2");
+            SeriesCollection2 = new SeriesCollection();   //대시보드 틀
+            //Console.WriteLine(selected.Dept_id); 
+            List<ImpDeptModel> list_xy = product_dao.Dept_Category_Mount(selected);
+            Console.WriteLine(selected);
+            //부서id별 제품code와 수량리스트
+            //List<string> list_x = new List<string>();                                    //x축리스트
+            //ChartValues<int> list_y = new ChartValues<int>();                          //y축리스트
+            //foreach (var item in list_xy)
+            //{
+            //    list_x.Add((string)item.Prod_code);
+            //    list_y.Add((int)item.Prod_total);
+            //}
+            //name을 2개선언 리스트
+
+            //List<ProductShowModel> list1 = list_y;      //y축출력
+            //List<ProductShowModel> list1 = product_dao.Prodtotal_Info();     
+            foreach (var item in list_xy)
+            {
+                mount.Add((int)item.Imp_dept_count);
+            }
+            //for (int i = 0; i < 8; i++)
+            //{
+            //    name.Add((int)list_xy[i].Prod_total);
+            //}
+            Values = new ChartValues<int> { };
+
+            SeriesCollection2.Add(new LineSeries
+            {
+                Title = "총 수량",   //+ i
+                Values = mount,
+            });
+            BarLabels2 = new List<string>() { };                           //x축출력
+            foreach (var item in list_xy)
+            {
+                BarLabels2.Add(item.Category_name);
+            }
+            Formatter = value => value.ToString("N");   //문자열 10진수 변환
+        }//dashboardprint2
 
 
     }//class

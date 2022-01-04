@@ -1841,6 +1841,64 @@ namespace EasyProject.Dao
         }///Get_Dept_Category_RemainExpire
 
 
+        //부서별 카테고리별//제품 총수량 그래프 
+        public List<ImpDeptModel> Dept_Category_Mount(DeptModel SelectedDepts)
+        {
+            List<ImpDeptModel> list = new List<ImpDeptModel>();
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT D.dept_name, C.category_name, SUM(I.imp_dept_count) " +
+                            "FROM IMP_DEPT I " +
+                            "INNER JOIN PRODUCT P " +
+                            "ON I.prod_id = P.prod_id " +
+                            "INNER JOIN CATEGORY C " +
+                            "ON P.category_id = C.category_id " +
+                            "INNER JOIN DEPT D " +
+                            "ON I.dept_id = D.dept_id " +
+                            "WHERE D.dept_name = :dept_name " +
+                            "GROUP BY C.category_name, D.dept_name";
+
+
+                        cmd.Parameters.Add(new OracleParameter("dept_name", SelectedDepts.Dept_name)); //category_name
+                        //cmd.Parameters.Add(new OracleParameter("total", prod_dto.Prod_total));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string Category_name = reader.GetString(1);
+                            int? SUM_dept = reader.GetInt32(2);
+                            ImpDeptModel dto = new ImpDeptModel()
+                            {
+                                Category_name = Category_name,
+                                Imp_dept_count = SUM_dept
+                            };
+
+                            list.Add(dto);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+            return list;
+        }///Dept_Category_Mount
+
 
     }//class
 
