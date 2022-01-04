@@ -11,7 +11,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="RemainExpire_GraphPage">
 
-    <Grid>
+    <Grid Height="450" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition Height="0.2*" />
             <RowDefinition Height="0.8*" />
@@ -25,7 +25,7 @@
             <Grid Grid.Column="1">
                 <Grid>
                         <ComboBox x:Name="deptName_ComboBox_Pie23" 
-                       ItemsSource="{Binding Path=Category1}" SelectedItem="{Binding SelectedCategory1}"  VerticalAlignment="Bottom" HorizontalAlignment="Center"  Height="30" Width="100"  TextBlock.FontSize="10"     >
+                       ItemsSource="{Binding Path=Category1}" SelectedItem="{Binding SelectedCategory1}"  VerticalAlignment="Bottom" HorizontalAlignment="Center"  Height="30" Width="182"  TextBlock.FontSize="10"     >
                             <ComboBox.Resources>
                                 <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
                             </ComboBox.Resources>
@@ -67,7 +67,7 @@
         </Grid>
         <Grid Grid.Row="1">
             <lvc:CartesianChart x:Name="chart1" BorderThickness="2" Series="{Binding SeriesCollection1}" 
-                             LegendLocation="Top" Height="230" Width="330"  VerticalAlignment="Center" >
+                             LegendLocation="Top" Height="300" Width="400"  VerticalAlignment="Center" >
                 <!--Series="{Binding SeriesCollection}"-->
                 <lvc:CartesianChart.AxisY>
                     <lvc:Axis Labels="{Binding BarLabels1}" Title="수량" />
