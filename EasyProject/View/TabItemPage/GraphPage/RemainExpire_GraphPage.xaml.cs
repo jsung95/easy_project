@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using EasyProject.ViewModel;
+using EasyProject.Model;
 
 namespace EasyProject.View.TabItemPage.GraphPage
 {
@@ -31,6 +34,10 @@ namespace EasyProject.View.TabItemPage.GraphPage
                 (
                 new Uri("/View/TabItemPage/GraphPage/DeptCate_GraphPage.xaml", UriKind.Relative) //재고현황화면 --테스트
                 );
+            var dash = Ioc.Default.GetService<ProductShowViewModel>();
+            //temp.DashboardPrint();
+            dash.DashboardPrint1(dash.SelectedDept, dash.SelectedCategory1);
+            //dash.DashboardPrint2(dash.SelectedDept);
         }
     }
 }

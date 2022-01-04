@@ -38,6 +38,7 @@ namespace EasyProject.View.TabItemPage.GraphPage
             temp.DashboardPrint2();
             temp.DashboardPrint3();
             temp.DashboardPrint4(temp.SelectedCategory1);
+            temp.DashboardPrint_Pie();
 
         }
     }

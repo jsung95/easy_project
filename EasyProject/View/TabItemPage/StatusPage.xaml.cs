@@ -47,7 +47,7 @@ namespace EasyProject.View.TabItemPage
             var dash = Ioc.Default.GetService<ProductShowViewModel>();
             //temp.DashboardPrint();
             dash.DashboardPrint1(dash.SelectedDept, dash.SelectedCategory1);
-            //dash.DashboardPrint4(dash.SelectedCategory1);
+            dash.DashboardPrint2(dash.SelectedDept);
 
             if (deptNameText.Equals(userDeptName) || userDeptName == null)
             {
