@@ -234,24 +234,25 @@ namespace EasyProject.ViewModel
 
                     if (!dao.IsProductDuplicateCheck(productModel))
                     {
-                        //Console.WriteLine(productModel.Prod_code + productModel.Prod_name +
-                        //    productModel.Category_id.ToString()+productModel.Prod_price);
+
                         Console.WriteLine("중복이 아니다. ");
-                        excelProductList.Add(product);
+
                     }
                     else
                     {
                         DuplicatedProductString = "이미 존재하는 재고 입력은 불가합니다.";
                         Console.WriteLine("중복이다.");
                         IsDuplicatedProduct = true;
-                        excelProductList = null;
+                        excelProductList = new List<ProductShowModel>();
                     }
-
-
+                }
+                if (!IsDuplicatedProduct)
+                {
+                    excelProductList.Add(product);
                 }
             }
 
-            if (excelProductList != null)
+            if (excelProductList.Count > 0)
             {
                 foreach (ProductShowModel elem in excelProductList)
                 {
@@ -330,7 +331,7 @@ namespace EasyProject.ViewModel
                             DuplicatedProductString = "이미 존재하는 재고 입력은 불가합니다.";
                             Console.WriteLine("중복이다.");
                             IsDuplicatedProduct = true;
-                            excelProductList = new List<ProductShowModel>();
+                            excelProductList.Clear();
                         }
                     }
                     if (!IsDuplicatedProduct)
@@ -461,6 +462,7 @@ namespace EasyProject.ViewModel
         private string GetCellText(Excel.Range range, int rCnt, int cCnt)
         {
             string cellText = range.Cells[rCnt, cCnt].Text.ToString();
+            Console.WriteLine(cellText+"엑셀에서 읽어온 데이터");
             return cellText;
         }
 
