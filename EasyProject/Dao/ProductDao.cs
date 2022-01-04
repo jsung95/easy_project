@@ -84,7 +84,7 @@ namespace EasyProject.Dao
 
         }//GetProduct()
 
-        public bool IsProductDuplicateCheck(ProductModel product_dto)
+        public bool IsProductDuplicateCheck(ProductModel product_dto, CategoryModel cateogry_dto)
         {
             bool isDuplicated = false;
             try
@@ -104,12 +104,32 @@ namespace EasyProject.Dao
                                           "AND prod_name = :prod_name " +
                                           "AND category_id = :category_id " +
                                           "AND prod_price = :prod_price " +
-                                          "AND prod_expire = :prod_expire ";
+                                          "AND prod_expire = TO_DATE(:expire, 'YYYYMMDD') ";
                         cmd.Parameters.Add(new OracleParameter("prod_code", product_dto.Prod_code));
                         cmd.Parameters.Add(new OracleParameter("prod_name", product_dto.Prod_name));
                         cmd.Parameters.Add(new OracleParameter("category_id", product_dto.Category_id));
                         cmd.Parameters.Add(new OracleParameter("prod_price", product_dto.Prod_price));
-                        cmd.Parameters.Add(new OracleParameter("prod_expire", product_dto.Prod_expire));
+                        //cmd.Parameters.Add(new OracleParameter("prod_expire", product_dto.Prod_expire));
+
+                        // 날짜형식을 -> String 타입으로 변경 후 바인딩
+                        string month = product_dto.Prod_expire.Month.ToString();
+                        if (product_dto.Prod_expire.Month < 10)
+                        {
+                            month = "0" + product_dto.Prod_expire.Month.ToString();
+                        }// 선택한 월이 1자리 라면 앞에 0을 붙임
+
+                        string day = product_dto.Prod_expire.Day.ToString();
+                        if (product_dto.Prod_expire.Day < 10)
+                        {
+                            day = "0" + product_dto.Prod_expire.Day.ToString();
+                        }// 선택한 일이 1자리 라면 앞에 0을 붙임
+
+                        string expire = product_dto.Prod_expire.Year.ToString() + month + day;
+                        Console.WriteLine("Insert DATE : {0}", expire);
+                        cmd.Parameters.Add(new OracleParameter("expire", expire));
+
+
+
                         Console.WriteLine(product_dto.Prod_expire);
                         Console.WriteLine(product_dto.Category_id+"카페고리id");
                         OracleDataReader reader = cmd.ExecuteReader();
@@ -136,6 +156,81 @@ namespace EasyProject.Dao
             return isDuplicated;
 
         }//IdCheck
+
+
+        public bool IsProductDuplicateCheck(ProductModel product_dto, string category_name) //오버로딩
+        {
+            bool isDuplicated = false;
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT prod_code " +
+                                          "FROM PRODUCT " +
+                                          "WHERE prod_code = :prod_code " +
+                                          "AND prod_name = :prod_name " +
+                                          "AND category_id = :category_id " +
+                                          "AND prod_price = :prod_price " +
+                                          "AND prod_expire = TO_DATE(:expire, 'YYYYMMDD') ";
+                        cmd.Parameters.Add(new OracleParameter("prod_code", product_dto.Prod_code));
+                        cmd.Parameters.Add(new OracleParameter("prod_name", product_dto.Prod_name));
+                        cmd.Parameters.Add(new OracleParameter("category_id", category_name));
+                        cmd.Parameters.Add(new OracleParameter("prod_price", product_dto.Prod_price));
+                        //cmd.Parameters.Add(new OracleParameter("prod_expire", product_dto.Prod_expire));
+
+                        // 날짜형식을 -> String 타입으로 변경 후 바인딩
+                        string month = product_dto.Prod_expire.Month.ToString();
+                        if (product_dto.Prod_expire.Month < 10)
+                        {
+                            month = "0" + product_dto.Prod_expire.Month.ToString();
+                        }// 선택한 월이 1자리 라면 앞에 0을 붙임
+
+                        string day = product_dto.Prod_expire.Day.ToString();
+                        if (product_dto.Prod_expire.Day < 10)
+                        {
+                            day = "0" + product_dto.Prod_expire.Day.ToString();
+                        }// 선택한 일이 1자리 라면 앞에 0을 붙임
+
+                        string expire = product_dto.Prod_expire.Year.ToString() + month + day;
+                        Console.WriteLine("Insert DATE : {0}", expire);
+                        cmd.Parameters.Add(new OracleParameter("expire", expire));
+
+
+
+                        Console.WriteLine(product_dto.Prod_expire);
+                        Console.WriteLine(product_dto.Category_id + "카페고리id");
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.Read() == false)
+                        {
+                            //없는 제품을 추가하려고 하는 경우(access)
+                            isDuplicated = false;
+                        }
+                        else
+                        {
+                            //이미 입력된 제품을 추가하려고 하는 경우(deny)
+                            isDuplicated = true;
+                        }
+                    }//using(cmd)
+                }//using (conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return isDuplicated;
+
+        }//IdCheck
+
 
 
         public List<ProductShowModel> GetProductsByDept(DeptModel dept_dto)
@@ -259,6 +354,7 @@ namespace EasyProject.Dao
 
         public void AddProduct(ProductModel prod_dto, CategoryModel category_dto)
         {
+            CategoryDao category_dao = new CategoryDao();
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -317,7 +413,7 @@ namespace EasyProject.Dao
             }//catch
 
         }//AddProduct
-        
+
         public void AddProductForExcel(ProductShowModel prod_dto, String categoryName)
         {
             try
@@ -361,6 +457,69 @@ namespace EasyProject.Dao
                 Console.WriteLine(e.Message);
             }//catch
         }
+
+        public void AddProduct(ProductModel prod_dto, string category_name) //오버로딩
+        {
+            CategoryDao category_dao = new CategoryDao();
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "INSERT INTO PRODUCT(PROD_CODE, PROD_NAME, PROD_PRICE, PROD_TOTAL, PROD_EXPIRE, CATEGORY_ID) " +
+                                          "VALUES(:code, :name, :price, :total, TO_DATE(:expire, 'YYYYMMDD'), (SELECT category_id FROM CATEGORY WHERE category_name = :category_name) )";
+
+
+                        //파라미터 값 바인딩
+                        cmd.Parameters.Add(new OracleParameter("code", prod_dto.Prod_code));
+                        cmd.Parameters.Add(new OracleParameter("name", prod_dto.Prod_name));
+                        cmd.Parameters.Add(new OracleParameter("price", prod_dto.Prod_price));
+                        cmd.Parameters.Add(new OracleParameter("total", prod_dto.Prod_total));
+
+                        // 날짜형식을 -> String 타입으로 변경 후 바인딩
+                        string month = prod_dto.Prod_expire.Month.ToString();
+                        if (prod_dto.Prod_expire.Month < 10)
+                        {
+                            month = "0" + prod_dto.Prod_expire.Month.ToString();
+                        }// 선택한 월이 1자리 라면 앞에 0을 붙임
+
+                        string day = prod_dto.Prod_expire.Day.ToString();
+                        if (prod_dto.Prod_expire.Day < 10)
+                        {
+                            day = "0" + prod_dto.Prod_expire.Day.ToString();
+                        }// 선택한 일이 1자리 라면 앞에 0을 붙임
+
+                        string expire = prod_dto.Prod_expire.Year.ToString() + month + day;
+                        Console.WriteLine("Insert DATE : {0}", expire);
+                        cmd.Parameters.Add(new OracleParameter("expire", expire));
+                        ////////////////////////////////////////////////////////////////////////////
+
+                        cmd.Parameters.Add(new OracleParameter("category_name", category_name));
+
+                        cmd.ExecuteNonQuery();
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+        }//AddProduct
+
+
 
         public void StoredProduct(ProductModel prod_dto, NurseModel nurse_dto)
         {

@@ -131,16 +131,6 @@
                             VerticalAlignment="Center" Height="30"  Width="45" HorizontalAlignment="Left" 
                              Command="{Binding SearchCommand}" Cursor="Hand">
                                     <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
-                                    <!--<Button.Style>
-                                    <Style TargetType="Button">
-                                        <Setter Property="Visibility" Value="Visible"></Setter>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ComboboxChanged}" Value="True">
-                                                <Setter Property="Visibility" Value="Hidden"></Setter>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>-->
                                 </Button>
                             </Grid>
 
@@ -296,9 +286,9 @@
                                             <StackPanel Orientation="Horizontal">
                                                 <materialDesign:PopupBox StaysOpen="True" IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window }}">
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon  Kind="CallReceived" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="50"/>
+                                                        <materialDesign:PackIcon  Kind="Input" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="50"/>
                                                     </materialDesign:PopupBox.ToggleContent>
-                                                    <Grid Width="550" Height="500" Margin="8,8,8,8">
+                                                    <Grid Width="550" Height="500" Margin="8,8,8,8" >
                                                         <Grid.Resources>
                                                             <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
                                                                 <Setter Property="Margin" Value="8,8,10,8" />
@@ -449,9 +439,6 @@
                                                         </Grid>
                                                         <Grid Grid.Row="4">
                                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                                <Button x:Name="submitBtn" Content="제출"  Foreground="#4472C4" Background="white" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
-                                                                VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderThickness="0" Height="28" Width="58" Cursor="Hand" />
-
                                                                 <Button x:Name="printBtn" Content="인쇄"  Foreground="#4472C4" Background="white" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                                                                 VerticalAlignment="Center"  BorderThickness="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  Height="28" Width="58" Cursor="Hand" Margin="5" />
                                                             </StackPanel>
@@ -463,7 +450,7 @@
                                             <StackPanel Orientation="Horizontal">
                                                 <materialDesign:PopupBox StaysOpen="True" IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
                                                     <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon  Kind="Input" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
+                                                        <materialDesign:PackIcon  Kind="CallReceived" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
                                                     </materialDesign:PopupBox.ToggleContent>
                                                     <Grid Width="250" Height="270" Margin="8,8,8,8">
                                                         <Grid.Resources>
@@ -571,15 +558,8 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <Grid Grid.Row="2">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
-                        <StackPanel Orientation="Horizontal">
-
-                            <ComboBox Margin="5" SelectedIndex="0" Width="100" SelectedItem ="{Binding SelectedRecord, UpdateSourceTrigger=PropertyChanged}">
-                                <wookoa:Int32>10</wookoa:Int32>
-                                <wookoa:Int32>15</wookoa:Int32>
-                                <wookoa:Int32>20</wookoa:Int32>
-                                <wookoa:Int32>25</wookoa:Int32>
-                            </ComboBox>
                             <Button Height="23" HorizontalAlignment="Right"  Command="{Binding FirstCommand}"
                             Name="btnFirst" VerticalAlignment="Bottom" Width="40" Foreground="White" Background="#4472C4"
                             Content="&lt;&lt;" ToolTip="First page"  Opacity="0.75" Margin="5">
@@ -610,7 +590,7 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
-                            <TextBlock VerticalAlignment="Center">
+                            <TextBlock VerticalAlignment="Center" Margin="7">
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}{0} of {1}">
                                         <Binding Path="CurrentPage" />
@@ -648,6 +628,12 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
+                            <ComboBox Margin="5" SelectedIndex="0" Width="100" SelectedItem ="{Binding SelectedRecord, UpdateSourceTrigger=PropertyChanged}">
+                                <wookoa:Int32>10</wookoa:Int32>
+                                <wookoa:Int32>15</wookoa:Int32>
+                                <wookoa:Int32>20</wookoa:Int32>
+                                <wookoa:Int32>25</wookoa:Int32>
+                            </ComboBox>
                         </StackPanel>
                     </Grid>
                 </Grid>
