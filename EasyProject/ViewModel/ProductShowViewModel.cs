@@ -201,7 +201,7 @@ namespace EasyProject.ViewModel
             {
                 SelectedProductList.Clear(); // 이전에 담은 SelectedProduct를 리스트에서 지운다.
                 selectedProduct = value;
-                //OnPropertyChanged("SelectedProducts");
+                OnPropertyChanged("SelectedProduct");
                 //Message.Send(SelectedProducts);
                 /*                Console.WriteLine("==선택한 재고 정보==");
                                 Console.WriteLine($"  Prod_code : {SelectedProduct.Prod_code}");
@@ -217,41 +217,41 @@ namespace EasyProject.ViewModel
             }
         }
         public List<ProductShowModel> SelectedProductList { get; set; } // SelectedProduct를 DataGrid에서 사용하기 위한 List
-        // 재고 출고 - 선택한 출고 유형 콤보박스를 담을 값
-        private string selectedOutType;
-        public string SelectedOutType
-        {
-            get { return selectedOutType; }
-            set
-            {
-                selectedOutType = value;
-                OnPropertyChanged("SelectedOutType");
-            }
-        }
+        //// 재고 출고 - 선택한 출고 유형 콤보박스를 담을 값
+        //private string selectedOutType;
+        //public string SelectedOutType
+        //{
+        //    get { return selectedOutType; }
+        //    set
+        //    {
+        //        selectedOutType = value;
+        //        OnPropertyChanged("SelectedOutType");
+        //    }
+        //}
 
-        // 재고 출고 - 선택한 출고(이관) 부서를 담을 프로퍼티
-        private DeptModel selectedOutDept;
-        public DeptModel SelectedOutDept
-        {
-            get { return selectedOutDept; }
-            set
-            {
-                selectedOutDept = value;
-                OnPropertyChanged("SelectedOutDept");
-            }
-        }
+        //// 재고 출고 - 선택한 출고(이관) 부서를 담을 프로퍼티
+        //private DeptModel selectedOutDept;
+        //public DeptModel SelectedOutDept
+        //{
+        //    get { return selectedOutDept; }
+        //    set
+        //    {
+        //        selectedOutDept = value;
+        //        OnPropertyChanged("SelectedOutDept");
+        //    }
+        //}
 
-        // 재고 출고 - 입력한 출고 수량을 담을 프로퍼티
-        private int? inputOutCount;
-        public int? InputOutCount
-        {
-            get { return inputOutCount; }
-            set
-            {
-                inputOutCount = value;
-                OnPropertyChanged("InputOutCount");
-            }
-        }
+        //// 재고 출고 - 입력한 출고 수량을 담을 프로퍼티
+        //private int? inputOutCount;
+        //public int? InputOutCount
+        //{
+        //    get { return inputOutCount; }
+        //    set
+        //    {
+        //        inputOutCount = value;
+        //        OnPropertyChanged("InputOutCount");
+        //    }
+        //}
 
         // 발주 신청 페이지 바인딩
         public UserModel SelectedUser { get; }
@@ -528,14 +528,15 @@ namespace EasyProject.ViewModel
 
         public void OutProduct()
         {
-            product_dao.OutProduct(InputOutCount, SelectedProduct, Nurse, SelectedOutType, SelectedOutDept);
+            Console.WriteLine("OutProduct() 실행!");
+            product_dao.OutProduct(SelectedProduct, Nurse);
 
-            product_dao.ChangeProductInfo_IMP_DEPT_ForOut(InputOutCount, SelectedProduct);
-            product_dao.ChangeProductInfo_ForOut(InputOutCount, SelectedProduct);
+            product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
+            product_dao.ChangeProductInfo_ForOut(SelectedProduct);
 
-            SelectedOutType = null;
-            SelectedOutDept = null;
-            InputOutCount = null;
+            SelectedProduct.SelectedOutType = null;
+            SelectedProduct.SelectedOutDept = null;
+            SelectedProduct.InputOutCount = null;
 
             Products = new ObservableCollection<ProductShowModel>(product_dao.GetProducts());
         }
@@ -576,9 +577,9 @@ namespace EasyProject.ViewModel
 
         public void OutProductFormReset()
         {
-            SelectedOutType = null;
-            SelectedOutDept = null;
-            InputOutCount = null;
+            SelectedProduct.SelectedOutType = null;
+            SelectedProduct.SelectedOutDept = null;
+            SelectedProduct.InputOutCount = null;
         }
 
         private void showListbyDept()
