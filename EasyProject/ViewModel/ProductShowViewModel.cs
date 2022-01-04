@@ -12,6 +12,7 @@ using Xamarin.Forms;
 using System.Windows.Data;
 using System.Windows;
 using System.ComponentModel;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 
 namespace EasyProject.ViewModel
 {
@@ -513,24 +514,23 @@ namespace EasyProject.ViewModel
         }
 
 
-        //private ActionCommand outProductCommand;
-        //public ICommand OutProductCommand
-        //{
-        //    get
-        //    {
-        //        if (outProductCommand == null)
-        //        {
-        //            outProductCommand = new ActionCommand(OutProduct);
-        //        }
-        //        return outProductCommand;
-        //    }//get
-        //}
+        private ActionCommand outProductCommand; //출고확인 버튼 커맨드
+        public ICommand OutProductCommand
+        {
+            get
+            {
+                if (outProductCommand == null)
+                {
+                    outProductCommand = new ActionCommand(OutProduct);
+                }
+                return outProductCommand;
+            }//get
+        }
 
         public void OutProduct()
         {
             Console.WriteLine("OutProduct() 실행!");
             product_dao.OutProduct(SelectedProduct, Nurse);
-
             product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
             product_dao.ChangeProductInfo_ForOut(SelectedProduct);
 
@@ -539,6 +539,8 @@ namespace EasyProject.ViewModel
             SelectedProduct.InputOutCount = null;
 
             Products = new ObservableCollection<ProductShowModel>(product_dao.GetProducts());
+            var temp = Ioc.Default.GetService<ProductInOutViewModel>();
+            temp.Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
         }
 
 

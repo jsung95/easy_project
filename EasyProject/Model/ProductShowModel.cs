@@ -94,7 +94,7 @@ namespace EasyProject.Model
             set
             {
                 selectedOutDept = value;
-                Console.WriteLine("선택한 출고(이관) 부서명 : " + selectedOutDept.Dept_name);
+                //Console.WriteLine("선택한 출고(이관) 부서명 : " + selectedOutDept.Dept_name);
                 OnPropertyChanged("SelectedOutDept");
             }
         }
