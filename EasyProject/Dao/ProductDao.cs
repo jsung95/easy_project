@@ -514,8 +514,27 @@ namespace EasyProject.Dao
                         cmd.Parameters.Add(new OracleParameter("price", prod_dto.Prod_price));
                         cmd.Parameters.Add(new OracleParameter("total", prod_dto.Prod_total));
 
-                        String expireText = prod_dto.Prod_expire.Year.ToString()+
-                            prod_dto.Prod_expire.Month.ToString()+ prod_dto.Prod_expire.Day.ToString();
+
+                        // 날짜형식을 -> String 타입으로 변경 후 바인딩
+                        string month = prod_dto.Prod_expire.Month.ToString();
+                        if (prod_dto.Prod_expire.Month < 10)
+                        {
+                            month = "0" + prod_dto.Prod_expire.Month.ToString();
+                        }// 선택한 월이 1자리 라면 앞에 0을 붙임
+
+                        string day = prod_dto.Prod_expire.Day.ToString();
+                        if (prod_dto.Prod_expire.Day < 10)
+                        {
+                            day = "0" + prod_dto.Prod_expire.Day.ToString();
+                        }// 선택한 일이 1자리 라면 앞에 0을 붙임
+
+                        string expireText = prod_dto.Prod_expire.Year.ToString() + month + day;
+                        Console.WriteLine("Insert DATE : {0}", expireText);
+                        ////////////////////////////////////////////////////////////////////////////
+                        
+
+                        /*String expireText = prod_dto.Prod_expire.Year.ToString()+
+                            prod_dto.Prod_expire.Month.ToString()+ prod_dto.Prod_expire.Day.ToString();*/
 
                         cmd.Parameters.Add(new OracleParameter("expire", expireText));
                         cmd.Parameters.Add(new OracleParameter("category_name", categoryName));
