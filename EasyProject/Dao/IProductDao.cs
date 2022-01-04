@@ -51,7 +51,8 @@ namespace EasyProject.Dao
 
 
         //제품 중복검사
-        bool IsProductDuplicateCheck(ProductModel product_dto, CategoryModel category_dto);
+        bool IsProductDuplicateCheck(ProductModel product_dto);
+        bool IsProductDuplicateCheck(ProductModel product_dto, CategoryModel category_dto); //오버로딩
         bool IsProductDuplicateCheck(ProductModel product_dto, string category_name); //오버로딩
 
     }//interface

@@ -218,8 +218,8 @@
     <Compile Include="View\TabItemPage\GraphPage\DeptCate_GraphPage.xaml.cs">
       <DependentUpon>DeptCate_GraphPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TabItemPage\GraphPage\TestGraphPage.xaml.cs">
-      <DependentUpon>TestGraphPage.xaml</DependentUpon>
+    <Compile Include="View\TabItemPage\GraphPage\RemainExpire_GraphPage.xaml.cs">
+      <DependentUpon>RemainExpire_GraphPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TabItemPage\GraphTabPage.xaml.cs">
       <DependentUpon>GraphTabPage.xaml</DependentUpon>
@@ -296,7 +296,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\TabItemPage\GraphPage\TestGraphPage.xaml">
+    <Page Include="View\TabItemPage\GraphPage\RemainExpire_GraphPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

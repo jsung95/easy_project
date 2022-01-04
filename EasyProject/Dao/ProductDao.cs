@@ -84,7 +84,8 @@ namespace EasyProject.Dao
 
         }//GetProduct()
 
-        public bool IsProductDuplicateCheck(ProductModel product_dto, CategoryModel cateogry_dto)
+
+        public bool IsProductDuplicateCheck(ProductModel product_dto)
         {
             bool isDuplicated = false;
             try
@@ -102,12 +103,67 @@ namespace EasyProject.Dao
                                           "FROM PRODUCT " +
                                           "WHERE prod_code = :prod_code " +
                                           "AND prod_name = :prod_name " +
-                                          "AND category_id = :category_id " +
+                                          "AND category_id = (SELECT category_id FROM category WHERE category_name = :category_name) " +
+                                          "AND prod_price = :prod_price " +
+                                          "AND prod_expire = :prod_expire ";
+                        cmd.Parameters.Add(new OracleParameter("prod_code", product_dto.Prod_code));
+                        cmd.Parameters.Add(new OracleParameter("prod_name", product_dto.Prod_name));
+                        cmd.Parameters.Add(new OracleParameter("category_name", product_dto.Category_id));
+                        cmd.Parameters.Add(new OracleParameter("prod_price", product_dto.Prod_price));
+                        cmd.Parameters.Add(new OracleParameter("prod_expire", product_dto.Prod_expire));
+
+                        Console.WriteLine(product_dto.Prod_expire);
+                        Console.WriteLine(product_dto.Category_id + "카페고리id");
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.Read() == false)
+                        {
+                            //없는 제품을 추가하려고 하는 경우(access)
+                            isDuplicated = false;
+                        }
+                        else
+                        {
+                            //이미 입력된 제품을 추가하려고 하는 경우(deny)
+                            isDuplicated = true;
+                        }
+                    }//using(cmd)
+                }//using (conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return isDuplicated;
+
+        }//IdCheck
+
+
+        public bool IsProductDuplicateCheck(ProductModel product_dto, CategoryModel cateogry_dto)//오버로딩
+        {
+            bool isDuplicated = false;
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT prod_code " +
+                                          "FROM PRODUCT " +
+                                          "WHERE prod_code = :prod_code " +
+                                          "AND prod_name = :prod_name " +
+                                          "AND category_id = (SELECT category_id FROM category WHERE category_name = :category_name) " +
                                           "AND prod_price = :prod_price " +
                                           "AND prod_expire = TO_DATE(:expire, 'YYYYMMDD') ";
                         cmd.Parameters.Add(new OracleParameter("prod_code", product_dto.Prod_code));
                         cmd.Parameters.Add(new OracleParameter("prod_name", product_dto.Prod_name));
-                        cmd.Parameters.Add(new OracleParameter("category_id", product_dto.Category_id));
+                        cmd.Parameters.Add(new OracleParameter("category_name", cateogry_dto.Category_name));
                         cmd.Parameters.Add(new OracleParameter("prod_price", product_dto.Prod_price));
                         //cmd.Parameters.Add(new OracleParameter("prod_expire", product_dto.Prod_expire));
 
@@ -176,12 +232,12 @@ namespace EasyProject.Dao
                                           "FROM PRODUCT " +
                                           "WHERE prod_code = :prod_code " +
                                           "AND prod_name = :prod_name " +
-                                          "AND category_id = :category_id " +
+                                          "AND category_id = (SELECT category_id FROM category WHERE category_name = :category_name) " +
                                           "AND prod_price = :prod_price " +
                                           "AND prod_expire = TO_DATE(:expire, 'YYYYMMDD') ";
                         cmd.Parameters.Add(new OracleParameter("prod_code", product_dto.Prod_code));
                         cmd.Parameters.Add(new OracleParameter("prod_name", product_dto.Prod_name));
-                        cmd.Parameters.Add(new OracleParameter("category_id", category_name));
+                        cmd.Parameters.Add(new OracleParameter("category_name", category_name));
                         cmd.Parameters.Add(new OracleParameter("prod_price", product_dto.Prod_price));
                         //cmd.Parameters.Add(new OracleParameter("prod_expire", product_dto.Prod_expire));
 
@@ -1509,7 +1565,65 @@ namespace EasyProject.Dao
 
         }// OutProduct()
 
+        public void OutProduct(ProductShowModel prod_dto, NurseModel nurse_dto)//오버로딩
+        {
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
 
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "INSERT INTO PRODUCT_OUT(PROD_OUT_COUNT, PROD_ID, NURSE_NO, DEPT_ID, PROD_OUT_FROM, PROD_OUT_TO, PROD_OUT_TYPE) " +
+                                          "VALUES(:count, :prod_id, :nurse_no, :dept_id1, (SELECT dept_name FROM DEPT WHERE dept_id = :dept_id2), :out_to, :out_type)";
+
+                        //파라미터 값 바인딩
+                        cmd.Parameters.Add(new OracleParameter("count", prod_dto.InputOutCount));
+                        cmd.Parameters.Add(new OracleParameter("prod_id", prod_dto.Prod_id));
+                        cmd.Parameters.Add(new OracleParameter("nurse_no", nurse_dto.Nurse_no));
+                        cmd.Parameters.Add(new OracleParameter("dept_id1", nurse_dto.Dept_id));
+                        cmd.Parameters.Add(new OracleParameter("dept_id2", nurse_dto.Dept_id));
+
+                        ///////////////////////////////////////////////////////////////////////
+                        if (prod_dto.SelectedOutType.Equals("이관"))
+                        {
+                            cmd.Parameters.Add(new OracleParameter("out_to", prod_dto.SelectedOutDept.Dept_name)); //출고된 곳은 콤보박스에서 선택한 부서로 출고
+                            OutProduct_FromTo(prod_dto, nurse_dto); // 이관 시에 이관받은 부서에서 입고도 함께 진행
+                            OutProduct_FromTo_IMP_DEPT(prod_dto); // 이관되어서 해당부서는 입고받았기 때문에 imp_dept 테이블에도 추가
+                        }
+                        else if (prod_dto.SelectedOutType.Equals("사용")) //출고 유형이 '사용'이라면
+                        {
+                            cmd.Parameters.Add(new OracleParameter("out_to", GetNurseDeptName(nurse_dto)));
+                        }
+                        else // 폐기 일때
+                        {
+                            cmd.Parameters.Add(new OracleParameter("out_to", prod_dto.SelectedOutType));
+                        }
+                        ///////////////////////////////////////////////////////////////////////
+
+                        cmd.Parameters.Add(new OracleParameter("out_type", prod_dto.SelectedOutType));
+
+
+                        cmd.ExecuteNonQuery();
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+        }// OutProduct()
         public string GetNurseDeptName(NurseModel nurse_dto)
         {
             string dept_name = "";
@@ -1594,7 +1708,46 @@ namespace EasyProject.Dao
 
         }//OutPorduct_FromTo()
 
+        public void OutProduct_FromTo(ProductShowModel prod_dto, NurseModel nurse_dto) //오버로딩
+        {
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
 
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "INSERT INTO PRODUCT_IN(PROD_IN_COUNT, PROD_ID, NURSE_NO, DEPT_ID, PROD_IN_FROM, PROD_IN_TO, PROD_IN_TYPE) " +
+                                          "VALUES(:count, :prod_id, :nurse_no, :dept_id, :in_from, :in_to, :in_type) ";
+
+                        cmd.Parameters.Add(new OracleParameter("count", prod_dto.InputOutCount));
+                        cmd.Parameters.Add(new OracleParameter("prod_id", prod_dto.Prod_id));
+                        cmd.Parameters.Add(new OracleParameter("nurse_no", nurse_dto.Nurse_no));
+                        cmd.Parameters.Add(new OracleParameter("dept_id", nurse_dto.Dept_id));
+
+                        cmd.Parameters.Add(new OracleParameter("in_from", GetNurseDeptName(nurse_dto))); // 출고한 사원 소속 부서
+                        cmd.Parameters.Add(new OracleParameter("in_to", prod_dto.SelectedOutDept.Dept_name)); // 입고받은 부서명
+                        cmd.Parameters.Add(new OracleParameter("in_type", prod_dto.SelectedOutType));
+
+                        cmd.ExecuteNonQuery();
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+        }//OutPorduct_FromTo()
 
         public void OutProduct_FromTo_IMP_DEPT(int? InputOutCount, ProductShowModel prod_dto, DeptModel dept_dto)
         {
@@ -1658,7 +1811,67 @@ namespace EasyProject.Dao
             
         }//OutProduct_FromTo_IMP_DEPT
 
+        public void OutProduct_FromTo_IMP_DEPT(ProductShowModel prod_dto)//오버로딩
+        {
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
 
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        /*                        cmd.CommandText = "INSERT INTO IMP_DEPT(IMP_DEPT_COUNT, DEPT_ID, PROD_ID) " +
+                                                                  "VALUES(:count, :dept_id, :pord_id) ";*/
+
+                        cmd.CommandText = "MERGE INTO IMP_DEPT A " +
+                                          "USING dual " +
+                                          "ON(:prod_id IN(SELECT prod_id FROM IMP_DEPT WHERE dept_id = :dept_id AND prod_id = :prod_id) " +
+                                          "   AND :dept_id IN(SELECT dept_id FROM IMP_DEPT WHERE dept_id = :dept_id AND prod_id = :prod_id)) " +
+                                          "WHEN MATCHED THEN " +
+                                          "UPDATE SET A.imp_dept_count = A.imp_dept_count + :count " +
+                                          "WHERE A.dept_id = :dept_id AND A.prod_id = :prod_id " +
+                                          "WHEN NOT MATCHED THEN " +
+                                          "INSERT(A.imp_dept_count, A.dept_id, A.prod_id) " +
+                                          "VALUES(:count, :dept_id, :prod_id)";
+
+                        cmd.Parameters.Add(new OracleParameter("pord_id", prod_dto.Prod_id));
+                        cmd.Parameters.Add(new OracleParameter("dept_id", prod_dto.SelectedOutDept.Dept_id));
+                        cmd.Parameters.Add(new OracleParameter("pord_id", prod_dto.Prod_id));
+
+                        cmd.Parameters.Add(new OracleParameter("dept_id", prod_dto.SelectedOutDept.Dept_id));
+                        cmd.Parameters.Add(new OracleParameter("dept_id", prod_dto.SelectedOutDept.Dept_id));
+                        cmd.Parameters.Add(new OracleParameter("pord_id", prod_dto.Prod_id));
+
+                        cmd.Parameters.Add(new OracleParameter("count", prod_dto.InputOutCount));
+
+                        cmd.Parameters.Add(new OracleParameter("dept_id", prod_dto.SelectedOutDept.Dept_id));
+                        cmd.Parameters.Add(new OracleParameter("pord_id", prod_dto.Prod_id));
+
+                        cmd.Parameters.Add(new OracleParameter("count", prod_dto.InputOutCount));
+                        cmd.Parameters.Add(new OracleParameter("dept_id", prod_dto.SelectedOutDept.Dept_id));
+                        cmd.Parameters.Add(new OracleParameter("pord_id", prod_dto.Prod_id));
+
+
+
+                        cmd.ExecuteNonQuery();
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+        }//OutProduct_FromTo_IMP_DEPT
 
         public void ChangeProductInfo_IMP_DEPT_ForOut(int? InputOutCount, ProductShowModel prod_dto)
         {
@@ -1697,7 +1910,42 @@ namespace EasyProject.Dao
 
         }//ChangeProductInfo_IMP_DEPT_ForOut
 
+        public void ChangeProductInfo_IMP_DEPT_ForOut(ProductShowModel prod_dto)//오버로딩
+        {
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
 
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "UPDATE IMP_DEPT SET " +
+                                          "imp_dept_count = imp_dept_count - :imp_total " +
+                                          "WHERE imp_dept_id = :imp_id";
+
+                        cmd.Parameters.Add(new OracleParameter("imp_total", prod_dto.InputOutCount));
+                        cmd.Parameters.Add(new OracleParameter("imp_id", prod_dto.Imp_dept_id));
+
+
+
+                        cmd.ExecuteNonQuery();
+
+                    }//using(cmd)
+
+                }//using(conn)
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+        }//ChangeProductInfo_IMP_DEPT_ForOut
         public void ChangeProductInfo_ForOut(int? InputOutCount, ProductShowModel prod_dto)
         {
             try
@@ -1733,6 +1981,42 @@ namespace EasyProject.Dao
             }//catch
 
         }//ChangeProductInfo_ForOut
+
+        public void ChangeProductInfo_ForOut(ProductShowModel prod_dto) //오버로딩
+        {
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "UPDATE PRODUCT SET " +
+                                          "prod_total = prod_total - :total " +
+                                          "WHERE prod_id = :id ";
+
+                        cmd.Parameters.Add(new OracleParameter("total", prod_dto.InputOutCount));
+                        cmd.Parameters.Add(new OracleParameter("id", prod_dto.Prod_id));
+
+
+                        cmd.ExecuteNonQuery();
+
+                    }//using(cmd)
+
+                }//using(conn)
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+        }//ChangeProductInfo_ForOut 
         public List<ProductShowModel> Prodcode_Info()     //prodcode 
         {
             List<ProductShowModel> list = new List<ProductShowModel>();
@@ -1778,8 +2062,11 @@ namespace EasyProject.Dao
             }//catch
             return list;
         }///product_info
-        public List<ProductShowModel> Prodtotal_Info()               //total
+        
+
+        public List<ProductShowModel> Get_Dept_Category_RemainExpire(DeptModel SelectedDept, CategoryModel SelectedCategory)
         {
+            Console.WriteLine("start");
             List<ProductShowModel> list = new List<ProductShowModel>();
             try
             {
@@ -1793,21 +2080,35 @@ namespace EasyProject.Dao
                     using (cmd)
                     {
                         cmd.Connection = conn;
-                        cmd.CommandText = "select sum(prod_total) from product group by prod_code";
-                        //cmd.CommandText = "SELECT * FROM NURSE WHERE nurse_no = :no AND nurse_pw = :pw";
+                        cmd.CommandText = "SELECT prod_code, TO_CHAR(TO_DATE(TO_CHAR(prod_expire, 'YYYYMMDD')) - TO_DATE(TO_CHAR(CURRENT_DATE, 'YYYYMMDD'))) " +
+                            "FROM PRODUCT P " +
+                            "INNER JOIN CATEGORY C " +
+                            "ON P.Category_id = c.category_id " +
+                            "INNER JOIN IMP_DEPT I " +
+                            "ON P.prod_id = I.prod_id " +
+                            "INNER JOIN DEPT D " +
+                            "ON I.dept_id = D.dept_id " +
+                            "WHERE d.dept_name= :dept_name and C.category_name = :category_name " +
+                            "order by TO_CHAR(TO_DATE(TO_CHAR(prod_expire, 'YYYYMMDD')) - TO_DATE(TO_CHAR(CURRENT_DATE, 'YYYYMMDD'))) asc";
 
-                        //cmd.Parameters.Add(new OracleParameter("p_code", prod_dto.Prod_code));
+
+                        cmd.Parameters.Add(new OracleParameter("dept_name", SelectedDept.Dept_name));
+                        cmd.Parameters.Add(new OracleParameter("category_name", SelectedCategory.Category_name)); //category_name
+
                         //cmd.Parameters.Add(new OracleParameter("total", prod_dto.Prod_total));
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
                         while (reader.Read())
                         {
-                            int? Prod_total = reader.GetInt32(0);
+                            string Prod_code = reader.GetString(0);
+                            string Prod_remainexpire = reader.GetString(1);
                             ProductShowModel dto = new ProductShowModel()
                             {
-                                Prod_total = Prod_total
+                                Prod_code = Prod_code,
+                                Prod_remainexpire = Convert.ToInt32(Prod_remainexpire)
                             };
+
                             list.Add(dto);
                         }//while
 
@@ -1821,11 +2122,70 @@ namespace EasyProject.Dao
                 Console.WriteLine(e.Message);
             }//catch
             return list;
-        }///product_info
+        }///Get_Dept_Category_RemainExpire
+
+
+        //부서별 카테고리별//제품 총수량 그래프 
+        public List<ImpDeptModel> Dept_Category_Mount(DeptModel SelectedDepts)
+        {
+            List<ImpDeptModel> list = new List<ImpDeptModel>();
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT D.dept_name, C.category_name, SUM(I.imp_dept_count) " +
+                            "FROM IMP_DEPT I " +
+                            "INNER JOIN PRODUCT P " +
+                            "ON I.prod_id = P.prod_id " +
+                            "INNER JOIN CATEGORY C " +
+                            "ON P.category_id = C.category_id " +
+                            "INNER JOIN DEPT D " +
+                            "ON I.dept_id = D.dept_id " +
+                            "WHERE D.dept_name = :dept_name " +
+                            "GROUP BY C.category_name, D.dept_name";
+
+
+                        cmd.Parameters.Add(new OracleParameter("dept_name", SelectedDepts.Dept_name)); //category_name
+                        //cmd.Parameters.Add(new OracleParameter("total", prod_dto.Prod_total));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string Category_name = reader.GetString(1);
+                            int? SUM_dept = reader.GetInt32(2);
+                            ImpDeptModel dto = new ImpDeptModel()
+                            {
+                                Category_name = Category_name,
+                                Imp_dept_count = SUM_dept
+                            };
+
+                            list.Add(dto);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+            return list;
+        }///Dept_Category_Mount
 
 
     }//class
 
-    
+
 
 }//namespace

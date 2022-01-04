@@ -15,7 +15,8 @@ namespace EasyProject.Model
 
 
         //table에는 없지만 편의상(그래프 그릴려고) 만듬 
-        public string dept_name { get; set; }
+        public string Dept_name { get; set; }
+        public string Category_name { get; set; }
 
     }//class
 

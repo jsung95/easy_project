@@ -16,13 +16,21 @@ using System.Windows.Shapes;
 namespace EasyProject.View.TabItemPage.GraphPage
 {
     /// <summary>
-    /// TestGraphPage.xaml에 대한 상호 작용 논리
+    /// RemainExpire_GraphPage.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class TestGraphPage : Page
+    public partial class RemainExpire_GraphPage : Page
     {
-        public TestGraphPage()
+        public RemainExpire_GraphPage()
         {
             InitializeComponent();
+        }
+
+        private void LeftBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate
+                (
+                new Uri("/View/TabItemPage/GraphPage/DeptCate_GraphPage.xaml", UriKind.Relative) //재고현황화면 --테스트
+                );
         }
     }
 }
