@@ -13,7 +13,7 @@
       DataContext="{Binding PSVM, Source={StaticResource Locator}}"
       Title="StatusPage">
 
-    <Page.Resources>       
+    <Page.Resources>
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="LightGray"/>
             <Setter Property="FontSize" Value="12"/>
@@ -65,7 +65,7 @@
                 <CheckBox x:Name="DataGridCheckbox" Style="{StaticResource MaterialDesignFilterChipOutlineCheckBox}" Grid.Column="4" HorizontalAlignment="Right" IsChecked="True" Content="표보기" Cursor="Hand" Click="DataGridCheckboxClick"></CheckBox>
                 <CheckBox x:Name="GraphCheckbox" Style="{StaticResource MaterialDesignFilterChipOutlineCheckBox}" Grid.Column="5" HorizontalAlignment="Right" IsChecked="True" Content="그래프보기" Cursor="Hand" Click="GraphCheckboxClick"></CheckBox>
 
-                
+
                 <Label Content="부서명" Foreground="#4472C4" Grid.Column="2" FontSize="12" 
                        FontWeight="Bold" HorizontalAlignment="Right"  
                        VerticalAlignment="Center" Margin="10"/>
@@ -84,9 +84,9 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
 
-                   
+
                 </ComboBox>
-             
+
             </Grid>
             <Grid x:Name="DataAndGraphGrid" Grid.Row="2" >
                 <Grid.ColumnDefinitions>
@@ -98,7 +98,7 @@
                         <RowDefinition Height="0.3*"/>
                         <RowDefinition Height="2*"/>
                         <RowDefinition Height="0.2*"/>
-                        
+
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
@@ -114,7 +114,7 @@
                             </ComboBox.Resources>
                         </ComboBox>
 
-                       
+
 
                         <Grid Grid.Column="1" Margin="10 0">
                             <Grid.ColumnDefinitions>
@@ -136,13 +136,25 @@
 
                         </Grid>
                     </Grid>
-                    
+
                     <DataGrid x:Name="dataGrid" Grid.Row="1"
                             HorizontalAlignment="Left" Margin="10 0"
                             VerticalAlignment="Top" AutoGenerateColumns="False" 
                             IsReadOnly="True" ColumnWidth="*" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" SelectionMode="Extended" SelectionUnit="FullRow" Cursor="Hand">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="1.5*" CanUserSort="false"  IsReadOnly="True" />
+                            <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="1.5*" CanUserSort="false"  IsReadOnly="True">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Style.Triggers>
+
+
+                                            <DataTrigger Binding="{Binding PSVM.SelectedProduct.Prod_code, Source={StaticResource Locator}}" Value="True">
+                                                <Setter Property="Background" Value="Yellow"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
                             <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="1.5*" CanUserSort="false" IsReadOnly="True"/>
                             <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="1.5*" CanUserSort="false" IsReadOnly="True"/>
                             <DataGridTextColumn Binding="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}" CanUserSort="true" Header="제품가격" Width="1*"  IsReadOnly="True">
@@ -161,13 +173,15 @@
                             </DataGridTextColumn>
                             <DataGridTextColumn Binding="{Binding Prod_expire, StringFormat='yyyy-MM-dd'}"  Header="유통기한" Width="3*" CanUserSort="true" IsReadOnly="True"/>
 
-                          <DataGridTemplateColumn x:Name="buttonColumn" Header="신청" Width="3*" IsReadOnly="True" Visibility="Visible">
+                            <DataGridTemplateColumn x:Name="buttonColumn" Header="신청" Width="3*" IsReadOnly="True" Visibility="Visible">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                             <Button x:Name="goDialog_Btn" Foreground="#4472C4"  FontSize="12" FontWeight="Bold" Background="{x:Null}"  Cursor="Hand"
-                                                    VerticalAlignment="Center" Height="45"  Width="45" HorizontalAlignment="Center" Click="goDialog_Btn_Click">
-                                                <materialDesign:PackIcon  Kind="LeadPencil" VerticalAlignment="Center" HorizontalAlignment="Center" Height="17" Width="17"/>
+                                                    VerticalAlignment="Center" Height="45"  Width="45" HorizontalAlignment="Center" Command="{Binding PSVM.ProductEditCommand, Source={StaticResource Locator}}">
+                                                <materialDesign:PackIcon Kind="LeadPencil" VerticalAlignment="Center" HorizontalAlignment="Center" Height="17" Width="17">
+
+                                                </materialDesign:PackIcon>
                                             </Button>
                                             <StackPanel Orientation="Horizontal">
                                                 <materialDesign:PopupBox StaysOpen="True" IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
@@ -216,26 +230,26 @@
                                                                           VerticalAlignment="Center" 
                                                                           ItemsSource="{Binding PSVM.Depts, Source={StaticResource Locator}}"
                                                                           SelectedItem="{Binding PSVM.SelectedOutDept, Source={StaticResource Locator}}">
-                                                                    <ComboBox.ItemTemplate>
-                                                                        <DataTemplate>
-                                                                            <StackPanel Orientation="Horizontal">
-                                                                                <TextBlock Text="{Binding Dept_name}"/>
-                                                                            </StackPanel>
-                                                                        </DataTemplate>
-                                                                    </ComboBox.ItemTemplate>
-                                                                </ComboBox>
-                                                            </Grid>
-                                                            <Grid Grid.Row="3">
-                                                                <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                </Grid.ColumnDefinitions>
-                                                                <TextBlock  Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" Text="수량" />
-                                                                <TextBox x:Name="mount_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Left"
+                                                                <ComboBox.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <TextBlock Text="{Binding Dept_name}"/>
+                                                                        </StackPanel>
+                                                                    </DataTemplate>
+                                                                </ComboBox.ItemTemplate>
+                                                            </ComboBox>
+                                                        </Grid>
+                                                        <Grid Grid.Row="3">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock  Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" Text="수량" />
+                                                            <TextBox x:Name="mount_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Left"
                                                                     VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Width="80"
                                                                     Text="{Binding InputOutCount}"/>
-                                                            </Grid>
-                                                         <Grid Grid.Row="4">
+                                                        </Grid>
+                                                        <Grid Grid.Row="4">
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="*"/>
                                                                 <ColumnDefinition Width="*"/>
@@ -301,12 +315,12 @@
                                                             </Grid.ColumnDefinitions>
                                                             <TextBlock FontWeight="Bold" FontSize="15" TextAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Margin="10"
                                                                        VerticalAlignment="center"><Run Foreground="White" Text="발주 신청서" IsEnabled="False" /></TextBlock>
-                                                            
+
                                                             <Button x:Name="resetBtn"  Foreground="white" Background="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Right"  
                                                                         VerticalAlignment="Center"  BorderThickness="0" Height="48" Width="58" Cursor="Hand" Grid.Column="1" >
-                                                                    <materialDesign:PackIcon Grid.Row="0" Kind="Restore" VerticalAlignment="Top" HorizontalAlignment="Center" Height="17" Width="17" />
+                                                                <materialDesign:PackIcon Grid.Row="0" Kind="Restore" VerticalAlignment="Top" HorizontalAlignment="Center" Height="17" Width="17" />
                                                             </Button>
-                                                           
+
 
                                                         </Grid>
                                                         <Grid Grid.Row="1">
@@ -319,7 +333,7 @@
                                                                     <Rectangle Fill="White" HorizontalAlignment="Left" Height="10"  Stroke="#4472C4" VerticalAlignment="center" Width="10" Margin="10"/>
                                                                     <TextBlock  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" Margin="7" TextWrapping="Wrap" Text="신청자 정보" VerticalAlignment="center" Foreground="#4472C4"/>
                                                                 </StackPanel>
-                                                                
+
                                                             </Grid>
 
                                                             <Grid Grid.Row="1">
@@ -340,72 +354,74 @@
                                                                         VerticalAlignment="Center" Margin="10,0,0,0" Width="80"/>
                                                                 <TextBox x:Name="id_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="아이디" Grid.Column="1" HorizontalContentAlignment="Left" 
                                                                         VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
-                                                                        Text="{Binding PSVM.SelectedUser.Nurse_name , Source={StaticResource Locator}}"/>
+                                                                        Text="{Binding SelectedUser.Nurse_name}"/>
 
                                                                 <Label Content="부서" Grid.Column="2" Foreground="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                                                                         VerticalAlignment="Center" Margin="10,0,0,0"/>
                                                                 <TextBox x:Name="dept_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="부서" Grid.Column="3" HorizontalContentAlignment="Left" 
                                                                         VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
-                                                                        Text="{Binding PSVM.SelectedUser.Dept_name, Source={StaticResource Locator}}"/>
+                                                                        Text="{Binding SelectedUser.Dept_name}"/>
 
 
                                                                 <Label Content="연락처" Grid.Column="4" Foreground="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                                                                        VerticalAlignment="Center" Margin="10,0,0,0" Width="80"/>
                                                                 <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="- 빼고입력" Grid.Column="5" HorizontalContentAlignment="Left" 
                                                                         VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Width="120"
-                                                                        Text="{Binding PSVM.SelectedUser.Dept_phone, Source={StaticResource Locator}}"/>
+                                                                        Text="{Binding SelectedUser.Dept_phone}"/>
 
                                                             </Grid>
                                                         </Grid>
                                                         <Grid Grid.Row="2">
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition Height="0.3*"/>
-                                                                    <RowDefinition Height="0.7*"/>
-                                                                </Grid.RowDefinitions>
-                                                                <Grid Grid.Row="0">
-                                                                    <StackPanel Orientation="Horizontal">
-                                                                        <Rectangle Fill="White" HorizontalAlignment="Left" Height="10" Margin="10" Stroke="#4472C4" VerticalAlignment="center" Width="10"/>
-                                                                        <TextBlock  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" Margin="7" TextWrapping="Wrap" Text="발주 정보" VerticalAlignment="center" Foreground="#4472C4"/>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="0.3*"/>
+                                                                <RowDefinition Height="0.7*"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid Grid.Row="0">
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Rectangle Fill="White" HorizontalAlignment="Left" Height="10" Margin="10" Stroke="#4472C4" VerticalAlignment="center" Width="10"/>
+                                                                    <TextBlock  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" Margin="7" TextWrapping="Wrap" Text="발주 정보" VerticalAlignment="center" Foreground="#4472C4"/>
 
-                                                                    </StackPanel>
-                                                                </Grid>
+                                                                </StackPanel>
+                                                            </Grid>
 
-                                                                <Grid Grid.Row="1">
-                                                                    <Grid.ColumnDefinitions>
-                                                                        <ColumnDefinition Width="120*"/>
-                                                                        <ColumnDefinition Width="120*"/>
-                                                                        <ColumnDefinition Width="55*"/>
-                                                                        <ColumnDefinition Width="100*"/>
-                                                                        <ColumnDefinition Width="55*"/>
-                                                                        <ColumnDefinition Width="100*"/>
-                                                                        <ColumnDefinition Width="75*"/>
-                                                                        <ColumnDefinition Width="170*"/>
+                                                            <Grid Grid.Row="1">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="120*"/>
+                                                                    <ColumnDefinition Width="120*"/>
+                                                                    <ColumnDefinition Width="55*"/>
+                                                                    <ColumnDefinition Width="100*"/>
+                                                                    <ColumnDefinition Width="55*"/>
+                                                                    <ColumnDefinition Width="100*"/>
+                                                                    <ColumnDefinition Width="75*"/>
+                                                                    <ColumnDefinition Width="170*"/>
+
+
                                                                 </Grid.ColumnDefinitions>
-                                                                    <Label Content="신청 품목명" Foreground="#4472C4" Grid.Column="0" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                                                                <Label Content="신청 품목명" Foreground="#4472C4" Grid.Column="0" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                                                                            VerticalAlignment="Center" Margin="10,0,0,0"/>
-                                                                    <TextBox x:Name="request_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="신청품목명" Grid.Column="1" HorizontalContentAlignment="Left" 
+                                                                <TextBox x:Name="request_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="신청품목명" Grid.Column="1" HorizontalContentAlignment="Left" 
                                                                            VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="5,0,5,0" Height="30" 
-                                                                           Text="{Binding PSVM.SelectedProduct.Prod_name, Source={StaticResource Locator}}"/>
+                                                                           Text="{Binding SelectedProduct.Prod_name}"/>
 
-                                                                    <Label Content="용량" Foreground="#4472C4" Grid.Column="2" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                                                                <Label Content="용량" Foreground="#4472C4" Grid.Column="2" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                                                                            VerticalAlignment="Center" Margin="7,0,0,0"/>
-                                                                    <TextBox x:Name="capacity_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="용량" Grid.Column="3" HorizontalContentAlignment="Left" 
+                                                                <TextBox x:Name="capacity_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="용량" Grid.Column="3" HorizontalContentAlignment="Left" 
                                                                            VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="5,0,5,0" Height="30" />
 
-                                                                    <Label Content="수량" Foreground="#4472C4" Grid.Column="4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                                                                <Label Content="수량" Foreground="#4472C4" Grid.Column="4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                                                                            VerticalAlignment="Center" Margin="7,0,0,0"/>
-                                                                    <TextBox x:Name="amount_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="5" HorizontalContentAlignment="Left" 
+                                                                <TextBox x:Name="amount_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="5" HorizontalContentAlignment="Left" 
                                                                            VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="5,0,5,0" Height="30" />
 
-                                                                    <Label Content="제조사명" Foreground="#4472C4" Grid.Column="6" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                                                                <Label Content="제조사명" Foreground="#4472C4" Grid.Column="6" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                                                                            VerticalAlignment="Center" Margin="7,0,0,0"/>
 
-                                                                    <Grid Grid.Column="7">
-                                                                        <TextBox x:Name="company_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="제조사명"  HorizontalContentAlignment="Left" 
+                                                                <Grid Grid.Column="7">
+                                                                    <TextBox x:Name="company_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="제조사명"  HorizontalContentAlignment="Left" 
                                                                             VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,21,34.8,21.8" Height="30" />
-                                                                    </Grid>
                                                                 </Grid>
                                                             </Grid>
+                                                        </Grid>
                                                         <Grid Grid.Row="3">
                                                             <Grid.RowDefinitions>
                                                                 <RowDefinition Height="0.4*"/>
@@ -416,7 +432,7 @@
                                                                 <StackPanel Orientation="Horizontal">
                                                                     <Rectangle Fill="White" HorizontalAlignment="Left" Height="10" Margin="10" Stroke="#4472C4" VerticalAlignment="center" Width="10"/>
                                                                     <TextBlock  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  TextWrapping="Wrap" Margin="7" Text="메모" VerticalAlignment="center" Foreground="#4472C4"/>
-                                                                    
+
                                                                 </StackPanel>
                                                             </Grid>
                                                             <Grid Grid.Row="1">
@@ -463,14 +479,12 @@
                                                                 <ColumnDefinition Width="*"/>
                                                                 <ColumnDefinition Width="*"/>
                                                             </Grid.ColumnDefinitions>
-                                                            <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                                                                       FontSize="11" Text="유형" />
-                                                            <ComboBox Grid.Column="1" Height="30" Width="70" MaxDropDownHeight="200" 
-                                                                      HorizontalAlignment="Left"  Name="Type_comboBox2" VerticalAlignment="Center"
+                                                            <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" Text="유형" />
+                                                            <ComboBox Grid.Column="1" Height="30" Width="70" MaxDropDownHeight="200" HorizontalAlignment="Left"  Name="Type_comboBox2" VerticalAlignment="Center"
                                                                     SelectedValue="{Binding SelectedOutType}" SelectedValuePath="Content" >
-                                                                <ComboBoxItem Content="발주" />
                                                                 <ComboBoxItem Content="사용" />
                                                                 <ComboBoxItem Content="이관" />
+                                                                <ComboBoxItem Content="폐기" />
                                                             </ComboBox>
                                                         </Grid>
                                                         <Grid Grid.Row="2">
@@ -617,13 +631,14 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
-                            <ComboBox Margin="5" SelectedIndex="0" Width="100" SelectedItem ="{Binding SelectedRecord, UpdateSourceTrigger=PropertyChanged}">
-                                <wookoa:Int32>10</wookoa:Int32>
-                                <wookoa:Int32>15</wookoa:Int32>
-                                <wookoa:Int32>20</wookoa:Int32>
-                                <wookoa:Int32>25</wookoa:Int32>
-                            </ComboBox>
+
                         </StackPanel>
+                        <ComboBox Margin="10 5" SelectedIndex="0" Width="100" SelectedItem ="{Binding SelectedRecord, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right">
+                            <wookoa:Int32>10</wookoa:Int32>
+                            <wookoa:Int32>15</wookoa:Int32>
+                            <wookoa:Int32>20</wookoa:Int32>
+                            <wookoa:Int32>25</wookoa:Int32>
+                        </ComboBox>
                     </Grid>
                 </Grid>
                 <Grid Grid.Column="1">
@@ -640,20 +655,26 @@
                             <Grid>
                                 <lvc:CartesianChart x:Name="chart" BorderThickness="2" Series="{Binding SeriesCollection}" 
                                         LegendLocation="Top" Height="229" VerticalAlignment="Bottom" Margin="0,0,25.8,204.6"  >
-                                    --><!--Series="{Binding SeriesCollection}"--><!--
+                                    -->
+                        <!--Series="{Binding SeriesCollection}"-->
+                        <!--
                                     <lvc:CartesianChart.AxisY>
                                         <lvc:Axis LabelFormatter="{Binding Formatter}" Title="수량" />
-                                        --><!-- LabelFormatter="{Binding Formatter}" 바인딩--><!--
+                                        -->
+                        <!-- LabelFormatter="{Binding Formatter}" 바인딩-->
+                        <!--
                                     </lvc:CartesianChart.AxisY>
                                     <lvc:CartesianChart.AxisX>
                                         <lvc:Axis Labels="{Binding BarLabels}" Title="제품코드" />
-                                        --><!--Labels="{Binding BarLabels}" 바인딩--><!--
+                                        -->
+                        <!--Labels="{Binding BarLabels}" 바인딩-->
+                        <!--
                                     </lvc:CartesianChart.AxisX>
                                 </lvc:CartesianChart>
                             </Grid>
                         </StackPanel>-->
                         <Frame x:Name="Status_GraphFrame" NavigationUIVisibility="Hidden" Source="/View/TabItemPage/GraphPage/DeptCate_GraphPage.xaml"  Height="430" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        
+
                     </materialDesign:Card>
                 </Grid>
             </Grid>

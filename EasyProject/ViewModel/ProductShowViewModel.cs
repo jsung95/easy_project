@@ -55,6 +55,9 @@ namespace EasyProject.ViewModel
         //카테고리 목록 콤보박스, 카테고리 목록 출력
         public ObservableCollection<CategoryModel> Categories { get; set; }
 
+        //대시보드 목록 콤보박스
+        public ObservableCollection<CategoryModel> Category1 { get; set; }
+
         //선택한 부서를 담을 프로퍼티
         private DeptModel selectedDept;
         public DeptModel SelectedDept
@@ -77,6 +80,30 @@ namespace EasyProject.ViewModel
             {
                 selectedCategory = value;
                 OnPropertyChanged("SelectedCategory");
+            }
+        }
+        //대시보드 목록 카테고리 프로퍼티
+        private CategoryModel selectedCategory1;
+        public CategoryModel SelectedCategory1
+        {
+            get { return selectedCategory1; }
+            set
+            {
+                selectedCategory1 = value;
+                OnPropertyChanged("SelectedCategory1");
+                //DashboardPrint11(selectedDept11, selectedCategory11);
+
+            }
+        }
+        // DashboardPrint() 그래프
+        private SeriesCollection seriesCollection1;
+        public SeriesCollection SeriesCollection1               //그래프 큰 틀 만드는거
+        {
+            get { return seriesCollection1; }
+            set
+            {
+                seriesCollection1 = value;
+                OnPropertyChanged("SeriesCollection1");
             }
         }
         //검색 유형 프로퍼티
@@ -103,6 +130,31 @@ namespace EasyProject.ViewModel
         public SeriesCollection SeriesCollection { get; set; }
         public List<string> BarLabels { get; set; }       //string[]
         public Func<double, string> Formatter { get; set; }
+        public Func<double, string> Formatter1 { get; set; }
+
+        //대시보드 동적 프로퍼티
+        private ChartValues<int> values1;
+        public ChartValues<int> Values1
+        {
+            get { return values1; }
+            set
+            {
+                values1 = value;
+                OnPropertyChanged("values1");
+
+            }
+        }
+        private List<string> barLabels1;
+        public List<string> BarLabels1
+        {
+            get { return barLabels1; }
+            set
+            {
+                barLabels1 = value;
+                OnPropertyChanged("barLabels1");
+
+            }
+        }
 
         //입력한 검색내용을 담을 프로퍼티
         private string textForSearch;
@@ -190,14 +242,14 @@ namespace EasyProject.ViewModel
             Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts());
             SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1];
 
-            
+
             Categories = new ObservableCollection<CategoryModel>(category_dao.GetCategories());
 
 
             //App.xaml.cs 에 로그인할 때 바인딩 된 로그인 정보 객체
             Nurse = App.nurse_dto;
             SelectedProductList = new List<ProductShowModel>();
-            DashboardPrint();  //대시보드 프린트
+         
 
             SelectedUser = user_dao.GetUserInfoWithDept(Nurse);
 
@@ -208,7 +260,63 @@ namespace EasyProject.ViewModel
             //LoadEmployee();
             //UpdateRecordCount();
             //EmployeeCollection.Filter = FilterByName;
+
+
+            //11대시보드
+            Category1 = new ObservableCollection<CategoryModel>(category_dao.GetCategoriesvalues());
+            SelectedCategory1 = Category1[1];
+            DashboardPrint1(SelectedDept, SelectedCategory1);
         }//Constructor
+        public void DashboardPrint1(DeptModel selected_dept, CategoryModel selected_category)                       //대시보드 출력(x축:제품code, y축:수량) 
+        {
+            ChartValues<int> name = new ChartValues<int>();   //y축들어갈 임시 값
+            Console.WriteLine("DashboardPrint11");
+            SeriesCollection1 = new SeriesCollection();   //대시보드 틀
+            //Console.WriteLine(selected.Dept_id); 
+            List<ProductShowModel> list_xyz = product_dao.Get_Dept_Category_RemainExpire(selected_dept, selected_category);
+            Console.WriteLine(selected_dept.Dept_name);
+            Console.WriteLine(selected_category.Category_name);
+            foreach (var item in list_xyz)
+            {
+                name.Add((int)item.Prod_remainexpire);
+                Console.WriteLine("PROD_REMAINEXPIRE" + (int)item.Prod_remainexpire);
+            }
+
+            Values = new ChartValues<int> { };
+
+            SeriesCollection1.Add(new RowSeries
+            {
+                Title = "총 수량",   //+ i
+                Values = name,
+                DataLabels = true,
+                LabelPoint = point => point.X + "일 "
+            });
+            BarLabels1 = new List<string>() { };                           //x축출력
+            foreach (var item in list_xyz)
+            {
+                BarLabels1.Add(item.Prod_code);
+                Console.WriteLine("Prod_code" + item.Prod_code);
+            }
+            Formatter1 = value => value.ToString("N");   //문자열 10진수 변환
+        }//dashboardprint4
+        private ActionCommand command;
+        public ICommand Command
+        {
+            get
+            {
+                if (command == null)
+                {
+                    command = new ActionCommand(Dashprint);
+                }
+                return command;
+            }//get
+
+        }//Command
+
+        public void Dashprint()
+        {
+            DashboardPrint1(SelectedDept, SelectedCategory1);
+        }
 
         private ActionCommand nextCommand;
         public ICommand NextCommand
@@ -290,18 +398,18 @@ namespace EasyProject.ViewModel
 
 
 
-/*        private ActionCommand changeProductCommand;
-        public ICommand ChangeProductCommand
-        {
-            get
-            {
-                if (changeProductCommand == null)
+        /*        private ActionCommand changeProductCommand;
+                public ICommand ChangeProductCommand
                 {
-                    changeProductCommand = new ActionCommand(ChangeProductInfo);
-                }
-                return changeProductCommand;
-            }//get
-        }*/
+                    get
+                    {
+                        if (changeProductCommand == null)
+                        {
+                            changeProductCommand = new ActionCommand(ChangeProductInfo);
+                        }
+                        return changeProductCommand;
+                    }//get
+                }*/
 
         public void ChangeProductInfo() //재고수정 확인 버튼 클릭 시에 동작하는 메소드
         {
@@ -381,18 +489,18 @@ namespace EasyProject.ViewModel
         }
 
 
-/*        private ActionCommand outProductCommand;
-        public ICommand OutProductCommand
-        {
-            get
-            {
-                if (outProductCommand == null)
+        /*        private ActionCommand outProductCommand;
+                public ICommand OutProductCommand
                 {
-                    outProductCommand = new ActionCommand(OutProduct);
-                }
-                return outProductCommand;
-            }//get
-        }*/
+                    get
+                    {
+                        if (outProductCommand == null)
+                        {
+                            outProductCommand = new ActionCommand(OutProduct);
+                        }
+                        return outProductCommand;
+                    }//get
+                }*/
 
         public void OutProduct()
         {
@@ -467,50 +575,12 @@ namespace EasyProject.ViewModel
             //}
         }
 
-        public void DashboardPrint()                       //대시보드 출력(x축:제품code, y축:수량) 
-        {
-            SeriesCollection = new SeriesCollection();   //대시보드 틀
-
-
-            ChartValues<int> name = new ChartValues<int> { };            //y축들어갈 임시 값
-
-            if (product_dao.Prodcode_Info().Count != 0)
-            {
-                List<ProductShowModel> list1 = product_dao.Prodtotal_Info();      //y축출력
-                                                                                  //foreach (var item in list1)
-                                                                                  //{
-                                                                                  //    name.Add((int)item.Prod_total);
-                                                                                  //}
-                for (int i = 0; i < 8; i++)
-                {
-                    //name.Add((int)list1[i].Prod_total);
-                }
-                
-
-                Values = new ChartValues<int> { };
-                SeriesCollection.Add(new ColumnSeries
-                {
-                    Title = "재고현황",   //+ i
-                    Values = name,
-
-                });
-
-                BarLabels = new List<string>() { };                           //x축출력
-                List<ProductShowModel> list = product_dao.Prodcode_Info();
-                foreach (var item in list)
-                {
-                    BarLabels.Add(item.Prod_code);
-                }
-
-                Formatter = value => value.ToString("N");   //문자열 10진수 변환
-            }
-
-        }//DashboardPrint
-        //*****************************************************************************
-        //*****************************************************************************
-        //여기서부터 paginaion 추가한 코드 내용
-
         
+         //*****************************************************************************
+         //*****************************************************************************
+         //여기서부터 paginaion 추가한 코드 내용
+
+
 
         private ObservableCollection<ProductShowModel> LstOfRecords;
         public void LoadEmployee() //Read details
@@ -564,11 +634,11 @@ namespace EasyProject.ViewModel
 
         private void UpdateCollection(IEnumerable<ProductShowModel> enumerable)
         {
-            if(Products != null)
+            if (Products != null)
             {
                 Products.Clear();
             }
-            
+
             foreach (var item in enumerable)
             {
                 Products.Add(item);

@@ -269,7 +269,7 @@ namespace EasyProject.ViewModel
             Console.WriteLine("DashboardPrint11");
             SeriesCollection1 = new SeriesCollection();   //대시보드 틀
             //Console.WriteLine(selected.Dept_id); 
-            List<ProductShowModel> list_xyz = dashboard_dao.Dept_Category_Mount3(selected_dept, selected_category);
+            List<ProductShowModel> list_xyz = dashboard_dao.Get_Dept_Category_RemainExpire(selected_dept, selected_category);
             Console.WriteLine(selected_dept.Dept_name);
             Console.WriteLine(selected_category.Category_name);
             foreach (var item in list_xyz)

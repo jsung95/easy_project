@@ -37,12 +37,17 @@ namespace EasyProject.View.TabItemPage
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            
+
             var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
             var deptNameText = deptModelObject.Dept_name; // 콤보박스에서 선택한 부서명
             var temp = Ioc.Default.GetService<ProductShowViewModel>();
             var userDept = temp.Depts[(int)App.nurse_dto.Dept_id - 1];  // 현재 사용자 소속 부서 객체
             var userDeptName = userDept.Dept_name;
+
+            var dash = Ioc.Default.GetService<ProductShowViewModel>();
+            //temp.DashboardPrint();
+            dash.DashboardPrint1(dash.SelectedDept, dash.SelectedCategory1);
+            //dash.DashboardPrint4(dash.SelectedCategory1);
 
             if (deptNameText.Equals(userDeptName) || userDeptName == null)
             {
@@ -67,7 +72,7 @@ namespace EasyProject.View.TabItemPage
         {
             MessageBox.Show("버튼을 클릭했습니다.");
         }
-       
+
 
         private void Part_comboBox_Selection(object sender, SelectedCellsChangedEventArgs e)
         {
@@ -109,7 +114,7 @@ namespace EasyProject.View.TabItemPage
 
         private void DataGridCheckboxClick(object sender, RoutedEventArgs e)
         {
-            if(DataGridCheckbox.IsChecked == true)
+            if (DataGridCheckbox.IsChecked == true)
             {
                 //DataAndGraphGrid.ColumnDefinitions.Add(DataGridColumn);
                 DataGridColumn.Width = new GridLength(1.8, GridUnitType.Star);

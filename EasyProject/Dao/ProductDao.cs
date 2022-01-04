@@ -102,12 +102,12 @@ namespace EasyProject.Dao
                                           "FROM PRODUCT " +
                                           "WHERE prod_code = :prod_code " +
                                           "AND prod_name = :prod_name " +
-                                          "AND category_id = :category_id " +
+                                          "AND category_id = (SELECT category_id FROM category WHERE category_name = :category_name) " +
                                           "AND prod_price = :prod_price " +
                                           "AND prod_expire = TO_DATE(:expire, 'YYYYMMDD') ";
                         cmd.Parameters.Add(new OracleParameter("prod_code", product_dto.Prod_code));
                         cmd.Parameters.Add(new OracleParameter("prod_name", product_dto.Prod_name));
-                        cmd.Parameters.Add(new OracleParameter("category_id", product_dto.Category_id));
+                        cmd.Parameters.Add(new OracleParameter("category_name", cateogry_dto.Category_name));
                         cmd.Parameters.Add(new OracleParameter("prod_price", product_dto.Prod_price));
                         //cmd.Parameters.Add(new OracleParameter("prod_expire", product_dto.Prod_expire));
 
@@ -176,12 +176,12 @@ namespace EasyProject.Dao
                                           "FROM PRODUCT " +
                                           "WHERE prod_code = :prod_code " +
                                           "AND prod_name = :prod_name " +
-                                          "AND category_id = :category_id " +
+                                          "AND category_id = (SELECT category_id FROM category WHERE category_name = :category_name) " +
                                           "AND prod_price = :prod_price " +
                                           "AND prod_expire = TO_DATE(:expire, 'YYYYMMDD') ";
                         cmd.Parameters.Add(new OracleParameter("prod_code", product_dto.Prod_code));
                         cmd.Parameters.Add(new OracleParameter("prod_name", product_dto.Prod_name));
-                        cmd.Parameters.Add(new OracleParameter("category_id", category_name));
+                        cmd.Parameters.Add(new OracleParameter("category_name", category_name));
                         cmd.Parameters.Add(new OracleParameter("prod_price", product_dto.Prod_price));
                         //cmd.Parameters.Add(new OracleParameter("prod_expire", product_dto.Prod_expire));
 
@@ -1778,8 +1778,11 @@ namespace EasyProject.Dao
             }//catch
             return list;
         }///product_info
-        public List<ProductShowModel> Prodtotal_Info()               //total
+        
+
+        public List<ProductShowModel> Get_Dept_Category_RemainExpire(DeptModel SelectedDept, CategoryModel SelectedCategory)
         {
+            Console.WriteLine("start");
             List<ProductShowModel> list = new List<ProductShowModel>();
             try
             {
@@ -1793,21 +1796,35 @@ namespace EasyProject.Dao
                     using (cmd)
                     {
                         cmd.Connection = conn;
-                        cmd.CommandText = "select sum(prod_total) from product group by prod_code";
-                        //cmd.CommandText = "SELECT * FROM NURSE WHERE nurse_no = :no AND nurse_pw = :pw";
+                        cmd.CommandText = "SELECT prod_code, TO_CHAR(TO_DATE(TO_CHAR(prod_expire, 'YYYYMMDD')) - TO_DATE(TO_CHAR(CURRENT_DATE, 'YYYYMMDD'))) " +
+                            "FROM PRODUCT P " +
+                            "INNER JOIN CATEGORY C " +
+                            "ON P.Category_id = c.category_id " +
+                            "INNER JOIN IMP_DEPT I " +
+                            "ON P.prod_id = I.prod_id " +
+                            "INNER JOIN DEPT D " +
+                            "ON I.dept_id = D.dept_id " +
+                            "WHERE d.dept_name= :dept_name and C.category_name = :category_name " +
+                            "order by TO_CHAR(TO_DATE(TO_CHAR(prod_expire, 'YYYYMMDD')) - TO_DATE(TO_CHAR(CURRENT_DATE, 'YYYYMMDD'))) asc";
 
-                        //cmd.Parameters.Add(new OracleParameter("p_code", prod_dto.Prod_code));
+
+                        cmd.Parameters.Add(new OracleParameter("dept_name", SelectedDept.Dept_name));
+                        cmd.Parameters.Add(new OracleParameter("category_name", SelectedCategory.Category_name)); //category_name
+
                         //cmd.Parameters.Add(new OracleParameter("total", prod_dto.Prod_total));
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
                         while (reader.Read())
                         {
-                            int? Prod_total = reader.GetInt32(0);
+                            string Prod_code = reader.GetString(0);
+                            string Prod_remainexpire = reader.GetString(1);
                             ProductShowModel dto = new ProductShowModel()
                             {
-                                Prod_total = Prod_total
+                                Prod_code = Prod_code,
+                                Prod_remainexpire = Convert.ToInt32(Prod_remainexpire)
                             };
+
                             list.Add(dto);
                         }//while
 
@@ -1821,11 +1838,12 @@ namespace EasyProject.Dao
                 Console.WriteLine(e.Message);
             }//catch
             return list;
-        }///product_info
+        }///Get_Dept_Category_RemainExpire
+
 
 
     }//class
 
-    
+
 
 }//namespace
