@@ -513,18 +513,18 @@ namespace EasyProject.ViewModel
         }
 
 
-        /*        private ActionCommand outProductCommand;
-                public ICommand OutProductCommand
-                {
-                    get
-                    {
-                        if (outProductCommand == null)
-                        {
-                            outProductCommand = new ActionCommand(OutProduct);
-                        }
-                        return outProductCommand;
-                    }//get
-                }*/
+        //private ActionCommand outProductCommand;
+        //public ICommand OutProductCommand
+        //{
+        //    get
+        //    {
+        //        if (outProductCommand == null)
+        //        {
+        //            outProductCommand = new ActionCommand(OutProduct);
+        //        }
+        //        return outProductCommand;
+        //    }//get
+        //}
 
         public void OutProduct()
         {
