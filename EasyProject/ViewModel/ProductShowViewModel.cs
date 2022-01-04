@@ -599,7 +599,7 @@ namespace EasyProject.ViewModel
             SelectedProduct.SelectedOutDept = null;
             SelectedProduct.InputOutCount = null;
 
-            Products = new ObservableCollection<ProductShowModel>(product_dao.GetProducts());
+            Products = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(dept_dao.GetDeptName((int)App.nurse_dto.Dept_id)));
             var temp = Ioc.Default.GetService<ProductInOutViewModel>();
             temp.Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
         }
