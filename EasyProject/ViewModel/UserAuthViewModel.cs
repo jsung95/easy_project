@@ -170,6 +170,8 @@ namespace EasyProject.ViewModel
             {
                 Normals_searched.Add(item); // 선택되지 않은 리스트만 검색 목록에 다시 넣어줌
             }
+            Normal_users = dao.GetUserInfo("NORMAL"); // 사용자들을 검색할 리스트 갱신
+            Admin_users = dao.GetUserInfo("ADMIN");   // 사용자들을 검색할 리스트 갱신
         }//MoveRight
 
         public void MoveLeft()
@@ -201,7 +203,8 @@ namespace EasyProject.ViewModel
             {
                 Admins_searched.Add(item);
             }
-
+            Normal_users = dao.GetUserInfo("NORMAL"); // 사용자들을 검색할 리스트 갱신
+            Admin_users = dao.GetUserInfo("ADMIN");   // 사용자들을 검색할 리스트 갱신
         }//MoveLeft
 
         public void OnNormalKeywordChanged()
