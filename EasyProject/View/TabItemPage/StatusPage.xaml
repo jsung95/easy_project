@@ -83,6 +83,11 @@
                             </StackPanel>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding Command}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
 
 
                 </ComboBox>

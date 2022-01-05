@@ -26,6 +26,9 @@ namespace EasyProject.View.TabItemPage.GraphPage
         public RemainExpire_GraphPage()
         {
             InitializeComponent();
+            var dash = Ioc.Default.GetService<ProductShowViewModel>();
+            //temp.DashboardPrint();
+            dash.DashboardPrint1(dash.SelectedDept, dash.SelectedCategory1, dash.SelectedNumber);
         }
 
         private void LeftBtn_Click(object sender, RoutedEventArgs e)
