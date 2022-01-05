@@ -143,7 +143,14 @@ namespace EasyProject.ViewModel
 
         public void InListSearch()
         {
-            Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, selectedSearchType_In, searchKeyword_In));
+            if (SelectedStartDate != null && SelectedEndDate != null)
+            {
+                Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, selectedSearchType_In, searchKeyword_In, SelectedStartDate, SelectedEndDate));
+            }
+            else
+            {
+                Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, selectedSearchType_In, searchKeyword_In));
+            }
 
         }// InListSearch
 
