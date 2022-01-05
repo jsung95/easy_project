@@ -204,7 +204,7 @@
                                   Opacity="0.75" Cursor="Hand">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="MicrosoftExcel"  HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" />
-                                <TextBlock Text="DownLoad" Foreground="White" FontWeight="Bold"></TextBlock>
+                                <TextBlock Margin="3,0,0,0" Text="DownLoad" Foreground="White" FontWeight="Bold"></TextBlock>
                             </StackPanel>
 
                         </Button>

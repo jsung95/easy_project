@@ -31,6 +31,12 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
         </Style>
+        <Style TargetType="DataGridCell" x:Key="DataGridCellStyle">
+            <Setter Property="Foreground" Value="#FF0059C0"/>
+            <Setter Property="FontStyle" Value="Normal"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
     </Page.Resources>
 
     <Grid Height="450" Width="1000"> 

@@ -304,7 +304,7 @@ namespace EasyProject.ViewModel
             SelectedCategory1 = Category1[1];
             DashboardPrint1(SelectedDept, SelectedCategory1);
         }//Constructor
-        public void DashboardPrint1(DeptModel selected_dept, CategoryModel selected_category)                       //대시보드 출력(x축:제품code, y축:수량) 
+        public void DashboardPrint1(DeptModel selected_dept, CategoryModel selected_category)      //대시보드 출력(x축:제품code, y축:수량) 
         {
             ChartValues<int> name = new ChartValues<int>();   //y축들어갈 임시 값
             Console.WriteLine("DashboardPrint11");

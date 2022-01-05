@@ -623,7 +623,6 @@
                     </DataGrid>
                     <Grid Grid.Row="2">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-
                             <Button Height="23" HorizontalAlignment="Right"  Command="{Binding FirstCommand}"
                             Name="btnFirst" VerticalAlignment="Bottom" Width="40" Foreground="White" Background="#4472C4"
                             Content="&lt;&lt;" ToolTip="First page"  Opacity="0.75" Margin="5">
