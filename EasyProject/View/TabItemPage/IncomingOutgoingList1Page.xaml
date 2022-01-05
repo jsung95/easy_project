@@ -99,7 +99,7 @@
                                 </Grid.ColumnDefinitions>
                                 <DatePicker x:Name="expirationDate_DatePicker"  Grid.Column="0" HorizontalContentAlignment="Left" 
                                         VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Width="90" Height="33"
-                                        SelectedDate="{Binding Product.Prod_expire}">
+                                        SelectedDate="{Binding SelectedStartDate}">
                                         <DatePicker.Resources>
                                             <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
                                                 <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />
@@ -126,7 +126,7 @@
                                 <TextBlock   HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center" Text="~" FontWeight="Bold" FontSize="15" />
                                 <DatePicker x:Name="expirationDate_DatePicker2" Grid.Column="2" HorizontalContentAlignment="Left" Width="90" Height="33"
                                         VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" 
-                                        SelectedDate="{Binding Product.Prod_expire}">
+                                        SelectedDate="{Binding SelectedEndDate}">
                                     <DatePicker.Resources>
                                         <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
                                             <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />

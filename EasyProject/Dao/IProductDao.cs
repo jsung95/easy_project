@@ -26,7 +26,9 @@ namespace EasyProject.Dao
         // 입고테이블 조회
         List<ProductInOutModel> GetProductIn();
         List<ProductInOutModel> GetProductIn(DeptModel dept_dto);
+        List<ProductInOutModel> GetProductIn(DeptModel dept_dto, DateTime? start_date, DateTime? end_date); //입고 날짜 기간 지정
         List<ProductInOutModel> GetProductIn(DeptModel dept_dto, string search_type, string search_text);
+        List<ProductInOutModel> GetProductIn(DeptModel dept_dto, string search_type, string search_text, DateTime? start_date, DateTime? end_date); //입고 날짜 기간 지정
         // 출고테이블 조회
         List<ProductInOutModel> GetProductOut();
         List<ProductInOutModel> GetProductOut(DeptModel dept_dto);

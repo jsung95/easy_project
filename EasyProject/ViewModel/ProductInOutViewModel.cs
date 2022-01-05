@@ -69,6 +69,41 @@ namespace EasyProject.ViewModel
         public string selectedSearchType_In { get; set; }
         public string selectedSearchType_Out { get; set; }
 
+
+        //입출고 날짜별 조회
+        //시작일을 담을 프로퍼티
+        private DateTime? selectedStartDate;
+        public DateTime? SelectedStartDate
+        {
+            get { return selectedStartDate; }
+            set
+            {
+                selectedStartDate = value;
+
+                ShowProductIn_By_Date();
+                if (selectedStartDate > selectedEndDate)
+                {
+                    SelectedStartDate = SelectedEndDate.Value.AddDays(-1);
+                }
+                OnPropertyChanged("SelectedStartDate");
+            }
+        }
+        //종료일을 담을 프로퍼티
+        private DateTime? selectedEndDate;
+        public DateTime? SelectedEndDate
+        {
+            get { return selectedEndDate; }
+            set
+            {
+                selectedEndDate = value;
+
+                ShowProductIn_By_Date();
+
+                OnPropertyChanged("SelectedEndDate");
+            }
+        }
+
+
         public ProductInOutViewModel()
         {
             
@@ -84,30 +119,13 @@ namespace EasyProject.ViewModel
             Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In));
             Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept_Out));
 
-            
+            SelectedStartDate = null;
+            SelectedEndDate = null;
 
         }//Constructor
 
 
-        private ActionCommand command;
-        public ICommand Command
-        {
-            get
-            {
-                if (command == null)
-                {
-                    command = new ActionCommand(DoSomeThing);
-                }
-                return command;
-            }//get
 
-        }//Command
-
-        public void DoSomeThing()
-        {
-            
-
-        }// 
 
         private ActionCommand inSearchCommand;
         public ICommand InSearchCommand
@@ -160,6 +178,18 @@ namespace EasyProject.ViewModel
             Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept_Out));
         
         }//showOutListByDept
+
+
+        public void ShowProductIn_By_Date() // 시작, 끝 날짜 지정해서 입고 데이터 조회
+        {
+            if (SelectedStartDate != null && SelectedEndDate != null)
+            {
+                Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, SelectedStartDate, SelectedEndDate));
+            }
+        }//ShowProductIn_By_Date
+
+
+
     }//class
 
 }//namespace
