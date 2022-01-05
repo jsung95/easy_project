@@ -2055,114 +2055,7 @@ namespace EasyProject.Dao
             }//catch
 
         }//ChangeProductInfo_ForOut 
-        public List<ProductShowModel> Prodcode_Info()     //prodcode 
-        {
-            List<ProductShowModel> list = new List<ProductShowModel>();
-            try
-            {
-                OracleConnection conn = new OracleConnection(connectionString);
-                OracleCommand cmd = new OracleCommand();
-
-                using (conn)
-                {
-                    conn.Open();
-
-                    using (cmd)
-                    {
-                        cmd.Connection = conn;
-                        cmd.CommandText = "select distinct(prod_code) from product";
-                        //cmd.CommandText = "SELECT * FROM NURSE WHERE nurse_no = :no AND nurse_pw = :pw";
-
-                        //cmd.Parameters.Add(new OracleParameter("p_code", prod_dto.Prod_code));
-                        //cmd.Parameters.Add(new OracleParameter("total", prod_dto.Prod_total));
-
-                        OracleDataReader reader = cmd.ExecuteReader();
-
-                        while (reader.Read())
-                        {
-                            string Prod_code = reader.GetString(0);
-                            //int? Prod_total = reader.GetInt32(1);
-                            ProductShowModel dto = new ProductShowModel()
-                            {
-                                Prod_code = Prod_code
-                            };
-                            list.Add(dto);
-                        }//while
-
-                    }//using(cmd)
-
-                }//using(conn)
-
-            }//try
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }//catch
-            return list;
-        }///product_info
         
-
-        public List<ProductShowModel> Get_Dept_Category_RemainExpire(DeptModel SelectedDept, CategoryModel SelectedCategory)
-        {
-            Console.WriteLine("start");
-            List<ProductShowModel> list = new List<ProductShowModel>();
-            try
-            {
-                OracleConnection conn = new OracleConnection(connectionString);
-                OracleCommand cmd = new OracleCommand();
-
-                using (conn)
-                {
-                    conn.Open();
-
-                    using (cmd)
-                    {
-                        cmd.Connection = conn;
-                        cmd.CommandText = "SELECT prod_code, TO_CHAR(TO_DATE(TO_CHAR(prod_expire, 'YYYYMMDD')) - TO_DATE(TO_CHAR(CURRENT_DATE, 'YYYYMMDD'))) " +
-                            "FROM PRODUCT P " +
-                            "INNER JOIN CATEGORY C " +
-                            "ON P.Category_id = c.category_id " +
-                            "INNER JOIN IMP_DEPT I " +
-                            "ON P.prod_id = I.prod_id " +
-                            "INNER JOIN DEPT D " +
-                            "ON I.dept_id = D.dept_id " +
-                            "WHERE d.dept_name= :dept_name and C.category_name = :category_name " +
-                            "order by TO_CHAR(TO_DATE(TO_CHAR(prod_expire, 'YYYYMMDD')) - TO_DATE(TO_CHAR(CURRENT_DATE, 'YYYYMMDD'))) asc";
-
-
-                        cmd.Parameters.Add(new OracleParameter("dept_name", SelectedDept.Dept_name));
-                        cmd.Parameters.Add(new OracleParameter("category_name", SelectedCategory.Category_name)); //category_name
-
-                        //cmd.Parameters.Add(new OracleParameter("total", prod_dto.Prod_total));
-
-                        OracleDataReader reader = cmd.ExecuteReader();
-
-                        while (reader.Read())
-                        {
-                            string Prod_code = reader.GetString(0);
-                            string Prod_remainexpire = reader.GetString(1);
-                            ProductShowModel dto = new ProductShowModel()
-                            {
-                                Prod_code = Prod_code,
-                                Prod_remainexpire = Convert.ToInt32(Prod_remainexpire)
-                            };
-
-                            list.Add(dto);
-                        }//while
-
-                    }//using(cmd)
-
-                }//using(conn)
-
-            }//try
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }//catch
-            return list;
-        }///Get_Dept_Category_RemainExpire
-
-
         //부서별 카테고리별//제품 총수량 그래프 
         public List<ImpDeptModel> Dept_Category_Mount(DeptModel SelectedDepts)
         {
@@ -2221,7 +2114,69 @@ namespace EasyProject.Dao
             return list;
         }///Dept_Category_Mount
 
+        public List<ProductShowModel> Get_Dept_Category_Number_RemainExpire(DeptModel SelectedDept, CategoryModel SelectedCategory, int SelectedNumber)
+        {
+            Console.WriteLine("start");
+            List<ProductShowModel> list = new List<ProductShowModel>();
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
 
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT A.* " +
+                            "FROM (SELECT P.prod_code, TO_CHAR(TO_DATE(TO_CHAR(P.prod_expire, 'YYYYMMDD')) - TO_DATE(TO_CHAR(CURRENT_DATE, 'YYYYMMDD'))) " +
+                            "FROM product P " +
+                            "INNER JOIN category C " +
+                            "ON P.category_id = C.category_id " +
+                            "INNER JOIN imp_dept I " +
+                            "ON P.prod_id = I.prod_id " +
+                            "INNER JOIN dept D " +
+                            "ON I.dept_id = D.dept_id " +
+                            "WHERE d.dept_name= :dept_name and C.category_name = :category_name " +
+                            "GROUP BY P.prod_code, P.prod_expire " +
+                            "ORDER BY 2 asc) A " +
+                            "WHERE ROWNUM <= :SelectedNumber";
+
+
+                        cmd.Parameters.Add(new OracleParameter("dept_name", SelectedDept.Dept_name));
+                        cmd.Parameters.Add(new OracleParameter("category_name", SelectedCategory.Category_name)); //category_name
+                        cmd.Parameters.Add(new OracleParameter("SelectedNumber", SelectedNumber));
+
+                        //cmd.Parameters.Add(new OracleParameter("total", prod_dto.Prod_total));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string Prod_code = reader.GetString(0);
+                            string Prod_remainexpire = reader.GetString(1);
+                            ProductShowModel dto = new ProductShowModel()
+                            {
+                                Prod_code = Prod_code,
+                                Prod_remainexpire = Convert.ToInt32(Prod_remainexpire)
+                            };
+
+                            list.Add(dto);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+            return list;
+        }///Get_Dept_Category_RemainExpire
     }//class
 
 

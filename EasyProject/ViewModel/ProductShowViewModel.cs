@@ -144,8 +144,10 @@ namespace EasyProject.ViewModel
         public List<string> BarLabels { get; set; }       //string[]
         public Func<double, string> Formatter { get; set; }
         public Func<double, string> Formatter1 { get; set; }
-
         
+        // 대시보드에 표시할 갯수 프로퍼티
+        public int[] DecidedNumber { get; set; }
+
         //대시보드 동적 프로퍼티
         private ChartValues<int> values1;
         public ChartValues<int> Values1
@@ -180,7 +182,17 @@ namespace EasyProject.ViewModel
 
             }
         }
-
+        //대시보드 출력 갯수
+        private int selectedNumber;
+        public int SelectedNumber               
+        {
+            get { return selectedNumber; }
+            set
+            {
+                selectedNumber = value;
+                OnPropertyChanged("selectedNumber");
+            }
+        }
         //입력한 검색내용을 담을 프로퍼티
         private string textForSearch;
         public string TextForSearch
@@ -302,15 +314,17 @@ namespace EasyProject.ViewModel
             //11대시보드
             Category1 = new ObservableCollection<CategoryModel>(category_dao.GetCategoriesvalues());
             SelectedCategory1 = Category1[1];
-            DashboardPrint1(SelectedDept, SelectedCategory1);
+            DecidedNumber = new[] { 10, 20, 30 };
+            SelectedNumber = DecidedNumber[0];
+            DashboardPrint1(SelectedDept, SelectedCategory1, SelectedNumber);
         }//Constructor
-        public void DashboardPrint1(DeptModel selected_dept, CategoryModel selected_category)                       //대시보드 출력(x축:제품code, y축:수량) 
+        public void DashboardPrint1(DeptModel selected_dept, CategoryModel selected_category, int selected_number)                       //대시보드 출력(x축:제품code, y축:수량) 
         {
             ChartValues<int> name = new ChartValues<int>();   //y축들어갈 임시 값
             Console.WriteLine("DashboardPrint11");
             SeriesCollection1 = new SeriesCollection();   //대시보드 틀
             //Console.WriteLine(selected.Dept_id); 
-            List<ProductShowModel> list_xyz = product_dao.Get_Dept_Category_RemainExpire(selected_dept, selected_category);
+            List<ProductShowModel> list_xyz = product_dao.Get_Dept_Category_Number_RemainExpire(selected_dept, selected_category, selected_number);
             Console.WriteLine(selected_dept.Dept_name);
             Console.WriteLine(selected_category.Category_name);
             foreach (var item in list_xyz)
@@ -323,7 +337,7 @@ namespace EasyProject.ViewModel
 
             SeriesCollection1.Add(new RowSeries
             {
-                Title = "총 수량",   //+ i
+                Title = "남은 유통기한",   //+ i
                 Values = name,
                 DataLabels = true,
                 LabelPoint = point => point.X + "일 "
@@ -336,6 +350,7 @@ namespace EasyProject.ViewModel
             }
             Formatter1 = value => value.ToString("N");   //문자열 10진수 변환
         }//dashboardprint4
+
         private ActionCommand command;
         public ICommand Command
         {
@@ -352,7 +367,7 @@ namespace EasyProject.ViewModel
 
         public void Dashprint()
         {
-            DashboardPrint1(SelectedDept, SelectedCategory1);
+            DashboardPrint1(SelectedDept, SelectedCategory1, SelectedNumber);
         }
 
         private ActionCommand nextCommand;
