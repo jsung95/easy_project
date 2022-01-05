@@ -749,6 +749,23 @@ namespace EasyProject.ViewModel
             temp.Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
         }
 
+        private ActionCommand inProductCommand; //출고확인 버튼 커맨드
+        public ICommand InProductCommand
+        {
+            get
+            {
+                if (inProductCommand == null)
+                {
+                    inProductCommand = new ActionCommand(InProduct);
+                }
+                return inProductCommand;
+            }//get
+        }
+
+        public void InProduct()
+        {
+            
+        }
 
         private ActionCommand modifyProductReset;
         public ICommand ModifyProductReset
