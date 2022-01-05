@@ -636,10 +636,9 @@ namespace EasyProject.Dao
                         cmd.Parameters.Add(new OracleParameter("count", prod_dto.Prod_total));
                         cmd.Parameters.Add(new OracleParameter("nurse_no", nurse_dto.Nurse_no));
                         cmd.Parameters.Add(new OracleParameter("dept_id1", nurse_dto.Dept_id));
-
                         cmd.Parameters.Add(new OracleParameter("in_from", "발주처"));
                         cmd.Parameters.Add(new OracleParameter("dept_id2", nurse_dto.Dept_id));
-                        cmd.Parameters.Add(new OracleParameter("in_type", "발주"));
+                        cmd.Parameters.Add(new OracleParameter("in_type", "신규"));
 
                         cmd.ExecuteNonQuery();
                     }//using(cmd)
@@ -2176,7 +2175,121 @@ namespace EasyProject.Dao
                 Console.WriteLine(e.Message);
             }//catch
             return list;
-        }///Get_Dept_Category_RemainExpire
+        } //Get_Dept_Category_RemainExpire
+
+        public void InProduct(ProductShowModel prod_dto, NurseModel nurse_dto)
+        {
+            Console.WriteLine("InProduct!");
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "INSERT INTO PRODUCT_IN(PROD_IN_COUNT, PROD_ID, NURSE_NO, DEPT_ID, PROD_IN_FROM, PROD_IN_TO, PROD_IN_TYPE) " +
+                                          "VALUES(:count, :prod_id, :nurse_no, :dept_id, :in_from, :in_to, :in_type)";
+
+                        //파라미터 값 바인딩
+                        cmd.Parameters.Add(new OracleParameter("count", prod_dto.InputOutCount)); // PROD_IN_COUNT
+                        cmd.Parameters.Add(new OracleParameter("prod_id", prod_dto.Prod_id));     // PROD_ID
+                        cmd.Parameters.Add(new OracleParameter("nurse_no", nurse_dto.Nurse_no));  // NURSE_NO
+                        cmd.Parameters.Add(new OracleParameter("dept_id", nurse_dto.Dept_id));   // DEPT_ID
+                        cmd.Parameters.Add(new OracleParameter("in_from", "발주처"));            // PROD_IN_FROM
+                        cmd.Parameters.Add(new OracleParameter("in_to", GetNurseDeptName(nurse_dto))); // PROD_IN_TO * 입고된 부서는 팝업박스에서 입고한 사용자의 부서와 같다.(자기 부서에만 입고할 수 있음)
+                        cmd.Parameters.Add(new OracleParameter("in_type", prod_dto.SelectedInType)); // PROD_IN_TYPE
+
+                        cmd.ExecuteNonQuery();
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+        }//InProduct()
+      
+        public void ChangeProductInfo_IMP_DEPT_ForIn(ProductShowModel prod_dto)
+        {
+            Console.WriteLine("ChangeProductInfo_IMP_DEPT_ForIn !");
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "UPDATE IMP_DEPT SET " +
+                                          "imp_dept_count = imp_dept_count + :imp_total " +
+                                          "WHERE imp_dept_id = :imp_id";
+
+                        cmd.Parameters.Add(new OracleParameter("imp_total", prod_dto.InputOutCount)); //사용자가 입력한 추가 수량
+                        cmd.Parameters.Add(new OracleParameter("imp_id", prod_dto.Imp_dept_id));
+
+                        cmd.ExecuteNonQuery();
+
+                    }//using(cmd)
+
+                }//using(conn)
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+        }//ChangeProductInfo_IMP_DEPT_ForIn
+
+        public void ChangeProductInfo_ForIn(ProductShowModel prod_dto)
+        {
+            Console.WriteLine("ChangeProductInfo_ForIn !");
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "UPDATE PRODUCT SET " +
+                                          "prod_total = prod_total + :total " +
+                                          "WHERE prod_id = :id ";
+
+                        cmd.Parameters.Add(new OracleParameter("total", prod_dto.InputOutCount)); //사용자가 입력한 추가 수량
+                        cmd.Parameters.Add(new OracleParameter("id", prod_dto.Prod_id));
+
+
+                        cmd.ExecuteNonQuery();
+
+                    }//using(cmd)
+
+                }//using(conn)
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+        }//ChangeProductInfo_ForIn
+
     }//class
 
 

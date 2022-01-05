@@ -545,6 +545,10 @@
                                                                 <ColumnDefinition Width="*"/>
                                                                 <ColumnDefinition Width="*"/>
                                                             </Grid.ColumnDefinitions>
+                                                            <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11"  Text="입고유형" />
+                                                            <TextBox x:Name="SelectedInType_txtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="입고 유형" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Left"
+                                                                    VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Width="80" IsReadOnly="True"
+                                                                    Text="{Binding PSVM.SelectedProduct.SelectedInType, Source={StaticResource Locator}}"/>
                                                         </Grid>
                                                         <Grid Grid.Row="2">
                                                             <Grid.ColumnDefinitions>

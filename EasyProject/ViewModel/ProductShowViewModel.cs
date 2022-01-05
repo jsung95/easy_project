@@ -749,7 +749,7 @@ namespace EasyProject.ViewModel
             temp.Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
         }
 
-        private ActionCommand inProductCommand; //출고확인 버튼 커맨드
+        private ActionCommand inProductCommand; //입고확인 버튼 커맨드
         public ICommand InProductCommand
         {
             get
@@ -764,7 +764,17 @@ namespace EasyProject.ViewModel
 
         public void InProduct()
         {
+            Console.WriteLine("InProduct 실행");
             
+            product_dao.InProduct(SelectedProduct, Nurse);
+            product_dao.ChangeProductInfo_IMP_DEPT_ForIn(SelectedProduct);
+            product_dao.ChangeProductInfo_ForIn(SelectedProduct);
+
+            SelectedProduct.InputOutCount = null;
+
+            Products = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(dept_dao.GetDeptName((int)App.nurse_dto.Dept_id)));
+            var temp = Ioc.Default.GetService<ProductInOutViewModel>();
+            temp.Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
         }
 
         private ActionCommand modifyProductReset;
