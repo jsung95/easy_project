@@ -63,10 +63,6 @@ namespace EasyProject.View.TabItemPage
             ((ProductShowViewModel)(this.DataContext)).LoadEmployee();
 
         }
-        private void reset_Btn_Click(object sender, RoutedEventArgs e)
-        {
-            //mount_TxtBox.Text = "";
-        }
 
         private void RowButton_Click(object sender, RoutedEventArgs e)
         {

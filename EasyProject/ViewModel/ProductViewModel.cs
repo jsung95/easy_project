@@ -476,6 +476,7 @@ namespace EasyProject.ViewModel
             catch (Exception ex)
             {
                 obj = null;
+                Console.WriteLine("releaseObject : " + ex);
             }
             finally
             {

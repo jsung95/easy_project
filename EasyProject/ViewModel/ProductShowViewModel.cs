@@ -515,6 +515,7 @@ namespace EasyProject.ViewModel
 
         // ==================== 스넥바 snackbar =======================
         //============================================================
+
         private bool isEmptyProduct = false;
         public bool IsEmptyProduct
         {
@@ -577,6 +578,7 @@ namespace EasyProject.ViewModel
             //IsEmptyProduct = false;
             IsInOutEnabled = false;
         }
+
         //============================================================
         //============================================================
 
@@ -655,6 +657,7 @@ namespace EasyProject.ViewModel
                     var temp = Ioc.Default.GetService<ProductInOutViewModel>();
                     temp.Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
                 }
+
             }//else if
             else if(SelectedProduct.SelectedOutType == "이관") // 출고타입이 이관일 때  *출고 타입을 선택하지 않은 경우는 확인 버튼이 비활성화되어 있음
             {
@@ -683,7 +686,7 @@ namespace EasyProject.ViewModel
                     product_dao.OutProduct(SelectedProduct, Nurse);
                     product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
                     product_dao.ChangeProductInfo_ForOut(SelectedProduct);
-                    ErrorProductString = $"{SelectedProduct.Prod_name}을(를) 모두 {SelectedProduct.SelectedOutDept.Dept_name}으로 이관하였습니다.";
+                    ErrorProductString = $"{SelectedProduct.Prod_name}을(를) 모두 {SelectedProduct.SelectedOutDept.Dept_name} 부서로 이관하였습니다.";
                     IsInOutEnabled = true;
                 }
                 else
@@ -691,13 +694,14 @@ namespace EasyProject.ViewModel
                     product_dao.OutProduct(SelectedProduct, Nurse);
                     product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
                     product_dao.ChangeProductInfo_ForOut(SelectedProduct);
-                    ErrorProductString = $"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 {SelectedProduct.SelectedOutDept.Dept_name}으로 이관하였습니다.";
+                    ErrorProductString = $"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 {SelectedProduct.SelectedOutDept.Dept_name} 부서로 이관하였습니다.";
                     IsInOutEnabled = true;
 
                     Products = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(dept_dao.GetDeptName((int)App.nurse_dto.Dept_id)));
                     var temp = Ioc.Default.GetService<ProductInOutViewModel>();
                     temp.Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
                 }
+
             }//else if
             else if (SelectedProduct.SelectedOutType == "폐기")  // 출고타입이 폐기일 때  *출고 타입을 선택하지 않은 경우는 확인 버튼이 비활성화되어 있음
             {
@@ -737,11 +741,16 @@ namespace EasyProject.ViewModel
                     var temp = Ioc.Default.GetService<ProductInOutViewModel>();
                     temp.Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
                 }
+
             }//else if
 
-            SelectedProduct.SelectedOutType = null;
-            SelectedProduct.SelectedOutDept = null;
-            SelectedProduct.InputOutCount = null;           
+            if(SelectedProduct != null)
+            {
+                SelectedProduct.SelectedOutType = null;
+                SelectedProduct.SelectedOutDept = null;
+                SelectedProduct.InputOutCount = null;
+            }
+                       
         }//OutProduct
 
         private ActionCommand inProductCommand; //입고확인 버튼 커맨드
@@ -782,8 +791,12 @@ namespace EasyProject.ViewModel
                 var temp = Ioc.Default.GetService<ProductInOutViewModel>();
                 temp.Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
             }
-            
-            SelectedProduct.InputInCount = null;            
+
+            if(SelectedProduct != null)
+            {
+                SelectedProduct.InputInCount = null;
+            }
+                        
         }//InProduct
 
         private ActionCommand modifyProductReset;
@@ -803,8 +816,6 @@ namespace EasyProject.ViewModel
         {
             SelectedCategory = null;
         }
-
-
 
         private ActionCommand outProductReset;
         public ICommand OutProductReset
@@ -826,22 +837,27 @@ namespace EasyProject.ViewModel
             SelectedProduct.InputOutCount = null;
         }
 
+        private ActionCommand inProductReset;
+        public ICommand InProductReset
+        {
+            get
+            {
+                if (inProductReset == null)
+                {
+                    inProductReset = new ActionCommand(InProductFormReset);
+                }
+                return inProductReset;
+            }//get
+        }
+
+        public void InProductFormReset()
+        {            
+            SelectedProduct.InputInCount = null;
+        }
+
         private void showListbyDept()
         {
-            //Products = new ObservableCollection<ProductShowModel>();
             LoadEmployee();
-            //if (SelectedDept == Depts[(int)App.nurse_dto.Dept_id - 1])
-            //{
-            //    Console.WriteLine("소속 부서");
-            //    buttonColumnVisibility = Visibility.Visible;
-            //    Console.WriteLine(buttonColumnVisibility);
-            //}
-            //else
-            //{
-            //    Console.WriteLine("다른 부서");
-            //    buttonColumnVisibility = Visibility.Hidden;
-            //    Console.WriteLine(buttonColumnVisibility);
-            //}
         }
 
         

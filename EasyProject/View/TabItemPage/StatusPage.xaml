@@ -243,7 +243,7 @@
                                             </Button>
                                             <StackPanel Orientation="Horizontal">
                                                 <!--출고 -->
-                                                <materialDesign:PopupBox Name="releasePopupBox" StaysOpen="True" IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
+                                                <materialDesign:PopupBox Name="releasePopupBox" StaysOpen="True">
                                                     <materialDesign:PopupBox.ToggleContent>
                                                         <materialDesign:PackIcon  Kind="CallMade" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
                                                     </materialDesign:PopupBox.ToggleContent>
@@ -302,7 +302,7 @@
                                                                 <ColumnDefinition Width="*"/>
                                                             </Grid.ColumnDefinitions>
                                                             <TextBlock  Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" Text="수량" />
-                                                            <TextBox x:Name="mount_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Left"
+                                                            <TextBox x:Name="out_popupBox_mount_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Left"
                                                                     VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Width="80"
                                                                     Text="{Binding PSVM.SelectedProduct.InputOutCount, Source={StaticResource Locator}}"/>
                                                         </Grid>
@@ -311,8 +311,8 @@
                                                                 <ColumnDefinition Width="*"/>
                                                                 <ColumnDefinition Width="*"/>
                                                             </Grid.ColumnDefinitions>
-                                                            <Button x:Name="reset_Btn" Grid.Column="0"  Content="초기화"  FontSize="8"  HorizontalAlignment="Center"  Click="reset_Btn_Click"
-                                                                   VerticalAlignment="Center"  BorderThickness="0" Height="30" Width="55"  Foreground="White" Command="{Binding OutProductReset}" Cursor="Hand">
+                                                            <Button x:Name="out_popupBox_reset_Btn" Grid.Column="0"  Content="초기화"  FontSize="8"  HorizontalAlignment="Center" 
+                                                                   VerticalAlignment="Center"  BorderThickness="0" Height="30" Width="55"  Foreground="White" Command="{Binding PSVM.OutProductReset, Source={StaticResource Locator}}" Cursor="Hand">
                                                                 <Button.Style>
                                                                     <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                                                                         <Setter  Property="Background" Value="Red" />
@@ -320,7 +320,7 @@
                                                                 </Button.Style>
                                                             </Button>
                                                             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                                                <Button x:Name="cancel_Btn" Content="취소" Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}" 
+                                                                <Button x:Name="out_popupBox_cancel_Btn" Content="취소" Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}" 
                                                                             FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"  
                                                                             VerticalAlignment="Center"  BorderThickness="0" Height="28" Width="55" Cursor="Hand"  Foreground="White" >
                                                                     <Button.Style>
@@ -344,7 +344,7 @@
                                                 </materialDesign:PopupBox>
                                             </StackPanel><!--출고끝-->
                                             <StackPanel Orientation="Horizontal"><!--발주신청서-->
-                                                <materialDesign:PopupBox Name="orderPopupBox" StaysOpen="True" IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window }}">
+                                                <materialDesign:PopupBox Name="orderPopupBox" StaysOpen="True">
                                                     <materialDesign:PopupBox.ToggleContent>
                                                         <materialDesign:PackIcon  Kind="Input" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="50"/>
                                                     </materialDesign:PopupBox.ToggleContent>
@@ -517,7 +517,7 @@
                                             </StackPanel>
 
                                             <StackPanel Orientation="Horizontal"><!--입고-->
-                                                <materialDesign:PopupBox Name="InPopupBox" StaysOpen="True" IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
+                                                <materialDesign:PopupBox Name="InPopupBox" StaysOpen="True">
                                                     <materialDesign:PopupBox.ToggleContent>
                                                         <materialDesign:PackIcon  Kind="CallReceived" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
                                                     </materialDesign:PopupBox.ToggleContent>
@@ -556,7 +556,7 @@
                                                                 <ColumnDefinition Width="*"/>
                                                             </Grid.ColumnDefinitions>
                                                             <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11"  Text="부서" />
-                                                            <TextBox x:Name="selectedUser_Dept_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="소속 부서" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Left"
+                                                            <TextBox x:Name="in_popupBox_Dept_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="소속 부서" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Left"
                                                                     VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Width="80" IsReadOnly="True"
                                                                     Text="{Binding PSVM.SelectedUser.Dept_name, Source={StaticResource Locator}}"/>
                                                         </Grid>
@@ -566,7 +566,7 @@
                                                                 <ColumnDefinition Width="*"/>
                                                             </Grid.ColumnDefinitions>
                                                             <TextBlock  Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" Text="수량" />
-                                                            <TextBox x:Name="mount_TxtBox2" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Left"
+                                                            <TextBox x:Name="in_popupBox_mount_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Left"
                                                                     VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Width="80"
                                                                     Text="{Binding PSVM.SelectedProduct.InputInCount, Source={StaticResource Locator}}"/>
                                                         </Grid>
@@ -575,7 +575,7 @@
                                                                 <ColumnDefinition Width="*"/>
                                                                 <ColumnDefinition Width="*"/>
                                                             </Grid.ColumnDefinitions>
-                                                            <Button x:Name="reset_Btn2" Grid.Column="0"  Content="초기화"  FontSize="8"  HorizontalAlignment="Center"  Click="reset_Btn_Click"
+                                                            <Button x:Name="in_popupBox_reset_Btn" Grid.Column="0"  Content="초기화"  FontSize="8"  HorizontalAlignment="Center" Command="{Binding PSVM.InProductReset, Source={StaticResource Locator}}"
                                                                    VerticalAlignment="Center"  BorderThickness="0" Height="30" Width="55"  Foreground="White" Cursor="Hand">
                                                                 <Button.Style>
                                                                     <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
@@ -584,7 +584,7 @@
                                                                 </Button.Style>
                                                             </Button>
                                                             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                                                <Button x:Name="cancel_Btn3" Content="취소" Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}" 
+                                                                <Button x:Name="in_popupBox_cancel_Btn" Content="취소" Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}" 
                                                                             FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"  
                                                                             VerticalAlignment="Center"  BorderThickness="0" Height="28" Width="55" Cursor="Hand"  Foreground="White" >
                                                                     <Button.Style>
@@ -594,7 +594,7 @@
                                                                     </Button.Style>
                                                                 </Button>
 
-                                                                <Button x:Name="productAdd_Btn" Margin="5,0,0,0" Content="확인"  FontSize="10"  HorizontalAlignment="Center" IsEnabled="{Binding PSVM.SelectedProduct.IsEnabled2, Source={StaticResource Locator}}" 
+                                                                <Button x:Name="productAdd_Btn" Margin="5,0,0,0" Content="확인"  FontSize="10"  HorizontalAlignment="Center"  
                                                                     VerticalAlignment="Center"  BorderThickness="0" Height="28" Width="55" Cursor="Hand"  Command="{Binding PSVM.InProductCommand, Source={StaticResource Locator}}" Foreground="white" >
                                                                     <Button.Style>
                                                                         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
