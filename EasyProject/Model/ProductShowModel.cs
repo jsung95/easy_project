@@ -41,23 +41,29 @@ namespace EasyProject.Model
             set
             {
                 selectedOutType = value;
-                IsEnabled = true;
+                if (selectedOutType == null)
+                {
+                    IsEnabled = false;
+                }               
+                
                 Console.WriteLine("SelectedOutType 변경합니다! : " + selectedOutType);
                 if (selectedOutType == "사용")
                 {
                     Popup_combobox_vis = Visibility.Hidden;
                     Popup_textBox_vis = Visibility.Hidden;
+                    IsEnabled = true;
                 }
                 else if (selectedOutType == "이관")
                 {
                     Popup_combobox_vis = Visibility.Visible;
                     Popup_textBox_vis = Visibility.Visible;
+                    IsEnabled = true;
                 }
                 else if (selectedOutType == "폐기")
                 {
                     Popup_combobox_vis = Visibility.Hidden;
                     Popup_textBox_vis = Visibility.Hidden;
-
+                    IsEnabled = true;
                 }
 
                 OnPropertyChanged("SelectedOutType");
@@ -112,19 +118,30 @@ namespace EasyProject.Model
             }
         }
 
-        // 재고 입/출고 - 입력한 입/출고 수량을 담을 프로퍼티
+        // 재고 출고 - 입력한 출고 수량을 담을 프로퍼티
         private int? inputOutCount;
         public int? InputOutCount
         {
             get { return inputOutCount; }
             set
             {
-                inputOutCount = value;
+                inputOutCount = value;               
                 OnPropertyChanged("InputOutCount");
             }
         }
+        // 재고 입고 - 입력한 입고 수량을 담을 프로퍼티
+        private int? inputInCount;
+        public int? InputInCount
+        {
+            get { return inputInCount; }
+            set
+            {
+                inputInCount = value;
+                OnPropertyChanged("InputInCount");
+            }
+        }
 
-        //재고 출고 - 확인 버튼 활성화/비활성화 프로퍼티
+        //재고 출고 팝업박스 - 확인 버튼 활성화/비활성화 프로퍼티
         private bool isEnabled;
         public bool IsEnabled
         {
@@ -135,6 +152,7 @@ namespace EasyProject.Model
                 OnPropertyChanged("IsEnabled");
             }
         }
+
     }//class
 
 }//namespace

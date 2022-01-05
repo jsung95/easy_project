@@ -2179,7 +2179,6 @@ namespace EasyProject.Dao
 
         public void InProduct(ProductShowModel prod_dto, NurseModel nurse_dto)
         {
-            Console.WriteLine("InProduct!");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -2197,7 +2196,7 @@ namespace EasyProject.Dao
                                           "VALUES(:count, :prod_id, :nurse_no, :dept_id, :in_from, :in_to, :in_type)";
 
                         //파라미터 값 바인딩
-                        cmd.Parameters.Add(new OracleParameter("count", prod_dto.InputOutCount)); // PROD_IN_COUNT
+                        cmd.Parameters.Add(new OracleParameter("count", prod_dto.InputInCount)); // PROD_IN_COUNT
                         cmd.Parameters.Add(new OracleParameter("prod_id", prod_dto.Prod_id));     // PROD_ID
                         cmd.Parameters.Add(new OracleParameter("nurse_no", nurse_dto.Nurse_no));  // NURSE_NO
                         cmd.Parameters.Add(new OracleParameter("dept_id", nurse_dto.Dept_id));   // DEPT_ID
@@ -2221,7 +2220,6 @@ namespace EasyProject.Dao
       
         public void ChangeProductInfo_IMP_DEPT_ForIn(ProductShowModel prod_dto)
         {
-            Console.WriteLine("ChangeProductInfo_IMP_DEPT_ForIn !");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -2239,7 +2237,7 @@ namespace EasyProject.Dao
                                           "imp_dept_count = imp_dept_count + :imp_total " +
                                           "WHERE imp_dept_id = :imp_id";
 
-                        cmd.Parameters.Add(new OracleParameter("imp_total", prod_dto.InputOutCount)); //사용자가 입력한 추가 수량
+                        cmd.Parameters.Add(new OracleParameter("imp_total", prod_dto.InputInCount)); //사용자가 입력한 추가 수량
                         cmd.Parameters.Add(new OracleParameter("imp_id", prod_dto.Imp_dept_id));
 
                         cmd.ExecuteNonQuery();
@@ -2256,7 +2254,6 @@ namespace EasyProject.Dao
 
         public void ChangeProductInfo_ForIn(ProductShowModel prod_dto)
         {
-            Console.WriteLine("ChangeProductInfo_ForIn !");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -2274,7 +2271,7 @@ namespace EasyProject.Dao
                                           "prod_total = prod_total + :total " +
                                           "WHERE prod_id = :id ";
 
-                        cmd.Parameters.Add(new OracleParameter("total", prod_dto.InputOutCount)); //사용자가 입력한 추가 수량
+                        cmd.Parameters.Add(new OracleParameter("total", prod_dto.InputInCount)); //사용자가 입력한 추가 수량
                         cmd.Parameters.Add(new OracleParameter("id", prod_dto.Prod_id));
 
 
