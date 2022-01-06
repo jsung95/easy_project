@@ -38,9 +38,10 @@ namespace EasyProject
 
             this.DataContext = this;
         }
+
         void MainWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)       //드래그 무브
         {
-            this.DragMove();
+            this.DragMove();           
         }
 
         void Window1_SizeChanged(object sender, SizeChangedEventArgs e)

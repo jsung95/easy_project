@@ -24,7 +24,7 @@ namespace EasyProject.View
         {
             InitializeComponent();
         }
- 
+
     }
 
 }

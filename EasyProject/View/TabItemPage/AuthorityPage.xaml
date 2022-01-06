@@ -9,10 +9,9 @@
       xmlns:vm="clr-namespace:EasyProject.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="1000"
+      DataContext="{Binding UAVM, Source={StaticResource Locator}}"
       Title="AuthorityPage">
-    <Page.DataContext>
-        <vm:UserAuthViewModel />
-    </Page.DataContext>
+
     <Page.Resources>
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="Template">
@@ -134,13 +133,13 @@
                             <ColumnDefinition Width="185*"/>
                         </Grid.ColumnDefinitions>
                         <DataGrid  x:Name="dataGrid1" Margin="5,5,5,5" AutoGenerateColumns="False" SelectionMode="Extended"
-                             ItemsSource="{Binding Normals_searched, Mode=TwoWay}"                           
-                             ScrollViewer.CanContentScroll="True" 
+                             ItemsSource="{Binding Normals_searched}"                           
+                             ScrollViewer.CanContentScroll="True"
                              ScrollViewer.VerticalScrollBarVisibility="Visible" 
                              ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" IsSynchronizedWithCurrentItem="False" Grid.ColumnSpan="2">
-
+                             
                             <DataGrid.Columns>
-
+                                
                                 <!--데이터 바인딩-->
                                 <DataGridCheckBoxColumn Binding="{Binding IsChecked}" IsReadOnly="False" />
                                 <DataGridTextColumn Header=" 이름"  Binding="{Binding Nurse_name}" IsReadOnly="True" />
@@ -186,7 +185,7 @@
                     </Grid>
                     <Grid Grid.Column="2">
                         <DataGrid  x:Name="dataGrid2" Margin="5" AutoGenerateColumns="false" SelectionMode="Extended"
-                             ItemsSource="{Binding Admins_searched, Mode=TwoWay}"  
+                             ItemsSource="{Binding Admins_searched}"  
                              ScrollViewer.CanContentScroll="True" 
                              ScrollViewer.VerticalScrollBarVisibility="Visible" 
                              ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" IsSynchronizedWithCurrentItem="False">
