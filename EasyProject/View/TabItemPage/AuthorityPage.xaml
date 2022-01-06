@@ -141,7 +141,14 @@
                             <DataGrid.Columns>
                                 
                                 <!--데이터 바인딩-->
-                                <DataGridCheckBoxColumn Binding="{Binding IsChecked}" IsReadOnly="False" />
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox x:Name="normalCheckBox" IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}" 
+                                                      Background="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" BorderBrush="#FF0E0D0D" Foreground="#FF111010"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                                 <DataGridTextColumn Header=" 이름"  Binding="{Binding Nurse_name}" IsReadOnly="True" />
                                 <DataGridTextColumn Header=" ID" Binding="{Binding Nurse_no}" IsReadOnly="True"/>
                                 <DataGridTextColumn Header=" 부서" Binding="{Binding Dept_name}" IsReadOnly="True"/>
@@ -192,7 +199,15 @@
 
                             <DataGrid.Columns>
                                 <!--데이터 바인딩-->
-                                <DataGridCheckBoxColumn Binding="{Binding IsChecked}" IsReadOnly="False"/>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox x:Name="adminCheckBox" IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}" 
+                                                      Background="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" BorderBrush="#FF0E0D0D" Foreground="#FF111010"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <!--<DataGridCheckBoxColumn Binding="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>-->
                                 <DataGridTextColumn Header=" 이름"  Binding="{Binding Nurse_name}" IsReadOnly="True" />
                                 <DataGridTextColumn Header=" ID" Binding="{Binding Nurse_no}" IsReadOnly="True"/>
                                 <DataGridTextColumn Header=" 부서" Binding="{Binding Dept_name}" IsReadOnly="True"/>
