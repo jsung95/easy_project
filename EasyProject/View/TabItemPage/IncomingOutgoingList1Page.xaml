@@ -203,8 +203,11 @@
                                                 <DataTrigger Binding="{Binding Prod_in_type}" Value="이관">
                                                     <Setter Property="Foreground" Value="Red"/>
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding Prod_in_type}" Value="발주">
+                                                <DataTrigger Binding="{Binding Prod_in_type}" Value="신규">
                                                     <Setter Property="Foreground" Value="Blue"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Prod_in_type}" Value="추가">
+                                                    <Setter Property="Foreground" Value="Green"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>

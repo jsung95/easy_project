@@ -181,11 +181,14 @@
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Prod_out_type}" Value="이관">
+                                                <DataTrigger Binding="{Binding Prod_out_type}" Value=" 폐기">
                                                     <Setter Property="Foreground" Value="Red"/>
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding Prod_out_type}" Value="발주">
-                                                    <Setter Property="Foreground" Value="Yellow"/>
+                                                <DataTrigger Binding="{Binding Prod_out_type}" Value="사용">
+                                                    <Setter Property="Foreground" Value="Green"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Prod_out_type}" Value="이관">
+                                                    <Setter Property="Foreground" Value="Blue"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
