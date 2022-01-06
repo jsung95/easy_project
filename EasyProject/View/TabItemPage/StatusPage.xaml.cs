@@ -37,7 +37,6 @@ namespace EasyProject.View.TabItemPage
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-
             var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
             var deptNameText = deptModelObject.Dept_name; // 콤보박스에서 선택한 부서명
             var temp = Ioc.Default.GetService<ProductShowViewModel>();
@@ -62,10 +61,6 @@ namespace EasyProject.View.TabItemPage
 
             ((ProductShowViewModel)(this.DataContext)).LoadEmployee();
 
-        }
-        private void reset_Btn_Click(object sender, RoutedEventArgs e)
-        {
-            //mount_TxtBox.Text = "";
         }
 
         private void RowButton_Click(object sender, RoutedEventArgs e)

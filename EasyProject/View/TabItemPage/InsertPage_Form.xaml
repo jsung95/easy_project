@@ -97,6 +97,7 @@
                             <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
                                 <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />
                                 <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="white" />
+                                <Setter Property="Cursor" Value="Hand"/>
                             </Style>
                             <Style x:Key="CustomCalendarButton" TargetType="CalendarButton" BasedOn="{StaticResource MaterialDesignCalendarButton}">
                                 <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />

@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Microsoft.Expression.Interactivity.Core;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace EasyProject.ViewModel
 {
@@ -69,6 +72,41 @@ namespace EasyProject.ViewModel
         public string selectedSearchType_In { get; set; }
         public string selectedSearchType_Out { get; set; }
 
+
+        //입출고 날짜별 조회
+        //시작일을 담을 프로퍼티
+        private DateTime? selectedStartDate;
+        public DateTime? SelectedStartDate
+        {
+            get { return selectedStartDate; }
+            set
+            {
+                selectedStartDate = value;
+
+                ShowProductIn_By_Date();
+                if (selectedStartDate > selectedEndDate)
+                {
+                    SelectedStartDate = SelectedEndDate.Value.AddDays(-1);
+                }
+                OnPropertyChanged("SelectedStartDate");
+            }
+        }
+        //종료일을 담을 프로퍼티
+        private DateTime? selectedEndDate;
+        public DateTime? SelectedEndDate
+        {
+            get { return selectedEndDate; }
+            set
+            {
+                selectedEndDate = value;
+
+                ShowProductIn_By_Date();
+
+                OnPropertyChanged("SelectedEndDate");
+            }
+        }
+
+
         public ProductInOutViewModel()
         {
             
@@ -84,30 +122,13 @@ namespace EasyProject.ViewModel
             Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In));
             Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept_Out));
 
-            
+            SelectedStartDate = null;
+            SelectedEndDate = null;
 
         }//Constructor
 
 
-        private ActionCommand command;
-        public ICommand Command
-        {
-            get
-            {
-                if (command == null)
-                {
-                    command = new ActionCommand(DoSomeThing);
-                }
-                return command;
-            }//get
 
-        }//Command
-
-        public void DoSomeThing()
-        {
-            
-
-        }// 
 
         private ActionCommand inSearchCommand;
         public ICommand InSearchCommand
@@ -125,7 +146,14 @@ namespace EasyProject.ViewModel
 
         public void InListSearch()
         {
-            Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, selectedSearchType_In, searchKeyword_In));
+            if (SelectedStartDate != null && SelectedEndDate != null)
+            {
+                Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, selectedSearchType_In, searchKeyword_In, SelectedStartDate, SelectedEndDate));
+            }
+            else
+            {
+                Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, selectedSearchType_In, searchKeyword_In));
+            }
 
         }// InListSearch
 
@@ -160,6 +188,63 @@ namespace EasyProject.ViewModel
             Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept_Out));
         
         }//showOutListByDept
-    }//class
+        public void ShowProductIn_By_Date() // 시작, 끝 날짜 지정해서 입고 데이터 조회
+        {
+            if (SelectedStartDate != null && SelectedEndDate != null)
+            {
+                Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, SelectedStartDate, SelectedEndDate));
+            }
+        }//ShowProductIn_By_Date
+
+
+
+
+        //=================================================================================
+        //=================================================================================
+        private ObservableCollection<ProductShowModel> list;
+        private FrameworkElement GetParent(FrameworkElement child, Type targetType)
+        {
+            object parent = child.Parent;
+            if (parent != null)
+            {
+                if (parent.GetType() == targetType)
+                {
+
+                    return (FrameworkElement)parent;
+                }
+                else
+                {
+                    return GetParent((FrameworkElement)parent, targetType);
+                }
+            }
+            return null;
+        }
+        void Incomingdatagrid_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            // CustomerDetail is a table at service side
+            //ServiceReference1.CustomerDetail list = e.Row.DataContext asServiceReference1.CustomerDetail;
+            //var list = e.Row.DataContext;
+            // list = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In));
+            FrameworkElement el;
+            //el = this.dataGrid1.Columns[6].GetCellContent(e.Row);
+
+            //DataGridCell changeCell = GetParent(el, typeof(DataGridCell)) as DataGridCell;
+
+            SolidColorBrush brush = new SolidColorBrush(Colors.Black);
+
+            //if (changeCell != null)
+            //{
+            //    if (list.Equals("사용"))
+            //    {
+            //        brush = new SolidColorBrush(Colors.Green);
+            //    }
+            //    else if (list.Equals("이관"))
+            //    {
+            //        brush = new SolidColorBrush(Colors.Red);
+            //    }
+            //    changeCell.Foreground = brush;
+            //}
+
+        }    }//class
 
 }//namespace

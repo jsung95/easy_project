@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
 using EasyProject.Model;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -23,13 +24,29 @@ namespace EasyProject.View.TabItemPage
     {
         public String userDept00 = null;
         public bool isComboBoxDropDownOpened = false;
+        Boolean headerflag = false;
 
         public IncomingOutgoingList1Page()
         {
             InitializeComponent();
+            //Incomingdatagrid_LoadingRow();
+            
+            //dataGrid1.LayoutUpdated += new EventHandler(Incomingdatagrid_LayoutUpdated);
             export_btn.Click += Export_btn_Click;
             userDept00 = (deptName_ComboBox1.SelectedValue as DeptModel).Dept_name;
         }
+
+        private void Incomingdatagrid_LayoutUpdated(object sender, EventArgs e)
+        {
+            if (headerflag)
+            {
+
+                DataGridColumn col = dataGrid1.Columns[6];
+                col.CellStyle = (Style)Resources["DataGridCellStyle"];
+                headerflag = false;
+            }
+        }
+
         private void OnDropDownOpened(object sender, EventArgs e)
         {
             isComboBoxDropDownOpened = true;
@@ -38,6 +55,11 @@ namespace EasyProject.View.TabItemPage
             var deptNameText = deptModelObject.Dept_name;
             userDept00= deptNameText.ToString();
         }
+
+        //******************************************************************************
+        //************************입고 유형별 색깔 다르게 주기**************************
+        
+       
 
         private void Export_btn_Click(object sender, RoutedEventArgs e)
         {
