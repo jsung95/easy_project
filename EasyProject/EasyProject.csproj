@@ -208,6 +208,9 @@
     <Compile Include="View\ExportPage\ModifyPage.xaml.cs">
       <DependentUpon>ModifyPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\OrderPopupBoxPage.xaml.cs">
+      <DependentUpon>OrderPopupBoxPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PasswordChangePage.xaml.cs">
       <DependentUpon>PasswordChangePage.xaml</DependentUpon>
     </Compile>
@@ -276,6 +279,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\ExportPage\ModifyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\OrderPopupBoxPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

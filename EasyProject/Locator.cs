@@ -18,5 +18,6 @@ namespace EasyProject
         public ProductInOutViewModel PIOVM => Ioc.Default.GetService<ProductInOutViewModel>();
         public DashBoardViewModel DBVM => Ioc.Default.GetService<DashBoardViewModel>();
         public UserAuthViewModel UAVM => Ioc.Default.GetService<UserAuthViewModel>();
+
     }
 }

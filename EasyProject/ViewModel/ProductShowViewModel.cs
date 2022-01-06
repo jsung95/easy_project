@@ -13,6 +13,7 @@ using System.Windows.Data;
 using System.Windows;
 using System.ComponentModel;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using System.Windows.Controls;
 
 namespace EasyProject.ViewModel
 {
@@ -241,6 +242,9 @@ namespace EasyProject.ViewModel
                 OnPropertyChanged("SelectedProductIndex");
             }
         }
+
+
+        
 
         public List<ProductShowModel> SelectedProductList { get; set; } // SelectedProduct를 DataGrid에서 사용하기 위한 List
         //// 재고 출고 - 선택한 출고 유형 콤보박스를 담을 값
