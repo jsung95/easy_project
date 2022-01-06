@@ -868,9 +868,9 @@ namespace EasyProject.ViewModel
 
         public void OrderFormReset()
         {
-            SelectedUser.Nurse_name = null;
-            SelectedUser.Dept_name = null;
-            SelectedUser.Dept_phone = null;
+            //SelectedUser.Nurse_name = null;
+            //SelectedUser.Dept_name = null;
+            //SelectedUser.Dept_phone = null;
             //SelectedProduct.Prod_name = null;
             SelectedProduct.Mount = null;
             SelectedProduct.Volume = null;
