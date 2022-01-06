@@ -348,14 +348,11 @@
                                                 </materialDesign:PopupBox>
                                             </StackPanel><!--출고끝-->
                                             <StackPanel Orientation="Horizontal"><!--발주신청서-->
-                                                <materialDesign:PopupBox Name="orderPopupBox" StaysOpen="True">
+                                                <materialDesign:PopupBox x:Name="orderPopupBox" StaysOpen="True">
                                                     <materialDesign:PopupBox.ToggleContent>
                                                         <materialDesign:PackIcon  Kind="Input" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="50"/>
                                                     </materialDesign:PopupBox.ToggleContent>
-                                                    <Grid Width="550" Height="500" Margin="8,8,8,8" >
-                                                        <Frame Source="/View/OrderPopupBoxPage.xaml"></Frame>
-                                                        
-                                                    </Grid>
+
                                                 </materialDesign:PopupBox>
                                             </StackPanel>
 

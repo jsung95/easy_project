@@ -148,7 +148,7 @@ namespace EasyProject.View.TabItemPage
 
         private void signUp_Btn_Click(object sender, RoutedEventArgs e)
         {
-
+           
         }
 
         private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -194,7 +194,17 @@ namespace EasyProject.View.TabItemPage
             //}
         }
 
+        //private void printBtn_Click(object sender, RoutedEventArgs e)
+        //{
+        //    PrintDialog printDialog = new PrintDialog();
+        //    if (printDialog.ShowDialog().GetValueOrDefault(false))
+        //    {
+        //        printDialog.PrintVisual(buttonColumn., "orderPopupBox");
+        //    }
 
-    }
+        //}
 
-}
+
+    }//class
+
+}//namespace

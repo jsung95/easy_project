@@ -7,6 +7,7 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="EasyProject.View.AuthorityPage"
       xmlns:y="http://schemas.devexpress.com/winfx/2008/xaml/grid"
       xmlns:vm="clr-namespace:EasyProject.ViewModel"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="1000"
       DataContext="{Binding UAVM, Source={StaticResource Locator}}"
@@ -91,7 +92,13 @@
                         </Grid>
                         <Grid Grid.Column="1">
                             <TextBox  Grid.Column="0" Text="{Binding Normal_Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                             Style="{DynamicResource WatermarkTextBox}" Tag ="검색명을 입력해주세요" FontSize="10" Height="25"  Grid.ColumnSpan="2" Margin="5" Cursor="Hand" />
+                             Style="{DynamicResource WatermarkTextBox}" Tag ="검색명을 입력해주세요" FontSize="10" Height="25"  Grid.ColumnSpan="2" Margin="5" Cursor="Hand" >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="KeyUp">
+                                        <i:InvokeCommandAction Command="{Binding NormalKeywordCommand}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
                         </Grid>
                         <Grid Grid.Column="2">
                             <!--<Button  Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White" Height="25" 
@@ -137,19 +144,20 @@
                              ScrollViewer.CanContentScroll="True"
                              ScrollViewer.VerticalScrollBarVisibility="Visible" 
                              ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" IsSynchronizedWithCurrentItem="False" Grid.ColumnSpan="2">
-                             
                             <DataGrid.Columns>
                                 
                                 <!--데이터 바인딩-->
                                 <DataGridTemplateColumn>
+                                    
                                     <DataGridTemplateColumn.CellTemplate>
+                                        
                                         <DataTemplate>
                                             <CheckBox x:Name="normalCheckBox" IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}" 
-                                                      Background="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" BorderBrush="#FF0E0D0D" Foreground="#FF111010"/>
+                                                      Background="#4472C4" BorderBrush="#FF0E0D0D" Foreground="#FF111010"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn Header=" 이름"  Binding="{Binding Nurse_name}" IsReadOnly="True" />
+                                <DataGridTextColumn Header=" 이름" Binding="{Binding Nurse_name}" IsReadOnly="True" />
                                 <DataGridTextColumn Header=" ID" Binding="{Binding Nurse_no}" IsReadOnly="True"/>
                                 <DataGridTextColumn Header=" 부서" Binding="{Binding Dept_name}" IsReadOnly="True"/>
 
@@ -203,7 +211,7 @@
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <CheckBox x:Name="adminCheckBox" IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}" 
-                                                      Background="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" BorderBrush="#FF0E0D0D" Foreground="#FF111010"/>
+                                                      Background="#4472C4" BorderBrush="#FF0E0D0D" Foreground="#FF111010"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
@@ -220,6 +228,32 @@
                 </Grid>
             </Grid>
         </materialDesign:Card>
+
+        <materialDesign:Snackbar x:Name="Snackbar"  Background="#Ea4a2d" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+            <materialDesign:SnackbarMessage ActionContent="닫기" ActionCommand="{Binding SnackBarCommand}" Width="619">
+                <materialDesign:SnackbarMessage.Style>
+                    <Style TargetType="materialDesign:SnackbarMessage">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsAuthChangeEnabled}" Value="True">
+                                <Setter Property="Content" Value="{Binding ErrorProductString}"></Setter>
+                            </DataTrigger>
+
+                        </Style.Triggers>
+                    </Style>
+                </materialDesign:SnackbarMessage.Style>
+            </materialDesign:SnackbarMessage>
+
+            <materialDesign:Snackbar.Style>
+                <Style TargetType="materialDesign:Snackbar">
+                    <Setter Property="IsActive" Value="False"></Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsAuthChangeEnabled}" Value="True">
+                            <Setter Property="IsActive" Value="True"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </materialDesign:Snackbar.Style>
+        </materialDesign:Snackbar>
     </Grid>
 
 </Page>

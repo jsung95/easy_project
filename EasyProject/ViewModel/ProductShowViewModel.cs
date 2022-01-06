@@ -284,7 +284,16 @@ namespace EasyProject.ViewModel
         //}
 
         // 발주 신청 페이지 바인딩
-        public UserModel SelectedUser { get; }
+        private UserModel selectedUser;
+        public UserModel SelectedUser 
+        { 
+            get { return selectedUser; }
+            set
+            {
+                selectedUser = value;
+                OnPropertyChanged("SelectedUser");
+            }
+        }
         public ICollectionView EmployeeCollection { get; private set; }
 
         public ProductShowViewModel()
@@ -844,6 +853,35 @@ namespace EasyProject.ViewModel
             SelectedProduct.SelectedOutDept = null;
             SelectedProduct.InputOutCount = null;
         }
+
+
+        //재고현황페이지에서 발주팝업박스 텍스트초기화 커맨드
+        private ActionCommand orderPopupReset;
+        public ICommand OrderPopupReset
+        {
+            get
+            {
+                if (orderPopupReset == null)
+                {
+                    Console.WriteLine("리셋!");
+                    orderPopupReset = new ActionCommand(OrderFormReset);
+                }
+                return orderPopupReset;
+            }//get
+        }
+
+        public void OrderFormReset()
+        {
+            //SelectedUser.Nurse_name = null;
+            //SelectedUser.Dept_name = null;
+            //SelectedUser.Dept_phone = null;
+            //SelectedProduct.Prod_name = null;
+            SelectedProduct.Mount = null;
+            SelectedProduct.Volume = null;
+            SelectedProduct.Manufacturer = null;
+            SelectedProduct.OrderMemo = null;
+        }
+
 
         private ActionCommand inProductReset;
         public ICommand InProductReset
