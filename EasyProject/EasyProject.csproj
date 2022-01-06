@@ -181,6 +181,7 @@
     <Compile Include="Model\UserModel.cs" />
     <Compile Include="Util\PasswordHelper.cs" />
     <Compile Include="Util\SHA256Hash.cs" />
+    <Compile Include="ValueToBrushConverter.cs" />
     <Compile Include="ViewModel\DashBoardViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\OrderViewModel.cs" />

@@ -201,7 +201,7 @@ namespace EasyProject.ViewModel
 
         //=================================================================================
         //=================================================================================
-        private ObservableCollection<ProductShowModel> list;
+        //private ObservableCollection<ProductShowModel> list;
         private FrameworkElement GetParent(FrameworkElement child, Type targetType)
         {
             object parent = child.Parent;

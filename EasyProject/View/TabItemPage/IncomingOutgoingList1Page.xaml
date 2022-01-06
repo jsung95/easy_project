@@ -6,12 +6,16 @@
       xmlns:local="clr-namespace:EasyProject.View.TabItemPage"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:wookoa="clr-namespace:System;assembly=mscorlib"
-      xmlns:vm="clr-namespace:EasyProject.ViewModel"
+      xmlns:vm="clr-namespace:EasyProject.ViewModel" xmlns:conv="clr-namespace:EasyProject"
       mc:Ignorable="d"
       DataContext="{Binding PIOVM, Source={StaticResource Locator}}"
       Title="IncomingOutgoingList1Page" Cursor="Hand">
 
     <Page.Resources>
+        
+        <Style x:Key="CellStyle" TargetType="DataGridCell">
+            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}}" />
+        </Style>
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="#EAEAEA"/>
             <Setter Property="FontSize" Value="12"/>
@@ -37,6 +41,9 @@
             <Setter Property="FontFamily" Value="Arial"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
         </Style>
+
+     
+
     </Page.Resources>
 
     <Grid Height="450" Width="1000"> 
@@ -154,20 +161,20 @@
                                             <Setter Property="CalendarStyle" Value="{StaticResource CustomCalendar}" />
                                         </Style>
                                     </DatePicker.Resources>
-                                </DatePicker>
+                                </DatePicker>                            
                                 
-                                
-
                             </Grid>
 
                         </Grid>
                         
                         
 
-                        <DataGrid x:Name="dataGrid1" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Top" ScrollViewer.CanContentScroll="True"         
+                        <DataGrid x:Name="dataGrid1" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Top"
+                              ScrollViewer.CanContentScroll="True"         
                               ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.HorizontalScrollBarVisibility="Visible" 
                                   AutoGenerateColumns="False" CanUserSortColumns="True" IsReadOnly="True" Margin="5"
-                                  ItemsSource="{Binding Product_in}">
+                                  ItemsSource="{Binding Product_in}" CellStyle="{StaticResource CellStyle}">
+                            
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="*" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="*" IsReadOnly="True"/>
@@ -179,9 +186,23 @@
                                             <Setter Property="HorizontalAlignment" Value="Right" />
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
+                                    
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding Prod_in_date}" Header="입고일" Width="1.3*" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Prod_in_type}" Header="입고유형" Width="0.5*" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_in_type}" Header="입고유형" Width="0.5*" IsReadOnly="True">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Prod_in_type}" Value="이관">
+                                                    <Setter Property="Foreground" Value="Red"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Prod_in_type}" Value="발주">
+                                                    <Setter Property="Foreground" Value="Yellow"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding Prod_in_from}" Header="입고출처" Width="0.7*" IsReadOnly="True"/>
                                 <DataGridTextColumn  Header="관리자명" Width="*" IsReadOnly="True">
                                     <DataGridTextColumn.Binding>
@@ -192,12 +213,12 @@
                                     </DataGridTextColumn.Binding>
                                 </DataGridTextColumn>
                             </DataGrid.Columns>
-                            <DataGrid.RowStyle>
+                            <!--<DataGrid.RowStyle>
                                 <Style TargetType="{x:Type DataGridRow}">
                                     <Setter Property="FontSize" Value="10"/>
                                     <Setter Property="FontFamily" Value="Arial"/>
                                 </Style>
-                            </DataGrid.RowStyle>
+                            </DataGrid.RowStyle>-->
                         </DataGrid>
                     </Grid>
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -29,23 +30,13 @@ namespace EasyProject.View.TabItemPage
         public IncomingOutgoingList1Page()
         {
             InitializeComponent();
-            //Incomingdatagrid_LoadingRow();
-            
-            //dataGrid1.LayoutUpdated += new EventHandler(Incomingdatagrid_LayoutUpdated);
+           
             export_btn.Click += Export_btn_Click;
             userDept00 = (deptName_ComboBox1.SelectedValue as DeptModel).Dept_name;
         }
 
-        private void Incomingdatagrid_LayoutUpdated(object sender, EventArgs e)
-        {
-            if (headerflag)
-            {
-
-                DataGridColumn col = dataGrid1.Columns[6];
-                col.CellStyle = (Style)Resources["DataGridCellStyle"];
-                headerflag = false;
-            }
-        }
+    
+       
 
         private void OnDropDownOpened(object sender, EventArgs e)
         {
@@ -56,11 +47,7 @@ namespace EasyProject.View.TabItemPage
             userDept00= deptNameText.ToString();
         }
 
-        //******************************************************************************
-        //************************입고 유형별 색깔 다르게 주기**************************
-        
-       
-
+      
         private void Export_btn_Click(object sender, RoutedEventArgs e)
         {
             dataGrid1.SelectAllCells();

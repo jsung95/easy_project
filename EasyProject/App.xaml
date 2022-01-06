@@ -9,11 +9,12 @@
     <Application.Resources>
         <ResourceDictionary>
             <local:Locator x:Key="Locator"/>
+            
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Dictionary/WaterMarkDictionary.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
-               
+                
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
