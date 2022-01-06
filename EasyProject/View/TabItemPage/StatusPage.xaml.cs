@@ -46,7 +46,6 @@ namespace EasyProject.View.TabItemPage
             var userDeptName = userDept.Dept_name;
 
             var dash = Ioc.Default.GetService<ProductShowViewModel>();
-            //temp.DashboardPrint();
             dash.DashboardPrint1(dash.SelectedDept, dash.SelectedCategory1,dash.SelectedNumber);
             dash.DashboardPrint2(dash.SelectedDept);
 
@@ -75,14 +74,6 @@ namespace EasyProject.View.TabItemPage
         {
             MessageBox.Show("버튼을 클릭했습니다.");
         }
-
-        /*private void goDialog_Btn_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate
-                (
-                new Uri("/View/ExportPage/DialogPage.xaml", UriKind.Relative)
-                );
-        }*/
 
         private void OnDropDownOpened(object sender, EventArgs e)
         {

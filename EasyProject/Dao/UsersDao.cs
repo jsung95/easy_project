@@ -160,7 +160,7 @@ namespace EasyProject.Dao
                         cmd.Parameters.Add(new OracleParameter("auth", auth));                      
                         cmd.ExecuteNonQuery();
 
-                        MessageBox.Show($"선택한 사용자들의 권한을 {auth}으로 변경하였습니다.");
+                        //MessageBox.Show($"선택한 사용자들의 권한을 {auth}으로 변경하였습니다.");
                     }//using(cmd)
 
                 }//using(conn)

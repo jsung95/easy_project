@@ -42,6 +42,7 @@ namespace EasyProject.ViewModel
 
         //부서 목록 콤보박스, 부서 리스트 출력
         public ObservableCollection<DeptModel> Depts { get; set; }
+        public ObservableCollection<DeptModel> DeptsForPopupBox { get; set; }
 
         private bool comboboxChanged = false;
         public bool ComboboxChanged
@@ -122,22 +123,8 @@ namespace EasyProject.ViewModel
         }
         //검색 유형 프로퍼티
         public string[] SearchTypeList { get; set; }
-        //선택한 검색 콤보박스를 담을 프로퍼티
+        //선택한 검색 유형 콤보박스를 담을 프로퍼티
         public string SelectedSearchType { get; set; }
-        // 선택한 검색 유형 프로퍼티
-
-        // 버튼 컬럼 투명도
-        //private Visibility buttonColumnVisibility;
-        //public Visibility ButtonColumnVisibility
-        //{
-        //    get { return buttonColumnVisibility; }
-        //    set
-        //    {
-        //        buttonColumnVisibility = value;
-        //        Console.WriteLine("ButtonColumnVisibility set : " + buttonColumnVisibility);
-        //        OnPropertyChanged("ButtonColumnVisibility");
-        //    }
-        //}
 
         // 대시보드 프로퍼티
         public ChartValues<int> Values { get; set; }
@@ -299,13 +286,13 @@ namespace EasyProject.ViewModel
         public ProductShowViewModel()
         {
             Products = new ObservableCollection<ProductShowModel>();
-            SearchTypeList = new[] { "제품코드", "제품명", "품목/종류" };
-            SelectedSearchType = SearchTypeList[0];
+            SearchTypeList = new[] { "제품코드", "제품명", "품목/종류" }; // 검색 유형 리스트
+            SelectedSearchType = SearchTypeList[0]; // 검색 유형 초기값 설정 ( SearchTypeList 리스트의 0번 인덱스)
 
-            Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts());
-            SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1];
-
-
+            Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts()); // 우측 상단 제품 현황 목록의 부서 선택 콤보박스
+            SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1]; // 위 콤보박스의 초기값 = 현재 사용자의 부서로 설정
+            DeptsForPopupBox = new ObservableCollection<DeptModel>(dept_dao.GetDepts()); // 출고 팝업의 부서 선택 콤보박스
+            DeptsForPopupBox.RemoveAt((int)App.nurse_dto.Dept_id - 1); // 현재 사용자의 부서는 목록에서 제거
             Categories = new ObservableCollection<CategoryModel>(category_dao.GetCategories());
 
 

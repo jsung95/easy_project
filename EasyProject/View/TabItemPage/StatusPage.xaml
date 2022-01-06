@@ -319,7 +319,7 @@
                                                             <ComboBox Grid.Column="1" Height="30" Width="70"  HorizontalAlignment="Left" x:Name="Dept_comboBox" 
                                                                           VerticalAlignment="Center" 
                                                                           Visibility="{Binding PSVM.SelectedProduct.Popup_combobox_vis, Source={StaticResource Locator}}"
-                                                                          ItemsSource="{Binding PSVM.Depts, Source={StaticResource Locator}}"
+                                                                          ItemsSource="{Binding PSVM.DeptsForPopupBox, Source={StaticResource Locator}}"
                                                                           SelectedItem="{Binding PSVM.SelectedProduct.SelectedOutDept, Source={StaticResource Locator}}">
                                                                 <ComboBox.ItemTemplate>
                                                                     <DataTemplate>
