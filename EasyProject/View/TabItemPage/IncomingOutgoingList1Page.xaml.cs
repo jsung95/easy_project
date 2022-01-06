@@ -57,7 +57,8 @@ namespace EasyProject.View.TabItemPage
            
             dataGrid1.UnselectAllCells();
            
-            string today = String.Format(DateTime.Now.ToString("yyyy/MM/dd"));
+           // DateTime now = DateTime.Now;
+            string today = String.Format(DateTime.Now.ToString("yyyy/MM/dd/HH/mm/ss"));
 
             //Console.WriteLine(result);
             string f_path = @"c:\temp\["+ userDept00 + "]"+"입고현황_" + today + ".csv";
