@@ -172,6 +172,7 @@ namespace EasyProject.ViewModel
             }
             Normal_users = dao.GetUserInfo("NORMAL"); // 사용자들을 검색할 리스트 갱신
             Admin_users = dao.GetUserInfo("ADMIN");   // 사용자들을 검색할 리스트 갱신
+
         }//MoveRight
 
         public void MoveLeft()

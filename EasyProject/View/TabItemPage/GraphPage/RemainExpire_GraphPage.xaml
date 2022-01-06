@@ -23,9 +23,15 @@
                 <ColumnDefinition Width="0.3*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="1">
-                <Grid>
-                        <ComboBox x:Name="deptName_ComboBox_Pie23" 
-                       ItemsSource="{Binding Path=Category1}" SelectedItem="{Binding SelectedCategory1}"  VerticalAlignment="Bottom" HorizontalAlignment="Center"  Height="30" Width="182"  TextBlock.FontSize="10"     >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="0.5*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Grid>
+                        <ComboBox x:Name="category_ComboBox" 
+                       ItemsSource="{Binding Path=Category1}" SelectedItem="{Binding SelectedCategory1}"  VerticalAlignment="Bottom" HorizontalAlignment="Center"  Height="30" Width="100"  TextBlock.FontSize="10"     >
                             <ComboBox.Resources>
                                 <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
                             </ComboBox.Resources>
@@ -45,14 +51,52 @@
                                     </StackPanel>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding Command}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </ComboBox>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding Command}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
                     </Grid>
-          
+                    <Grid>
+                        <Label Content="카테고리명" Foreground="#4472C4" Grid.Column="2" FontSize="12" 
+                       FontWeight="Bold" HorizontalAlignment="Center"  
+                       VerticalAlignment="Center" Margin="30"/>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <Grid>
+                        <ComboBox x:Name="Number" 
+                       ItemsSource="{Binding Path=DecidedNumber}" SelectedItem="{Binding SelectedNumber}"  VerticalAlignment="Bottom" HorizontalAlignment="Center"  Height="30" Width="100"  TextBlock.FontSize="10"     >
+                            <ComboBox.Resources>
+                                <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+                            </ComboBox.Resources>
+                            <ComboBox.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleY="+1"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </ComboBox.RenderTransform>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding Command}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                    </Grid>
+                    <Grid>
+                        <Grid>
+                            <Label Content="표시할 개수" Foreground="#4472C4" Grid.Column="2" FontSize="12" 
+                       FontWeight="Bold" HorizontalAlignment="Center"  
+                       VerticalAlignment="Center" />
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+
             </Grid>
 
             <Grid Grid.Column="2">

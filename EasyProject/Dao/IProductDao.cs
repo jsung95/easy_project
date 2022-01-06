@@ -26,7 +26,9 @@ namespace EasyProject.Dao
         // 입고테이블 조회
         List<ProductInOutModel> GetProductIn();
         List<ProductInOutModel> GetProductIn(DeptModel dept_dto);
+        List<ProductInOutModel> GetProductIn(DeptModel dept_dto, DateTime? start_date, DateTime? end_date); //입고 날짜 기간 지정
         List<ProductInOutModel> GetProductIn(DeptModel dept_dto, string search_type, string search_text);
+        List<ProductInOutModel> GetProductIn(DeptModel dept_dto, string search_type, string search_text, DateTime? start_date, DateTime? end_date); //입고 날짜 기간 지정
         // 출고테이블 조회
         List<ProductInOutModel> GetProductOut();
         List<ProductInOutModel> GetProductOut(DeptModel dept_dto);
@@ -49,6 +51,17 @@ namespace EasyProject.Dao
         void ChangeProductInfo_IMP_DEPT_ForOut(int? InputOutCount, ProductShowModel prod_dto);
         void ChangeProductInfo_ForOut(int? InputOutCount, ProductShowModel prod_dto);
 
+        // 재고 출고 오버로딩 - 팝업박스
+        void OutProduct(ProductShowModel prod_dto, NurseModel nurse_dto);
+        void OutProduct_FromTo(ProductShowModel prod_dto, NurseModel nurse_dto);
+        void OutProduct_FromTo_IMP_DEPT(ProductShowModel prod_dto);
+        void ChangeProductInfo_IMP_DEPT_ForOut(ProductShowModel prod_dto);
+        void ChangeProductInfo_ForOut(ProductShowModel prod_dto);
+
+        // 재고 추가 입고 - 팝업박스
+        void InProduct(ProductShowModel prod_dto, NurseModel nurse_dto);
+        void ChangeProductInfo_IMP_DEPT_ForIn(ProductShowModel prod_dto);
+        void ChangeProductInfo_ForIn(ProductShowModel prod_dto);
 
         //제품 중복검사
         bool IsProductDuplicateCheck(ProductModel product_dto);

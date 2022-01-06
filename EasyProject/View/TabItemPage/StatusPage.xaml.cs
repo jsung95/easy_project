@@ -45,7 +45,7 @@ namespace EasyProject.View.TabItemPage
 
             var dash = Ioc.Default.GetService<ProductShowViewModel>();
             //temp.DashboardPrint();
-            dash.DashboardPrint1(dash.SelectedDept, dash.SelectedCategory1);
+            dash.DashboardPrint1(dash.SelectedDept, dash.SelectedCategory1,dash.SelectedNumber);
             dash.DashboardPrint2(dash.SelectedDept);
 
             if (deptNameText.Equals(userDeptName) || userDeptName == null)
@@ -61,10 +61,6 @@ namespace EasyProject.View.TabItemPage
 
             ((ProductShowViewModel)(this.DataContext)).LoadEmployee();
 
-        }
-        private void reset_Btn_Click(object sender, RoutedEventArgs e)
-        {
-            //mount_TxtBox.Text = "";
         }
 
         private void RowButton_Click(object sender, RoutedEventArgs e)
