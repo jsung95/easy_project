@@ -13,6 +13,8 @@ using EasyProject.Model;
 using System.ComponentModel;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using EasyProject.ViewModel;
+using System.Windows.Data;
+using System.Globalization;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -151,6 +153,7 @@ namespace EasyProject.View.TabItemPage
            
         }
 
+
         private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var temp = Ioc.Default.GetService<ProductShowViewModel>();
@@ -206,5 +209,62 @@ namespace EasyProject.View.TabItemPage
 
 
     }//class
+
+    public class IsLesserThanConverter : IValueConverter
+    {//Red
+        public static readonly IValueConverter Instance = new IsLesserThanConverter();
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            int intValue = (int)value;//남은 일수 
+            int compareToValue = Int32.Parse(parameter.ToString());
+
+            return intValue < compareToValue;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class IsEqualOrLessGreaterThanConverter : IValueConverter
+    {//Yellow
+        public static readonly IValueConverter Instance = new IsEqualOrLessGreaterThanConverter();
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            int intValue = (int)value;//남은 일수
+            int compareToValue = Int32.Parse(parameter.ToString());//0
+
+            return ((intValue > compareToValue) && (intValue - compareToValue < 3))
+                || (intValue == compareToValue);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class IsGreaterThanConverter : IValueConverter
+    {//Green
+        public static readonly IValueConverter Instance = new IsGreaterThanConverter();
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            int intValue = (int)value;//남은 일수
+            int compareToValue = Int32.Parse(parameter.ToString());
+
+            return (intValue > compareToValue) && (intValue - compareToValue > 3);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
 
 }//namespace

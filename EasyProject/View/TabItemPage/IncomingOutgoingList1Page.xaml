@@ -199,7 +199,7 @@
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Prod_in_type}" Value="이관">
+                                                <DataTrigger Binding="{Binding Prod_remainexpire}" Value="-3">
                                                     <Setter Property="Foreground" Value="Red"/>
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{Binding Prod_in_type}" Value="발주">
@@ -210,7 +210,7 @@
                                     </DataGridTextColumn.CellStyle>
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding Prod_in_from}" Header="입고출처" Width="0.7*" IsReadOnly="True"/>
-                                <DataGridTextColumn  Header="관리자명" Width="*" IsReadOnly="True">
+                                <DataGridTextColumn Header="관리자명" Width="*" IsReadOnly="True">
                                     <DataGridTextColumn.Binding>
                                         <MultiBinding StringFormat="{}{0} ({1})">
                                             <Binding Path="Nurse_name" />

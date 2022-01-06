@@ -14,6 +14,10 @@
       Title="StatusPage">
 
     <Page.Resources>
+        <local:IsLesserThanConverter x:Key="IsLesserThanConverter" />
+        <local:IsEqualOrLessGreaterThanConverter x:Key="IsEqualOrLessGreaterThanConverter" />
+        <local:IsGreaterThanConverter x:Key="IsGreaterThanConverter" />
+        
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="LightGray"/>
             <Setter Property="FontSize" Value="12"/>
@@ -233,8 +237,34 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Binding="{Binding Prod_expire, StringFormat='yyyy-MM-dd'}"  Header="유통기한" Width="3*" CanUserSort="true" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Prod_expire, StringFormat='yyyy-MM-dd'}"  Header="유통기한" Width="2*" CanUserSort="true" IsReadOnly="True"/>
 
+                            <DataGridTemplateColumn Header="상태" Width="*" CanUserSort="true" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <materialDesign:PackIcon Kind="Circle" VerticalAlignment="Center" HorizontalAlignment="Center" Height="17" Width="17">
+                                                <materialDesign:PackIcon.Style>
+                                                    <Style TargetType="materialDesign:PackIcon">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Prod_remainexpire, Converter={StaticResource IsLesserThanConverter}, ConverterParameter=0}" Value="True">
+                                                                <Setter Property="Foreground" Value="Red"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Prod_remainexpire, Converter={StaticResource IsEqualOrLessGreaterThanConverter}, ConverterParameter=0}" Value="True">
+                                                                <Setter Property="Foreground" Value="Yellow"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Prod_remainexpire, Converter={StaticResource IsGreaterThanConverter}, ConverterParameter=0}" Value="True">
+                                                                <Setter Property="Foreground" Value="Green"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </materialDesign:PackIcon.Style>
+                                            </materialDesign:PackIcon>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            
                             <DataGridTemplateColumn x:Name="buttonColumn" Header="신청" Width="3*" IsReadOnly="True" Visibility="Visible">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
