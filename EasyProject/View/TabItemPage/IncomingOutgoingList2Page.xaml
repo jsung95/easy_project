@@ -13,6 +13,7 @@
       Title="IncomingOutgoingList2Page" Cursor="Hand">
 
     <Page.Resources>
+        <local:MultipleTextFormatConverterKey x:Key="MultipleTextFormatConverterKey2" />
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="#EAEAEA"/>
             <Setter Property="FontSize" Value="12"/>
@@ -156,11 +157,7 @@
                                         </Style>
                                     </DatePicker.Resources>
                                 </DatePicker>
-
-
-
                             </Grid>
-
                         </Grid>
 
                         <DataGrid x:Name="dataGrid2" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Top" ScrollViewer.CanContentScroll="True"         
@@ -180,11 +177,24 @@
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding Prod_out_date}"  Header="출고일" Width="*"  IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Prod_out_type}"  Header="출고유형" Width="0.7*"   IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Prod_out_to}"  Header="출고대상" Width="*"  IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_out_type}"  Header="출고유형" Width="0.7*"   IsReadOnly="True">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Prod_out_type}" Value="이관">
+                                                <Setter Property="Foreground" Value="Red"/>
+                                            </DataTrigger>
+                                                <DataTrigger Binding="{Binding Prod_out_type}" Value="발주">
+                                                <Setter Property="Foreground" Value="Yellow"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                              </DataGridTextColumn >
+                              <DataGridTextColumn Binding="{Binding Prod_out_to}"  Header="출고대상" Width="*"  IsReadOnly="True"/>
                                 <DataGridTextColumn  Header="관리자명" Width="*"  IsReadOnly="True">
                                     <DataGridTextColumn.Binding>
-                                        <MultiBinding StringFormat="{}{0} ({1})">
+                                        <MultiBinding Converter="{StaticResource MultipleTextFormatConverterKey2}"  ConverterParameter="{}{0} ({1})">
                                             <Binding Path="Nurse_name" />
                                             <Binding Path="Dept_name" />
                                         </MultiBinding>

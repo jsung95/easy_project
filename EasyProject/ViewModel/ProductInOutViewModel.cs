@@ -199,52 +199,6 @@ namespace EasyProject.ViewModel
 
 
 
-        //=================================================================================
-        //=================================================================================
-        //private ObservableCollection<ProductShowModel> list;
-        private FrameworkElement GetParent(FrameworkElement child, Type targetType)
-        {
-            object parent = child.Parent;
-            if (parent != null)
-            {
-                if (parent.GetType() == targetType)
-                {
-
-                    return (FrameworkElement)parent;
-                }
-                else
-                {
-                    return GetParent((FrameworkElement)parent, targetType);
-                }
-            }
-            return null;
-        }
-        void Incomingdatagrid_LoadingRow(object sender, DataGridRowEventArgs e)
-        {
-            // CustomerDetail is a table at service side
-            //ServiceReference1.CustomerDetail list = e.Row.DataContext asServiceReference1.CustomerDetail;
-            //var list = e.Row.DataContext;
-            // list = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In));
-            FrameworkElement el;
-            //el = this.dataGrid1.Columns[6].GetCellContent(e.Row);
-
-            //DataGridCell changeCell = GetParent(el, typeof(DataGridCell)) as DataGridCell;
-
-            SolidColorBrush brush = new SolidColorBrush(Colors.Black);
-
-            //if (changeCell != null)
-            //{
-            //    if (list.Equals("사용"))
-            //    {
-            //        brush = new SolidColorBrush(Colors.Green);
-            //    }
-            //    else if (list.Equals("이관"))
-            //    {
-            //        brush = new SolidColorBrush(Colors.Red);
-            //    }
-            //    changeCell.Foreground = brush;
-            //}
-
-        }    }//class
+           }//class
 
 }//namespace
