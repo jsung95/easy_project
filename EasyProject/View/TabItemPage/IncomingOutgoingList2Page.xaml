@@ -72,7 +72,7 @@
                                 <TextBox.InputBindings>
                                     <KeyBinding Command="{Binding OutSearchCommand}" Key="Enter"/>
                                 </TextBox.InputBindings>
-                                
+
                             </TextBox>
 
                             <Button x:Name="search_Btn" Grid.Column="2" Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White"
@@ -178,20 +178,20 @@
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding Prod_out_date}"  Header="출고일" Width="*"  IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Prod_out_type}"  Header="출고유형" Width="0.7*"   IsReadOnly="True">
-                                <DataGridTextColumn.CellStyle>
-                                    <Style TargetType="DataGridCell">
-                                        <Style.Triggers>
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Prod_out_type}" Value="이관">
-                                                <Setter Property="Foreground" Value="Red"/>
-                                            </DataTrigger>
+                                                    <Setter Property="Foreground" Value="Red"/>
+                                                </DataTrigger>
                                                 <DataTrigger Binding="{Binding Prod_out_type}" Value="발주">
-                                                <Setter Property="Foreground" Value="Yellow"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </DataGridTextColumn.CellStyle>
-                              </DataGridTextColumn >
-                              <DataGridTextColumn Binding="{Binding Prod_out_to}"  Header="출고대상" Width="*"  IsReadOnly="True"/>
+                                                    <Setter Property="Foreground" Value="Yellow"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn >
+                                <DataGridTextColumn Binding="{Binding Prod_out_to}"  Header="출고대상" Width="*"  IsReadOnly="True"/>
                                 <DataGridTextColumn  Header="관리자명" Width="*"  IsReadOnly="True">
                                     <DataGridTextColumn.Binding>
                                         <MultiBinding Converter="{StaticResource MultipleTextFormatConverterKey2}"  ConverterParameter="{}{0} ({1})">
@@ -199,7 +199,7 @@
                                             <Binding Path="Dept_name" />
                                         </MultiBinding>
                                     </DataGridTextColumn.Binding>
-                                </DataGridTextColumn>                           
+                                </DataGridTextColumn>
                             </DataGrid.Columns>
                             <DataGrid.RowStyle>
 
