@@ -59,7 +59,7 @@ namespace EasyProject.View
             PrintDialog printDialog = new PrintDialog();
             if (printDialog.ShowDialog().GetValueOrDefault(false))
             {
-                printDialog.PrintVisual(this, this.Title);
+                printDialog.PrintVisual(PlaceOrder, "PlaceOrder");
             }
 
         }
