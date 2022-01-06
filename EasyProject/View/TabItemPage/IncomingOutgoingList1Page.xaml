@@ -12,6 +12,7 @@
       Title="IncomingOutgoingList1Page" Cursor="Hand">
 
     <Page.Resources>
+        <local:MultipleTextFormatConverterKey x:Key="MultipleTextFormatConverterKey" />
         
         <Style x:Key="CellStyle" TargetType="DataGridCell">
             <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}}" />
@@ -212,7 +213,7 @@
                                 <DataGridTextColumn Binding="{Binding Prod_in_from}" Header="입고출처" Width="0.7*" IsReadOnly="True"/>
                                 <DataGridTextColumn Header="관리자명" Width="*" IsReadOnly="True">
                                     <DataGridTextColumn.Binding>
-                                        <MultiBinding StringFormat="{}{0} ({1})">
+                                        <MultiBinding  Converter="{StaticResource MultipleTextFormatConverterKey}"  ConverterParameter="{}{0} ({1})">
                                             <Binding Path="Nurse_name" />
                                             <Binding Path="Dept_name" />
                                         </MultiBinding>

@@ -25,7 +25,7 @@ namespace EasyProject.View.TabItemPage
     {
         public String userDept00 = null;
         public bool isComboBoxDropDownOpened = false;
-        Boolean headerflag = false;
+        //Boolean headerflag = false;
 
         public IncomingOutgoingList1Page()
         {
@@ -33,9 +33,7 @@ namespace EasyProject.View.TabItemPage
            
             export_btn.Click += Export_btn_Click;
             userDept00 = (deptName_ComboBox1.SelectedValue as DeptModel).Dept_name;
-        }
-
-    
+        }      
        
 
         private void OnDropDownOpened(object sender, EventArgs e)
@@ -53,11 +51,16 @@ namespace EasyProject.View.TabItemPage
             dataGrid1.SelectAllCells();
             dataGrid1.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
             ApplicationCommands.Copy.Execute(null, dataGrid1);
-            dataGrid1.UnselectAllCells();
+           
             String result = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
-            string today = String.Format(DateTime.Now.ToString("yyyy/MM/dd"));
+            Clipboard.Clear();
+           
+            dataGrid1.UnselectAllCells();
+           
+           // DateTime now = DateTime.Now;
+            string today = String.Format(DateTime.Now.ToString("yyyy/MM/dd/HH/mm/ss"));
 
-            
+            //Console.WriteLine(result);
             string f_path = @"c:\temp\["+ userDept00 + "]"+"입고현황_" + today + ".csv";
             File.AppendAllText(f_path, result, UnicodeEncoding.UTF8);
 
@@ -87,6 +90,22 @@ namespace EasyProject.View.TabItemPage
                    Type.Missing,
                    Type.Missing
             );
+        }
+
+    }//class
+    public class MultipleTextFormatConverterKey : IMultiValueConverter  
+    {
+
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            return string.Format((string)parameter, values);
+
+        
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+             return null;
         }
     }
 }

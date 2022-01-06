@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Excel = Microsoft.Office.Interop.Excel;
 using EasyProject.Model;
+using System.Globalization;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -82,5 +83,20 @@ namespace EasyProject.View.TabItemPage
             );
         }
     }
-    
+    public class MultipleTextFormatConverterKey2 : IMultiValueConverter
+    {
+
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            return string.Format((string)parameter, values);
+
+
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
 }
