@@ -50,8 +50,10 @@
                 </Grid>-->
                 <Grid Grid.Column="2">
                     <Button x:Name="rightBtn"  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
-                        VerticalAlignment="Bottom"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Background="{x:Null}" Click="rightBtn_Click">
-                        <materialDesign:PackIcon  Kind="ArrowRight" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="26" />
+                        VerticalAlignment="Bottom"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" 
+                            Background="{x:Null}" Click="rightBtn_Click">
+                        <materialDesign:PackIcon  Kind="ArrowRight" VerticalAlignment="Center" 
+                                                  HorizontalAlignment="Center" Height="40" Width="26" />
                     </Button>
                 </Grid>
         </Grid>
@@ -66,7 +68,7 @@
                             <!-- LabelFormatter="{Binding Formatter}" 바인딩-->
                         </lvc:CartesianChart.AxisY>
                         <lvc:CartesianChart.AxisX>
-                            <lvc:Axis Labels="{Binding BarLabels2}" Title="부서별" />
+                            <lvc:Axis Labels="{Binding BarLabels2}" Title="카테고리별" />
                             <!--Labels="{Binding BarLabels}" 바인딩-->
                         </lvc:CartesianChart.AxisX>
                     </lvc:CartesianChart>
