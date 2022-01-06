@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using EasyProject.Model;
 using EasyProject.ViewModel;
+using log4net;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 
@@ -17,6 +18,15 @@ namespace EasyProject
     /// </summary>
     public partial class App : Application
     {
+
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            log.Info("==== START UP EASY_PROJECT ====");
+            base.OnStartup(e);
+        }
+
         public static NurseModel nurse_dto = null;
         public static CategoryModel category_dto = null;
         public App()
@@ -29,6 +39,7 @@ namespace EasyProject
                 .AddSingleton<PasswordChangeViewModel>()
                 .AddSingleton<ProductInOutViewModel>()
                 .AddSingleton<DashBoardViewModel>()
+                .AddSingleton<UserAuthViewModel>()
                 .BuildServiceProvider());
 
             this.InitializeComponent();

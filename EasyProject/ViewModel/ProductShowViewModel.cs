@@ -13,6 +13,7 @@ using System.Windows.Data;
 using System.Windows;
 using System.ComponentModel;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using System.Windows.Controls;
 
 namespace EasyProject.ViewModel
 {
@@ -242,6 +243,9 @@ namespace EasyProject.ViewModel
             }
         }
 
+
+        
+
         public List<ProductShowModel> SelectedProductList { get; set; } // SelectedProduct를 DataGrid에서 사용하기 위한 List
         //// 재고 출고 - 선택한 출고 유형 콤보박스를 담을 값
         //private string selectedOutType;
@@ -280,7 +284,16 @@ namespace EasyProject.ViewModel
         //}
 
         // 발주 신청 페이지 바인딩
-        public UserModel SelectedUser { get; }
+        private UserModel selectedUser;
+        public UserModel SelectedUser 
+        { 
+            get { return selectedUser; }
+            set
+            {
+                selectedUser = value;
+                OnPropertyChanged("SelectedUser");
+            }
+        }
         public ICollectionView EmployeeCollection { get; private set; }
 
         public ProductShowViewModel()
@@ -840,6 +853,35 @@ namespace EasyProject.ViewModel
             SelectedProduct.SelectedOutDept = null;
             SelectedProduct.InputOutCount = null;
         }
+
+
+        //재고현황페이지에서 발주팝업박스 텍스트초기화 커맨드
+        private ActionCommand orderPopupReset;
+        public ICommand OrderPopupReset
+        {
+            get
+            {
+                if (orderPopupReset == null)
+                {
+                    Console.WriteLine("리셋!");
+                    orderPopupReset = new ActionCommand(OrderFormReset);
+                }
+                return orderPopupReset;
+            }//get
+        }
+
+        public void OrderFormReset()
+        {
+            //SelectedUser.Nurse_name = null;
+            //SelectedUser.Dept_name = null;
+            //SelectedUser.Dept_phone = null;
+            //SelectedProduct.Prod_name = null;
+            SelectedProduct.Mount = null;
+            SelectedProduct.Volume = null;
+            SelectedProduct.Manufacturer = null;
+            SelectedProduct.OrderMemo = null;
+        }
+
 
         private ActionCommand inProductReset;
         public ICommand InProductReset

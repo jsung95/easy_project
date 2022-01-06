@@ -1,5 +1,8 @@
-﻿using System;
+﻿using PdfSharp.Drawing;
+using PdfSharp.Pdf;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +23,8 @@ namespace EasyProject.View
     /// </summary>
     public partial class OrderPage : Page
     {
+        private int index = 1;
+        
         public OrderPage()
         {
             InitializeComponent();
@@ -48,15 +53,63 @@ namespace EasyProject.View
 
         }
 
+        //인쇄 버튼
         private void printBtn_Click(object sender, RoutedEventArgs e)
         {
             PrintDialog printDialog = new PrintDialog();
             if (printDialog.ShowDialog().GetValueOrDefault(false))
             {
-                printDialog.PrintVisual(this, this.Title);
+                printDialog.PrintVisual(PlaceOrder, "PlaceOrder");
             }
 
         }
+
+        //pdf 버튼
+        private void pdfBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //이미지로 저장(스크린 샷)
+            RenderTargetBitmap rtb = new RenderTargetBitmap((int)PlaceOrder.ActualWidth, (int)PlaceOrder.ActualHeight, 74, 74, PixelFormats.Pbgra32);
+            rtb.Render(PlaceOrder);
+            PngBitmapEncoder png = new PngBitmapEncoder();
+            png.Frames.Add(BitmapFrame.Create(rtb));
+            MemoryStream stream = new MemoryStream();
+            png.Save(stream);
+
+            System.Drawing.Image image = System.Drawing.Image.FromStream(stream);
+            string stampFileName = @"C:\Users\user\Desktop\"  + $"발주신청서{index}.png";
+            image.Save(stampFileName);
+           
+
+            
+
+            //sharpPDF이용해서 넣기
+            PdfDocument document = new PdfDocument();
+
+            // Create an empty page
+            PdfPage page = document.AddPage();
+
+            // Get an XGraphics object for drawing
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+
+            // Create a font
+            XFont font = new XFont("Verdana", 20, XFontStyle.Bold);
+
+            XImage im = XImage.FromFile(@"C:\Users\user\Desktop\" + $"발주신청서{index}.png");
+
+            gfx.DrawImage(im, -150, 100, 700, 450);
+
+
+         
+
+            // Save the document...
+            string filename = @"C:\Users\user\Desktop\" + $"발주신청서{index}.pdf";
+            document.Save(filename);
+            MessageBox.Show($"발주신청서{index}.pdf 생성");
+            index++;
+            
+        }
+
+  
     }
 
 

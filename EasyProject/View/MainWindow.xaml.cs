@@ -16,6 +16,7 @@ using Oracle.ManagedDataAccess.Client;
 using EasyProject.ViewModel;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Expression.Interactivity.Core;
+using log4net;
 
 namespace EasyProject
 {
@@ -25,6 +26,7 @@ namespace EasyProject
 
     public partial class MainWindow : Window
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
 
         double orginalWidth, originalHeight;
         ScaleTransform scale = new ScaleTransform();
@@ -37,10 +39,14 @@ namespace EasyProject
             this.MouseLeftButtonDown += MainWindow_MouseLeftButtonDown;    //드래그 무브
 
             this.DataContext = this;
+
+            log.Info("Info");
+            log.Fatal("Fatal");
         }
+
         void MainWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)       //드래그 무브
         {
-            this.DragMove();
+            this.DragMove();           
         }
 
         void Window1_SizeChanged(object sender, SizeChangedEventArgs e)

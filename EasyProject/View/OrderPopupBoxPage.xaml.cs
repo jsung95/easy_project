@@ -16,15 +16,24 @@ using System.Windows.Shapes;
 namespace EasyProject.View
 {
     /// <summary>
-    /// AuthorityPage.xaml에 대한 상호 작용 논리
+    /// OrderPopupBoxPage.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class AuthorityPage : Page
+    public partial class OrderPopupBoxPage : Page
     {
-        public AuthorityPage()
+        public OrderPopupBoxPage()
         {
             InitializeComponent();
-        }
 
+            
+        }
+        public void PrintBtn(object e, RoutedEventArgs arg)
+        {
+            PrintDialog printDialog = new PrintDialog();
+            if (printDialog.ShowDialog().GetValueOrDefault(false))
+            {
+                printDialog.PrintVisual(this, this.Title);
+            }
+        }
     }
 
 }
