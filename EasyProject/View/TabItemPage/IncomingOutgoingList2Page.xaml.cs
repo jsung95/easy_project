@@ -43,44 +43,51 @@ namespace EasyProject.View.TabItemPage
         //}
         private void Export_btn_Click(object sender, RoutedEventArgs e)
         {
-            dataGrid2.SelectAllCells();
-            dataGrid2.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
-            ApplicationCommands.Copy.Execute(null, dataGrid2);
-            dataGrid2.UnselectAllCells();
-            String result = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
+            try
+            {
+                dataGrid2.SelectAllCells();
+                dataGrid2.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
+                ApplicationCommands.Copy.Execute(null, dataGrid2);
+                dataGrid2.UnselectAllCells();
+                String result = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
 
-            string today = String.Format(DateTime.Now.ToString("yyyy/MM/dd/HH/mm"));
+                string today = String.Format(DateTime.Now.ToString("yyyy/MM/dd/HH/mm"));
 
 
-            string f_path = @"c:\temp\[" + userDept00 + "]" + "출고현황_" + today + ".csv";
-            File.AppendAllText(f_path, result, UnicodeEncoding.UTF8);
+                string f_path = @"c:\temp\[" + userDept00 + "]" + "출고현황_" + today + ".csv";
+                File.AppendAllText(f_path, result, UnicodeEncoding.UTF8);
 
-            // Get the Excel application object.
-            Excel.Application excel_app = new Excel.Application();
+                // Get the Excel application object.
+                Excel.Application excel_app = new Excel.Application();
 
-            // Make Excel visible (optional).
-            excel_app.Visible = true;
+                // Make Excel visible (optional).
+                excel_app.Visible = true;
 
-            // Open the file.
-            excel_app.Workbooks.Open(
-                f_path,               // Filename
-                Type.Missing,
-                Type.Missing,
+                // Open the file.
+                excel_app.Workbooks.Open(
+                    f_path,               // Filename
+                    Type.Missing,
+                    Type.Missing,
 
-                   Excel.XlFileFormat.xlCSV,   // Format
-                   Type.Missing,
-                   Type.Missing,
-                   Type.Missing,
-                   Type.Missing,
+                       Excel.XlFileFormat.xlCSV,   // Format
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
 
-                   ",",          // Delimiter
-                   Type.Missing,
-                   Type.Missing,
-                   Type.Missing,
-                   Type.Missing,
-                   Type.Missing,
-                   Type.Missing
-            );
+                       ",",          // Delimiter
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing
+                );
+            }
+            catch (Exception ex)
+            {
+                //로그 Level : error
+            }
         }
     }
     public class MultipleTextFormatConverterKey2 : IMultiValueConverter
