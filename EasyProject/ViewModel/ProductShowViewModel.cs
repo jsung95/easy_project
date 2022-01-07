@@ -658,6 +658,7 @@ namespace EasyProject.ViewModel
                     IsInOutEnabled = true;
 
                     showListbyDept();
+
                     var temp = Ioc.Default.GetService<ProductInOutViewModel>();
                     temp.Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
                 }
@@ -901,7 +902,10 @@ namespace EasyProject.ViewModel
 
             LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
 
-            UpdateCollection(LstOfRecords.Take(SelectedRecord)); // SelectedRecord만큼 잘라서 UpdateCollection에 넣음
+            RecordStartFrom = (CurrentPage-1) * SelectedRecord;
+            var recordsToShow = LstOfRecords.Skip(RecordStartFrom).Take(SelectedRecord);
+
+            UpdateCollection(recordsToShow); // SelectedRecord만큼 잘라서 UpdateCollection에 넣음
             UpdateRecordCount();
         }
 
@@ -1052,8 +1056,12 @@ namespace EasyProject.ViewModel
         {
             NumberOfPages = (int)Math.Ceiling((double)LstOfRecords.Count / SelectedRecord);
             NumberOfPages = NumberOfPages == 0 ? 1 : NumberOfPages;
-            UpdateCollection(LstOfRecords.Take(SelectedRecord));
-            CurrentPage = 1;
+
+            RecordStartFrom = (CurrentPage - 1) * SelectedRecord;
+            var recordsToShow = LstOfRecords.Skip(RecordStartFrom).Take(SelectedRecord);
+
+            UpdateCollection(recordsToShow);
+            //CurrentPage = 1;
         }
 
 
