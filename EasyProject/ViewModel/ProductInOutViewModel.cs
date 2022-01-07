@@ -48,6 +48,11 @@ namespace EasyProject.ViewModel
             set
             {
                 selectedDept_In = value;
+
+                searchKeyword_In = null;
+                SelectedStartDate = Convert.ToDateTime(product_dao.GetProductIn_MinDate(SelectedDept_In));
+                SelectedEndDate = Convert.ToDateTime(product_dao.GetProductIn_MaxDate(SelectedDept_In));
+
                 OnPropertyChanged("SelectedDept_In");
                 showInListByDept();
             }
@@ -66,7 +71,14 @@ namespace EasyProject.ViewModel
         }
 
         public string[] SearchTypeList { get; set; }
-        public string searchKeyword_In { get; set; }
+
+        private string _searchKeyword_In;
+        public string searchKeyword_In 
+        {
+            get { return _searchKeyword_In;}
+            set { _searchKeyword_In = value; OnPropertyChanged("searchKeyword_In"); }
+        }
+
         public string searchKeyword_Out { get; set; }
 
         public string selectedSearchType_In { get; set; }
@@ -101,7 +113,10 @@ namespace EasyProject.ViewModel
                 selectedEndDate = value;
 
                 ShowProductIn_By_Date();
-
+                if (selectedStartDate > selectedEndDate)
+                {
+                    SelectedStartDate = SelectedEndDate.Value.AddDays(-1);
+                }
                 OnPropertyChanged("SelectedEndDate");
             }
         }
@@ -122,8 +137,14 @@ namespace EasyProject.ViewModel
             Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In));
             Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept_Out));
 
-            SelectedStartDate = null;
-            SelectedEndDate = null;
+
+            //날짜 컨트롤 부서별 해당 최소 날짜 및 최대 날짜로 초기화
+            SelectedStartDate = Convert.ToDateTime(product_dao.GetProductIn_MinDate(SelectedDept_In));
+            SelectedEndDate = Convert.ToDateTime(product_dao.GetProductIn_MaxDate(SelectedDept_In));
+
+            Console.WriteLine("최소날짜 : " + product_dao.GetProductIn_MinDate(SelectedDept_In));
+            Console.WriteLine("최대날짜 : " + product_dao.GetProductIn_MaxDate(SelectedDept_In));
+            
 
         }//Constructor
 
@@ -146,13 +167,15 @@ namespace EasyProject.ViewModel
 
         public void InListSearch()
         {
-            if (SelectedStartDate != null && SelectedEndDate != null)
+            if (SelectedStartDate != null && SelectedEndDate != null) 
             {
                 Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, selectedSearchType_In, searchKeyword_In, SelectedStartDate, SelectedEndDate));
+                searchKeyword_In = null;
             }
             else
             {
-                Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, selectedSearchType_In, searchKeyword_In));
+                MessageBox.Show("날짜를 모두 선택해주세요.");
+                //Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, selectedSearchType_In, searchKeyword_In));
             }
 
         }// InListSearch
