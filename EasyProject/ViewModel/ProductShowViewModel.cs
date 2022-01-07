@@ -657,7 +657,7 @@ namespace EasyProject.ViewModel
                     ErrorProductString = $"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 사용하였습니다.";
                     IsInOutEnabled = true;
 
-                    Products = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(dept_dao.GetDeptName((int)App.nurse_dto.Dept_id)));
+                    showListbyDept();
                     var temp = Ioc.Default.GetService<ProductInOutViewModel>();
                     temp.Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
                 }
@@ -701,7 +701,7 @@ namespace EasyProject.ViewModel
                     ErrorProductString = $"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 {SelectedProduct.SelectedOutDept.Dept_name} 부서로 이관하였습니다.";
                     IsInOutEnabled = true;
 
-                    Products = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(dept_dao.GetDeptName((int)App.nurse_dto.Dept_id)));
+                    showListbyDept();
                     var temp = Ioc.Default.GetService<ProductInOutViewModel>();
                     temp.Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
                 }
@@ -741,7 +741,7 @@ namespace EasyProject.ViewModel
                     ErrorProductString = $"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 폐기하였습니다.";
                     IsInOutEnabled = true;
 
-                    Products = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(dept_dao.GetDeptName((int)App.nurse_dto.Dept_id)));
+                    showListbyDept();
                     var temp = Ioc.Default.GetService<ProductInOutViewModel>();
                     temp.Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
                 }
@@ -791,7 +791,7 @@ namespace EasyProject.ViewModel
                 ErrorProductString = $"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputInCount}개 추가 입고하였습니다.";
                 IsInOutEnabled = true;
 
-                Products = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(dept_dao.GetDeptName((int)App.nurse_dto.Dept_id)));
+                showListbyDept();
                 var temp = Ioc.Default.GetService<ProductInOutViewModel>();
                 temp.Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
             }
@@ -901,7 +901,7 @@ namespace EasyProject.ViewModel
 
             LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
 
-            UpdateCollection(LstOfRecords.Take(SelectedRecord));
+            UpdateCollection(LstOfRecords.Take(SelectedRecord)); // SelectedRecord만큼 잘라서 UpdateCollection에 넣음
             UpdateRecordCount();
         }
 
