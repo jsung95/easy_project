@@ -33,15 +33,13 @@ namespace EasyProject
 
         public MainWindow()
         {
+            log.Info("Initialize MainWindow.xaml");
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;  //화면버튼
             this.Loaded += new RoutedEventHandler(Window1_Loaded);
             this.MouseLeftButtonDown += MainWindow_MouseLeftButtonDown;    //드래그 무브
 
             this.DataContext = this;
-
-            log.Info("Info");
-            log.Fatal("Fatal");
         }
 
         void MainWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)       //드래그 무브

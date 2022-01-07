@@ -64,6 +64,7 @@ namespace EasyProject.Dao
                                 Prod_expire = prod_expire,
                                 Prod_id = prod_id,
                                 Imp_dept_id = imp_dept_id,
+                                Prod_remainexpire = (prod_expire.Date - DateTime.Now.Date).Days
 
                             };
                             Console.WriteLine(dto);
@@ -1143,6 +1144,112 @@ namespace EasyProject.Dao
             return list;
 
         }//GetProductIn
+
+
+        public string GetProductIn_MaxDate(DeptModel dept_dto)
+        {
+            string result = null;
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT MAX(I.prod_in_date) " +
+                                          "FROM PRODUCT_IN I " +
+                                          "INNER JOIN PRODUCT P " +
+                                          "ON I.prod_id = P.prod_id " +
+                                          "INNER JOIN CATEGORY C " +
+                                          "ON P.category_id = C.category_id " +
+                                          "LEFT OUTER JOIN NURSE N " +
+                                          "ON I.nurse_no = N.nurse_no " +
+                                          "INNER JOIN DEPT D " +
+                                          "ON N.dept_id = D.dept_id " +
+                                          "WHERE I.prod_in_to = :name " +
+                                          "ORDER BY I.prod_in_date, P.prod_name ";
+
+
+                        cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            result = reader.GetString(0);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return result;
+        }//GetProductIn_MaxDate
+
+        public string GetProductIn_MinDate(DeptModel dept_dto)
+        {
+            string result = null;
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT MIN(I.prod_in_date) " +
+                                          "FROM PRODUCT_IN I " +
+                                          "INNER JOIN PRODUCT P " +
+                                          "ON I.prod_id = P.prod_id " +
+                                          "INNER JOIN CATEGORY C " +
+                                          "ON P.category_id = C.category_id " +
+                                          "LEFT OUTER JOIN NURSE N " +
+                                          "ON I.nurse_no = N.nurse_no " +
+                                          "INNER JOIN DEPT D " +
+                                          "ON N.dept_id = D.dept_id " +
+                                          "WHERE I.prod_in_to = :name " +
+                                          "ORDER BY I.prod_in_date, P.prod_name ";
+
+
+                        cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            result = reader.GetString(0);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return result;
+        }//GetProductIn_MinDate
+
 
         public List<ProductInOutModel> GetProductOut()
         {
