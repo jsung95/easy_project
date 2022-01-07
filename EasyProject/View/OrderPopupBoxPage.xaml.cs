@@ -2,6 +2,7 @@
 using PdfSharp.Pdf;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -90,6 +91,7 @@ namespace EasyProject.View
             document.Save(filename);
             MessageBox.Show($"발주신청서{index}.pdf 생성");
             index++;
+            Process.Start(filename);
         }
     }
 
