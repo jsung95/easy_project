@@ -208,8 +208,6 @@ namespace EasyProject.View.TabItemPage
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             bool checkBool = false;
-            Console.WriteLine(value+"??");
-            Console.WriteLine(targetType + "//");
 
             if (value != null && targetType != null)
             {
@@ -236,8 +234,6 @@ namespace EasyProject.View.TabItemPage
         {
 
             bool checkBool = false;
-            Console.WriteLine(value + "??");
-            Console.WriteLine(targetType + "//");
 
             if (value != null && targetType != null)
             {
@@ -264,8 +260,6 @@ namespace EasyProject.View.TabItemPage
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             bool checkBool = false;
-            Console.WriteLine(value + "??");
-            Console.WriteLine(targetType + "//");
 
             if (value != null && targetType != null)
             {
