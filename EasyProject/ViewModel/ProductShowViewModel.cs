@@ -338,17 +338,22 @@ namespace EasyProject.ViewModel
             var Mapper = Mappers.Xy<int>()
            .X((value, index) => value)
            .Y((value, index) => index)
-           .Fill((value, index) =>
-           {
-               //Console.WriteLine("value" + (double)value.Prod_remainexpire);
-               Console.WriteLine("index" + index);
-               if (value <= 10)
+
+           .Fill((value, index) => {
+               Console.WriteLine("dfassdfa");
+
+               if (value < 0)
                {
                    return Brushes.Red;
                }
+               else if (((value > 0) && (value < 3))
+                || (value == 0))
+               {
+                   return Brushes.Yellow;
+               }
                else
                {
-                   return Brushes.Black;
+                   return Brushes.Green;
                }
 
            });
