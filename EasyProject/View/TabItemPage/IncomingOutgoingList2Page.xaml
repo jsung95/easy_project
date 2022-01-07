@@ -36,7 +36,12 @@
     </Page.Resources>
 
     <Grid  Height="450" Width="1000">
-        <materialDesign:Card  UniformCornerRadius="20" Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="199*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
+        <materialDesign:Card  UniformCornerRadius="20" Background="White" Grid.ColumnSpan="2">
             <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*"/>
@@ -54,7 +59,6 @@
                                 <ColumnDefinition Width="60*"/>
                                 <ColumnDefinition Width="200*"/>
                                 <ColumnDefinition Width="60*"/>
-                                <ColumnDefinition Width="90*"/>
                                 <ColumnDefinition Width="120*"/>
                             </Grid.ColumnDefinitions>
 
@@ -81,24 +85,7 @@
                                 <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
                             </Button>
 
-                            <Label Content="부서명" Foreground="#4472C4" Grid.Column="2" FontSize="12" 
-                       FontWeight="Bold" HorizontalAlignment="Right"  
-                       VerticalAlignment="Center"/>
-
-                            <ComboBox x:Name="deptName_ComboBox1" Height="30" Grid.Column="3" Margin="10 0" HorizontalContentAlignment="Left" 
-                       ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept_Out}" DropDownClosed="OnDropDownOpened" >
-                                <ComboBox.Resources>
-                                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
-                                </ComboBox.Resources>
-
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Dept_name}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
+                            
                             <Grid Grid.Column="4">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -106,7 +93,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <DatePicker x:Name="expirationDate_DatePicker"  Grid.Column="0" HorizontalContentAlignment="Left" 
-                                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Width="90" Height="33"
+                                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Width="90" Height="40"
                                         SelectedDate="{Binding SelectedStartDate_Out}">
                                     <DatePicker.Resources>
                                         <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
@@ -132,7 +119,7 @@
                                 </DatePicker>
 
                                 <TextBlock   HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center" Text="~" FontWeight="Bold" FontSize="15" />
-                                <DatePicker x:Name="expirationDate_DatePicker2" Grid.Column="2" HorizontalContentAlignment="Left" Width="90" Height="33"
+                                <DatePicker x:Name="expirationDate_DatePicker2" Grid.Column="2" HorizontalContentAlignment="Left" Width="90" Height="40"
                                         VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" 
                                         SelectedDate="{Binding SelectedEndDate_Out}">
                                     <DatePicker.Resources>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EasyProject.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,12 +21,23 @@ namespace EasyProject.View.TabItemPage
     /// </summary>
     public partial class IncomingOutgoingPageBtn : Page
     {
+        public String userDept00 = null;
+        public bool isComboBoxDropDownOpened = false;
         public IncomingOutgoingPageBtn()
         {
             InitializeComponent();
             IncomingBtn.Click += Incoming_Click;
             OutgoingBtn.Click += Outgoing_Click;
         }
+        private void OnDropDownOpened(object sender, EventArgs e)
+        {
+            isComboBoxDropDownOpened = true;
+
+            var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
+            var deptNameText = deptModelObject.Dept_name;
+            userDept00 = deptNameText.ToString();
+        }
+
         private void Incoming_Click(object sender, RoutedEventArgs e)
         {
             ListFrame.Source = new Uri("IncomingOutgoingList1Page.xaml", UriKind.Relative);
