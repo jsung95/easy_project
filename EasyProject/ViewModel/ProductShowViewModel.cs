@@ -888,28 +888,23 @@ namespace EasyProject.ViewModel
             SelectedProduct.InputInCount = null;
         }
 
-        private void showListbyDept()
-        {
-            LoadEmployee();
-        }
-
-        
-         //*****************************************************************************
-         //*****************************************************************************
-         //여기서부터 paginaion 추가한 코드 내용
 
 
-
+        //*****************************************************************************
+        //*****************************************************************************
+        //여기서부터 paginaion 추가한 코드 내용
         private ObservableCollection<ProductShowModel> LstOfRecords;
-        public void LoadEmployee() //Read details
+        public void showListbyDept()
         {
-
+            //LoadEmployee();
             //LstOfRecords.Add(empDetails);
+
             LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
 
             UpdateCollection(LstOfRecords.Take(SelectedRecord));
             UpdateRecordCount();
         }
+
         int RecordStartFrom = 0;
         private void PreviousPage(object obj)
         {
