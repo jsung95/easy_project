@@ -48,61 +48,66 @@ namespace EasyProject.View.TabItemPage
       
         private void Export_btn_Click(object sender, RoutedEventArgs e)
         {
-            dataGrid1.SelectAllCells();
-            dataGrid1.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
-            ApplicationCommands.Copy.Execute(null, dataGrid1);
-           
-            String result = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
-            Clipboard.Clear();
-           
-            dataGrid1.UnselectAllCells();
-           
-           // DateTime now = DateTime.Now;
-            string today = String.Format(DateTime.Now.ToString("yyyy/MM/dd_HHmmss"));
+            try
+            {
+                dataGrid1.SelectAllCells();
+                dataGrid1.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
+                ApplicationCommands.Copy.Execute(null, dataGrid1);
 
-            //Console.WriteLine(result);
-            string f_path = @"c:\temp\["+ userDept00 + "]"+"입고현황_" + today + ".csv";
-            File.AppendAllText(f_path, result, UnicodeEncoding.UTF8);
+                String result = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
+                Clipboard.Clear();
 
-            // Get the Excel application object.
-            Excel.Application excel_app = new Excel.Application();
+                dataGrid1.UnselectAllCells();
 
-            // Make Excel visible (optional).
-            excel_app.Visible = true;
+                // DateTime now = DateTime.Now;
+                string today = String.Format(DateTime.Now.ToString("yyyy/MM/dd_HHmmss"));
 
-            // Open the file.
-            excel_app.Workbooks.Open(
-                f_path,               // Filename
-                Type.Missing,
-                Type.Missing,
+                //Console.WriteLine(result);
+                string f_path = @"c:\temp\[" + userDept00 + "]" + "입고현황_" + today + ".csv";
+                File.AppendAllText(f_path, result, UnicodeEncoding.UTF8);
 
-                   Excel.XlFileFormat.xlCSV,   // Format
-                   Type.Missing,
-                   Type.Missing,
-                   Type.Missing,
-                   Type.Missing,
+                // Get the Excel application object.
+                Excel.Application excel_app = new Excel.Application();
 
-                   ",",          // Delimiter
-                   Type.Missing,
-                   Type.Missing,
-                   Type.Missing,
-                   Type.Missing,
-                   Type.Missing,
-                   Type.Missing
-            );
+                // Make Excel visible (optional).
+                excel_app.Visible = true;
+
+                // Open the file.
+                excel_app.Workbooks.Open(
+                    f_path,               // Filename
+                    Type.Missing,
+                    Type.Missing,
+
+                       Excel.XlFileFormat.xlCSV,   // Format
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+
+                       ",",          // Delimiter
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing
+                );
+            }
+            catch (Exception ex)
+            {
+                //로그 Level : error
+            }
+            
         }
 
     }//class
     public class MultipleTextFormatConverterKey : IMultiValueConverter  
     {
-
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             return string.Format((string)parameter, values);
-
         
         }
-
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
              return null;

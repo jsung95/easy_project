@@ -16,24 +16,24 @@
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.9*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="3*" Cursor="Hand"/>
+                <ColumnDefinition Width="5*" />
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="IncomingBtn" Content="입고 현황" Grid.Column="0" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
+            <Button x:Name="IncomingBtn" Content="입고 현황" Grid.Column="1" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
                     Foreground="White"   
                     VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="150" Cursor="Hand"/>
-            <Button x:Name="OutgoingBtn" Content="출고 현황" Grid.Column="1" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
+            <Button x:Name="OutgoingBtn" Content="출고 현황" Grid.Column="2" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
                     Foreground="White"   
                     VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="150" Cursor="Hand"/>
-            <Grid Grid.Column="2">
-                <StackPanel Orientation="Horizontal">
+            <Grid Grid.Column="3">
+                <StackPanel Orientation="Horizontal" Margin="7">
                     <Label Content="부서명" Foreground="#4472C4"  FontSize="12"  Margin="5"
                        FontWeight="Bold" VerticalAlignment="Center"/>
 
-                    <ComboBox x:Name="deptName_ComboBox1" Height="30" Margin="5" Width="100"
+                    <ComboBox x:Name="deptName_ComboBox1" Height="30" Margin="5" Width="100" HorizontalAlignment="Right"
                                 ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept_In}" DropDownClosed="OnDropDownOpened">
                         <ComboBox.Resources>
                             <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
@@ -46,18 +46,13 @@
                                 </StackPanel>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
-                    </ComboBox>
-                 
-                </StackPanel>
-                
+                    </ComboBox>                 
+                </StackPanel>                
             </Grid>
-
         </Grid>
 
         <Grid Grid.Row="1" >
-
             <Frame x:Name="ListFrame"  Source="IncomingOutgoingList1Page.xaml" VerticalAlignment="Top"/>
-
         </Grid>
     </Grid>
 </Page>

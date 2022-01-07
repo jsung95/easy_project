@@ -46,258 +46,203 @@
     </Page.Resources>
 
     <Grid Height="450" Width="1000" >
-        <materialDesign:Card  Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0"/>
-                    <RowDefinition Height="0.5*"/>
-                    <RowDefinition Height="0.5*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="0.4*"/>
-                </Grid.RowDefinitions>
-                <!--<Grid Grid.Row="0"  >
-                    <TextBlock  Background="#4472C4" Margin="5,10,5,0"></TextBlock>
-                    <TextBlock FontWeight="Bold" FontSize="15" TextAlignment="left" Width="750" Height="30" 
-                               HorizontalAlignment="Center" VerticalAlignment="Center"><Run Foreground="White" Text="권한 변경" IsEnabled="False" /></TextBlock>
-                </Grid>-->
-
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.4*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="1.4*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <TextBlock Text="Normal" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                    </Grid>
-                    <Grid Grid.Column="1"></Grid>
-                    <Grid Grid.Column="2">
-                        <TextBlock Text="Admin" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                    </Grid>
-                </Grid>
-                <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.4*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="1.4*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0">
-                            <ComboBox Name="normal_dept_combobox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="60" SelectedItem="{Binding NormalSearchDept}" ItemsSource="{Binding SearchDeptList}" SelectedIndex="0" Margin="0,2,0,0">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Dept_name}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="SelectionChanged">
-                                        <i:InvokeCommandAction Command="{Binding NormalKeywordCommand}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </ComboBox>
-                            <ComboBox Margin="0,32,0,0" Name="normal_searchType_combobox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="60" SelectedItem="{Binding NormalSearchType}" ItemsSource="{Binding SearchTypeList}" SelectedIndex="0">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="SelectionChanged">
-                                        <i:InvokeCommandAction Command="{Binding NormalKeywordCommand}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </ComboBox>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.4*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <materialDesign:Card Background="White" UniformCornerRadius="20">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.5*"/>
+                            <RowDefinition Height="0.7*"/>
+                            <RowDefinition Height="3*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <TextBlock Text="Normal" Foreground="#4472C4"  FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                         </Grid>
-                        <Grid Grid.Column="1">
-                            <TextBox  Grid.Column="0" Text="{Binding Normal_Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="0.2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <ComboBox Name="normal_dept_combobox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="60" SelectedItem="{Binding NormalSearchDept}" ItemsSource="{Binding SearchDeptList}" SelectedIndex="0" Margin="0,2,0,0">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Dept_name}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding NormalKeywordCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                                <ComboBox Margin="0,32,0,0" Name="normal_searchType_combobox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="60" SelectedItem="{Binding NormalSearchType}" ItemsSource="{Binding SearchTypeList}" SelectedIndex="0">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding NormalKeywordCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <TextBox  Grid.Column="0" Text="{Binding Normal_Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                              Style="{DynamicResource WatermarkTextBox}" Tag ="검색명을 입력해주세요" FontSize="10" Height="25"  Grid.ColumnSpan="2" Margin="5" Cursor="Hand" >
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="KeyUp">
-                                        <i:InvokeCommandAction Command="{Binding NormalKeywordCommand}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </TextBox>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="KeyUp">
+                                            <i:InvokeCommandAction Command="{Binding NormalKeywordCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                            </Grid>
                         </Grid>
-                        <Grid Grid.Column="2">
-                            <!--<Button  Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White" Height="25" 
-                             Command="{Binding NormalSearchCommand}" Margin="10" Cursor="Hand">
-                                <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
-                            </Button>-->
-                        </Grid>
-                    </Grid>
-                    <Grid Grid.Column="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0">
-                            <ComboBox Margin="5,2,0,0" Name="admin_dept_combobox" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="60" SelectedItem="{Binding AdminSearchDept}" ItemsSource="{Binding SearchDeptList}" SelectedIndex="0">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Dept_name}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="SelectionChanged">
-                                        <i:InvokeCommandAction Command="{Binding AdminKeywordCommand}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </ComboBox>
-                            <ComboBox Margin="5,32,0,0" Name="admin_searchType_combobox" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="60" SelectedItem="{Binding AdminSearchType}" ItemsSource="{Binding SearchTypeList}" SelectedIndex="0">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="SelectionChanged">
-                                        <i:InvokeCommandAction Command="{Binding AdminKeywordCommand}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </ComboBox>
-                        </Grid>
-                        <Grid Grid.Column="1">
-                            <TextBox  Grid.Column="0" Text="{Binding Admin_Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                             Style="{DynamicResource WatermarkTextBox}" Tag ="검색명을 입력해주세요" FontSize="10" Height="25"  Grid.ColumnSpan="2" Margin="5" Cursor="Hand">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="KeyUp">
-                                        <i:InvokeCommandAction Command="{Binding AdminKeywordCommand}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </TextBox>
-                        </Grid>
-                        <Grid Grid.Column="2">
-                            <!--<Button  Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White" Height="25" 
-                             Command="{Binding AdminSearchCommand}" Margin="10" Cursor="Hand">
-                                <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
-                            </Button>-->
-                        </Grid>
-                    </Grid>
-                </Grid>
-                <Grid Grid.Row="3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.4*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="1.4*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="103*"/>
-                            <ColumnDefinition Width="185*"/>
-                        </Grid.ColumnDefinitions>
-                        <DataGrid  x:Name="dataGrid1" Margin="5,5,5,5" AutoGenerateColumns="False" SelectionMode="Extended"
+                        <Grid Grid.Row="2">
+                            <DataGrid  x:Name="dataGrid1" Margin="7,7,7,7" AutoGenerateColumns="False" SelectionMode="Extended"
                              ItemsSource="{Binding Normals_searched}"                           
                              ScrollViewer.CanContentScroll="True"
                              ScrollViewer.VerticalScrollBarVisibility="Visible" 
                              ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" IsSynchronizedWithCurrentItem="False" Grid.ColumnSpan="2">
-                            <DataGrid.Columns>
+                                <DataGrid.Columns>
 
-                                <!--데이터 바인딩-->
-                                <DataGridTemplateColumn>
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <CheckBox x:Name="normalCheckBox" IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}" 
+                                    <!--데이터 바인딩-->
+                                    <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <CheckBox x:Name="normalCheckBox" IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}" 
                                                       Background="#4472C4" BorderBrush="#FF0E0D0D" Foreground="#FF111010"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTextColumn Header=" 이름" Binding="{Binding Nurse_name}" IsReadOnly="True" />
-                                <DataGridTextColumn Header=" ID" Binding="{Binding Nurse_no}" IsReadOnly="True"/>
-                                <DataGridTextColumn Header=" 부서" Binding="{Binding Dept_name}" IsReadOnly="True"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Header=" 이름" Binding="{Binding Nurse_name}" IsReadOnly="True" />
+                                    <DataGridTextColumn Header=" ID" Binding="{Binding Nurse_no}" IsReadOnly="True"/>
+                                    <DataGridTextColumn Header=" 부서" Binding="{Binding Dept_name}" IsReadOnly="True"/>
 
-                            </DataGrid.Columns>
-                        </DataGrid>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
                     </Grid>
-                    <Grid Grid.Column="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-
-                        <Grid Grid.Row ="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5*"/>
-                                <ColumnDefinition Width="7*"/>
-                            </Grid.ColumnDefinitions>
-                            <!--왼쪽옮기기 버튼-->
-                            <Label Grid.Column="1" Content="왼쪽으로 이동" Foreground="#4472C4" FontSize="13" HorizontalAlignment="Center" Height="28"  VerticalAlignment="Center" />
-                            <Button x:Name="leftBtn" Foreground="white" Background="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Right"  
+                </materialDesign:Card>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+                        <Button x:Name="leftBtn" Margin="10" Foreground="white" Background="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Right"  
                         VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Command="{Binding MoveLeftCommand}">
-                                <materialDesign:PackIcon Grid.Row="0" Kind="ChevronLeftCircle" VerticalAlignment="Center" HorizontalAlignment="Center" Height="15" Width="26" />
-                            </Button>
-                        </Grid>
-
-                        <Grid Grid.Row ="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5*"/>
-                                <ColumnDefinition Width="7*"/>
-                            </Grid.ColumnDefinitions>
-                            <!--오른쪽옮기기 버튼-->
-                            <Label Grid.Column="2" Content="오른쪽으로 이동" Foreground="#4472C4"   FontSize="13" HorizontalAlignment="Center" Height="28"  VerticalAlignment="Center"/>
-                            <Button x:Name="rightBtn"   Foreground="white" Background="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Right"  
+                            <materialDesign:PackIcon Grid.Row="0" Kind="ChevronLeftCircle" VerticalAlignment="Center" HorizontalAlignment="Center" Height="15" Width="26" />
+                        </Button>
+                        <Label  Content="왼쪽으로 이동" Margin="5" Foreground="#4472C4"  FontSize="11" HorizontalAlignment="Center" Height="28"  VerticalAlignment="Center" />
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                        <Button x:Name="rightBtn" Margin="10"  Foreground="white" Background="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Right"  
                         VerticalAlignment="Center"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Command="{Binding MoveRightCommand}">
-                                <materialDesign:PackIcon Grid.Row="0" Kind="ChevronRightCircle" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="26" />
-                            </Button>
+                            <materialDesign:PackIcon Grid.Row="0" Kind="ChevronRightCircle" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="26" />
+                        </Button>
+                        <Label Margin="5"  Content="오른쪽으로 이동" Foreground="#4472C4"   FontSize="11" HorizontalAlignment="Center" Height="28"  VerticalAlignment="Center"/>
+                    </StackPanel>
+                    
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="2">
+                <materialDesign:Card Background="White" UniformCornerRadius="20">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.5*"/>
+                            <RowDefinition Height="0.7*"/>
+                            <RowDefinition Height="3*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <TextBlock Text="Admin" Foreground="#4472C4"  FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                         </Grid>
-                    </Grid>
-                    <Grid Grid.Column="2">
-                        <DataGrid  x:Name="dataGrid2" Margin="5" AutoGenerateColumns="false" SelectionMode="Extended"
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="0.2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <ComboBox Margin="15,2,0,0" Name="admin_dept_combobox" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="60" SelectedItem="{Binding AdminSearchDept}" ItemsSource="{Binding SearchDeptList}" SelectedIndex="0">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Dept_name}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding AdminKeywordCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                                <ComboBox Margin="15,32,0,0" Name="admin_searchType_combobox" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="60" SelectedItem="{Binding AdminSearchType}" ItemsSource="{Binding SearchTypeList}" SelectedIndex="0">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding AdminKeywordCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <TextBox  Grid.Column="0" Text="{Binding Admin_Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                             Style="{DynamicResource WatermarkTextBox}" Tag ="검색명을 입력해주세요" FontSize="10" Height="25"  Grid.ColumnSpan="2" Margin="5" Cursor="Hand">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="KeyUp">
+                                            <i:InvokeCommandAction Command="{Binding AdminKeywordCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                            </Grid>                          
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <DataGrid  x:Name="dataGrid2" Margin="5" AutoGenerateColumns="false" SelectionMode="Extended"
                              ItemsSource="{Binding Admins_searched}"  
                              ScrollViewer.CanContentScroll="True" 
                              ScrollViewer.VerticalScrollBarVisibility="Visible" 
                              ScrollViewer.HorizontalScrollBarVisibility="Visible" CanUserAddRows="False" IsSynchronizedWithCurrentItem="False">
 
-                            <DataGrid.Columns>
-                                <!--데이터 바인딩-->
-                                <DataGridTemplateColumn>
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <CheckBox x:Name="adminCheckBox" IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}" 
+                                <DataGrid.Columns>
+                                    <!--데이터 바인딩-->
+                                    <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <CheckBox x:Name="adminCheckBox" IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}" 
                                                       Background="#4472C4" BorderBrush="#FF0E0D0D" Foreground="#FF111010"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <!--<DataGridCheckBoxColumn Binding="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>-->
-                                <DataGridTextColumn Header=" 이름"  Binding="{Binding Nurse_name}" IsReadOnly="True" />
-                                <DataGridTextColumn Header=" ID" Binding="{Binding Nurse_no}" IsReadOnly="True"/>
-                                <DataGridTextColumn Header=" 부서" Binding="{Binding Dept_name}" IsReadOnly="True"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <!--<DataGridCheckBoxColumn Binding="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>-->
+                                    <DataGridTextColumn Header=" 이름"  Binding="{Binding Nurse_name}" IsReadOnly="True" />
+                                    <DataGridTextColumn Header=" ID" Binding="{Binding Nurse_no}" IsReadOnly="True"/>
+                                    <DataGridTextColumn Header=" 부서" Binding="{Binding Dept_name}" IsReadOnly="True"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
                     </Grid>
-                </Grid>
-                <Grid Grid.Row="4">
-                    <Button Content="확인" Background="#4472C4"  FontSize="15" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,10,0"></Button>
-                </Grid>
+                </materialDesign:Card>
             </Grid>
-        </materialDesign:Card>
 
+        </Grid>
+        <Grid Grid.Row="2">
+            <Button Content="확인" Background="#4472C4"  FontSize="11" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="15"></Button>
+        </Grid>
 
-        <materialDesign:Snackbar x:Name="Snackbar"  Background="#Ea4a2d" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
-            <materialDesign:SnackbarMessage ActionContent="닫기" ActionCommand="{Binding SnackBarCommand}" Width="619">
-                <materialDesign:SnackbarMessage.Style>
-                    <Style TargetType="materialDesign:SnackbarMessage">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsAuthChangeEnabled}" Value="True">
-                                <Setter Property="Content" Value="{Binding ErrorProductString}"></Setter>
-                            </DataTrigger>
-
-                        </Style.Triggers>
-                    </Style>
-                </materialDesign:SnackbarMessage.Style>
-            </materialDesign:SnackbarMessage>
-
-            <materialDesign:Snackbar.Style>
-                <Style TargetType="materialDesign:Snackbar">
-                    <Setter Property="IsActive" Value="False"></Setter>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsAuthChangeEnabled}" Value="True">
-                            <Setter Property="IsActive" Value="True"></Setter>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </materialDesign:Snackbar.Style>
-        </materialDesign:Snackbar>
     </Grid>
 </Page>
