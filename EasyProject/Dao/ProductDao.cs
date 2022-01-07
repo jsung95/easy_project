@@ -36,7 +36,7 @@ namespace EasyProject.Dao
                                           "ON I.dept_id = D.dept_id " +
                                           "WHERE D.dept_status != '폐지' " +
                                           "AND D.dept_name = (select dept_name from dept where dept_id = :dept_id) " +
-                                          "ORDER BY P.prod_expire, P.prod_name";
+                                          "ORDER BY P.prod_code, P.prod_expire ";
 
                         cmd.Parameters.Add(new OracleParameter("dept_id", App.nurse_dto.Dept_id));
 
@@ -337,7 +337,7 @@ namespace EasyProject.Dao
                                           "WHERE D.dept_status != '폐지' " +
                                           "AND D.dept_name = :dept_name " +
                                           "AND I.imp_dept_count != 0 " +
-                                          "ORDER BY P.prod_expire, P.prod_name";
+                                          "ORDER BY P.prod_code, P.prod_expire ";
 
                         cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
 
@@ -2019,7 +2019,8 @@ namespace EasyProject.Dao
                                 Imp_dept_count = imp_dept_count,
                                 Prod_expire = prod_expire,
                                 Prod_id = prod_id,
-                                Imp_dept_id = imp_dept_id
+                                Imp_dept_id = imp_dept_id,
+                                Prod_remainexpire = (prod_expire.Date - DateTime.Now.Date).Days
                             };
 
                             list.Add(dto);
