@@ -191,8 +191,19 @@
                                     </Style>
                                 </DataGridTemplateColumn.CellStyle>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="1.5*" CanUserSort="false" IsReadOnly="True">
-                                <DataGridTextColumn.CellStyle>
+                            <DataGridTemplateColumn Header="제품명" Width="1.5*" CanUserSort="false" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Prod_name}"></TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding PSVM.SelectedProduct.Prod_name, Source={StaticResource Locator}}"></TextBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+
+                                <DataGridTemplateColumn.CellStyle>
                                     <Style TargetType="DataGridCell">
                                         <Style.Triggers>
                                             <Trigger Property="IsSelected" Value="True">
@@ -200,8 +211,8 @@
                                             </Trigger>
                                         </Style.Triggers>
                                     </Style>
-                                </DataGridTextColumn.CellStyle>
-                            </DataGridTextColumn>
+                                </DataGridTemplateColumn.CellStyle>
+                            </DataGridTemplateColumn>
                             <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="1.5*" CanUserSort="false" IsReadOnly="True">
                                 <DataGridTextColumn.CellStyle>
                                     <Style TargetType="DataGridCell">

@@ -207,10 +207,19 @@ namespace EasyProject.View.TabItemPage
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int intValue = (int)value;//남은 일수 
-            int compareToValue = Int32.Parse(parameter.ToString());
+            bool checkBool = false;
+            Console.WriteLine(value+"??");
+            Console.WriteLine(targetType + "//");
 
-            return intValue < compareToValue;
+            if (value != null && targetType != null)
+            {
+                int intValue = (int)value;//남은 일수
+                int compareToValue = Int32.Parse(parameter.ToString());
+
+                checkBool = intValue < compareToValue;
+            }
+
+            return checkBool;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -225,11 +234,21 @@ namespace EasyProject.View.TabItemPage
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int intValue = (int)value;//남은 일수
-            int compareToValue = Int32.Parse(parameter.ToString());//0
 
-            return ((intValue > compareToValue) && (intValue - compareToValue < 3))
+            bool checkBool = false;
+            Console.WriteLine(value + "??");
+            Console.WriteLine(targetType + "//");
+
+            if (value != null && targetType != null)
+            {
+                int intValue = (int)value;//남은 일수
+                int compareToValue = Int32.Parse(parameter.ToString());
+
+                checkBool = ((intValue > compareToValue) && (intValue - compareToValue < 3))
                 || (intValue == compareToValue);
+            }
+
+            return checkBool;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -244,10 +263,19 @@ namespace EasyProject.View.TabItemPage
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int intValue = (int)value;//남은 일수
-            int compareToValue = Int32.Parse(parameter.ToString());
+            bool checkBool = false;
+            Console.WriteLine(value + "??");
+            Console.WriteLine(targetType + "//");
 
-            return (intValue > compareToValue) && (intValue - compareToValue > 3);
+            if (value != null && targetType != null)
+            {
+                int intValue = (int)value;//남은 일수
+                int compareToValue = Int32.Parse(parameter.ToString());
+
+                checkBool = (intValue > compareToValue) && (intValue - compareToValue > 3);
+            }
+
+            return checkBool;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

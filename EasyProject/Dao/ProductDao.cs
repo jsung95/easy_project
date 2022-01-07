@@ -64,6 +64,7 @@ namespace EasyProject.Dao
                                 Prod_expire = prod_expire,
                                 Prod_id = prod_id,
                                 Imp_dept_id = imp_dept_id,
+                                Prod_remainexpire = (prod_expire.Date - DateTime.Now.Date).Days
 
                             };
                             Console.WriteLine(dto);
