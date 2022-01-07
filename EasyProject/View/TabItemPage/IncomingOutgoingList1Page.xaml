@@ -6,12 +6,17 @@
       xmlns:local="clr-namespace:EasyProject.View.TabItemPage"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:wookoa="clr-namespace:System;assembly=mscorlib"
-      xmlns:vm="clr-namespace:EasyProject.ViewModel"
+      xmlns:vm="clr-namespace:EasyProject.ViewModel" xmlns:conv="clr-namespace:EasyProject"
       mc:Ignorable="d"
       DataContext="{Binding PIOVM, Source={StaticResource Locator}}"
       Title="IncomingOutgoingList1Page" Cursor="Hand">
 
     <Page.Resources>
+        <local:MultipleTextFormatConverterKey x:Key="MultipleTextFormatConverterKey" />
+
+        <Style x:Key="CellStyle" TargetType="DataGridCell">
+            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}}" />
+        </Style>
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="#EAEAEA"/>
             <Setter Property="FontSize" Value="12"/>
@@ -39,7 +44,7 @@
         </Style>
     </Page.Resources>
 
-    <Grid Height="450" Width="1000"> 
+    <Grid Height="450" Width="1000">
         <materialDesign:Card Grid.Column="0"  UniformCornerRadius="20" Background="White" >
             <Grid>
                 <Grid.RowDefinitions>
@@ -55,63 +60,20 @@
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="60*"/>
-                                <ColumnDefinition Width="200*"/>
-                                <ColumnDefinition Width="60*"/>
-                                <ColumnDefinition Width="90*"/>
-                                <ColumnDefinition Width="120*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-
-                            <ComboBox x:Name="searchText_ComboBox" Margin="10 0" Height="30" Grid.Column="0" HorizontalContentAlignment="Left" ItemsSource="{Binding Path=SearchTypeList}"
-                       SelectedItem="{Binding selectedSearchType_In}">
-                                <ComboBox.Resources>
-                                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
-                                </ComboBox.Resources>
-                            </ComboBox>
-
-                            <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요" Grid.Column="1" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
-                                     Text="{Binding searchKeyword_In, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
-
-                                <TextBox.InputBindings>
-                                    <KeyBinding Command="{Binding InSearchCommand}" Key="Enter" />
-                                </TextBox.InputBindings>
-                                
-                            </TextBox>
-
-                            <Button x:Name="search_Btn" Grid.Column="2" Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White"
-                            VerticalAlignment="Center" Height="30"  Width="45" HorizontalAlignment="Left" 
-                                    Command="{Binding InSearchCommand}" Cursor="Hand">
-                                <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
-                            </Button>
-
-                            <Label Content="부서명" Foreground="#4472C4" Grid.Column="2" FontSize="12" 
-                       FontWeight="Bold" HorizontalAlignment="Right"  
-                       VerticalAlignment="Center"/>
-
-                            <ComboBox x:Name="deptName_ComboBox1" Height="30" Grid.Column="3" Margin="10 0" HorizontalContentAlignment="Left" 
-                                ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept_In}" DropDownClosed="OnDropDownOpened">
-                                <ComboBox.Resources>
-                                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
-                                </ComboBox.Resources>
-
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Dept_name}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                            <Grid Grid.Column="4">
+                            <Grid Grid.Column="0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="0.1*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <DatePicker x:Name="expirationDate_DatePicker"  Grid.Column="0" HorizontalContentAlignment="Left" 
-                                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Width="90" Height="33"
-                                        SelectedDate="{Binding SelectedStartDate}">
+                                
+                                    <DatePicker x:Name="expirationDate_DatePicker"  Grid.Column="0" HorizontalContentAlignment="Left" 
+                                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Width="90" Height="40"
+                                        SelectedDate="{Binding SelectedStartDate_In}">
                                         <DatePicker.Resources>
                                             <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
                                                 <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />
@@ -134,11 +96,11 @@
                                             </Style>
                                         </DatePicker.Resources>
                                     </DatePicker>
-                                    
-                                <TextBlock   HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center" Text="~" FontWeight="Bold" FontSize="15" />
-                                <DatePicker x:Name="expirationDate_DatePicker2" Grid.Column="2" HorizontalContentAlignment="Left" Width="90" Height="33"
+
+                                    <TextBlock HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center" Text="~" FontWeight="Bold" FontSize="15" />
+                                <DatePicker x:Name="expirationDate_DatePicker2" Grid.Column="2" HorizontalContentAlignment="Left" Width="90" Height="40"
                                         VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" 
-                                        SelectedDate="{Binding SelectedEndDate}">
+                                        SelectedDate="{Binding SelectedEndDate_In}">
                                     <DatePicker.Resources>
                                         <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
                                             <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />
@@ -161,19 +123,42 @@
                                         </Style>
                                     </DatePicker.Resources>
                                 </DatePicker>
-                                
-                                
-
                             </Grid>
+                            <Grid Grid.Column="1">
+                                <StackPanel Orientation="Horizontal">                              
 
+                                    <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요"  Width="420"
+                                        VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10" Height="30" 
+                                        Text="{Binding searchKeyword_In, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
+
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Command="{Binding InSearchCommand}" Key="Enter" />
+                                        </TextBox.InputBindings>
+
+                                    </TextBox>
+                                    <Button x:Name="search_Btn" Grid.Column="2" Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White"
+                                        VerticalAlignment="Center" Height="30"  Width="45" HorizontalAlignment="Left" 
+                                        Command="{Binding InSearchCommand}" Cursor="Hand">
+                                        <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
+                                    </Button>
+                                </StackPanel>                             
+                            </Grid>
+                            <Grid Grid.Column="2">
+                                <ComboBox x:Name="searchText_ComboBox" Margin="10" Width="100" Height="30"  HorizontalContentAlignment="Left" ItemsSource="{Binding Path=SearchTypeList}"
+                                            SelectedItem="{Binding selectedSearchType_In}">
+                                    <ComboBox.Resources>
+                                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+                                    </ComboBox.Resources>
+                                </ComboBox>
+                            </Grid>
                         </Grid>
-                        
-                        
 
-                        <DataGrid x:Name="dataGrid1" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Top" ScrollViewer.CanContentScroll="True"         
+                        <DataGrid x:Name="dataGrid1" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Top"
+                              ScrollViewer.CanContentScroll="True"         
                               ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.HorizontalScrollBarVisibility="Visible" 
                                   AutoGenerateColumns="False" CanUserSortColumns="True" IsReadOnly="True" Margin="5"
-                                  ItemsSource="{Binding Product_in}">
+                                  ItemsSource="{Binding Product_in}" CellStyle="{StaticResource CellStyle}">
+
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="*" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="*" IsReadOnly="True"/>
@@ -185,25 +170,42 @@
                                             <Setter Property="HorizontalAlignment" Value="Right" />
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
+
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding Prod_in_date}" Header="입고일" Width="1.3*" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Prod_in_type}" Header="입고유형" Width="0.5*" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_in_type}" Header="입고유형" Width="0.5*" IsReadOnly="True">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Prod_in_type}" Value="이관">
+                                                    <Setter Property="Foreground" Value="Red"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Prod_in_type}" Value="신규">
+                                                    <Setter Property="Foreground" Value="Blue"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Prod_in_type}" Value="추가">
+                                                    <Setter Property="Foreground" Value="Green"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding Prod_in_from}" Header="입고출처" Width="0.7*" IsReadOnly="True"/>
-                                <DataGridTextColumn  Header="관리자명" Width="*" IsReadOnly="True">
+                                <DataGridTextColumn Header="관리자명" Width="*" IsReadOnly="True">
                                     <DataGridTextColumn.Binding>
-                                        <MultiBinding StringFormat="{}{0} ({1})">
+                                        <MultiBinding  Converter="{StaticResource MultipleTextFormatConverterKey}"  ConverterParameter="{}{0} ({1})">
                                             <Binding Path="Nurse_name" />
                                             <Binding Path="Dept_name" />
                                         </MultiBinding>
                                     </DataGridTextColumn.Binding>
                                 </DataGridTextColumn>
                             </DataGrid.Columns>
-                            <DataGrid.RowStyle>
+                            <!--<DataGrid.RowStyle>
                                 <Style TargetType="{x:Type DataGridRow}">
                                     <Setter Property="FontSize" Value="10"/>
                                     <Setter Property="FontFamily" Value="Arial"/>
                                 </Style>
-                            </DataGrid.RowStyle>
+                            </DataGrid.RowStyle>-->
                         </DataGrid>
                     </Grid>
 
@@ -211,19 +213,19 @@
 
                 <Grid Grid.Row="1">
                     <Grid Grid.Column="0" >
-                       
-                            <Button x:Name="export_btn" Height="26" HorizontalAlignment="Center" Grid.Column ="2" Foreground="White" Background="#4472C4"
+
+                        <Button x:Name="export_btn" Height="26" HorizontalAlignment="Center" Grid.Column ="2" Foreground="White" Background="#4472C4"
                                 VerticalAlignment="Center" Width="150"  FontSize="13" Margin="0,0,0,10" 
                                   Opacity="0.75" Cursor="Hand">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="MicrosoftExcel"  HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" />
                                 <TextBlock Text="DownLoad" Margin="3,0,0,0" Foreground="White" FontWeight="Bold"></TextBlock>
                             </StackPanel>
-                                
-                            </Button>
-                            
-                       
-                        
+
+                        </Button>
+
+
+
                     </Grid>
                 </Grid>
             </Grid>

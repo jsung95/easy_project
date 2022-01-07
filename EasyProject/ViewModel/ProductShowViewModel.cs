@@ -24,8 +24,6 @@ using System.Windows.Documents;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
-
 namespace EasyProject.ViewModel
 {
     public class ProductShowViewModel : Notifier
@@ -53,6 +51,7 @@ namespace EasyProject.ViewModel
 
         //부서 목록 콤보박스, 부서 리스트 출력
         public ObservableCollection<DeptModel> Depts { get; set; }
+        public ObservableCollection<DeptModel> DeptsForPopupBox { get; set; }
 
         private bool comboboxChanged = false;
         public bool ComboboxChanged
@@ -133,22 +132,8 @@ namespace EasyProject.ViewModel
         }
         //검색 유형 프로퍼티
         public string[] SearchTypeList { get; set; }
-        //선택한 검색 콤보박스를 담을 프로퍼티
+        //선택한 검색 유형 콤보박스를 담을 프로퍼티
         public string SelectedSearchType { get; set; }
-        // 선택한 검색 유형 프로퍼티
-
-        // 버튼 컬럼 투명도
-        //private Visibility buttonColumnVisibility;
-        //public Visibility ButtonColumnVisibility
-        //{
-        //    get { return buttonColumnVisibility; }
-        //    set
-        //    {
-        //        buttonColumnVisibility = value;
-        //        Console.WriteLine("ButtonColumnVisibility set : " + buttonColumnVisibility);
-        //        OnPropertyChanged("ButtonColumnVisibility");
-        //    }
-        //}
 
         // 대시보드 프로퍼티
         public ChartValues<int> Values { get; set; }
@@ -292,7 +277,16 @@ namespace EasyProject.ViewModel
         //}
 
         // 발주 신청 페이지 바인딩
-        public UserModel SelectedUser { get; }
+        private UserModel selectedUser;
+        public UserModel SelectedUser 
+        { 
+            get { return selectedUser; }
+            set
+            {
+                selectedUser = value;
+                OnPropertyChanged("SelectedUser");
+            }
+        }
         public ICollectionView EmployeeCollection { get; private set; }
 
         public ProductShowViewModel()
@@ -301,10 +295,13 @@ namespace EasyProject.ViewModel
             SearchTypeList = new[] { "제품코드", "제품명", "품목/종류" };
             SelectedSearchType = SearchTypeList[0];
 
-            Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts());
-            SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1];
-            
 
+
+
+            Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts()); // 우측 상단 제품 현황 목록의 부서 선택 콤보박스
+            SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1]; // 위 콤보박스의 초기값 = 현재 사용자의 부서로 설정
+            DeptsForPopupBox = new ObservableCollection<DeptModel>(dept_dao.GetDepts()); // 출고 팝업의 부서 선택 콤보박스
+            DeptsForPopupBox.RemoveAt((int)App.nurse_dto.Dept_id - 1); // 현재 사용자의 부서는 목록에서 제거
             Categories = new ObservableCollection<CategoryModel>(category_dao.GetCategories());
 
 
@@ -555,7 +552,7 @@ namespace EasyProject.ViewModel
             product_dao.ChangeProductInfo(SelectedProduct);
             product_dao.ChangeProductInfo_IMP_DEPT(SelectedProduct);
 
-            LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProducts());
+            LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
             UpdateCollection(LstOfRecords.Take(SelectedRecord));
             //첫페이지 말고 다음 페이지에서 재고수정할때 성공은 되는데 첫페이지로 돌아감 해결하기
             UpdateRecordCount();
@@ -702,7 +699,8 @@ namespace EasyProject.ViewModel
                     ErrorProductString = $"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 사용하였습니다.";
                     IsInOutEnabled = true;
 
-                    Products = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(dept_dao.GetDeptName((int)App.nurse_dto.Dept_id)));
+                    showListbyDept();
+
                     var temp = Ioc.Default.GetService<ProductInOutViewModel>();
                     temp.Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
                 }
@@ -746,7 +744,7 @@ namespace EasyProject.ViewModel
                     ErrorProductString = $"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 {SelectedProduct.SelectedOutDept.Dept_name} 부서로 이관하였습니다.";
                     IsInOutEnabled = true;
 
-                    Products = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(dept_dao.GetDeptName((int)App.nurse_dto.Dept_id)));
+                    showListbyDept();
                     var temp = Ioc.Default.GetService<ProductInOutViewModel>();
                     temp.Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
                 }
@@ -786,7 +784,7 @@ namespace EasyProject.ViewModel
                     ErrorProductString = $"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 폐기하였습니다.";
                     IsInOutEnabled = true;
 
-                    Products = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(dept_dao.GetDeptName((int)App.nurse_dto.Dept_id)));
+                    showListbyDept();
                     var temp = Ioc.Default.GetService<ProductInOutViewModel>();
                     temp.Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
                 }
@@ -836,7 +834,7 @@ namespace EasyProject.ViewModel
                 ErrorProductString = $"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputInCount}개 추가 입고하였습니다.";
                 IsInOutEnabled = true;
 
-                Products = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(dept_dao.GetDeptName((int)App.nurse_dto.Dept_id)));
+                showListbyDept();
                 var temp = Ioc.Default.GetService<ProductInOutViewModel>();
                 temp.Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
             }
@@ -886,6 +884,35 @@ namespace EasyProject.ViewModel
             SelectedProduct.InputOutCount = null;
         }
 
+
+        //재고현황페이지에서 발주팝업박스 텍스트초기화 커맨드
+        private ActionCommand orderPopupReset;
+        public ICommand OrderPopupReset
+        {
+            get
+            {
+                if (orderPopupReset == null)
+                {
+                    Console.WriteLine("리셋!");
+                    orderPopupReset = new ActionCommand(OrderFormReset);
+                }
+                return orderPopupReset;
+            }//get
+        }
+
+        public void OrderFormReset()
+        {
+            //SelectedUser.Nurse_name = null;
+            //SelectedUser.Dept_name = null;
+            //SelectedUser.Dept_phone = null;
+            //SelectedProduct.Prod_name = null;
+            SelectedProduct.Mount = null;
+            SelectedProduct.Volume = null;
+            SelectedProduct.Manufacturer = null;
+            SelectedProduct.OrderMemo = null;
+        }
+
+
         private ActionCommand inProductReset;
         public ICommand InProductReset
         {
@@ -904,28 +931,26 @@ namespace EasyProject.ViewModel
             SelectedProduct.InputInCount = null;
         }
 
-        private void showListbyDept()
-        {
-            LoadEmployee();
-        }
-
-        
-         //*****************************************************************************
-         //*****************************************************************************
-         //여기서부터 paginaion 추가한 코드 내용
 
 
-
+        //*****************************************************************************
+        //*****************************************************************************
+        //여기서부터 paginaion 추가한 코드 내용
         private ObservableCollection<ProductShowModel> LstOfRecords;
-        public void LoadEmployee() //Read details
+        public void showListbyDept()
         {
-
+            //LoadEmployee();
             //LstOfRecords.Add(empDetails);
+
             LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
 
-            UpdateCollection(LstOfRecords.Take(SelectedRecord));
+            RecordStartFrom = (CurrentPage-1) * SelectedRecord;
+            var recordsToShow = LstOfRecords.Skip(RecordStartFrom).Take(SelectedRecord);
+
+            UpdateCollection(recordsToShow); // SelectedRecord만큼 잘라서 UpdateCollection에 넣음
             UpdateRecordCount();
         }
+
         int RecordStartFrom = 0;
         private void PreviousPage(object obj)
         {
@@ -1073,8 +1098,12 @@ namespace EasyProject.ViewModel
         {
             NumberOfPages = (int)Math.Ceiling((double)LstOfRecords.Count / SelectedRecord);
             NumberOfPages = NumberOfPages == 0 ? 1 : NumberOfPages;
-            UpdateCollection(LstOfRecords.Take(SelectedRecord));
-            CurrentPage = 1;
+
+            RecordStartFrom = (CurrentPage - 1) * SelectedRecord;
+            var recordsToShow = LstOfRecords.Skip(RecordStartFrom).Take(SelectedRecord);
+
+            UpdateCollection(recordsToShow);
+            //CurrentPage = 1;
         }
 
 

@@ -36,7 +36,7 @@ namespace EasyProject.Dao
                                           "ON I.dept_id = D.dept_id " +
                                           "WHERE D.dept_status != '폐지' " +
                                           "AND D.dept_name = (select dept_name from dept where dept_id = :dept_id) " +
-                                          "ORDER BY P.prod_expire, P.prod_name";
+                                          "ORDER BY P.prod_code, P.prod_expire ";
 
                         cmd.Parameters.Add(new OracleParameter("dept_id", App.nurse_dto.Dept_id));
 
@@ -63,8 +63,11 @@ namespace EasyProject.Dao
                                 Imp_dept_count = imp_dept_count,
                                 Prod_expire = prod_expire,
                                 Prod_id = prod_id,
-                                Imp_dept_id = imp_dept_id
+                                Imp_dept_id = imp_dept_id,
+                                Prod_remainexpire = (prod_expire.Date - DateTime.Now.Date).Days
+
                             };
+                            Console.WriteLine(dto);
 
                             list.Add(dto);
 
@@ -334,7 +337,7 @@ namespace EasyProject.Dao
                                           "WHERE D.dept_status != '폐지' " +
                                           "AND D.dept_name = :dept_name " +
                                           "AND I.imp_dept_count != 0 " +
-                                          "ORDER BY P.prod_expire, P.prod_name";
+                                          "ORDER BY P.prod_code, P.prod_expire ";
 
                         cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
 
@@ -361,7 +364,8 @@ namespace EasyProject.Dao
                                 Imp_dept_count = imp_dept_count,
                                 Prod_expire = prod_expire,
                                 Prod_id = prod_id,
-                                Imp_dept_id = imp_dept_id
+                                Imp_dept_id = imp_dept_id,
+                                Prod_remainexpire = (prod_expire.Date - DateTime.Now.Date).Days
                             };
 
                             list.Add(dto);
@@ -1141,6 +1145,112 @@ namespace EasyProject.Dao
 
         }//GetProductIn
 
+
+        public string GetProductIn_MaxDate(DeptModel dept_dto)
+        {
+            string result = null;
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT MAX(I.prod_in_date) " +
+                                          "FROM PRODUCT_IN I " +
+                                          "INNER JOIN PRODUCT P " +
+                                          "ON I.prod_id = P.prod_id " +
+                                          "INNER JOIN CATEGORY C " +
+                                          "ON P.category_id = C.category_id " +
+                                          "LEFT OUTER JOIN NURSE N " +
+                                          "ON I.nurse_no = N.nurse_no " +
+                                          "INNER JOIN DEPT D " +
+                                          "ON N.dept_id = D.dept_id " +
+                                          "WHERE I.prod_in_to = :name " +
+                                          "ORDER BY I.prod_in_date, P.prod_name ";
+
+
+                        cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            result = reader.GetString(0);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return result;
+        }//GetProductIn_MaxDate
+
+        public string GetProductIn_MinDate(DeptModel dept_dto)
+        {
+            string result = null;
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT MIN(I.prod_in_date) " +
+                                          "FROM PRODUCT_IN I " +
+                                          "INNER JOIN PRODUCT P " +
+                                          "ON I.prod_id = P.prod_id " +
+                                          "INNER JOIN CATEGORY C " +
+                                          "ON P.category_id = C.category_id " +
+                                          "LEFT OUTER JOIN NURSE N " +
+                                          "ON I.nurse_no = N.nurse_no " +
+                                          "INNER JOIN DEPT D " +
+                                          "ON N.dept_id = D.dept_id " +
+                                          "WHERE I.prod_in_to = :name " +
+                                          "ORDER BY I.prod_in_date, P.prod_name ";
+
+
+                        cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            result = reader.GetString(0);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return result;
+        }//GetProductIn_MinDate
+
+
         public List<ProductInOutModel> GetProductOut()
         {
             List<ProductInOutModel> list = new List<ProductInOutModel>();
@@ -1158,7 +1268,7 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
 
-                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, O.prod_out_count, O.prod_out_date, O.prod_out_type, D.dept_name, N.nurse_name, O.prod_out_from, O.prod_out_to " +
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, O.prod_out_count, O.prod_out_date, O.prod_out_type, D.dept_name, N.nurse_name, O.prod_out_from, O.prod_out_to, P.prod_expire " +
                                           "FROM PRODUCT_OUT O " +
                                           "INNER JOIN PRODUCT P " +
                                           "ON O.prod_id = P.prod_id " +
@@ -1167,7 +1277,8 @@ namespace EasyProject.Dao
                                           "LEFT OUTER JOIN NURSE N " +
                                           "ON O.nurse_no = N.nurse_no " +
                                           "INNER JOIN DEPT D " +
-                                          "ON N.dept_id = D.dept_id";
+                                          "ON N.dept_id = D.dept_id " +
+                                          "ORDER BY O.prod_out_date, P.prod_name";
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
@@ -1184,6 +1295,7 @@ namespace EasyProject.Dao
                             string nurse_name = reader.GetString(8);
                             string prod_out_from = reader.GetString(9);
                             string prod_out_to = reader.GetString(10);
+                            DateTime prod_expire = reader.GetDateTime(11);
 
                             ProductInOutModel dto = new ProductInOutModel()
                             {
@@ -1197,7 +1309,8 @@ namespace EasyProject.Dao
                                 Dept_name = dept_name,
                                 Nurse_name = nurse_name,
                                 Prod_out_from = prod_out_from,
-                                Prod_out_to = prod_out_to
+                                Prod_out_to = prod_out_to,
+                                Prod_expire = prod_expire
                             };
 
                             list.Add(dto);
@@ -1234,7 +1347,7 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
 
-                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, O.prod_out_count, O.prod_out_date, O.prod_out_type, D.dept_name, N.nurse_name, O.prod_out_from, O.prod_out_to " +
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, O.prod_out_count, O.prod_out_date, O.prod_out_type, D.dept_name, N.nurse_name, O.prod_out_from, O.prod_out_to, P.prod_expire " +
                                           "FROM PRODUCT_OUT O " +
                                           "INNER JOIN PRODUCT P " +
                                           "ON O.prod_id = P.prod_id " +
@@ -1244,7 +1357,8 @@ namespace EasyProject.Dao
                                           "ON O.nurse_no = N.nurse_no " +
                                           "INNER JOIN DEPT D " +
                                           "ON N.dept_id = D.dept_id " +
-                                          "WHERE O.prod_out_from = :name";
+                                          "WHERE O.prod_out_from = :name " +
+                                          "ORDER BY O.prod_out_date, P.prod_name";
 
                         cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
                         Console.WriteLine("ProductDao - GetProductOut() 부서명 파라미터: " + dept_dto.Dept_name);
@@ -1264,6 +1378,7 @@ namespace EasyProject.Dao
                             string nurse_name = reader.GetString(8);
                             string prod_out_from = reader.GetString(9);
                             string prod_out_to = reader.GetString(10);
+                            DateTime prod_expire = reader.GetDateTime(11);
 
                             ProductInOutModel dto = new ProductInOutModel()
                             {
@@ -1277,7 +1392,94 @@ namespace EasyProject.Dao
                                 Dept_name = dept_name,
                                 Nurse_name = nurse_name,
                                 Prod_out_from = prod_out_from,
-                                Prod_out_to = prod_out_to
+                                Prod_out_to = prod_out_to,
+                                Prod_expire = prod_expire
+                            };
+
+                            list.Add(dto);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return list;
+
+        }//GetProductOut
+
+        public List<ProductInOutModel> GetProductOut(DeptModel dept_dto, DateTime? start_date, DateTime? end_date) // 오버로딩
+        {
+            List<ProductInOutModel> list = new List<ProductInOutModel>();
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, O.prod_out_count, O.prod_out_date, O.prod_out_type, D.dept_name, N.nurse_name, O.prod_out_from, O.prod_out_to, P.prod_expire " +
+                                          "FROM PRODUCT_OUT O " +
+                                          "INNER JOIN PRODUCT P " +
+                                          "ON O.prod_id = P.prod_id " +
+                                          "INNER JOIN CATEGORY C " +
+                                          "ON P.category_id = C.category_id " +
+                                          "LEFT OUTER JOIN NURSE N " +
+                                          "ON O.nurse_no = N.nurse_no " +
+                                          "INNER JOIN DEPT D " +
+                                          "ON N.dept_id = D.dept_id " +
+                                          "WHERE O.prod_out_from = :name " +
+                                          "AND O.prod_out_date BETWEEN :start_date AND :end_date + 1 " +
+                                          "ORDER BY O.prod_out_date, P.prod_name";
+
+                        cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
+                        cmd.Parameters.Add(new OracleParameter("start_date", start_date));
+                        cmd.Parameters.Add(new OracleParameter("end_date", end_date));
+                        Console.WriteLine("ProductDao - GetProductOut() 부서명 파라미터: " + dept_dto.Dept_name);
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string prod_code = reader.GetString(0);
+                            string prod_name = reader.GetString(1);
+                            string category_name = reader.GetString(2);
+                            int? prod_price = reader.GetInt32(3);
+                            int? prod_out_count = reader.GetInt32(4);
+                            DateTime prod_out_date = reader.GetDateTime(5);
+                            string prod_out_type = reader.GetString(6);
+                            string dept_name = reader.GetString(7);
+                            string nurse_name = reader.GetString(8);
+                            string prod_out_from = reader.GetString(9);
+                            string prod_out_to = reader.GetString(10);
+                            DateTime prod_expire = reader.GetDateTime(11);
+
+                            ProductInOutModel dto = new ProductInOutModel()
+                            {
+                                Prod_code = prod_code,
+                                Prod_name = prod_name,
+                                Category_name = category_name,
+                                Prod_price = prod_price,
+                                Prod_out_count = prod_out_count,
+                                Prod_out_date = prod_out_date,
+                                Prod_out_type = prod_out_type,
+                                Dept_name = dept_name,
+                                Nurse_name = nurse_name,
+                                Prod_out_from = prod_out_from,
+                                Prod_out_to = prod_out_to,
+                                Prod_expire = prod_expire
                             };
 
                             list.Add(dto);
@@ -1314,7 +1516,7 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
 
-                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, O.prod_out_count, O.prod_out_date, O.prod_out_type, D.dept_name, N.nurse_name, O.prod_out_from, O.prod_out_to " +
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, O.prod_out_count, O.prod_out_date, O.prod_out_type, D.dept_name, N.nurse_name, O.prod_out_from, O.prod_out_to, P.prod_expire " +
                                           "FROM PRODUCT_OUT O " +
                                           "INNER JOIN PRODUCT P " +
                                           "ON O.prod_id = P.prod_id " +
@@ -1330,7 +1532,7 @@ namespace EasyProject.Dao
                                             "((:search_combo = '제품명' AND O.prod_out_from = :dept_name ) AND (P.prod_name LIKE '%'||:search_text||'%')) " +
                                           "OR " +
                                             "((:search_combo = '품목/종류' AND O.prod_out_from = :dept_name ) AND (C.category_name LIKE '%'||:search_text||'%')) " +
-                                          "AND D.dept_status != '폐지'";
+                                          "ORDER BY O.prod_out_date, P.prod_name";
 
                         cmd.BindByName = true;
 
@@ -1357,6 +1559,7 @@ namespace EasyProject.Dao
                             string nurse_name = reader.GetString(8);
                             string prod_out_from = reader.GetString(9);
                             string prod_out_to = reader.GetString(10);
+                            DateTime prod_expire = reader.GetDateTime(11);
 
                             ProductInOutModel dto = new ProductInOutModel()
                             {
@@ -1370,7 +1573,8 @@ namespace EasyProject.Dao
                                 Dept_name = dept_name,
                                 Nurse_name = nurse_name,
                                 Prod_out_from = prod_out_from,
-                                Prod_out_to = prod_out_to
+                                Prod_out_to = prod_out_to,
+                                Prod_expire = prod_expire
                             };
 
                             list.Add(dto);
@@ -1389,6 +1593,213 @@ namespace EasyProject.Dao
             return list;
 
         }//GetProductOut
+
+
+        public List<ProductInOutModel> GetProductOut(DeptModel dept_dto, string search_type, string search_text, DateTime? start_date, DateTime? end_date)
+        {
+            List<ProductInOutModel> list = new List<ProductInOutModel>();
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_price, O.prod_out_count, O.prod_out_date, O.prod_out_type, D.dept_name, N.nurse_name, O.prod_out_from, O.prod_out_to, P.prod_expire " +
+                                          "FROM PRODUCT_OUT O " +
+                                          "INNER JOIN PRODUCT P " +
+                                          "ON O.prod_id = P.prod_id " +
+                                          "INNER JOIN CATEGORY C " +
+                                          "ON P.category_id = C.category_id " +
+                                          "LEFT OUTER JOIN NURSE N " +
+                                          "ON O.nurse_no = N.nurse_no " +
+                                          "INNER JOIN DEPT D " +
+                                          "ON N.dept_id = D.dept_id " +
+                                          "WHERE " +
+                                            "((:search_combo = '제품코드' AND O.prod_out_from = :dept_name AND O.prod_out_date BETWEEN :start_date AND :end_date + 1 ) AND (P.prod_code LIKE '%'||:search_text||'%')) " +
+                                          "OR " +
+                                            "((:search_combo = '제품명' AND O.prod_out_from = :dept_name AND O.prod_out_date BETWEEN :start_date AND :end_date + 1 ) AND (P.prod_name LIKE '%'||:search_text||'%')) " +
+                                          "OR " +
+                                            "((:search_combo = '품목/종류' AND O.prod_out_from = :dept_name AND O.prod_out_date BETWEEN :start_date AND :end_date + 1 ) AND (C.category_name LIKE '%'||:search_text||'%')) " +
+                                          "ORDER BY O.prod_out_date, P.prod_name";
+
+                        cmd.BindByName = true;
+
+                        cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
+                        cmd.Parameters.Add(new OracleParameter("search_combo", search_type));
+                        cmd.Parameters.Add(new OracleParameter("search_text", search_text));
+
+                        cmd.Parameters.Add(new OracleParameter("start_date", start_date));
+                        cmd.Parameters.Add(new OracleParameter("end_date", end_date));
+
+                        Console.WriteLine("dept_name : " + dept_dto.Dept_name);
+                        Console.WriteLine("search_combo : " + search_type);
+                        Console.WriteLine("search_text : " + search_text);
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string prod_code = reader.GetString(0);
+                            string prod_name = reader.GetString(1);
+                            string category_name = reader.GetString(2);
+                            int? prod_price = reader.GetInt32(3);
+                            int? prod_out_count = reader.GetInt32(4);
+                            DateTime prod_out_date = reader.GetDateTime(5);
+                            string prod_out_type = reader.GetString(6);
+                            string dept_name = reader.GetString(7);
+                            string nurse_name = reader.GetString(8);
+                            string prod_out_from = reader.GetString(9);
+                            string prod_out_to = reader.GetString(10);
+                            DateTime prod_expire = reader.GetDateTime(11);
+
+                            ProductInOutModel dto = new ProductInOutModel()
+                            {
+                                Prod_code = prod_code,
+                                Prod_name = prod_name,
+                                Category_name = category_name,
+                                Prod_price = prod_price,
+                                Prod_out_count = prod_out_count,
+                                Prod_out_date = prod_out_date,
+                                Prod_out_type = prod_out_type,
+                                Dept_name = dept_name,
+                                Nurse_name = nurse_name,
+                                Prod_out_from = prod_out_from,
+                                Prod_out_to = prod_out_to,
+                                Prod_expire = prod_expire
+                            };
+
+                            list.Add(dto);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return list;
+
+        }//GetProductOut
+
+
+        public string GetProductOut_MaxDate(DeptModel dept_dto)
+        {
+            string result = null;
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT MAX(O.prod_out_date) " +
+                                          "FROM PRODUCT_OUT O " +
+                                          "INNER JOIN PRODUCT P " +
+                                          "ON O.prod_id = P.prod_id " +
+                                          "INNER JOIN CATEGORY C " +
+                                          "ON P.category_id = C.category_id " +
+                                          "LEFT OUTER JOIN NURSE N " +
+                                          "ON O.nurse_no = N.nurse_no " +
+                                          "INNER JOIN DEPT D " +
+                                          "ON N.dept_id = D.dept_id " +
+                                          "WHERE O.prod_out_to = :name " +
+                                          "ORDER BY O.prod_out_date, P.prod_name ";
+
+
+                        cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            result = reader.GetString(0);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return result;
+        }//GetProductOut_MaxDate
+
+
+        public string GetProductOut_MinDate(DeptModel dept_dto)
+        {
+            string result = null;
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT MIN(O.prod_out_date) " +
+                                          "FROM PRODUCT_OUT O " +
+                                          "INNER JOIN PRODUCT P " +
+                                          "ON O.prod_id = P.prod_id " +
+                                          "INNER JOIN CATEGORY C " +
+                                          "ON P.category_id = C.category_id " +
+                                          "LEFT OUTER JOIN NURSE N " +
+                                          "ON O.nurse_no = N.nurse_no " +
+                                          "INNER JOIN DEPT D " +
+                                          "ON N.dept_id = D.dept_id " +
+                                          "WHERE O.prod_out_to = :name " +
+                                          "ORDER BY O.prod_out_date, P.prod_name ";
+
+
+                        cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            result = reader.GetString(0);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return result;
+        }//GetProductOut_MaxDate
+
+
 
         public void AddImpDept(ProductModel prod_dto, NurseModel nurse_dto)
         {
@@ -1608,7 +2019,8 @@ namespace EasyProject.Dao
                                 Imp_dept_count = imp_dept_count,
                                 Prod_expire = prod_expire,
                                 Prod_id = prod_id,
-                                Imp_dept_id = imp_dept_id
+                                Imp_dept_id = imp_dept_id,
+                                Prod_remainexpire = (prod_expire.Date - DateTime.Now.Date).Days
                             };
 
                             list.Add(dto);

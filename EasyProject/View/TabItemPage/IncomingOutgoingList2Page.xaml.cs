@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Excel = Microsoft.Office.Interop.Excel;
 using EasyProject.Model;
+using System.Globalization;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -30,16 +31,16 @@ namespace EasyProject.View.TabItemPage
         {
             InitializeComponent();
             export_btn.Click += Export_btn_Click;
-            userDept00 = (deptName_ComboBox1.SelectedValue as DeptModel).Dept_name;
+           // userDept00 = (deptName_ComboBox1.SelectedValue as DeptModel).Dept_name;
         }
-        private void OnDropDownOpened(object sender, EventArgs e)
-        {
-            isComboBoxDropDownOpened = true;
+        //private void OnDropDownOpened(object sender, EventArgs e)
+        //{
+        //    isComboBoxDropDownOpened = true;
 
-            var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
-            var deptNameText = deptModelObject.Dept_name;
-            userDept00 = deptNameText.ToString();
-        }
+        //    var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
+        //    var deptNameText = deptModelObject.Dept_name;
+        //    userDept00 = deptNameText.ToString();
+        //}
         private void Export_btn_Click(object sender, RoutedEventArgs e)
         {
             dataGrid2.SelectAllCells();
@@ -82,5 +83,20 @@ namespace EasyProject.View.TabItemPage
             );
         }
     }
-    
+    public class MultipleTextFormatConverterKey2 : IMultiValueConverter
+    {
+
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            return string.Format((string)parameter, values);
+
+
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
 }

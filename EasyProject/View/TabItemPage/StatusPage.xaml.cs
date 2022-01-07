@@ -13,6 +13,8 @@ using EasyProject.Model;
 using System.ComponentModel;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using EasyProject.ViewModel;
+using System.Windows.Data;
+using System.Globalization;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -44,7 +46,6 @@ namespace EasyProject.View.TabItemPage
             var userDeptName = userDept.Dept_name;
 
             var dash = Ioc.Default.GetService<ProductShowViewModel>();
-            //temp.DashboardPrint();
             dash.DashboardPrint1(dash.SelectedDept, dash.SelectedCategory1,dash.SelectedNumber);
             dash.DashboardPrint2(dash.SelectedDept);
 
@@ -59,28 +60,7 @@ namespace EasyProject.View.TabItemPage
                 buttonColumn.Visibility = Visibility.Hidden;
             }
 
-            ((ProductShowViewModel)(this.DataContext)).LoadEmployee();
-
         }
-
-        private void RowButton_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("버튼을 클릭했습니다.");
-        }
-
-
-        private void Part_comboBox_Selection(object sender, SelectedCellsChangedEventArgs e)
-        {
-            MessageBox.Show("버튼을 클릭했습니다.");
-        }
-
-        /*private void goDialog_Btn_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate
-                (
-                new Uri("/View/ExportPage/DialogPage.xaml", UriKind.Relative)
-                );
-        }*/
 
         private void OnDropDownOpened(object sender, EventArgs e)
         {
@@ -136,65 +116,88 @@ namespace EasyProject.View.TabItemPage
         {
             GraphCard.Visibility = Visibility.Visible;
         }
-        private void reset_Btn_Click(object sender, RoutedEvent e)
+
+
+
+    }//class
+
+    public class IsLesserThanConverter : IValueConverter
+    {//Red
+        public static readonly IValueConverter Instance = new IsLesserThanConverter();
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            //mount_TxtBox.Text = "";
+            bool checkBool = false;
+
+            if (value != null && targetType != null)
+            {
+                int intValue = (int)value;//남은 일수
+                int compareToValue = Int32.Parse(parameter.ToString());
+
+                checkBool = intValue < compareToValue;
+            }
+
+            return checkBool;
         }
 
-        private void cancel_Btn_Click(object sender, RoutedEventArgs e)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-
+            throw new NotImplementedException();
         }
-
-        private void signUp_Btn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var temp = Ioc.Default.GetService<ProductShowViewModel>();
-
-            //if (Type_comboBox.SelectedValue != null)
-            //{
-            //    if (Type_comboBox.SelectedValue.Equals("사용"))
-            //    {
-            //        Dept_comboBox.Visibility = Visibility.Hidden;
-
-            //        mount_TxtBox.Text = null;
-
-            //        mount_TxtBox_Hidden.IsEnabled = true;
-            //        mount_TxtBox_Hidden.Visibility = Visibility.Hidden;
-            //    }
-            //    else if (Type_comboBox.SelectedValue.Equals("폐기"))
-            //    {
-            //        Dept_comboBox.Visibility = Visibility.Hidden;
-
-            //        mount_TxtBox.Text = Convert.ToString(temp.SelectedProduct.Imp_dept_count);
-            //        mount_TxtBox.Focus();
-
-            //        mount_TxtBox_Hidden.Visibility = Visibility.Visible;
-            //        mount_TxtBox_Hidden.Text = Convert.ToString(temp.SelectedProduct.Imp_dept_count);
-            //        mount_TxtBox_Hidden.IsEnabled = false;
-
-            //        Console.WriteLine("ori : " + mount_TxtBox.Text);
-            //        Console.WriteLine("ori enable? : " + mount_TxtBox.IsEnabled);
-            //        Console.WriteLine("aft : " + mount_TxtBox_Hidden.Text);
-            //        Console.WriteLine("aft enable? : " + mount_TxtBox_Hidden.IsEnabled);
-            //    }
-            //    else
-            //    {
-            //        Dept_comboBox.Visibility = Visibility.Visible;
-
-            //        mount_TxtBox.Text = null;
-
-            //        mount_TxtBox_Hidden.IsEnabled = true;
-            //        mount_TxtBox_Hidden.Visibility = Visibility.Hidden;
-            //    }
-            //}
-        }
-
-
     }
 
-}
+    public class IsEqualOrLessGreaterThanConverter : IValueConverter
+    {//Yellow
+        public static readonly IValueConverter Instance = new IsEqualOrLessGreaterThanConverter();
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+
+            bool checkBool = false;
+
+            if (value != null && targetType != null)
+            {
+                int intValue = (int)value;//남은 일수
+                int compareToValue = Int32.Parse(parameter.ToString());
+
+                checkBool = ((intValue > compareToValue) && (intValue - compareToValue < 3))
+                || (intValue == compareToValue);
+            }
+
+            return checkBool;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class IsGreaterThanConverter : IValueConverter
+    {//Green
+        public static readonly IValueConverter Instance = new IsGreaterThanConverter();
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            bool checkBool = false;
+
+            if (value != null && targetType != null)
+            {
+                int intValue = (int)value;//남은 일수
+                int compareToValue = Int32.Parse(parameter.ToString());
+
+                checkBool = (intValue > compareToValue) && (intValue - compareToValue > 3);
+            }
+
+            return checkBool;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
+
+}//namespace

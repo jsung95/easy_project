@@ -29,10 +29,24 @@ namespace EasyProject.Dao
         List<ProductInOutModel> GetProductIn(DeptModel dept_dto, DateTime? start_date, DateTime? end_date); //입고 날짜 기간 지정
         List<ProductInOutModel> GetProductIn(DeptModel dept_dto, string search_type, string search_text);
         List<ProductInOutModel> GetProductIn(DeptModel dept_dto, string search_type, string search_text, DateTime? start_date, DateTime? end_date); //입고 날짜 기간 지정
+
+        // 입고테이블 최대, 최소 날짜 조회
+        string GetProductIn_MaxDate(DeptModel dept_dto);
+        string GetProductIn_MinDate(DeptModel dept_dto);
+
+
         // 출고테이블 조회
         List<ProductInOutModel> GetProductOut();
         List<ProductInOutModel> GetProductOut(DeptModel dept_dto);
+        List<ProductInOutModel> GetProductOut(DeptModel dept_dto, DateTime? start_date, DateTime? end_date); //출고 날짜 기간 지정
         List<ProductInOutModel> GetProductOut(DeptModel dept_dto, string search_type, string search_text);
+        List<ProductInOutModel> GetProductOut(DeptModel dept_dto, string search_type, string search_text, DateTime? start_date, DateTime? end_date); //출고 날짜 기간 지정
+
+        // 입고테이블 최대, 최소 날짜 조회
+        string GetProductOut_MaxDate(DeptModel dept_dto);
+        string GetProductOut_MinDate(DeptModel dept_dto);
+
+
         // IMP_DEPT 테이블 추가
         void AddImpDept(ProductModel prod_dto, NurseModel nurse_dto);
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -24,53 +25,42 @@ namespace EasyProject.View.TabItemPage
     {
         public String userDept00 = null;
         public bool isComboBoxDropDownOpened = false;
-        Boolean headerflag = false;
+        //Boolean headerflag = false;
 
         public IncomingOutgoingList1Page()
         {
             InitializeComponent();
-            //Incomingdatagrid_LoadingRow();
-            
-            //dataGrid1.LayoutUpdated += new EventHandler(Incomingdatagrid_LayoutUpdated);
+           
             export_btn.Click += Export_btn_Click;
-            userDept00 = (deptName_ComboBox1.SelectedValue as DeptModel).Dept_name;
-        }
-
-        private void Incomingdatagrid_LayoutUpdated(object sender, EventArgs e)
-        {
-            if (headerflag)
-            {
-
-                DataGridColumn col = dataGrid1.Columns[6];
-                col.CellStyle = (Style)Resources["DataGridCellStyle"];
-                headerflag = false;
-            }
-        }
-
-        private void OnDropDownOpened(object sender, EventArgs e)
-        {
-            isComboBoxDropDownOpened = true;
-
-            var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
-            var deptNameText = deptModelObject.Dept_name;
-            userDept00= deptNameText.ToString();
-        }
-
-        //******************************************************************************
-        //************************입고 유형별 색깔 다르게 주기**************************
-        
+            //userDept00 = (deptName_ComboBox1.SelectedValue as DeptModel).Dept_name;
+        }      
        
 
+        //private void OnDropDownOpened(object sender, EventArgs e)
+        //{
+        //    isComboBoxDropDownOpened = true;
+
+        //    var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
+        //    var deptNameText = deptModelObject.Dept_name;
+        //    userDept00= deptNameText.ToString();
+        //}
+
+      
         private void Export_btn_Click(object sender, RoutedEventArgs e)
         {
             dataGrid1.SelectAllCells();
             dataGrid1.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
             ApplicationCommands.Copy.Execute(null, dataGrid1);
-            dataGrid1.UnselectAllCells();
+           
             String result = (string)Clipboard.GetData(DataFormats.CommaSeparatedValue);
-            string today = String.Format(DateTime.Now.ToString("yyyy/MM/dd"));
+            Clipboard.Clear();
+           
+            dataGrid1.UnselectAllCells();
+           
+           // DateTime now = DateTime.Now;
+            string today = String.Format(DateTime.Now.ToString("yyyy/MM/dd_HHmmss"));
 
-            
+            //Console.WriteLine(result);
             string f_path = @"c:\temp\["+ userDept00 + "]"+"입고현황_" + today + ".csv";
             File.AppendAllText(f_path, result, UnicodeEncoding.UTF8);
 
@@ -100,6 +90,22 @@ namespace EasyProject.View.TabItemPage
                    Type.Missing,
                    Type.Missing
             );
+        }
+
+    }//class
+    public class MultipleTextFormatConverterKey : IMultiValueConverter  
+    {
+
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            return string.Format((string)parameter, values);
+
+        
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+             return null;
         }
     }
 }
