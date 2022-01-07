@@ -31,16 +31,16 @@ namespace EasyProject.View.TabItemPage
         {
             InitializeComponent();
             export_btn.Click += Export_btn_Click;
-            userDept00 = (deptName_ComboBox1.SelectedValue as DeptModel).Dept_name;
+           // userDept00 = (deptName_ComboBox1.SelectedValue as DeptModel).Dept_name;
         }
-        private void OnDropDownOpened(object sender, EventArgs e)
-        {
-            isComboBoxDropDownOpened = true;
+        //private void OnDropDownOpened(object sender, EventArgs e)
+        //{
+        //    isComboBoxDropDownOpened = true;
 
-            var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
-            var deptNameText = deptModelObject.Dept_name;
-            userDept00 = deptNameText.ToString();
-        }
+        //    var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
+        //    var deptNameText = deptModelObject.Dept_name;
+        //    userDept00 = deptNameText.ToString();
+        //}
         private void Export_btn_Click(object sender, RoutedEventArgs e)
         {
             dataGrid2.SelectAllCells();

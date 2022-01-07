@@ -18,7 +18,7 @@ namespace EasyProject.Model
             get { return prod_name; }
             set
             {
-                prod_name = value;
+                prod_name = value;                
                 OnPropertyChanged("Prod_name");
             }
         }
@@ -27,7 +27,25 @@ namespace EasyProject.Model
         public int? Prod_price { get; set; }
         public int? Prod_total { get; set; }
         public int? Imp_dept_count { get; set; }
-        public DateTime Prod_expire { get; set; }
+        private DateTime prod_expire;
+        public DateTime Prod_expire
+        {
+            get { return prod_expire; }
+            set
+            {
+                prod_expire = value;
+                if(prod_expire < DateTime.Now)
+                {
+                    isExpired = true;
+                }
+                else
+                {
+                    isExpired = false;
+                }
+                OnPropertyChanged("Prod_expire");      
+            }        
+        }
+
         public int? Prod_id { get; set; }
         public int? Imp_dept_id { get; set; }
         public int? Prod_remainexpire { get; set; }
@@ -115,19 +133,16 @@ namespace EasyProject.Model
                 if (selectedOutType == "사용")
                 {
                     Popup_combobox_vis = Visibility.Hidden;
-                    Popup_textBox_vis = Visibility.Hidden;
                     IsEnabled = true;
                 }
                 else if (selectedOutType == "이관")
                 {
-                    Popup_combobox_vis = Visibility.Visible;
-                    Popup_textBox_vis = Visibility.Visible;
+                    Popup_combobox_vis = Visibility.Visible;                    
                     IsEnabled = true;
                 }
                 else if (selectedOutType == "폐기")
                 {
-                    Popup_combobox_vis = Visibility.Hidden;
-                    Popup_textBox_vis = Visibility.Hidden;
+                    Popup_combobox_vis = Visibility.Hidden;                    
                     IsEnabled = true;
                 }
 
@@ -157,19 +172,7 @@ namespace EasyProject.Model
                 OnPropertyChanged("Popup_combobox_vis");
             }
         }
-        // 출고 - 부서 선택 콤보 박스 좌측 textbox의 Visibility와 바인딩
-        private Visibility popup_textBox_vis;
-        public Visibility Popup_textBox_vis
-        {
-            get { return popup_textBox_vis; }
-            set
-            {
-                popup_textBox_vis = value;
-                Console.WriteLine("popup_textBox_vis 변경합니다! : " + popup_textBox_vis);
-                OnPropertyChanged("Popup_textBox_vis");
-            }
-        }
-
+        
         // 재고 출고 - 선택한 출고(이관) 부서를 담을 프로퍼티
         private DeptModel selectedOutDept;
         public DeptModel SelectedOutDept
@@ -217,10 +220,35 @@ namespace EasyProject.Model
                 OnPropertyChanged("IsEnabled");
             }
         }
+        // 유통기한 만료 여부
+        private bool isExpired;
+        public bool IsExpired
+        {
+            get { return isExpired; }
+            set
+            {
+                isExpired = value;
+                if (isExpired)
+                    datePicker_vis = Visibility.Visible;
+                else
+                    datePicker_vis = Visibility.Hidden;
+                OnPropertyChanged("IsExpired");
+            }
+        }
+        // 입고 팝업박스 datepicker
+        private Visibility datePicker_vis = Visibility.Hidden;
+        public Visibility DatePickerVis
+        {
+            get { return datePicker_vis; }
+            set
+            {
+                datePicker_vis = value;
+                Console.WriteLine("DatePickerVis : " + datePicker_vis);              
+                OnPropertyChanged("DatePickerVis");
+            }
+        }
 
-  
 
-     
     }//class
 
 }//namespace
