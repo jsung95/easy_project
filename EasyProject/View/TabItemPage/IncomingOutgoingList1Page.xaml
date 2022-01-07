@@ -72,7 +72,7 @@
                                 </Grid.ColumnDefinitions>
                                 
                                     <DatePicker x:Name="expirationDate_DatePicker"  Grid.Column="0" HorizontalContentAlignment="Left" 
-                                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Width="90" Height="33"
+                                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Width="90" Height="40"
                                         SelectedDate="{Binding SelectedStartDate_In}">
                                         <DatePicker.Resources>
                                             <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
@@ -98,7 +98,7 @@
                                     </DatePicker>
 
                                     <TextBlock HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center" Text="~" FontWeight="Bold" FontSize="15" />
-                                <DatePicker x:Name="expirationDate_DatePicker2" Grid.Column="2" HorizontalContentAlignment="Left" Width="90" Height="33"
+                                <DatePicker x:Name="expirationDate_DatePicker2" Grid.Column="2" HorizontalContentAlignment="Left" Width="90" Height="40"
                                         VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" 
                                         SelectedDate="{Binding SelectedEndDate_In}">
                                     <DatePicker.Resources>
@@ -125,9 +125,9 @@
                                 </DatePicker>
                             </Grid>
                             <Grid Grid.Column="1">
-                                <StackPanel Orientation="Horizontal">                                   
+                                <StackPanel Orientation="Horizontal">                              
 
-                                    <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요"  Width="400"
+                                    <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요"  Width="420"
                                         VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10" Height="30" 
                                         Text="{Binding searchKeyword_In, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
 

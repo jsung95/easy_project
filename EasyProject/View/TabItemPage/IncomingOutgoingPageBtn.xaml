@@ -47,9 +47,7 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <ComboBox Height="30" Width="100" Margin="5">
-                        
-                    </ComboBox>
+                 
                 </StackPanel>
                 
             </Grid>
