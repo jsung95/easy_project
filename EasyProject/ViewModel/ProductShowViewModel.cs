@@ -510,7 +510,7 @@ namespace EasyProject.ViewModel
             product_dao.ChangeProductInfo(SelectedProduct);
             product_dao.ChangeProductInfo_IMP_DEPT(SelectedProduct);
 
-            LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProducts());
+            LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
             UpdateCollection(LstOfRecords.Take(SelectedRecord));
             //첫페이지 말고 다음 페이지에서 재고수정할때 성공은 되는데 첫페이지로 돌아감 해결하기
             UpdateRecordCount();
