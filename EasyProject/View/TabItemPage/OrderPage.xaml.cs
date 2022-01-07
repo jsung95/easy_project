@@ -42,9 +42,9 @@ namespace EasyProject.View
 
         private void resetBtn_Click(object sender, RoutedEventArgs e)
         {
-            id_TxtBox.Text = null;
-            dept_TxtBox = null;
-            phone_TxtBox.Text = null;
+            //id_TxtBox.Text = null;
+            //dept_TxtBox = null;
+            //phone_TxtBox.Text = null;
             request_TxtBox.Text = null;
             capacity_TxtBox.Text = null;
             amount_TxtBox.Text = null;
@@ -59,7 +59,7 @@ namespace EasyProject.View
             PrintDialog printDialog = new PrintDialog();
             if (printDialog.ShowDialog().GetValueOrDefault(false))
             {
-                printDialog.PrintVisual(PlaceOrder, "PlaceOrder");
+                printDialog.PrintVisual(NewPlaceOrder, "PlaceOrder");
             }
 
         }
@@ -68,15 +68,15 @@ namespace EasyProject.View
         private void pdfBtn_Click(object sender, RoutedEventArgs e)
         {
             //이미지로 저장(스크린 샷)
-            RenderTargetBitmap rtb = new RenderTargetBitmap((int)PlaceOrder.ActualWidth, (int)PlaceOrder.ActualHeight, 74, 74, PixelFormats.Pbgra32);
-            rtb.Render(PlaceOrder);
+            RenderTargetBitmap rtb = new RenderTargetBitmap((int)NewPlaceOrder.ActualWidth, (int)NewPlaceOrder.ActualHeight, 74, 74, PixelFormats.Pbgra32);
+            rtb.Render(NewPlaceOrder);
             PngBitmapEncoder png = new PngBitmapEncoder();
             png.Frames.Add(BitmapFrame.Create(rtb));
             MemoryStream stream = new MemoryStream();
             png.Save(stream);
 
             System.Drawing.Image image = System.Drawing.Image.FromStream(stream);
-            string stampFileName = @"C:\Users\user\Desktop\"  + $"발주신청서{index}.png";
+            string stampFileName = @"C:\Users\user\Desktop\"  + $"신규발주신청서{index}.png";
             image.Save(stampFileName);
            
 
@@ -94,18 +94,22 @@ namespace EasyProject.View
             // Create a font
             XFont font = new XFont("Verdana", 20, XFontStyle.Bold);
 
-            XImage im = XImage.FromFile(@"C:\Users\user\Desktop\" + $"발주신청서{index}.png");
+            XImage im = XImage.FromFile(@"C:\Users\user\Desktop\" + $"신규발주신청서{index}.png");
 
             gfx.DrawImage(im, -150, 100, 700, 450);
 
-
          
 
+
             // Save the document...
-            string filename = @"C:\Users\user\Desktop\" + $"발주신청서{index}.pdf";
+            string filename = @"C:\Users\user\Desktop\" + $"신규발주신청서{index}.pdf";
             document.Save(filename);
-            MessageBox.Show($"발주신청서{index}.pdf 생성");
+            MessageBox.Show($"신규발주신청서{index}.pdf 생성");
             index++;
+
+            var windows = new Window();
+            
+            windows.ShowDialog();
             
         }
 

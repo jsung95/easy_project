@@ -10,7 +10,7 @@
       DataContext="{Binding PSVM, Source={StaticResource Locator}}"
       Title="OrderPopupBoxPage">
 
-    <Grid>
+    <Grid x:Name="PlaceOrder">
         <Grid.Resources>
             <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
                 <Setter Property="Margin" Value="8,8,10,8" />
@@ -35,8 +35,8 @@
             <TextBlock FontWeight="Bold" FontSize="15" TextAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Margin="10"
                                                                        VerticalAlignment="center"><Run Foreground="White" Text="발주 신청서" IsEnabled="False" /></TextBlock>
 
-            <Button x:Name="resetBtn"  Foreground="white" Background="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Right"  
-                                                                        VerticalAlignment="Center"  BorderThickness="0" Height="48" Width="58" Cursor="Hand" Grid.Column="1" >
+            <Button x:Name="resetBtn"  Foreground="white" Background="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                                                                        VerticalAlignment="Bottom"  BorderThickness="0" Height="48" Width="58" Cursor="Hand" Grid.Column="1" Click="resetBtn_Click">
                 <materialDesign:PackIcon Grid.Row="0" Kind="Restore" VerticalAlignment="Top" HorizontalAlignment="Center" Height="17" Width="17" />
             </Button>
 
@@ -48,7 +48,11 @@
                 <RowDefinition Height="0.6*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <StackPanel Orientation="Horizontal">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="149*"/>
+                    <ColumnDefinition Width="11*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
                     <Rectangle Fill="White" HorizontalAlignment="Left" Height="10"  Stroke="#4472C4" VerticalAlignment="center" Width="10" Margin="10"/>
                     <TextBlock  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" Margin="7" TextWrapping="Wrap" Text="신청자 정보" VerticalAlignment="center" Foreground="#4472C4"/>
                 </StackPanel>
@@ -125,7 +129,7 @@
                 <Label Content="용량" Foreground="#4472C4" Grid.Column="2" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                                                                            VerticalAlignment="Center" Margin="7,0,0,0"/>
                 <TextBox x:Name="capacity_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="용량" Grid.Column="3" HorizontalContentAlignment="Left" 
-                                                                           VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="5,0,5,0" Height="30" />
+                                                                           VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="5,0,5,0" Height="30"/>
 
                 <Label Content="수량" Foreground="#4472C4" Grid.Column="4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                                                                            VerticalAlignment="Center" Margin="7,0,0,0"/>
@@ -172,6 +176,8 @@
                 </Button>
                 <Button x:Name="printBtn" Content="인쇄"  Foreground="#4472C4" Background="white" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" Click="PrintBtn"
                                                                 VerticalAlignment="Center"  BorderThickness="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  Height="28" Width="58" Cursor="Hand" Margin="5" />
+                <Button x:Name="pdfBtn" Content="PDF"  Foreground="#4472C4" Background="white" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" Click="pdfBtn_Click"
+                                                                VerticalAlignment="Center"  BorderThickness="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  Height="28" Width="58" Cursor="Hand" />
             </StackPanel>
         </Grid>
     </Grid>
