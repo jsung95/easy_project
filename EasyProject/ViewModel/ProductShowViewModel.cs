@@ -13,6 +13,18 @@ using System.Windows.Data;
 using System.Windows;
 using System.ComponentModel;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using LiveCharts.Configurations;
+using System.Windows.Media;
+using SolidColorBrush = Xamarin.Forms.SolidColorBrush;
+using Color = Xamarin.Forms.Color;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
 
 namespace EasyProject.ViewModel
 {
@@ -291,7 +303,7 @@ namespace EasyProject.ViewModel
 
             Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts());
             SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1];
-
+            
 
             Categories = new ObservableCollection<CategoryModel>(category_dao.GetCategories());
 
@@ -318,16 +330,42 @@ namespace EasyProject.ViewModel
             DecidedNumber = new[] { 10, 20, 30 };
             SelectedNumber = DecidedNumber[0];
             DashboardPrint1(SelectedDept, SelectedCategory1, SelectedNumber);
+           
         }//Constructor
 
-    //대시보드 출력(x축:제품code, y축:수량) 
+        //대시보드 출력(x축:제품code, y축:수량) 
 
         public void DashboardPrint1(DeptModel selected_dept, CategoryModel selected_category, int selected_number)                       //대시보드 출력(x축:제품code, y축:수량) 
-
         {
+
+            var Mapper = Mappers.Xy<int>()
+           .X((value, index) => value)
+           .Y((value, index) => index)
+           .Fill((value, index) =>
+           {
+               //Console.WriteLine("value" + (double)value.Prod_remainexpire);
+               Console.WriteLine("index" + index);
+               if (value <= 10)
+               {
+                   return Brushes.Red;
+               }
+               else
+               {
+                   return Brushes.Black;
+               }
+
+           });
+
+            //Console.WriteLine("dsdfsdffsdf");
+            //Console.WriteLine(value.Prod_remainexpire);
+
+            var seriesCollection = new SeriesCollection(Mapper);
+            Console.WriteLine(Mapper);
+            
             ChartValues<int> name = new ChartValues<int>();   //y축들어갈 임시 값
+
             Console.WriteLine("DashboardPrint11");
-            SeriesCollection1 = new SeriesCollection();   //대시보드 틀
+            SeriesCollection1 = seriesCollection;   //대시보드 틀
             //Console.WriteLine(selected.Dept_id); 
             List<ProductShowModel> list_xyz = product_dao.Get_Dept_Category_Number_RemainExpire(selected_dept, selected_category, selected_number);
             Console.WriteLine(selected_dept.Dept_name);
@@ -345,8 +383,10 @@ namespace EasyProject.ViewModel
                 Title = "남은 유통기한",   //+ i
                 Values = name,
                 DataLabels = true,
-                LabelPoint = point => point.X + "일 "
+                LabelPoint = point => point.X + "일 ",
+                Configuration = Mapper,
             });
+
             BarLabels1 = new List<string>() { };                           //x축출력
             foreach (var item in list_xyz)
             {
@@ -354,7 +394,11 @@ namespace EasyProject.ViewModel
                 Console.WriteLine("Prod_code" + item.Prod_code);
             }
             Formatter1 = value => value.ToString("N");   //문자열 10진수 변환
-        }//dashboardprint4
+            
+
+        }//dashboardprint1
+
+
 
         private ActionCommand command;
         public ICommand Command
@@ -489,6 +533,7 @@ namespace EasyProject.ViewModel
             //LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.SearchProducts(SelectedDept, SelectedSearchType, TextForSearch));
             //UpdateCollection(LstOfRecords.Take(SelectedRecord));
             //UpdateRecordCount();
+            
         }
 
         public void EditProduct()
