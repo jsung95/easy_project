@@ -60,7 +60,7 @@ namespace EasyProject.View.TabItemPage
                 buttonColumn.Visibility = Visibility.Hidden;
             }
 
-            ((ProductShowViewModel)(this.DataContext)).LoadEmployee();
+            ((ProductShowViewModel)(this.DataContext)).showListbyDept();
 
         }
 
