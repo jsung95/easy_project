@@ -2,6 +2,7 @@
 using PdfSharp.Pdf;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -98,22 +99,23 @@ namespace EasyProject.View
 
             gfx.DrawImage(im, -150, 100, 700, 450);
 
-         
-
+    
+            
+            
 
             // Save the document...
             string filename = @"C:\Users\user\Desktop\" + $"신규발주신청서{index}.pdf";
             document.Save(filename);
             MessageBox.Show($"신규발주신청서{index}.pdf 생성");
             index++;
+            Process.Start(filename);
+            //var windows = new Window();
 
-            var windows = new Window();
-            
-            windows.ShowDialog();
-            
+            //windows.ShowDialog();
+
         }
 
-  
+
     }
 
 
