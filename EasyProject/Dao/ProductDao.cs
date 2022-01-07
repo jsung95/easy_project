@@ -2019,7 +2019,8 @@ namespace EasyProject.Dao
                                 Imp_dept_count = imp_dept_count,
                                 Prod_expire = prod_expire,
                                 Prod_id = prod_id,
-                                Imp_dept_id = imp_dept_id
+                                Imp_dept_id = imp_dept_id,
+                                Prod_remainexpire = (prod_expire.Date - DateTime.Now.Date).Days
                             };
 
                             list.Add(dto);
