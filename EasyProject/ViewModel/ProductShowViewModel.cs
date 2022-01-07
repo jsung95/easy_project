@@ -304,7 +304,6 @@ namespace EasyProject.ViewModel
             DeptsForPopupBox.RemoveAt((int)App.nurse_dto.Dept_id - 1); // 현재 사용자의 부서는 목록에서 제거
             Categories = new ObservableCollection<CategoryModel>(category_dao.GetCategories());
 
-
             //App.xaml.cs 에 로그인할 때 바인딩 된 로그인 정보 객체
             Nurse = App.nurse_dto;
             SelectedProductList = new List<ProductShowModel>();
