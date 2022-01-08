@@ -24,66 +24,9 @@ namespace EasyProject.ViewModel
         ProductDao dao = new ProductDao();
         CategoryDao categoryDao = new CategoryDao();
 
-        private string openFileDialog;
-        public string OpenFileDialog { 
-            get
-            {
-                return openFileDialog;
-            }
 
-            set
-            {
-                this.openFileDialog = value;
-                OnPropertyChanged("OpenFileDialog");
-            }
-        }
-
-        private bool isDuplicatedProduct = false;
-        public bool IsDuplicatedProduct
-        {
-            get { return isDuplicatedProduct; }
-            set
-            {
-                isDuplicatedProduct = value;
-                OnPropertyChanged("IsDuplicatedProduct");
-            }
-        }
-
-/*        private string duplicatedProductString;
-        public string DuplicatedProductString
-        {
-            get { return duplicatedProductString; }
-            set
-            {
-                duplicatedProductString = value;
-                OnPropertyChanged("DuplicatedProductString");
-            }
-        }*/
-
-        private string addCategoryName;
-        public string AddCategoryName
-        {
-            get { return addCategoryName; }
-            set
-            {
-                addCategoryName = value;
-                OnPropertyChanged("AddCategoryName");
-            }
-        }
-
+        //카테고리 목록을 담을 프로퍼티
         public ObservableCollection<CategoryModel> Categories { get; set; }
-
-        //선택한 카테고리를 담을 프로퍼티
-        private CategoryModel selectedCategory;
-        public CategoryModel SelectedCategory
-        {
-            get { return selectedCategory; }
-            set
-            {
-                selectedCategory = value;
-                OnPropertyChanged("SelectedCategory");
-            }
-        }
 
         //재고 입력 데이터를 담을 프로퍼티
         public ProductModel Product { get; set; }
@@ -108,19 +51,6 @@ namespace EasyProject.ViewModel
         public List<ProductInOutModel> productDtoList { get; set; }
 
         private List<ProductShowModel> excelProductList;
-
-
-        //스넥바 메세지큐
-        private SnackbarMessageQueue messagequeue;
-        public SnackbarMessageQueue MessageQueue
-        {
-            get { return messagequeue; }
-            set {
-                messagequeue = value; 
-                OnPropertyChanged("MessageQueue"); 
-            }
-        }
-
 
 
         public ProductViewModel()
@@ -153,46 +83,33 @@ namespace EasyProject.ViewModel
 
         }
 
-        private ActionCommand command;
-        public ICommand Command
+
+        #region 스넥바
+
+        //스넥바 메세지큐
+        private SnackbarMessageQueue messagequeue;
+        public SnackbarMessageQueue MessageQueue
         {
-            get
+            get { return messagequeue; }
+            set
             {
-                if (command == null)
-                {
-                    command = new ActionCommand(ProductInsert);   
-                }
-                return command;
-            }//get
+                messagequeue = value;
+                OnPropertyChanged("MessageQueue");
+            }
+        }
 
-        }//Command
-        private ActionCommand resetCommand; // 초기화 버튼(입력 폼 비우기)
-        public ICommand ResetCommand
+
+        private bool isDuplicatedProduct = false;
+        public bool IsDuplicatedProduct
         {
-            get
+            get { return isDuplicatedProduct; }
+            set
             {
-                if (resetCommand == null)
-                {
-                    resetCommand = new ActionCommand(ResetForm);
-                }
-                return resetCommand;
-            }//get
+                isDuplicatedProduct = value;
+                OnPropertyChanged("IsDuplicatedProduct");
+            }
+        }
 
-        }//ResetCommand
-
-        private ActionCommand listCommand;
-        public ICommand ListCommand
-        {
-            get
-            {
-                if (listCommand == null)
-                {
-                    listCommand = new ActionCommand(FileReader);
-                }
-                return listCommand;
-            }//get
-
-        }//ListCommand
 
         private ActionCommand snackBarCommand;
         public ICommand SnackBarCommand
@@ -212,6 +129,38 @@ namespace EasyProject.ViewModel
         {
             IsDuplicatedProduct = false;
         }
+        #endregion
+
+        #region CSV/엑셀
+
+        private string openFileDialog;
+        public string OpenFileDialog
+        {
+            get
+            {
+                return openFileDialog;
+            }
+
+            set
+            {
+                this.openFileDialog = value;
+                OnPropertyChanged("OpenFileDialog");
+            }
+        }
+
+        private ActionCommand listCommand;
+        public ICommand ListCommand
+        {
+            get
+            {
+                if (listCommand == null)
+                {
+                    listCommand = new ActionCommand(FileReader);
+                }
+                return listCommand;
+            }//get
+
+        }//ListCommand
 
         private void FileReader()
         {
@@ -520,6 +469,47 @@ namespace EasyProject.ViewModel
                 GC.Collect();
             }
         }
+        #endregion
+
+        #region 재고입력
+
+        //선택한 카테고리를 담을 프로퍼티
+        private CategoryModel selectedCategory;
+        public CategoryModel SelectedCategory
+        {
+            get { return selectedCategory; }
+            set
+            {
+                selectedCategory = value;
+                OnPropertyChanged("SelectedCategory");
+            }
+        }
+
+        //카테고리 추가 - 직접입력한 카테고리 TextBox.Text 값
+        private string addCategoryName;
+        public string AddCategoryName
+        {
+            get { return addCategoryName; }
+            set
+            {
+                addCategoryName = value;
+                OnPropertyChanged("AddCategoryName");
+            }
+        }
+
+        private ActionCommand command;
+        public ICommand Command
+        {
+            get
+            {
+                if (command == null)
+                {
+                    command = new ActionCommand(ProductInsert);
+                }
+                return command;
+            }//get
+
+        }//Command
 
         public void ProductInsert()
         {
@@ -656,6 +646,22 @@ namespace EasyProject.ViewModel
 
             }//else
         }// ProductInsert
+        #endregion
+
+        #region 초기화 버튼
+        private ActionCommand resetCommand; // 초기화 버튼(입력 폼 비우기)
+        public ICommand ResetCommand
+        {
+            get
+            {
+                if (resetCommand == null)
+                {
+                    resetCommand = new ActionCommand(ResetForm);
+                }
+                return resetCommand;
+            }//get
+
+        }//ResetCommand
         public void ResetForm()
         {
             Product.Prod_expire = DateTime.Now;
@@ -665,6 +671,8 @@ namespace EasyProject.ViewModel
             Product.Prod_code = null;
             SelectedCategory = null;
         }
+        #endregion
+
     }//class
 
 }//namespace
