@@ -206,9 +206,6 @@
     <Compile Include="View\ExportPage\DialogPage.xaml.cs">
       <DependentUpon>DialogPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ExportPage\Logout_DialogPage.xaml.cs">
-      <DependentUpon>Logout_DialogPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\ExportPage\ModifyPage.xaml.cs">
       <DependentUpon>ModifyPage.xaml</DependentUpon>
     </Compile>
@@ -281,10 +278,6 @@
     <Page Include="View\ExportPage\DialogPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\ExportPage\Logout_DialogPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ExportPage\ModifyPage.xaml">
       <SubType>Designer</SubType>
