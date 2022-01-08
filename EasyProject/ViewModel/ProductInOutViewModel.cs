@@ -112,6 +112,7 @@ namespace EasyProject.ViewModel
                 selectedStartDate_In = value;
 
                 ShowProductIn_By_Date();
+                searchKeyword_In = null;
                 if (selectedStartDate_In > selectedEndDate_In)
                 {
                     SelectedStartDate_In = SelectedEndDate_In.Value.AddDays(-1);
@@ -129,6 +130,7 @@ namespace EasyProject.ViewModel
                 selectedEndDate_In = value;
 
                 ShowProductIn_By_Date();
+                searchKeyword_In = null;
                 if (selectedStartDate_In > selectedEndDate_In)
                 {
                     SelectedStartDate_In = SelectedEndDate_In.Value.AddDays(-1);
@@ -225,7 +227,6 @@ namespace EasyProject.ViewModel
             if (SelectedStartDate_In != null && SelectedEndDate_In != null) 
             {
                 Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, selectedSearchType_In, searchKeyword_In, SelectedStartDate_In, SelectedEndDate_In));
-                searchKeyword_In = null;
             }
             else
             {
@@ -254,7 +255,6 @@ namespace EasyProject.ViewModel
             if (SelectedStartDate_Out != null && SelectedEndDate_Out != null)
             {
                 Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept_Out, selectedSearchType_Out, searchKeyword_Out, SelectedStartDate_Out, SelectedEndDate_Out));
-                searchKeyword_Out = null;
             }
             else
             {
