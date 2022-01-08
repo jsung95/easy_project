@@ -44,8 +44,8 @@
         </Style>
     </Page.Resources>
 
-    <Grid Height="450" Width="1000">
-        <materialDesign:Card Grid.Column="0"  UniformCornerRadius="20" Background="White" >
+    <Grid Height="550" Width="1090" HorizontalAlignment="Left" Margin="50,0,0,0">
+        <!--<materialDesign:Card Grid.Column="0"  UniformCornerRadius="20" Background="White" >-->
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*"/>
@@ -61,8 +61,8 @@
                         <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="0.5*"/>
+                                <ColumnDefinition Width="2.5*"/>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
                                 <Grid.ColumnDefinitions>
@@ -124,10 +124,10 @@
                                     </DatePicker.Resources>
                                 </DatePicker>
                             </Grid>
-                            <Grid Grid.Column="1">
+                            <Grid Grid.Column="2">
                                 <StackPanel Orientation="Horizontal">                              
 
-                                    <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요"  Width="420"
+                                    <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요"  Width="500"
                                         VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10" Height="30" 
                                         Text="{Binding searchKeyword_In, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
 
@@ -143,7 +143,7 @@
                                     </Button>
                                 </StackPanel>                             
                             </Grid>
-                            <Grid Grid.Column="2">
+                            <Grid Grid.Column="1" HorizontalAlignment="Left" Margin="30,0,0,0">
                                 <ComboBox x:Name="searchText_ComboBox" Margin="10" Width="100" Height="30"  HorizontalContentAlignment="Left" ItemsSource="{Binding Path=SearchTypeList}"
                                             SelectedItem="{Binding selectedSearchType_In}">
                                     <ComboBox.Resources>
@@ -229,6 +229,6 @@
                     </Grid>
                 </Grid>
             </Grid>
-        </materialDesign:Card>
+        <!--</materialDesign:Card>-->
     </Grid>
 </Page>

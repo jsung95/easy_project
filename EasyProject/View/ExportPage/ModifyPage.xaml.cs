@@ -53,7 +53,8 @@ namespace EasyProject.View
             //만약 입력을 하나라도 안할경우 메시지 출력
             if(prodcode_TxtBox.Text.Length < 1 || prodname_TxtBox.Text.Length < 1 || expirationDate_DatePicker.Text.Length < 1 || price_TxtBox.Text.Length < 1 || mount_TxtBox.Text.Length < 1)
             {
-                temp.ErrorProductString = "수정할 제품의 정보를 모두 기입해주세요.";
+                temp.MessageQueue.Enqueue("수정할 제품의 정보를 모두 기입해주세요.", "닫기", (x) => { temp.IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                //temp.ErrorProductString = "수정할 제품의 정보를 모두 기입해주세요.";
                 temp.IsEmptyProduct = true;
             }
             else

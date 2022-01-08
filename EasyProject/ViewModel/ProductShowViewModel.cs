@@ -24,6 +24,8 @@ using System.Windows.Documents;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MaterialDesignThemes.Wpf;
+
 namespace EasyProject.ViewModel
 {
     public class ProductShowViewModel : Notifier
@@ -56,11 +58,11 @@ namespace EasyProject.ViewModel
 
         public ProductShowViewModel()
         {
+            messagequeue = new SnackbarMessageQueue();
+
             Products = new ObservableCollection<ProductShowModel>();
             SearchTypeList = new[] { "제품코드", "제품명", "품목/종류" };
             SelectedSearchType = SearchTypeList[0];
-
-
 
 
             Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts()); // 우측 상단 제품 현황 목록의 부서 선택 콤보박스
@@ -616,17 +618,17 @@ namespace EasyProject.ViewModel
             {
                 if (SelectedProduct.InputOutCount == null) // null 입력할 경우
                 {
-                    ErrorProductString = "제품 사용 수량을 올바르게 입력해주세요.";
+                    MessageQueue.Enqueue("제품 사용 수량을 올바르게 입력해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
                 }
                 else if (SelectedProduct.InputOutCount <= 0) //0 or 음수를 입력할 경우
                 {
-                    ErrorProductString = "제품 사용 수량에는 0 보다 큰 수량을 입력해주세요.";
+                    MessageQueue.Enqueue("제품 사용 수량에는 0 보다 큰 수량을 입력해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
                 }
                 else if (SelectedProduct.InputOutCount > SelectedProduct.Imp_dept_count) // 현재 재고 수량보다 많은 숫자를 입력할 경우
                 {
-                    ErrorProductString = $"{SelectedProduct.Prod_name}의 현재 수량이 {SelectedProduct.InputOutCount}보다 적습니다.";
+                    MessageQueue.Enqueue($"{SelectedProduct.Prod_name}의 현재 수량이 {SelectedProduct.InputOutCount}보다 적습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
                 }
                 else if (SelectedProduct.InputOutCount == SelectedProduct.Imp_dept_count) // 현재 재고 수량을 모두 사용할 경우
@@ -634,7 +636,7 @@ namespace EasyProject.ViewModel
                     product_dao.OutProduct(SelectedProduct, Nurse);
                     product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
                     product_dao.ChangeProductInfo_ForOut(SelectedProduct);
-                    ErrorProductString = $"{SelectedProduct.Prod_name}을(를) 모두 사용하였습니다.";
+                    MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) 모두 사용하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
                 }
                 else
@@ -642,7 +644,7 @@ namespace EasyProject.ViewModel
                     product_dao.OutProduct(SelectedProduct, Nurse);
                     product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
                     product_dao.ChangeProductInfo_ForOut(SelectedProduct);
-                    ErrorProductString = $"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 사용하였습니다.";
+                    MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 사용하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
 
                     showListbyDept();
@@ -656,22 +658,22 @@ namespace EasyProject.ViewModel
             {
                 if (SelectedProduct.InputOutCount == null) // null 입력할 경우
                 {
-                    ErrorProductString = "제품 이관 수량을 올바르게 입력해주세요.";
+                    MessageQueue.Enqueue("제품 이관 수량을 올바르게 입력해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
                 }
                 else if (SelectedProduct.SelectedOutDept == null) // 부서 선택하지 않을 경우
                 {
-                    ErrorProductString = "제품을 이관할 부서를 선택해주세요.";
+                    MessageQueue.Enqueue("제품을 이관할 부서를 선택해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
                 }
                 else if (SelectedProduct.InputOutCount <= 0) //0 or 음수를 입력할 경우
                 {
-                    ErrorProductString = "제품 이관 수량에는 0 보다 큰 수량을 입력해주세요.";
+                    MessageQueue.Enqueue("제품 이관 수량에는 0 보다 큰 수량을 입력해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
                 }
                 else if (SelectedProduct.InputOutCount > SelectedProduct.Imp_dept_count) // 현재 재고 수량보다 많은 숫자를 입력할 경우
                 {
-                    ErrorProductString = $"{SelectedProduct.Prod_name}의 현재 수량이 {SelectedProduct.InputOutCount}보다 적습니다.";
+                    MessageQueue.Enqueue($"{SelectedProduct.Prod_name}의 현재 수량이 {SelectedProduct.InputOutCount}보다 적습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
                 }
                 else if (SelectedProduct.InputOutCount == SelectedProduct.Imp_dept_count) // 현재 재고 수량을 모두 이관할 경우
@@ -679,7 +681,7 @@ namespace EasyProject.ViewModel
                     product_dao.OutProduct(SelectedProduct, Nurse);
                     product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
                     product_dao.ChangeProductInfo_ForOut(SelectedProduct);
-                    ErrorProductString = $"{SelectedProduct.Prod_name}을(를) 모두 {SelectedProduct.SelectedOutDept.Dept_name} 부서로 이관하였습니다.";
+                    MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) 모두 {SelectedProduct.SelectedOutDept.Dept_name} 부서로 이관하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
                 }
                 else
@@ -687,7 +689,7 @@ namespace EasyProject.ViewModel
                     product_dao.OutProduct(SelectedProduct, Nurse);
                     product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
                     product_dao.ChangeProductInfo_ForOut(SelectedProduct);
-                    ErrorProductString = $"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 {SelectedProduct.SelectedOutDept.Dept_name} 부서로 이관하였습니다.";
+                    MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 {SelectedProduct.SelectedOutDept.Dept_name} 부서로 이관하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
 
                     showListbyDept();
@@ -701,17 +703,17 @@ namespace EasyProject.ViewModel
 
                 if (SelectedProduct.InputOutCount == null) // null 입력할 경우
                 {
-                    ErrorProductString = "제품 폐기 수량을 올바르게 입력해주세요.";
+                    MessageQueue.Enqueue("제품 폐기 수량을 올바르게 입력해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
                 }
                 else if (SelectedProduct.InputOutCount <= 0) //0 or 음수를 입력할 경우
                 {
-                    ErrorProductString = "제품 폐기 수량에는 0 보다 큰 수량을 입력해주세요.";
+                    MessageQueue.Enqueue("제품 폐기 수량에는 0 보다 큰 수량을 입력해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
                 }
                 else if (SelectedProduct.InputOutCount > SelectedProduct.Imp_dept_count) // 현재 재고 수량보다 많은 숫자를 입력할 경우
                 {
-                    ErrorProductString = $"{SelectedProduct.Prod_name}의 현재 수량이 {SelectedProduct.InputOutCount}보다 적습니다.";
+                    MessageQueue.Enqueue($"{SelectedProduct.Prod_name}의 현재 수량이 {SelectedProduct.InputOutCount}보다 적습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
                 }
                 else if (SelectedProduct.InputOutCount == SelectedProduct.Imp_dept_count) // 현재 재고 수량을 모두 폐기할 경우
@@ -719,7 +721,7 @@ namespace EasyProject.ViewModel
                     product_dao.OutProduct(SelectedProduct, Nurse);
                     product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
                     product_dao.ChangeProductInfo_ForOut(SelectedProduct);
-                    ErrorProductString = $"{SelectedProduct.Prod_name}을(를) 모두 폐기하였습니다.";
+                    MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) 모두 폐기하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
                 }
                 else
@@ -727,7 +729,7 @@ namespace EasyProject.ViewModel
                     product_dao.OutProduct(SelectedProduct, Nurse);
                     product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
                     product_dao.ChangeProductInfo_ForOut(SelectedProduct);
-                    ErrorProductString = $"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 폐기하였습니다.";
+                    MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 폐기하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
 
                     showListbyDept();
@@ -786,12 +788,12 @@ namespace EasyProject.ViewModel
             Console.WriteLine("InProduct() 실행!");
             if (SelectedProduct.InputInCount == null)
             {
-                ErrorProductString = "제품 추가 입고 수량을 제대로 입력해주세요.";
+                MessageQueue.Enqueue("제품 추가 입고 수량을 제대로 입력해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                 IsInOutEnabled = true;
             }
             else if (SelectedProduct.InputInCount <= 0)
             {
-                ErrorProductString = "제품 추가 입고 수량은 0보다 커야합니다.";
+                MessageQueue.Enqueue("제품 추가 입고 수량은 0보다 커야합니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                 IsInOutEnabled = true;
             }
             else
@@ -799,7 +801,8 @@ namespace EasyProject.ViewModel
                 product_dao.InProduct(SelectedProduct, Nurse);
                 product_dao.ChangeProductInfo_IMP_DEPT_ForIn(SelectedProduct);
                 product_dao.ChangeProductInfo_ForIn(SelectedProduct);
-                ErrorProductString = $"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputInCount}개 추가 입고하였습니다.";
+                MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputInCount}개 추가 입고하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
                 IsInOutEnabled = true;
 
                 showListbyDept();
@@ -877,6 +880,18 @@ namespace EasyProject.ViewModel
         // ==================== 스넥바 snackbar =======================
         //============================================================
 
+        //스넥바 메세지큐
+        private SnackbarMessageQueue messagequeue;
+        public SnackbarMessageQueue MessageQueue
+        {
+            get { return messagequeue; }
+            set
+            {
+                messagequeue = value;
+                OnPropertyChanged("MessageQueue");
+            }
+        }
+
         private bool isEmptyProduct = false;
         public bool IsEmptyProduct
         {
@@ -906,17 +921,6 @@ namespace EasyProject.ViewModel
             {
                 isEditButtonClicked = value;
                 OnPropertyChanged("IsEditButtonClicked");
-            }
-        }
-
-        private string errorProductString;
-        public string ErrorProductString
-        {
-            get { return errorProductString; }
-            set
-            {
-                errorProductString = value;
-                OnPropertyChanged("ErrorProductString");
             }
         }
 

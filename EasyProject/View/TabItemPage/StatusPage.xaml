@@ -680,7 +680,7 @@
 
         </Grid>
         <materialDesign:Snackbar x:Name="Snackbar"  Background="#Ea4a2d" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
-            <materialDesign:SnackbarMessage ActionContent="닫기" ActionCommand="{Binding SnackBarCommand}" Width="619">
+            <!--materialDesign:SnackbarMessage ActionContent="닫기" ActionCommand="{Binding SnackBarCommand}" Width="619">
                 <materialDesign:SnackbarMessage.Style>
                     <Style TargetType="materialDesign:SnackbarMessage">
                         <Style.Triggers>
@@ -691,9 +691,9 @@
                         </Style.Triggers>
                     </Style>
                 </materialDesign:SnackbarMessage.Style>
-            </materialDesign:SnackbarMessage>
+            </materialDesign:SnackbarMessage-->
 
-            <materialDesign:Snackbar.Style>
+            <!--materialDesign:Snackbar.Style>
                 <Style TargetType="materialDesign:Snackbar">
                     <Setter Property="IsActive" Value="False"></Setter>
                     <Style.Triggers>
@@ -702,7 +702,18 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
+            </materialDesign:Snackbar.Style-->
+
+            <materialDesign:Snackbar.Style>
+                <Style TargetType="materialDesign:Snackbar">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsInOutEnabled}" Value="True">
+                            <Setter Property="MessageQueue" Value="{Binding MessageQueue}"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
             </materialDesign:Snackbar.Style>
+            
         </materialDesign:Snackbar>
     </Grid>
 </Page>

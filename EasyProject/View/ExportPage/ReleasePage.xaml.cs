@@ -59,7 +59,8 @@ namespace EasyProject.View
                     if(mount_TxtBox.Text.Length == 0) //사용일때 수량입력을 안했다면
                     {
                         mount_TxtBox.Focus();
-                        temp.ErrorProductString = "제품 사용 수량을 입력해주세요.";
+                        temp.MessageQueue.Enqueue("제품 사용 수량을 입력해주세요.", "닫기", (x) => { temp.IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        //temp.ErrorProductString = "제품 사용 수량을 입력해주세요.";
                         temp.IsEmptyProduct = true;
                     }//if
                     else
@@ -75,7 +76,8 @@ namespace EasyProject.View
                     if(Dept_comboBox.SelectedValue == null) //이관일때 부서를 안고르면
                     {
                         Dept_comboBox.Focus();
-                        temp.ErrorProductString = "제품을 이관할 부서를 선택해주세요.";
+                        temp.MessageQueue.Enqueue("제품을 이관할 부서를 선택해주세요.", "닫기", (x) => { temp.IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        //temp.ErrorProductString = "제품을 이관할 부서를 선택해주세요.";
                         temp.IsEmptyProduct = true;
                     }//if
                     else
@@ -83,7 +85,8 @@ namespace EasyProject.View
                         if (mount_TxtBox.Text.Length == 0) //부서를 골랐는데 수량입력을 안했다면
                         {
                             mount_TxtBox.Focus();
-                            temp.ErrorProductString = "제품 사용 수량을 입력해주세요.";
+                            temp.MessageQueue.Enqueue("제품 사용 수량을 입력해주세요.", "닫기", (x) => { temp.IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                            //temp.ErrorProductString = "제품 사용 수량을 입력해주세요.";
                             temp.IsEmptyProduct = true;
                         }//if
                         else
@@ -107,7 +110,8 @@ namespace EasyProject.View
             else
             {
                 Type_comboBox.Focus();
-                temp.ErrorProductString = "출고 유형을 선택해주세요.";
+                temp.MessageQueue.Enqueue("출고 유형을 선택해주세요.", "닫기", (x) => { temp.IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                //temp.ErrorProductString = "출고 유형을 선택해주세요.";
                 temp.IsEmptyProduct = true;
             }//else
 

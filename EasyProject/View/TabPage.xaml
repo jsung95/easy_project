@@ -24,9 +24,8 @@
                 <Button Uid="4" Height="40" Width="150" Click="TabButtonClick" ToolTip="신규발주 신청" Foreground="#ff2196f3" Content="신규발주 신청" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" />
                 <Button Uid="5" Height="40" Width="150" Click="TabButtonClick" ToolTip="권한부여" Foreground="#ff2196f3" Content="권한 변경" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" />
             </StackPanel>
- 
+
             <StackPanel Orientation="Horizontal" Margin="10 0" VerticalAlignment="Center" HorizontalAlignment="Right">
-               
                 <Button x:Name="logoutBtn" Height="35" Width="90" FontSize="13" FontWeight="DemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3" Content="로그아웃" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand"
                         Command="{Binding LogoutCommand}" Click="logoutBtn_Click"/>
                 <TextBlock x:Name="userNameTxtBox" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"></TextBlock>
