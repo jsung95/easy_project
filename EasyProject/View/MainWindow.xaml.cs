@@ -79,11 +79,13 @@ namespace EasyProject
 
             if (temp.idCheckResult) //만약 로그인에 성공했던 상태라면
             {
+                log.Info("Terminated Program");
                 temp.Logout_For_QuitProgram(); //로그아웃 로깅 데이터를 추가하고
                 Window.GetWindow(this).Close(); //프로그램 종료
             }
             else
             {
+                log.Info("Terminated Program");
                 Window.GetWindow(this).Close();
             }
 

@@ -26,6 +26,7 @@
             </StackPanel>
  
             <StackPanel Orientation="Horizontal" Margin="10 0" VerticalAlignment="Center" HorizontalAlignment="Right">
+               
                 <Button x:Name="logoutBtn" Height="35" Width="90" FontSize="13" FontWeight="DemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3" Content="로그아웃" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand"
                         Command="{Binding LogoutCommand}" Click="logoutBtn_Click"/>
                 <TextBlock x:Name="userNameTxtBox" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"></TextBlock>
@@ -34,8 +35,6 @@
             </StackPanel>
             
             <Grid x:Name="GridCursor" Width="150" Height="5" Background="#ff2196f3" VerticalAlignment="Bottom" HorizontalAlignment="Left"></Grid>
-
-            
         </Grid>
         <Grid x:Name="TabBorder" Width="1300" Height="1" Background="LightGray" VerticalAlignment="Bottom" HorizontalAlignment="Left"></Grid>
 
