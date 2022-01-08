@@ -20,7 +20,7 @@ namespace EasyProject
     {
 
         private static readonly ILog log = LogManager.GetLogger(typeof(App));
-
+        
         protected override void OnStartup(StartupEventArgs e)
         {
             log.Info("==== START UP EASY_PROJECT ====");
@@ -43,12 +43,11 @@ namespace EasyProject
                 .BuildServiceProvider());
 
             this.InitializeComponent();
+
             nurse_dto = new NurseModel();
-            Console.WriteLine("===> Init NurseDTO");
-            Console.WriteLine("  Nurse NO : {0}", nurse_dto.Nurse_no);
-            Console.WriteLine("  Nurse NAME : {0}", nurse_dto.Nurse_name);
-            Console.WriteLine("  Nurse AUTH : {0}", nurse_dto.Nurse_auth);
-            Console.WriteLine("  DEPT ID : {0}", nurse_dto.Dept_id);
+
+
+
         }//App Constructor
     }
 }
