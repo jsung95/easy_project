@@ -70,7 +70,7 @@
                         </Style.Triggers>
                     </Style>
                 </materialDesign:Snackbar.Style-->
-                
+
                 <materialDesign:Snackbar.Style>
                     <Style TargetType="materialDesign:Snackbar">
                         <Style.Triggers>
@@ -80,7 +80,7 @@
                         </Style.Triggers>
                     </Style>
                 </materialDesign:Snackbar.Style>
-                
+
             </materialDesign:Snackbar>
         </Grid>
     </Grid>

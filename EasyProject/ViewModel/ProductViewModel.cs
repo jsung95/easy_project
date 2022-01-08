@@ -127,8 +127,8 @@ namespace EasyProject.ViewModel
         {
             log.Info("ProductViewModel invoked");
 
-            //스넥바 Duration 3초로 설정
-            messagequeue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(3000));
+            //스넥바 Duration 3초로 설정 TimeSpan.FromMilliseconds(3000)
+            messagequeue = new SnackbarMessageQueue();
 
             Product = new ProductModel()
             {
@@ -534,7 +534,8 @@ namespace EasyProject.ViewModel
             if (Product.Prod_code == null || Product.Prod_name == null || SelectedCategory == null || Product.Prod_expire == null || Product.Prod_price == null || Product.Prod_total == null)
             {
                 //스넥바 메세지 출력
-                MessageQueue.Enqueue("입력할 제품의 정보를 모두 기입해주세요.");
+                //MessageQueue.Enqueue("입력할 제품의 정보를 모두 기입해주세요.", "닫기", , null, false, true, TimeSpan.FromMilliseconds(3000));
+                MessageQueue.Enqueue("입력할 제품의 정보를 모두 기입해주세요.", "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                 //DuplicatedProductString = "입력할 제품의 정보를 모두 기입해주세요.";
                 IsDuplicatedProduct = true;
             }//if
