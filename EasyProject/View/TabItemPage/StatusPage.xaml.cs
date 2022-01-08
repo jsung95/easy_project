@@ -71,9 +71,9 @@ namespace EasyProject.View.TabItemPage
         {
             var comboBox = sender as ComboBox;
 
-            categoryComboBoxFirstSelected = (comboBox.SelectedItem as CategoryModel).Category_name;
 
-            if ((comboBox.SelectedItem as CategoryModel).Category_name != categoryComboBoxFirstSelected)
+            if ((comboBox.SelectedItem as CategoryModel).Category_name != 
+                ((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name)
             {
                 Console.WriteLine("다르다");
 
