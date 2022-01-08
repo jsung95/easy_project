@@ -8,6 +8,7 @@ using Microsoft.Expression.Interactivity.Core;
 using System.Linq;
 using System.Windows;
 using System.Text;
+using MaterialDesignThemes.Wpf;
 
 namespace EasyProject.ViewModel
 {
@@ -80,8 +81,25 @@ namespace EasyProject.ViewModel
 
         public List<UserModel> Admin_users { get; set; }
 
+
+        //스넥바 메세지큐
+        private SnackbarMessageQueue messagequeue;
+        public SnackbarMessageQueue MessageQueue
+        {
+            get { return messagequeue; }
+            set
+            {
+                messagequeue = value;
+                OnPropertyChanged("MessageQueue");
+            }
+        }
+
+
         public UserAuthViewModel()
         {
+            //스넥바 Duration 3초로 설정 TimeSpan.FromMilliseconds(3000)
+            messagequeue = new SnackbarMessageQueue();
+
             SearchTypeList = new[] { "이름", "아이디" };
             SearchDeptList = new ObservableCollection<DeptModel>(dept_dao.GetDepts());
             DeptModel deptModel = new DeptModel();
@@ -106,16 +124,6 @@ namespace EasyProject.ViewModel
             }
         }
 
-        private string errorProductString;
-        public string ErrorProductString
-        {
-            get { return errorProductString; }
-            set
-            {
-                errorProductString = value;
-                OnPropertyChanged("ErrorProductString");
-            }
-        }
 
         private ActionCommand snackBarCommand;
         public ICommand SnackBarCommand
@@ -178,14 +186,14 @@ namespace EasyProject.ViewModel
                 
                 if(updateList.Count == 1)
                 {
-                    ErrorProductString = $"{updateList[0].Nurse_name}의 권한을 ADMIN으로 변경하였습니다.";
+                    MessageQueue.Enqueue($"{updateList[0].Nurse_name}의 권한을 ADMIN으로 변경하였습니다.", "닫기", (x) => { IsAuthChangeEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsAuthChangeEnabled = true;
                     updateList.Clear();
 
                 }
                 else
                 {
-                    ErrorProductString = $"{updateList[0].Nurse_name} 외 {updateList.Count - 1}명의 권한을 ADMIN으로 변경하였습니다.";
+                    MessageQueue.Enqueue($"{updateList[0].Nurse_name} 외 {updateList.Count - 1}명의 권한을 ADMIN으로 변경하였습니다.", "닫기", (x) => { IsAuthChangeEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsAuthChangeEnabled = true;
                     updateList.Clear();
 
@@ -194,7 +202,7 @@ namespace EasyProject.ViewModel
             else // 체크박스 선택을 안했을 경우
             {
                 updateList.Clear();
-                ErrorProductString = "권한을 변경할 사용자를 선택해주세요.";
+                MessageQueue.Enqueue("권한을 변경할 사용자를 선택해주세요.", "닫기", (x) => { IsAuthChangeEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                 IsAuthChangeEnabled = true;
             }
             
@@ -249,14 +257,14 @@ namespace EasyProject.ViewModel
                 user_dao.UserAuthChange("NORMAL", updateList);
                 if (updateList.Count == 1)
                 {
-                    ErrorProductString = $"{updateList[0].Nurse_name}의 권한을 NORMAL로 변경하였습니다.";
+                    MessageQueue.Enqueue($"{updateList[0].Nurse_name}의 권한을 NORMAL로 변경하였습니다.", "닫기", (x) => { IsAuthChangeEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsAuthChangeEnabled = true;
                     updateList.Clear();
 
                 }
                 else
                 {
-                    ErrorProductString = $"{updateList[0].Nurse_name} 외 {updateList.Count - 1} 명의 권한을 NORMAL로 변경하였습니다.";
+                    MessageQueue.Enqueue($"{updateList[0].Nurse_name} 외 {updateList.Count - 1} 명의 권한을 NORMAL로 변경하였습니다.", "닫기", (x) => { IsAuthChangeEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsAuthChangeEnabled = true;
                     updateList.Clear();
 
@@ -265,7 +273,7 @@ namespace EasyProject.ViewModel
             else // 안했을 때 
             {
                 updateList.Clear();
-                ErrorProductString = "권한을 변경할 사용자를 선택해주세요.";
+                MessageQueue.Enqueue("권한을 변경할 사용자를 선택해주세요.", "닫기", (x) => { IsAuthChangeEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                 IsAuthChangeEnabled = true;
             }
             
