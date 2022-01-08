@@ -13,6 +13,7 @@ using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System.IO;
 using System.Text;
 using log4net;
+using MaterialDesignThemes.Wpf;
 
 namespace EasyProject.ViewModel
 {
@@ -108,9 +109,27 @@ namespace EasyProject.ViewModel
 
         private List<ProductShowModel> excelProductList;
 
+
+        //스넥바 메세지큐
+        private SnackbarMessageQueue messagequeue;
+        public SnackbarMessageQueue MessageQueue
+        {
+            get { return messagequeue; }
+            set {
+                messagequeue = value; 
+                OnPropertyChanged("MessageQueue"); 
+            }
+        }
+
+
+
         public ProductViewModel()
         {
             log.Info("ProductViewModel invoked");
+
+            //스넥바 Duration 3초로 설정
+            messagequeue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(3000));
+
             Product = new ProductModel()
             {
                 Prod_expire = DateTime.Now
@@ -514,7 +533,9 @@ namespace EasyProject.ViewModel
             // 만약 제품입력이 하나라도 안되었다면
             if (Product.Prod_code == null || Product.Prod_name == null || SelectedCategory == null || Product.Prod_expire == null || Product.Prod_price == null || Product.Prod_total == null)
             {
-                DuplicatedProductString = "입력할 제품의 정보를 모두 기입해주세요.";
+                //스넥바 메세지 출력
+                MessageQueue.Enqueue("입력할 제품의 정보를 모두 기입해주세요.");
+                //DuplicatedProductString = "입력할 제품의 정보를 모두 기입해주세요.";
                 IsDuplicatedProduct = true;
             }//if
             else //제품입력이 모두 되었지만
@@ -523,7 +544,8 @@ namespace EasyProject.ViewModel
                 {
                     if (AddCategoryName == null) //만약 직접입력란이 비어있다면
                     {
-                        DuplicatedProductString = "추가할 카테고리명을 입력해주세요.";
+                        MessageQueue.Enqueue("추가할 카테고리명을 입력해주세요.");
+                        //DuplicatedProductString = "추가할 카테고리명을 입력해주세요.";
                         IsDuplicatedProduct = true;
                     }//if
                     else //만약 직접입력라인 비어있지 않고 입력했다면

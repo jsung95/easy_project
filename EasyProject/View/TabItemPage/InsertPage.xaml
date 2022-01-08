@@ -43,21 +43,24 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <materialDesign:Snackbar x:Name="Snackbar"  Background="#Ea4a2d" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
-                <materialDesign:SnackbarMessage ActionContent="닫기" ActionCommand="{Binding SnackBarCommand}">
+            <materialDesign:Snackbar x:Name="Snackbar" Background="#Ea4a2d" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+
+                <!-- 닫기버튼이 안생겨서 일단 주석처리함 -->
+                <!--materialDesign:SnackbarMessage ActionContent="닫기" ActionCommand="{Binding SnackBarCommand}">
                     <materialDesign:SnackbarMessage.Style>
                         <Style TargetType="materialDesign:SnackbarMessage">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IsDuplicatedProduct}" Value="True">
-                                    <Setter Property="Content" Value="{Binding DuplicatedProductString}"></Setter>
+                                    메세지큐 사용으로 이것도 필요없음<Setter Property="Content" Value="{Binding DuplicatedProductString}"></Setter>
                                 </DataTrigger>
                                 
                             </Style.Triggers>
                         </Style>
                     </materialDesign:SnackbarMessage.Style>
-                </materialDesign:SnackbarMessage>
+                </materialDesign:SnackbarMessage-->
 
-                <materialDesign:Snackbar.Style>
+                <!-- 이건 이제 필요가 없음 -->
+                <!--materialDesign:Snackbar.Style>
                     <Style TargetType="materialDesign:Snackbar">
                         <Setter Property="IsActive" Value="False"></Setter>
                         <Style.Triggers>
@@ -66,7 +69,18 @@
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
+                </materialDesign:Snackbar.Style-->
+                
+                <materialDesign:Snackbar.Style>
+                    <Style TargetType="materialDesign:Snackbar">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsDuplicatedProduct}" Value="True">
+                                <Setter Property="MessageQueue" Value="{Binding MessageQueue}"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
                 </materialDesign:Snackbar.Style>
+                
             </materialDesign:Snackbar>
         </Grid>
     </Grid>
