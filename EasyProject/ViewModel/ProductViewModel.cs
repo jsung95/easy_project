@@ -12,11 +12,14 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System.IO;
 using System.Text;
+using log4net;
 
 namespace EasyProject.ViewModel
 {
     public class ProductViewModel : ObservableObject
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
+
         ProductDao dao = new ProductDao();
         CategoryDao categoryDao = new CategoryDao();
 
@@ -107,6 +110,7 @@ namespace EasyProject.ViewModel
 
         public ProductViewModel()
         {
+            log.Info("ProductViewModel invoked");
             Product = new ProductModel()
             {
                 Prod_expire = DateTime.Now

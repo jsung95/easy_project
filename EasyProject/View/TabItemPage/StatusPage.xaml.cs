@@ -15,6 +15,7 @@ using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using EasyProject.ViewModel;
 using System.Windows.Data;
 using System.Globalization;
+using log4net;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -23,12 +24,14 @@ namespace EasyProject.View.TabItemPage
     /// </summary>
     public partial class StatusPage : Page
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         public ChartValues<float> Values { get; set; }
 
         public bool isComboBoxDropDownOpened = false;
 
         public StatusPage()
         {
+            log.Info("StatusPage initialized");
             InitializeComponent();
             //dept_Label.Visibility = Visibility.Hidden;
             //Dept_comboBox.Visibility = Visibility.Hidden;

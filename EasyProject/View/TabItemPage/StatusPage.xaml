@@ -201,8 +201,28 @@
                                     </Style>
                                 </DataGridTemplateColumn.CellStyle>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="1.5*" CanUserSort="false" IsReadOnly="True">
-                                <DataGridTextColumn.CellStyle>
+
+                            <!--<DataGridTemplateColumn  Header="카테고리" >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Category_name}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <ComboBox ItemsSource="{Binding PSVM.Categories, Source={StaticResource Locator}}"
+                                                  SelectedValue="{Binding PSVM.SelectedProduct.Category_name, Source={StaticResource Locator}}">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{Binding Category_name}"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                                <DataGridTemplateColumn.CellStyle>
                                     <Style TargetType="DataGridCell">
                                         <Style.Triggers>
                                             <Trigger Property="IsSelected" Value="True">
@@ -210,18 +230,14 @@
                                             </Trigger>
                                         </Style.Triggers>
                                     </Style>
-                                </DataGridTextColumn.CellStyle>
-                            </DataGridTextColumn>
+                                </DataGridTemplateColumn.CellStyle>
+                            </DataGridTemplateColumn>-->
                             
-                            <DataGridTextColumn Binding="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}" CanUserSort="true" Header="제품가격" Width="1*"  IsReadOnly="True">
-                                
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Right"/>
-                                        <Setter Property="VerticalAlignment" Value="Center"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                                <DataGridTextColumn.CellStyle>
+                            <DataGridComboBoxColumn ItemsSource="{Binding PSVM.Categories, Source={StaticResource Locator}}" 
+                                                    TextBinding="{Binding Category_name}"
+                                                    DisplayMemberPath="Category_name" Header="품목/종류" Width="1.5*" CanUserSort="false" IsReadOnly="True">
+
+                                <DataGridComboBoxColumn.CellStyle>
                                     <Style TargetType="DataGridCell">
                                         <Style.Triggers>
                                             <Trigger Property="IsSelected" Value="True">
@@ -229,15 +245,87 @@
                                             </Trigger>
                                         </Style.Triggers>
                                     </Style>
-                                </DataGridTextColumn.CellStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Binding="{Binding Imp_dept_count, StringFormat='{}{0:#,0} 개'}" CanUserSort="true" Header="수량" Width="1*" IsReadOnly="True">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Right" />
+                                </DataGridComboBoxColumn.CellStyle>
+
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="ComboBox">
+                                        <Setter Property="SelectedValue" Value="{Binding PSVM.SelectedProduct.Category_name, Source={StaticResource Locator}}" />
                                     </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
+                                </DataGridComboBoxColumn.EditingElementStyle>
+
+
+
+                                <!--<DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="ComboBox">
+                                        <Setter Property="ItemsSource" Value="{Binding Path=PSVM.Categories, Source={StaticResource Locator}}" />
+                                        <Setter Property="IsEditable" Value="True"/>
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>-->
+                            </DataGridComboBoxColumn>
+
+
+                            <!--<DataGridTemplateColumn Header="품목/종류" Width="1.5*" CanUserSort="true" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox 
+                                            ItemsSource="{Binding PSVM.Categories, Source={StaticResource Locator}}">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{Binding Category_name}"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>-->
+
+
+                            <DataGridTemplateColumn CanUserSort="true" Header="제품가격" Width="1*"  IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding PSVM.SelectedProduct.Prod_price, Source={StaticResource Locator}}"></TextBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+
+                                <DataGridTemplateColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="IsEditing" Value="True"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTemplateColumn.CellStyle>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn CanUserSort="true" Header="수량" Width="1*" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Imp_dept_count, StringFormat='{}{0:#,0} 개'}" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding PSVM.SelectedProduct.Imp_dept_count, Source={StaticResource Locator}}"></TextBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+
+                                <DataGridTemplateColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="IsEditing" Value="True"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTemplateColumn.CellStyle>
+                            </DataGridTemplateColumn>
                             <DataGridTextColumn Binding="{Binding Prod_expire, StringFormat='yyyy-MM-dd'}"  Header="유통기한" Width="2*" CanUserSort="true" IsReadOnly="True"/>
 
                             <DataGridTemplateColumn Header="상태" Width="*" CanUserSort="true" IsReadOnly="True">
