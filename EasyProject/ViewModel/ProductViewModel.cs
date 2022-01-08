@@ -230,85 +230,99 @@ namespace EasyProject.ViewModel
         //csv로 입력받은 여러개의 제품들에 대한 처리 
         private void CsvReader()
         {
-            
-            //StreamReader sr = new StreamReader(openFileDialog, Encoding.GetEncoding("euc-kr"));
-            StreamReader sr = new StreamReader(openFileDialog, UnicodeEncoding.UTF8);
-            sr.ReadLine();
-            while (!sr.EndOfStream)
+            log.Info("CsvReader() invoked.");
+            try
             {
-                string s = sr.ReadLine();
-                string[] temp = s.Split(',');
-
-                var product = new ProductShowModel();
-
-                for (int cCnt = 0; cCnt <= 5; cCnt++)
+                //StreamReader sr = new StreamReader(openFileDialog, Encoding.GetEncoding("euc-kr"));
+                StreamReader sr = new StreamReader(openFileDialog, UnicodeEncoding.UTF8);
+                sr.ReadLine();
+                while (!sr.EndOfStream)
                 {
-                    product = SetProductObjectForCsv(ref product,cCnt,temp[cCnt]);
+                    string s = sr.ReadLine();
+                    string[] temp = s.Split(',');
 
-                    ProductModel productModel = new ProductModel();
-                    productModel.Prod_code = product.Prod_code;
-                    productModel.Prod_name = product.Prod_name;
-                    productModel.Category_id = categoryDao.GetCategoryID(product.Category_name);
-                    productModel.Prod_expire = product.Prod_expire;
-                    productModel.Prod_price = product.Prod_price;
+                    var product = new ProductShowModel();
 
-                    Console.WriteLine(product.Category_name + "////카테고리명////");
-
-
-                    if (!dao.IsProductDuplicateCheck(productModel))
+                    for (int cCnt = 0; cCnt <= 5; cCnt++)
                     {
+                        product = SetProductObjectForCsv(ref product, cCnt, temp[cCnt]);
 
-                        Console.WriteLine("중복이 아니다. ");
+                        ProductModel productModel = new ProductModel();
+                        productModel.Prod_code = product.Prod_code;
+                        productModel.Prod_name = product.Prod_name;
+                        productModel.Category_id = categoryDao.GetCategoryID(product.Category_name);
+                        productModel.Prod_expire = product.Prod_expire;
+                        productModel.Prod_price = product.Prod_price;
 
-                    }
-                    else
+                        Console.WriteLine(product.Category_name + "////카테고리명////");
+
+
+                        if (!dao.IsProductDuplicateCheck(productModel))
+                        {
+
+                            Console.WriteLine("중복이 아니다. ");
+
+                        }//if
+                        else
+                        {
+                            DuplicatedProductString = "이미 존재하는 재고 입력은 불가합니다.";
+                            Console.WriteLine("중복이다.");
+                            IsDuplicatedProduct = true;
+                            excelProductList = new List<ProductShowModel>();
+                        }//else
+                    }//for
+
+                    if (!IsDuplicatedProduct)
                     {
-                        DuplicatedProductString = "이미 존재하는 재고 입력은 불가합니다.";
-                        Console.WriteLine("중복이다.");
-                        IsDuplicatedProduct = true;
-                        excelProductList = new List<ProductShowModel>();
-                    }
-                }
-                if (!IsDuplicatedProduct)
+                        excelProductList.Add(product);
+                    }//if
+
+                }//while
+
+                if (excelProductList.Count > 0)
                 {
-                    excelProductList.Add(product);
-                }
-            }
+                    foreach (ProductShowModel elem in excelProductList)
+                    {
+                        //MessageBox.Show(product.Prod_code+".."+product.Prod_name+
+                        //   ".." + product.Category_name+".."+product.Prod_expire
+                        //   + ".." + product.Prod_price + ".." + product.Prod_total);
 
-            if (excelProductList.Count > 0)
+                        dao.AddProductForExcel(elem, elem.Category_name);
+                        dao.StoredProductForExcel(elem, Nurse);
+                        dao.AddImpDeptForExcel(elem, Nurse);
+
+                        // 현재 사용자가 추가 입고 내역을 담을 임시 객체
+                        ProductInOutModel productDto = new ProductInOutModel();
+
+                        // 새로 입고 시 Add_list(사용자의 입고 내역 목록) 업데이트
+                        productDto.Prod_in_date = DateTime.Now;
+                        productDto.Prod_code = elem.Prod_code;
+                        productDto.Prod_name = elem.Prod_name;
+                        productDto.Category_name = elem.Category_name;
+                        productDto.Prod_expire = elem.Prod_expire;
+                        productDto.Prod_price = elem.Prod_price;
+                        productDto.Prod_in_count = elem.Prod_total;
+                        productDto.Nurse_name = Nurse.Nurse_name;
+
+                        //productDtoList.Insert(0, productDto);
+                        Add_list.Insert(0, productDto);
+                        //Add_list.Add(productDto);
+                        Console.WriteLine(Add_list.Count + "개");
+                    }//foreach
+                }//if
+
+            }//try
+            catch (Exception e)
             {
-                foreach (ProductShowModel elem in excelProductList)
-                {
-                    //MessageBox.Show(product.Prod_code+".."+product.Prod_name+
-                    //   ".." + product.Category_name+".."+product.Prod_expire
-                    //   + ".." + product.Prod_price + ".." + product.Prod_total);
+                log.Error(e.Message);
+                
+                MessageQueue.Enqueue("업로드 할 파일을 닫고 다시 시도하십시오.");
+                IsDuplicatedProduct = true;
+            }//catch
 
-                    dao.AddProductForExcel(elem, elem.Category_name);
-                    dao.StoredProductForExcel(elem, Nurse);
-                    dao.AddImpDeptForExcel(elem, Nurse);
-
-                    // 현재 사용자가 추가 입고 내역을 담을 임시 객체
-                    ProductInOutModel productDto = new ProductInOutModel();
-
-                    // 새로 입고 시 Add_list(사용자의 입고 내역 목록) 업데이트
-                    productDto.Prod_in_date = DateTime.Now;
-                    productDto.Prod_code = elem.Prod_code;
-                    productDto.Prod_name = elem.Prod_name;
-                    productDto.Category_name = elem.Category_name;
-                    productDto.Prod_expire = elem.Prod_expire;
-                    productDto.Prod_price = elem.Prod_price;
-                    productDto.Prod_in_count = elem.Prod_total;
-                    productDto.Nurse_name = Nurse.Nurse_name;
-
-                    //productDtoList.Insert(0, productDto);
-                    Add_list.Insert(0, productDto);
-                    //Add_list.Add(productDto);
-                    Console.WriteLine(Add_list.Count + "개");
-                }
-            }
+        }//CsvReader
 
 
-        }
 
         //excel로 입력받은 여러개의 제품들에 대한 처리 
         private void ExcelReader()
