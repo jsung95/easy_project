@@ -552,7 +552,7 @@ namespace EasyProject.ViewModel
             //    IsEditButtonClicked = true;
             //}
             
-            Console.WriteLine(SelectedProduct.Prod_code);
+            Console.WriteLine(SelectedProduct.Category_name+"바뀐 카테고리");
             product_dao.ChangeProductInfo(SelectedProduct);
             product_dao.ChangeProductInfo_IMP_DEPT(SelectedProduct);
 

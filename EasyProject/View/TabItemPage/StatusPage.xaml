@@ -248,19 +248,10 @@
                                 </DataGridComboBoxColumn.CellStyle>
 
                                 <DataGridComboBoxColumn.EditingElementStyle>
-                                    <Style TargetType="ComboBox">
-                                        <Setter Property="SelectedValue" Value="{Binding PSVM.SelectedProduct.Category_name, Source={StaticResource Locator}}" />
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <EventSetter Event="SelectionChanged" Handler="SomeSelectionChanged" />
                                     </Style>
                                 </DataGridComboBoxColumn.EditingElementStyle>
-
-
-
-                                <!--<DataGridComboBoxColumn.EditingElementStyle>
-                                    <Style TargetType="ComboBox">
-                                        <Setter Property="ItemsSource" Value="{Binding Path=PSVM.Categories, Source={StaticResource Locator}}" />
-                                        <Setter Property="IsEditable" Value="True"/>
-                                    </Style>
-                                </DataGridComboBoxColumn.EditingElementStyle>-->
                             </DataGridComboBoxColumn>
 
 
