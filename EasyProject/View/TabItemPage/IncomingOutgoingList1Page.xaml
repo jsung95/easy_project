@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:EasyProject.View.TabItemPage"
+      xmlns:bod="clr-namespace:EasyProject.Util"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:wookoa="clr-namespace:System;assembly=mscorlib"
       xmlns:vm="clr-namespace:EasyProject.ViewModel" xmlns:conv="clr-namespace:EasyProject"
@@ -73,6 +74,7 @@
                                 
                                     <DatePicker x:Name="expirationDate_DatePicker"  Grid.Column="0" HorizontalContentAlignment="Left" 
                                         VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Width="90" Height="40"
+                                                bod:BlackOutDatesAdapter.BlackOutDates="{Binding BlackOutDates}"
                                         SelectedDate="{Binding SelectedStartDate_In}">
                                         <DatePicker.Resources>
                                             <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">

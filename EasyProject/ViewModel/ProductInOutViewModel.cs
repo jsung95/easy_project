@@ -49,7 +49,11 @@ namespace EasyProject.ViewModel
             SelectedStartDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MinDate(SelectedDept_Out));
             SelectedEndDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MaxDate(SelectedDept_Out));
 
-
+            BlackOutDates = new List<DateTime>();
+            /*BlackOutDates.Add(new DateTime(2022, 01, 01));
+            BlackOutDates.Add(new DateTime(2022, 01, 02));
+            BlackOutDates.Add(new DateTime(2022, 01, 03));
+            BlackOutDates.Add(new DateTime(2022, 01, 04));*/
         }//Constructor
 
 
@@ -341,6 +345,16 @@ namespace EasyProject.ViewModel
         }
         #endregion
 
+        private List<DateTime> blackOutDates;
+        public List<DateTime> BlackOutDates 
+        {
+            get { return blackOutDates; }
+            set 
+            {
+                blackOutDates = value;
+                OnPropertyChanged("BlackOutDates");
+            }
+        }
 
 
     }//class
