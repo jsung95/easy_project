@@ -17,6 +17,44 @@ namespace EasyProject.ViewModel
         ProductDao product_dao = new ProductDao();
         DeptDao dept_dao = new DeptDao();
 
+        public string[] SearchTypeList { get; set; }
+
+
+        //부서 리스트를 담을 프로퍼티
+        public ObservableCollection<DeptModel> Depts { get; set; }
+
+        public ProductInOutViewModel()
+        {
+            messagequeue = new SnackbarMessageQueue();
+
+            SearchTypeList = new[] { "제품코드", "제품명", "품목/종류" };
+            selectedSearchType_In = SearchTypeList[0];
+
+            Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts());
+            SelectedDept_In = Depts[(int)App.nurse_dto.Dept_id - 1];
+
+            selectedSearchType_Out = SearchTypeList[0];
+            SelectedDept_Out = Depts[(int)App.nurse_dto.Dept_id - 1];
+
+            Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In));
+            Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept_Out));
+
+
+            //날짜 컨트롤 부서별 해당 최소 날짜 및 최대 날짜로 초기화
+            //입고
+            SelectedStartDate_In = Convert.ToDateTime(product_dao.GetProductIn_MinDate(SelectedDept_In));
+            SelectedEndDate_In = Convert.ToDateTime(product_dao.GetProductIn_MaxDate(SelectedDept_In));
+
+            //출고
+            SelectedStartDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MinDate(SelectedDept_Out));
+            SelectedEndDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MaxDate(SelectedDept_Out));
+
+
+        }//Constructor
+
+
+        #region 입고
+
         //입고 내역을 담을 프로퍼티
         private ObservableCollection<ProductInOutModel> product_in;
         public ObservableCollection<ProductInOutModel> Product_in
@@ -28,20 +66,8 @@ namespace EasyProject.ViewModel
                 OnPropertyChanged("Product_in");
             }
         }
-        private ObservableCollection<ProductInOutModel> product_out;
-        //출고 내역을 담을 프로퍼티
-        public ObservableCollection<ProductInOutModel> Product_out
-        {
-            get { return product_out; }
-            set
-            {
-                product_out = value;
-                OnPropertyChanged("Product_out");
-            }
-        }
 
-        public ObservableCollection<DeptModel> Depts { get; set; }
-
+        //입고 - 선택한 부서를 담을 프로퍼티
         private DeptModel selectedDept_In;
         public DeptModel SelectedDept_In
         {
@@ -60,46 +86,16 @@ namespace EasyProject.ViewModel
             }
         }
 
-        private DeptModel selectedDept_Out;
-        public DeptModel SelectedDept_Out
-        {
-            get { return selectedDept_Out; }
-            set
-            {
-                selectedDept_Out = value;
-
-                //부서 변경 시에 
-                searchKeyword_Out = null; // 검색 텍스트 초기화
-                SelectedStartDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MinDate(SelectedDept_Out)); //날짜 컨트롤 최대, 최소 날짜로 설정
-                SelectedEndDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MaxDate(SelectedDept_Out));
-
-                OnPropertyChanged("SelectedDept_Out");
-                showOutListByDept();
-            }
-        }
-
-        public string[] SearchTypeList { get; set; }
-
         //검색 텍스트 - 입고
         private string _searchKeyword_In;
-        public string searchKeyword_In 
+        public string searchKeyword_In
         {
-            get { return _searchKeyword_In;}
+            get { return _searchKeyword_In; }
             set { _searchKeyword_In = value; OnPropertyChanged("searchKeyword_In"); }
         }
 
-        //검색 텍스트 - 출고
-        private string _searchKeyword_Out;
-        public string searchKeyword_Out 
-        {
-            get { return _searchKeyword_Out;}
-            set { _searchKeyword_Out = value; OnPropertyChanged("searchKeyword_Out"); }
-        }
-
-
 
         public string selectedSearchType_In { get; set; }
-        public string selectedSearchType_Out { get; set; }
 
 
         //입고
@@ -141,6 +137,99 @@ namespace EasyProject.ViewModel
         }
 
 
+        //입고 - 검색 수행
+        private ActionCommand inSearchCommand;
+        public ICommand InSearchCommand
+        {
+            get
+            {
+                if (inSearchCommand == null)
+                {
+                    inSearchCommand = new ActionCommand(InListSearch);
+                }
+                return inSearchCommand;
+            }//get
+
+        }//Command
+
+        public void InListSearch()
+        {
+            if (SelectedStartDate_In != null && SelectedEndDate_In != null)
+            {
+                Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, selectedSearchType_In, searchKeyword_In, SelectedStartDate_In, SelectedEndDate_In));
+            }
+            else
+            {
+                MessageQueue.Enqueue("날짜를 모두 선택해주세요.", "닫기", (x) => { IsInOutEnable = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                IsInOutEnable = true;
+                //Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, selectedSearchType_In, searchKeyword_In));
+            }
+
+        }// InListSearch
+
+
+        //입고 - 부서별 입고 리스트
+        public void showInListByDept()
+        {
+            Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In));
+
+        }//showInListByDept
+
+        // 입고 - 시작, 끝 날짜 지정해서 입고 데이터 조회
+        public void ShowProductIn_By_Date()
+        {
+            if (SelectedStartDate_In != null && SelectedEndDate_In != null)
+            {
+                Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, SelectedStartDate_In, SelectedEndDate_In));
+            }
+        }//ShowProductIn_By_Date
+
+        #endregion
+
+        #region 출고
+
+        private ObservableCollection<ProductInOutModel> product_out;
+        //출고 내역을 담을 프로퍼티
+        public ObservableCollection<ProductInOutModel> Product_out
+        {
+            get { return product_out; }
+            set
+            {
+                product_out = value;
+                OnPropertyChanged("Product_out");
+            }
+        }
+
+        //출고 - 선택한 부서를 담을 프로퍼티
+        private DeptModel selectedDept_Out;
+        public DeptModel SelectedDept_Out
+        {
+            get { return selectedDept_Out; }
+            set
+            {
+                selectedDept_Out = value;
+
+                //부서 변경 시에 
+                searchKeyword_Out = null; // 검색 텍스트 초기화
+                SelectedStartDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MinDate(SelectedDept_Out)); //날짜 컨트롤 최대, 최소 날짜로 설정
+                SelectedEndDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MaxDate(SelectedDept_Out));
+
+                OnPropertyChanged("SelectedDept_Out");
+                showOutListByDept();
+            }
+        }
+
+        //검색 텍스트 - 출고
+        private string _searchKeyword_Out;
+        public string searchKeyword_Out
+        {
+            get { return _searchKeyword_Out; }
+            set { _searchKeyword_Out = value; OnPropertyChanged("searchKeyword_Out"); }
+        }
+
+        public string selectedSearchType_Out { get; set; }
+
+
         //출고
         //시작일을 담을 프로퍼티
         private DateTime? selectedStartDate_Out;
@@ -177,92 +266,7 @@ namespace EasyProject.ViewModel
             }
         }
 
-
-        //스넥바 
-        private bool isInOutEnable = false;
-        public bool IsInOutEnable
-        {
-            get { return isInOutEnable; }
-            set
-            {
-                isInOutEnable = value;
-                OnPropertyChanged("IsInOutEnable");
-            }
-        }
-
-        //스넥바 메세지큐
-        private SnackbarMessageQueue messagequeue;
-        public SnackbarMessageQueue MessageQueue
-        {
-            get { return messagequeue; }
-            set
-            {
-                messagequeue = value;
-                OnPropertyChanged("MessageQueue");
-            }
-        }
-
-        public ProductInOutViewModel()
-        {
-            messagequeue = new SnackbarMessageQueue();
-
-            SearchTypeList = new[] { "제품코드", "제품명", "품목/종류" };
-            selectedSearchType_In = SearchTypeList[0];
-
-            Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts());
-            SelectedDept_In = Depts[(int)App.nurse_dto.Dept_id - 1];
-
-            selectedSearchType_Out = SearchTypeList[0];
-            SelectedDept_Out = Depts[(int)App.nurse_dto.Dept_id - 1];
-
-            Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In));
-            Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept_Out));
-
-
-            //날짜 컨트롤 부서별 해당 최소 날짜 및 최대 날짜로 초기화
-            //입고
-            SelectedStartDate_In = Convert.ToDateTime(product_dao.GetProductIn_MinDate(SelectedDept_In));
-            SelectedEndDate_In = Convert.ToDateTime(product_dao.GetProductIn_MaxDate(SelectedDept_In));
-
-            //출고
-            SelectedStartDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MinDate(SelectedDept_Out));
-            SelectedEndDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MaxDate(SelectedDept_Out));
-
-
-        }//Constructor
-
-
-
-
-        private ActionCommand inSearchCommand;
-        public ICommand InSearchCommand
-        {
-            get
-            {
-                if (inSearchCommand == null)
-                {
-                    inSearchCommand = new ActionCommand(InListSearch);
-                }
-                return inSearchCommand;
-            }//get
-
-        }//Command
-
-        public void InListSearch()
-        {
-            if (SelectedStartDate_In != null && SelectedEndDate_In != null) 
-            {
-                Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, selectedSearchType_In, searchKeyword_In, SelectedStartDate_In, SelectedEndDate_In));
-            }
-            else
-            {
-                MessageQueue.Enqueue("날짜를 모두 선택해주세요.", "닫기", (x) => { IsInOutEnable = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                IsInOutEnable = true;
-                //Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, selectedSearchType_In, searchKeyword_In));
-            }
-
-        }// InListSearch
-
+        //출고- 검색 수행
         private ActionCommand outSearchCommand;
         public ICommand OutSearchCommand
         {
@@ -289,35 +293,54 @@ namespace EasyProject.ViewModel
                 IsInOutEnable = true;
             }
 
-        }// InListSearch
+        }// OutListSearch
 
-        public void showInListByDept()
-        {
-            Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In));
-           
-        }//showInListByDept
 
+        //출고 - 부서별 출고 리스트
         public void showOutListByDept()
         {
             Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept_Out));
-        
+
         }//showOutListByDept
 
-        public void ShowProductIn_By_Date() // 입고 - 시작, 끝 날짜 지정해서 입고 데이터 조회
-        {
-            if (SelectedStartDate_In != null && SelectedEndDate_In != null)
-            {
-                Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, SelectedStartDate_In, SelectedEndDate_In));
-            }
-        }//ShowProductIn_By_Date
-
-        public void ShowProductOut_By_Date() // 출고 - 시작, 끝 날짜 지정해서 입고 데이터 조회
+        // 출고 - 시작, 끝 날짜 지정해서 입고 데이터 조회
+        public void ShowProductOut_By_Date()
         {
             if (SelectedStartDate_Out != null && SelectedEndDate_Out != null)
             {
                 Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept_Out, SelectedStartDate_Out, SelectedEndDate_Out));
             }
         }//ShowProductOut_By_Date
+
+
+        #endregion
+
+        #region 스넥바
+        //스넥바 
+        private bool isInOutEnable = false;
+        public bool IsInOutEnable
+        {
+            get { return isInOutEnable; }
+            set
+            {
+                isInOutEnable = value;
+                OnPropertyChanged("IsInOutEnable");
+            }
+        }
+
+        //스넥바 메세지큐
+        private SnackbarMessageQueue messagequeue;
+        public SnackbarMessageQueue MessageQueue
+        {
+            get { return messagequeue; }
+            set
+            {
+                messagequeue = value;
+                OnPropertyChanged("MessageQueue");
+            }
+        }
+        #endregion
+
 
 
     }//class
