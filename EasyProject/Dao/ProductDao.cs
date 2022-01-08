@@ -402,7 +402,7 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
 
-                        cmd.CommandText = "SELECT CATEGORY_NAME FROM CATEGORY";
+                        cmd.CommandText = "SELECT CATEGORY_NAME FROM CATEGORY ORDER BY category_id";
 
                         OracleDataReader reader = cmd.ExecuteReader();
 

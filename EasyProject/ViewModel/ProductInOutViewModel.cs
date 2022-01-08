@@ -8,6 +8,7 @@ using Microsoft.Expression.Interactivity.Core;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using MaterialDesignThemes.Wpf;
 
 namespace EasyProject.ViewModel
 {
@@ -112,6 +113,7 @@ namespace EasyProject.ViewModel
                 selectedStartDate_In = value;
 
                 ShowProductIn_By_Date();
+                searchKeyword_In = null;
                 if (selectedStartDate_In > selectedEndDate_In)
                 {
                     SelectedStartDate_In = SelectedEndDate_In.Value.AddDays(-1);
@@ -129,6 +131,7 @@ namespace EasyProject.ViewModel
                 selectedEndDate_In = value;
 
                 ShowProductIn_By_Date();
+                searchKeyword_In = null;
                 if (selectedStartDate_In > selectedEndDate_In)
                 {
                     SelectedStartDate_In = SelectedEndDate_In.Value.AddDays(-1);
@@ -175,9 +178,34 @@ namespace EasyProject.ViewModel
         }
 
 
+        //스넥바 
+        private bool isInOutEnable = false;
+        public bool IsInOutEnable
+        {
+            get { return isInOutEnable; }
+            set
+            {
+                isInOutEnable = value;
+                OnPropertyChanged("IsInOutEnable");
+            }
+        }
+
+        //스넥바 메세지큐
+        private SnackbarMessageQueue messagequeue;
+        public SnackbarMessageQueue MessageQueue
+        {
+            get { return messagequeue; }
+            set
+            {
+                messagequeue = value;
+                OnPropertyChanged("MessageQueue");
+            }
+        }
+
         public ProductInOutViewModel()
         {
-            
+            messagequeue = new SnackbarMessageQueue();
+
             SearchTypeList = new[] { "제품코드", "제품명", "품목/종류" };
             selectedSearchType_In = SearchTypeList[0];
 
@@ -225,11 +253,11 @@ namespace EasyProject.ViewModel
             if (SelectedStartDate_In != null && SelectedEndDate_In != null) 
             {
                 Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, selectedSearchType_In, searchKeyword_In, SelectedStartDate_In, SelectedEndDate_In));
-                searchKeyword_In = null;
             }
             else
             {
-                MessageBox.Show("날짜를 모두 선택해주세요.");
+                MessageQueue.Enqueue("날짜를 모두 선택해주세요.", "닫기", (x) => { IsInOutEnable = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                IsInOutEnable = true;
                 //Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, selectedSearchType_In, searchKeyword_In));
             }
 
@@ -254,11 +282,11 @@ namespace EasyProject.ViewModel
             if (SelectedStartDate_Out != null && SelectedEndDate_Out != null)
             {
                 Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept_Out, selectedSearchType_Out, searchKeyword_Out, SelectedStartDate_Out, SelectedEndDate_Out));
-                searchKeyword_Out = null;
             }
             else
             {
-                MessageBox.Show("날짜를 모두 선택해주세요.");
+                MessageQueue.Enqueue("날짜를 모두 선택해주세요.", "닫기", (x) => { IsInOutEnable = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                IsInOutEnable = true;
             }
 
         }// InListSearch

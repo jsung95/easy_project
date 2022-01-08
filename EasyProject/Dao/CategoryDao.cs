@@ -27,7 +27,7 @@ namespace EasyProject.Dao
                     using (cmd)
                     {
                         cmd.Connection = conn;
-                        cmd.CommandText = "SELECT category_name FROM CATEGORY";
+                        cmd.CommandText = "SELECT category_name FROM CATEGORY ORDER BY category_id";
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
@@ -111,7 +111,7 @@ namespace EasyProject.Dao
                     using (cmd)
                     {
                         cmd.Connection = conn;
-                        cmd.CommandText = "SELECT * FROM CATEGORY";
+                        cmd.CommandText = "SELECT * FROM CATEGORY ORDER BY category_id";
 
                         OracleDataReader reader = cmd.ExecuteReader();
 

@@ -29,6 +29,8 @@ namespace EasyProject.View.TabItemPage
 
         public bool isComboBoxDropDownOpened = false;
 
+        public string categoryComboBoxFirstSelected = null;
+
         public StatusPage()
         {
             log.Info("StatusPage initialized");
@@ -62,6 +64,27 @@ namespace EasyProject.View.TabItemPage
                 Console.WriteLine(userDeptName + "다른 부서일때");
                 buttonColumn.Visibility = Visibility.Hidden;
             }
+
+        }
+
+        private void SomeSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var comboBox = sender as ComboBox;
+
+
+            if ((comboBox.SelectedItem as CategoryModel).Category_name != 
+                ((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name)
+            {
+                Console.WriteLine("다르다");
+
+                ((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name = (comboBox.SelectedItem as CategoryModel).Category_name;
+                Console.WriteLine(((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name);
+            }
+
+        }
+
+        private void DropDownClosed(object sender, System.EventArgs e)
+        {
 
         }
 
