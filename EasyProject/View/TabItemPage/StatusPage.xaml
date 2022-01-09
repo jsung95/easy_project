@@ -615,10 +615,10 @@
                             </Button>
                             </StackPanel>
 
-                        <DockPanel Margin="10 5" HorizontalAlignment="Left" LastChildFill="True" Width="100" >
-                            <TextBlock Text="수정  " FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <DockPanel Margin="10 5" HorizontalAlignment="Left" LastChildFill="True" Width="150" >
+                            <TextBlock Text="수정 " FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
                             <ToggleButton HorizontalAlignment="Left" Style="{StaticResource MaterialDesignSwitchToggleButton}"
-                                      ToolTip="재고수정을 할 수 있습니다." IsChecked="{Binding IsToolTipChecked}">
+                                      ToolTip="수정기능을 잠금/해제 할 수 있습니다." IsChecked="{Binding IsToolTipChecked}">
                                 <materialDesign:PackIcon Kind="Pin" RenderTransformOrigin=".5,.5">
                                     <materialDesign:PackIcon.RenderTransform>
                                         <RotateTransform Angle="45" />
