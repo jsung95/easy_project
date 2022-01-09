@@ -49,11 +49,9 @@ namespace EasyProject.ViewModel
             SelectedStartDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MinDate(SelectedDept_Out));
             SelectedEndDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MaxDate(SelectedDept_Out));
 
-            BlackOutDates = new List<DateTime>();
-            /*BlackOutDates.Add(new DateTime(2022, 01, 01));
-            BlackOutDates.Add(new DateTime(2022, 01, 02));
-            BlackOutDates.Add(new DateTime(2022, 01, 03));
-            BlackOutDates.Add(new DateTime(2022, 01, 04));*/
+
+
+            //UpdateCalendarBlackoutDates();
         }//Constructor
 
 
@@ -345,17 +343,42 @@ namespace EasyProject.ViewModel
         }
         #endregion
 
-        private List<DateTime> blackOutDates;
-        public List<DateTime> BlackOutDates 
+
+
+        
+        private CalendarBlackoutDatesCollection blackOutDates_In_Start;
+        public CalendarBlackoutDatesCollection BlackOutDates_In_Start
         {
-            get { return blackOutDates; }
-            set 
+            get { return blackOutDates_In_Start; }
+            set
             {
-                blackOutDates = value;
-                OnPropertyChanged("BlackOutDates");
+                blackOutDates_In_Start = value;
+                OnPropertyChanged("BlackOutDates_In_Start");
             }
         }
+        
 
+        private void UpdateCalendarBlackoutDates()
+        {
+            
+            CalendarDateRange start = new CalendarDateRange(new DateTime(SelectedEndDate_In.Value.Year, SelectedEndDate_In.Value.Month, SelectedEndDate_In.Value.Day+1), new DateTime(9999, 12, 31));
+
+
+            // Because we can't reach the real calendar from the viewmodel, and we can't create a
+            // new CalendarBlackoutDatesCollection without specifying a Calendar to
+            // the constructor, we provide a "Dummy calendar", only to satisfy
+            // the CalendarBlackoutDatesCollection...
+            // because you can't do: BlackoutDates = new CalendarBlackoutDatesCollection().
+
+
+            Calendar dummyCal = new Calendar();
+            BlackOutDates_In_Start = new CalendarBlackoutDatesCollection(dummyCal);
+
+            // Add the dateranges to the BlackOutDates property
+
+
+            BlackOutDates_In_Start.Add(start);
+        }
 
     }//class
 
