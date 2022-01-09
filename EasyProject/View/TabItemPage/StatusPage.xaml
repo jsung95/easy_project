@@ -124,7 +124,8 @@
 
                         <Grid Grid.Column="1" Margin="10 0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="6*"/>
+                                <ColumnDefinition Width="4*"/>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
@@ -142,11 +143,33 @@
                                 </TextBox>
                             </Grid>
                             <Grid Grid.Column="1">
-                                <Button x:Name="search_Btn" Grid.Column="3" Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White"
+                                <StackPanel x:Name="ModifyToggleButtonPanel" Orientation="Horizontal" Margin="10 5" HorizontalAlignment="Right" Visibility="Hidden" >
+                                    <TextBlock Text="수정  " FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                    <ToggleButton HorizontalAlignment="Left" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                      ToolTip="수정기능을 잠금/해제 할 수 있습니다." IsChecked="{Binding IsToolTipChecked}">
+                                        <materialDesign:PackIcon Kind="Pin" RenderTransformOrigin=".5,.5">
+                                            <materialDesign:PackIcon.RenderTransform>
+                                                <RotateTransform Angle="45" />
+                                            </materialDesign:PackIcon.RenderTransform>
+                                        </materialDesign:PackIcon>
+                                        <materialDesign:ToggleButtonAssist.OnContent>
+                                            <materialDesign:PackIcon Kind="Pin" />
+                                        </materialDesign:ToggleButtonAssist.OnContent>
+                                    </ToggleButton>
+                                </StackPanel>
+                                <!--<Button x:Name="search_Btn" Grid.Column="3" Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White"
                             VerticalAlignment="Center" Height="30"  Width="45" HorizontalAlignment="Left"
                              Command="{Binding SearchCommand}" Cursor="Hand">
                                     <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
-                                </Button>
+                                </Button>-->
+                            </Grid>
+                            <Grid Grid.Column="2">
+                                <StackPanel x:Name="RefreshButtonPanel" Orientation="Horizontal" Margin="10 5" HorizontalAlignment="Left" Width="150" Visibility="Visible" >
+                                    <TextBlock Text="  새로고침 " FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                    <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Height="20" Width="20" Command="{Binding DataGridRefreshCommand}">
+                                        <materialDesign:PackIcon Kind="Replay" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gray"/>
+                                    </Button>
+                                </StackPanel>
                             </Grid>
 
                         </Grid>
@@ -154,7 +177,7 @@
 
                     <DataGrid x:Name="dataGrid" Grid.Row="1"
                             HorizontalAlignment="Left" Margin="10 0"
-                            AllowDrop="False"
+                            AllowDrop="False" PreviewKeyDown="DataGridKeyDown"
                             VerticalAlignment="Top" AutoGenerateColumns="False"
                             IsReadOnly="True" ColumnWidth="*" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" SelectionUnit="FullRow" Cursor="Hand">
 
@@ -180,6 +203,7 @@
 
                                 <DataGridTemplateColumn.CellStyle>
                                     <Style TargetType="DataGridCell">
+                                        <!--<EventSetter Event="KeyDown" Handler="ProductTextKeyDown"/>-->
                                         <Style.Triggers>
                                             <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
@@ -549,7 +573,15 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <Grid Grid.Row="2">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 5">
+                            <materialDesign:PackIcon Kind="Circle" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"></materialDesign:PackIcon>
+                            <Label Content="유통기한 지남" FontSize="8" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <materialDesign:PackIcon Kind="Circle" Foreground="Yellow" HorizontalAlignment="Center" VerticalAlignment="Center"></materialDesign:PackIcon>
+                            <Label Content="유통기한 3일 미만 남음" FontSize="8" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <materialDesign:PackIcon Kind="Circle" Foreground="Green" HorizontalAlignment="Center" VerticalAlignment="Center"></materialDesign:PackIcon>
+                            <Label Content="유통기한 3일 이상 남음" FontSize="8" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="5 0 0 0">
                             <Button Height="23" HorizontalAlignment="Right"  Command="{Binding FirstCommand}"
                             Name="btnFirst" VerticalAlignment="Bottom" Width="40" Foreground="White" Background="#4472C4"
                             Content="&lt;&lt;" Opacity="0.75" Margin="5">
@@ -618,32 +650,19 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
-                            </StackPanel>
 
-                        <DockPanel x:Name="ModifyToggleButtonPanel" Margin="10 5" HorizontalAlignment="Left" LastChildFill="True" Width="150" Visibility="Hidden" >
-                            <TextBlock Text="수정 " FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                            <ToggleButton HorizontalAlignment="Left" Style="{StaticResource MaterialDesignSwitchToggleButton}"
-                                      ToolTip="수정기능을 잠금/해제 할 수 있습니다." IsChecked="{Binding IsToolTipChecked}">
-                                <materialDesign:PackIcon Kind="Pin" RenderTransformOrigin=".5,.5">
-                                    <materialDesign:PackIcon.RenderTransform>
-                                        <RotateTransform Angle="45" />
-                                    </materialDesign:PackIcon.RenderTransform>
-                                </materialDesign:PackIcon>
-                                <materialDesign:ToggleButtonAssist.OnContent>
-                                    <materialDesign:PackIcon Kind="Pin" />
-                                </materialDesign:ToggleButtonAssist.OnContent>
-                            </ToggleButton>
+                            <ComboBox Margin="10 5" SelectedIndex="0" Width="100" SelectedItem ="{Binding SelectedRecord, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right">
+                                <wookoa:Int32>10</wookoa:Int32>
+                                <wookoa:Int32>15</wookoa:Int32>
+                                <wookoa:Int32>20</wookoa:Int32>
+                                <wookoa:Int32>25</wookoa:Int32>
+                            </ComboBox>
+                        </StackPanel>
 
-                            
-                        </DockPanel>
                         
                         
-                        <ComboBox Margin="10 5" SelectedIndex="0" Width="100" SelectedItem ="{Binding SelectedRecord, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right">
-                            <wookoa:Int32>10</wookoa:Int32>
-                            <wookoa:Int32>15</wookoa:Int32>
-                            <wookoa:Int32>20</wookoa:Int32>
-                            <wookoa:Int32>25</wookoa:Int32>
-                        </ComboBox>
+                        
+                        
                     </Grid>
                 </Grid>
                 <Grid Grid.Column="1">

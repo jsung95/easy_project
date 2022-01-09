@@ -27,6 +27,9 @@ namespace EasyProject.View
             InitializeComponent();
             backBtn.Click += backBtn_Click;
             pwChangeBtn.Click += pwChangeBtn_Click;
+
+            id_TxtBox.Text = App.nurse_dto.Nurse_no;
+            id_TxtBox.Focus();
         }
 
         private async void pwChangeBtn_Click(object sender, RoutedEventArgs e)
@@ -37,7 +40,15 @@ namespace EasyProject.View
             
             if (pwChangeResult == true)
             {
-                NavigationService.Navigate( new Uri("/View/LoginPage.xaml", UriKind.Relative) ); //로그인 화면
+                if (this.NavigationService.CanGoBack)
+                {
+                    this.NavigationService.GoBack();
+                }
+                else
+                {
+                    MessageBox.Show("No entries in back navigation history.");
+                }
+                //NavigationService.Navigate( new Uri("/View/LoginPage.xaml", UriKind.Relative) ); //로그인 화면
             }
             else
             {
@@ -47,10 +58,16 @@ namespace EasyProject.View
 
         private void backBtn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate
-           (
-                new Uri("/View/LoginPage.xaml", UriKind.Relative) //로그인 화면
-           );
+            if (this.NavigationService.CanGoBack)
+            {
+                this.NavigationService.GoBack();
+            }
+            else
+            {
+                MessageBox.Show("No entries in back navigation history.");
+            }
         }
+
+
     }
 }

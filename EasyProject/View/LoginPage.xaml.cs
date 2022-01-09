@@ -27,7 +27,7 @@ namespace EasyProject
             InitializeComponent();
             loginBtn.Click += loginBtn_Click;
             signUpBtn.Click += signUpBtn_Click;
-            searchBtn.Click += searchBtn_Click;
+            //searchBtn.Click += searchBtn_Click;
 
             id_TxtBox.Text = Properties.Settings.Default.LoginIDSave;
             if (id_TxtBox.Text.Length > 0)

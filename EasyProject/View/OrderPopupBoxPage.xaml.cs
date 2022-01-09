@@ -44,9 +44,8 @@ namespace EasyProject.View
         //초기화버튼
         public void resetBtn_Click(object e, RoutedEventArgs arg)
         {
-            capacity_TxtBox.Text = null;
-            amount_TxtBox.Text = null;
-            company_TxtBox.Text=null;
+           
+            prodprice_Textbox.Text = null;
             memo_TxtBox.Text= null;
         }
 

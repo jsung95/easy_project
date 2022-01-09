@@ -86,14 +86,14 @@ namespace EasyProject.ViewModel
             Products = new ObservableCollection<ProductShowModel>();
             SearchTypeList = new[] { "제품코드", "제품명", "품목/종류" };
             SelectedSearchType = SearchTypeList[0];
-
+            TextForSearch = ""; // 검색어 초기값을 null이 아닌 ""으로 설정
 
             Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts()); // 우측 상단 제품 현황 목록의 부서 선택 콤보박스
             SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1]; // 위 콤보박스의 초기값 = 현재 사용자의 부서로 설정
             
-            TextForSearch = ""; // 검색어 초기값을 null이 아닌 ""으로 설정
+            
             getListbyDept();
-            updateSearchedProducts(true);
+            //updateSearchedProducts(true);
 
             DeptsForPopupBox = new ObservableCollection<DeptModel>(dept_dao.GetDepts()); // 출고 팝업의 부서 선택 콤보박스
             DeptsForPopupBox.RemoveAt((int)App.nurse_dto.Dept_id - 1); // 현재 사용자의 부서는 목록에서 제거
@@ -126,7 +126,14 @@ namespace EasyProject.ViewModel
             DecidedNumber = new[] { 10, 20, 30 };
             SelectedNumber = DecidedNumber[0];
             DashboardPrint1(SelectedDept, SelectedCategory1, SelectedNumber);
-           
+
+            //파이차트
+            Depts_Pie = new ObservableCollection<DeptModel>(dept_dao.GetDepts());   //dept_od를 가져온다
+            SelectedDept_Pie = Depts_Pie[(int)App.nurse_dto.Dept_id - 1];  // 
+            ProductInout_Pie = new ObservableCollection<ProductInOutModel>(product_dao.GetProdOutType());
+            SelectedOutType_Pie = ProductInout_Pie[0];
+
+
         }//Constructor
 
         #region 대시보드
@@ -455,7 +462,8 @@ namespace EasyProject.ViewModel
                     MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 사용하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
 
-                    getListbyDept();
+                    LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
                     updateSearchedProducts(false);
                     UpdateRecordCount();
 
@@ -502,7 +510,8 @@ namespace EasyProject.ViewModel
                     MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 {SelectedProduct.SelectedOutDept.Dept_name} 부서로 이관하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
 
-                    getListbyDept();
+                    LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
                     updateSearchedProducts(false);
                     UpdateRecordCount();
 
@@ -545,7 +554,8 @@ namespace EasyProject.ViewModel
                     MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 폐기하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
 
-                    getListbyDept();
+                    LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
                     updateSearchedProducts(false);
                     UpdateRecordCount();
 
@@ -622,7 +632,8 @@ namespace EasyProject.ViewModel
 
                 IsInOutEnabled = true;
 
-                getListbyDept();
+                LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
                 updateSearchedProducts(false);
                 UpdateRecordCount();
                 var temp = Ioc.Default.GetService<ProductInOutViewModel>();
@@ -694,11 +705,14 @@ namespace EasyProject.ViewModel
             newCategoryDao.Category_id = cateGoryId;
             newCategoryDao.Category_name = SelectedProduct.Category_name;
             Categories.Insert(0,newCategoryDao);
-           
+
             //첫페이지 말고 다음 페이지에서 재고수정할때 성공은 되는데 첫페이지로 돌아감 해결하기
-            getListbyDept();
+            LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
             updateSearchedProducts(false);
             UpdateRecordCount();
+
+            DashboardPrint2(selectedDept);
         }
         #endregion
 
@@ -878,25 +892,7 @@ namespace EasyProject.ViewModel
             }
         }
 
-        private ActionCommand searchCommand;
-        public ICommand SearchCommand
-        {
-            get
-            {
-                if (searchCommand == null)
-                {
-                    searchCommand = new ActionCommand(SearchProducts);
-                }
-                return searchCommand;
-            }//get
-        }
-
-        public void SearchProducts()
-        {
-            LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.SearchProducts(SelectedDept, SelectedSearchType, TextForSearch));
-            UpdateCollection(LstOfRecords.Take(SelectedRecord));
-            UpdateRecordCount();
-        }
+        
 
         private ActionCommand searchKeywordCommand;
         public ICommand SearchKeywordCommand
@@ -915,7 +911,7 @@ namespace EasyProject.ViewModel
             updateSearchedProducts(true);
         }
         public void updateSearchedProducts(bool isNotUpdated)
-        {
+       {
             
             //LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.SearchProducts(SelectedDept, SelectedSearchType, TextForSearch));
             //UpdateCollection(LstOfRecords.Take(SelectedRecord));
@@ -931,22 +927,22 @@ namespace EasyProject.ViewModel
             {
                 if (SelectedSearchType == "제품명")
                 {
-                    searchedProducts = LstOfRecords.Where(model => model.Prod_name.Contains(TextForSearch));
-                    Console.WriteLine("제품명 : " + searchedProducts.Count());
+                    searchedProducts = LstOfRecords.Where(model => model.Prod_name.Contains(TextForSearch) || model.Prod_name.Contains(TextForSearch.ToUpper()) || model.Prod_name.Contains(TextForSearch.ToLower()));
+                    Console.WriteLine("제품명 : " + searchedProducts.Count() + TextForSearch.ToUpper());
 
                     UpdateRecordCount();
 
                 }
                 else if (SelectedSearchType == "제품코드")
                 {
-                    searchedProducts = LstOfRecords.Where(model => model.Prod_code.Contains(TextForSearch));
+                    searchedProducts = LstOfRecords.Where(model => model.Prod_code.Contains(TextForSearch) || model.Prod_code.Contains(TextForSearch.ToUpper()) || model.Prod_code.Contains(TextForSearch.ToLower()));
                     Console.WriteLine("제품코드 : " + searchedProducts.Count());
 
                     UpdateRecordCount();
                 }
                 else // 품목/종류
                 {
-                    searchedProducts = LstOfRecords.Where(model => model.Category_name.Contains(TextForSearch));
+                    searchedProducts = LstOfRecords.Where(model => model.Category_name.Contains(TextForSearch) || model.Category_name.Contains(TextForSearch.ToUpper()) || model.Category_name.Contains(TextForSearch.ToLower()));
                     Console.WriteLine("품목/종류 : " +  searchedProducts.Count());
 
                     UpdateRecordCount();
@@ -1032,6 +1028,8 @@ namespace EasyProject.ViewModel
             //LstOfRecords.Add(empDetails);
 
             LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+            updateSearchedProducts(true);
+            UpdateRecordCount();
             //searchKeywordChanged();
             //RecordStartFrom = (CurrentPage - 1) * SelectedRecord;
             //var recordsToShow = LstOfRecords.Skip(RecordStartFrom).Take(SelectedRecord);
@@ -1044,7 +1042,8 @@ namespace EasyProject.ViewModel
         private void PreviousPage(object obj)
         {
             CurrentPage--;
-            RecordStartFrom = searchedProducts.Count() - SelectedRecord * (NumberOfPages - (CurrentPage - 1));
+            //RecordStartFrom = searchedProducts.Count() - SelectedRecord * (NumberOfPages - (CurrentPage - 1));
+            RecordStartFrom = (CurrentPage - 1) * SelectedRecord;
             var recorsToShow = searchedProducts.Skip(RecordStartFrom).Take(SelectedRecord);
             UpdateCollection(recorsToShow);
             UpdateEnableState();
@@ -1509,8 +1508,147 @@ namespace EasyProject.ViewModel
             SelectedCategory = null;
         }
         #endregion
+        #region 검색버튼(현재 미사용)
+        private ActionCommand searchCommand;
+        public ICommand SearchCommand
+        {
+            get
+            {
+                if (searchCommand == null)
+                {
+                    searchCommand = new ActionCommand(SearchProducts);
+                }
+                return searchCommand;
+            }//get
+        }
+
+        public void SearchProducts()
+        {
+            LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.SearchProducts(SelectedDept, SelectedSearchType, TextForSearch));
+            UpdateCollection(LstOfRecords.Take(SelectedRecord));
+            UpdateRecordCount();
+        }
+        #endregion
+
+        public ObservableCollection<DeptModel> Depts_Pie { get; set; }
+
+        //선택한 부서를 담을 프로퍼티
+        private DeptModel selectedDept_Pie;
+        public DeptModel SelectedDept_Pie
+        {
+            get { return selectedDept_Pie; }
+            set
+            {
+                selectedDept_Pie = value;
+                //OnPropertyChanged("SelectedDept_Pie");
+                //DashboardPrint_Pie();
+            }
+        }
+
+        public ObservableCollection<ProductInOutModel> ProductInout_Pie { get; set; }
+
+        //선택한 출고유형(사용/이관/폐기)을 담을 프로퍼티
+        private ProductInOutModel selectedOutType_Pie;
+
+        public ProductInOutModel SelectedOutType_Pie
+        {
+            get { return selectedOutType_Pie; }
+            set
+            {
+                selectedOutType_Pie = value;
+                //OnPropertyChanged("SelectedOutType_Pie");
+                //DashboardPrint_Pie();
+            }
+        }
+
+        // 도넛그래프 SerieCollection(그래프틀)
+        private SeriesCollection seriesCollection_Pie;
+        public SeriesCollection SeriesCollection_Pie
+        {
+            get { return seriesCollection_Pie; }
+            set
+            {
+                seriesCollection_Pie = value;
+                OnPropertyChanged("SeriesCollection_Pie");
+            }
+        }
+
+        //도넛그래프 출력메소드
+        public void DashboardPrint_Pie()
+        {
+            List<ProductInOutModel> list = product_dao.GetDiscardTotalCount(SelectedDept_Pie, SelectedOutType_Pie);
+
+
+
+
+            SeriesCollection_Pie = new SeriesCollection();
+
+
+            foreach (var item in list)
+            {
+                //Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} ({1:C})", item.Prod_name, chartPoint.Participation);
+                Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0:#,0}개 ({1:#,0}￦)", item.Prod_out_count, item.Prod_price);
+                SeriesCollection_Pie.Add(new PieSeries
+                {
+                    Title = item.Prod_name,
+                    Values = new ChartValues<int> { (int)item.Prod_out_count },
+                    DataLabels = true,
+                    LabelPoint = labelPoint
+                });
+
+            }//foreache
+
+
+
+        }//DashboardPrint_Pie
+
+
+        //dashboardPrint_Pie command
+        private ActionCommand command45;
+        public ICommand Command45
+        {
+            get
+            {
+                if (command45 == null)
+                {
+                    command45 = new ActionCommand(dashboardPrint_Pie);
+                }
+                return command45;
+            }//get
+
+        }//Command
+
+        public void dashboardPrint_Pie()
+        {
+            DashboardPrint_Pie();
+        }
+
+        private ActionCommand dataGridRefreshCommand;
+        public ICommand DataGridRefreshCommand
+        {
+            get
+            {
+                if (dataGridRefreshCommand == null)
+                {
+                    dataGridRefreshCommand = new ActionCommand(DataGridRefresh);
+                }
+                return dataGridRefreshCommand;
+            }//get
+
+        }//Command
+
+        private void DataGridRefresh()
+        {
+            TextForSearch = null;
+            SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1];
+            getListbyDept();
+        }
 
     }//class
+
+    
+
+        
 
 
 

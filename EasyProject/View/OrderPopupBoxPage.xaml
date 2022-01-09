@@ -30,57 +30,44 @@
         <Grid Grid.Row="0" Background="#4472C4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*"/>
-                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <TextBlock FontWeight="Bold" FontSize="15" TextAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Margin="10"
                                                                        VerticalAlignment="center"><Run Foreground="White" Text="발주 신청서" IsEnabled="False" /></TextBlock>
-
-            <Button x:Name="resetBtn"  Foreground="white" Background="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"  
-                                                                        VerticalAlignment="Center"  BorderThickness="0" Height="48" Width="58" Cursor="Hand" Grid.Column="1" Click="resetBtn_Click">
-                <materialDesign:PackIcon Grid.Row="0" Kind="Restore" VerticalAlignment="Top" HorizontalAlignment="Center" Height="17" Width="17" />
-            </Button>
-            
-            
-
-
         </Grid>
+
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.7*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-            
+
                 <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
                     <Rectangle Fill="White" HorizontalAlignment="Left" Height="10"  Stroke="#4472C4" VerticalAlignment="center" Width="10" Margin="10"/>
                     <TextBlock  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" Margin="7" TextWrapping="Wrap" Text="신청자 정보" VerticalAlignment="center" Foreground="#4472C4"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Label Content="담당자 (" Foreground="#4472C4" Grid.Column="0" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                    <Label Content="담당자" Foreground="#4472C4" Grid.Column="0" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
                     <TextBlock x:Name="id_TxtBox" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="아이디" Grid.Column="1" 
-                      FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
+                      FontSize="12"  Margin="10,5,10,0" Height="30" FontWeight="Bold"                              
                              Text="{Binding PSVM.SelectedUser.Nurse_name, Source={StaticResource Locator}}"/>
-                    <Label Content=")" Foreground="#4472C4" Grid.Column="0" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
-                       VerticalAlignment="Center"/>
 
-                    <Label Content="부서 (" Grid.Column="2" Foreground="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+
+                    <Label Content="부서" Grid.Column="2" Foreground="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
                     <TextBlock x:Name="dept_TxtBox" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="부서" Grid.Column="3" 
-                    FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
+                    FontSize="12" VerticalAlignment="Center" Margin="10,5,10,0" Height="30" FontWeight="Bold"
                              Text="{Binding PSVM.SelectedUser.Dept_name, Source={StaticResource Locator}}"/>
-                    <Label Content=")" Grid.Column="2" Foreground="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
-                       VerticalAlignment="Center" />
 
-                    <Label Content="연락처 (" Grid.Column="4" Foreground="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+
+                    <Label Content="연락처" Grid.Column="4" Foreground="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
                     <TextBlock x:Name="phone_TxtBox" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="- 빼고입력" Grid.Column="5" 
-                        FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
+                        FontSize="12" VerticalAlignment="Center" Margin="10,5,10,0" Height="30" FontWeight="Bold"
                              Text="{Binding PSVM.SelectedUser.Dept_phone, Source={StaticResource Locator}}"/>
-                    <Label Content=")" Grid.Column="2" Foreground="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
-                       VerticalAlignment="Center" />
-
                 </StackPanel>
+
 
 
 
@@ -97,48 +84,57 @@
                     <Rectangle Fill="White" HorizontalAlignment="Left" Height="10" Margin="10" Stroke="#4472C4" VerticalAlignment="center" Width="10"/>
                     <TextBlock  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" Margin="7" TextWrapping="Wrap" Text="발주 정보" VerticalAlignment="center" Foreground="#4472C4"/>
 
-                    <Label Content="신청 품목명 (" Foreground="#4472C4" Grid.Column="0" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
-                                                                           VerticalAlignment="Center" Margin="40,0,0,0"/>
-                    <TextBlock x:Name="request_TxtBox" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="신청품목명" Grid.Column="1" 
-                                                                          FontSize="12" VerticalAlignment="Center" Margin="5,0,5,0" Height="30" 
-                                                                           Text="{Binding PSVM.SelectedProduct.Prod_name, Source={StaticResource Locator}}"/>
-                    <Label Content=")" Foreground="#4472C4" Grid.Column="0" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
-                                                                           VerticalAlignment="Center"/>
+
                 </StackPanel>
             </Grid>
 
             <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="90*"/>
-                    <ColumnDefinition Width="100*"/>
-                    <ColumnDefinition Width="80*"/>
-                    <ColumnDefinition Width="100*"/>
-                    <ColumnDefinition Width="80*"/>
-                    <ColumnDefinition Width="100*"/>
-                   
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="0.5*"/>
+                </Grid.RowDefinitions>
+
+               
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="23,0,0,0" Grid.Row="0">
+                        <Label Content="신청품목명" Foreground="#4472C4" Grid.Column="0" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                       VerticalAlignment="Center" Margin="10,0,0,0"/>
+                        <TextBlock x:Name="prodname_textblock" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="아이디" Grid.Column="1" 
+                      FontSize="12"  Margin="10,5,10,0" Height="30" FontWeight="Bold"                              
+                             Text="{Binding PSVM.SelectedProduct.Prod_name, Source={StaticResource Locator}}"/>
 
 
-                </Grid.ColumnDefinitions>
-                
-
-                <Label Content="용량" Foreground="#4472C4" Grid.Column="0" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"  
-                                                                           VerticalAlignment="Center" Margin="7,0,0,0"/>
-                <TextBox x:Name="capacity_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="용량" Grid.Column="1" HorizontalContentAlignment="Left" 
-                                                                           VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="5,0,5,0" Height="30"/>
-
-                <Label Content="수량" Foreground="#4472C4" Grid.Column="2" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"  
-                                                                           VerticalAlignment="Center" Margin="7,0,0,0"/>
-                <TextBox x:Name="amount_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="3" HorizontalContentAlignment="Left" 
-                                                                           VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="5,0,5,0" Height="30" />
-
-                <Label Content="제조사명" Foreground="#4472C4" Grid.Column="4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center"  
-                                                                           VerticalAlignment="Center" Margin="7,0,0,0"/>
+                        <Label Content="제품코드" Grid.Column="2" Foreground="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                       VerticalAlignment="Center" Margin="10,0,0,0"/>
+                        <TextBlock x:Name="prodcode_TextBlock" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="부서" Grid.Column="3" 
+                    FontSize="12" VerticalAlignment="Center" Margin="10,5,10,0" Height="30" FontWeight="Bold"
+                             Text="{Binding PSVM.SelectedProduct.Prod_code, Source={StaticResource Locator}}"/>
 
 
-                <TextBox x:Name="company_TxtBox" Grid.Column="5" Style="{DynamicResource WatermarkTextBox}" Tag ="제조사명"  HorizontalContentAlignment="Left" 
-                                                                            VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,21,34.8,21.8" Height="30" />
-                
+                        <Label Content="품목/종류" Grid.Column="4" Foreground="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                       VerticalAlignment="Center" Margin="10,0,0,0"/>
+                        <TextBlock x:Name="category_TextBlock" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="- 빼고입력" Grid.Column="5" 
+                        FontSize="12" VerticalAlignment="Center" Margin="10,5,10,0" Height="30" FontWeight="Bold"
+                             Text="{Binding PSVM.SelectedProduct.Category_name, Source={StaticResource Locator}}"/>
+
+                       
+                    </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="23,0,0,0" Grid.Row="1">
+                    <Label Content="제품가격" Grid.Column="4" Foreground="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                       VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    <TextBlock x:Name="prodprice_TextBlock" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="- 빼고입력" Grid.Column="5" 
+                        FontSize="12" VerticalAlignment="Center" Margin="10,5,10,0" Height="30" FontWeight="Bold"
+                             Text="{Binding PSVM.SelectedProduct.Prod_price, Source={StaticResource Locator}}"/>
+
+                    <Label Content="수량" Grid.Column="4" Foreground="#4472C4" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                       VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    <TextBox x:Name="prodprice_Textbox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="5" 
+                        FontSize="12" VerticalAlignment="Center" Height="30" FontWeight="Bold" Width="68" />
+                </StackPanel>
+
+
             </Grid>
+
         </Grid>
         <Grid Grid.Row="3">
             <Grid.RowDefinitions>
@@ -159,6 +155,17 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="4">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+
+
+                <Button x:Name="resetBtn"  Foreground="#4472C4" Background="white" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" 
+                                                                VerticalAlignment="Center"  BorderThickness="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  Height="28" Width="58" Cursor="Hand" Click="resetBtn_Click">
+
+                    <materialDesign:PackIcon Grid.Row="0" Kind="Restore" VerticalAlignment="Top" HorizontalAlignment="Center" Height="17" Width="17" />
+                </Button>
+
+            </StackPanel>
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button x:Name="cancel_Btn2" Content="취소" Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}" 
                                                                             FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"  

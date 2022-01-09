@@ -2888,6 +2888,108 @@ namespace EasyProject.Dao
             }//catch
         }//ChangeProductInfo_ForIn
 
+        // 사용/이관/폐기 리스트로 얻기
+        public List<ProductInOutModel> GetProdOutType()
+        {
+            List<ProductInOutModel> list = new List<ProductInOutModel>();
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT DISTINCT PROD_OUT_TYPE " +
+                                            "FROM PRODUCT_OUT";
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            ProductInOutModel dto = new ProductInOutModel()
+                            {
+
+                                Prod_out_type = reader.GetString(0)
+                            };
+
+                            list.Add(dto);
+                        }//while
+
+                    }//using(cmd)
+
+                }//conn
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return list;
+
+        }//GetProdOutType()
+
+        //도넛그래프 dao
+        public List<ProductInOutModel> GetDiscardTotalCount(DeptModel dept_dto, ProductInOutModel outtype_dto)
+        {
+            List<ProductInOutModel> list = new List<ProductInOutModel>();
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT P.prod_name , O.prod_out_count, O.prod_out_count * P.prod_price " +
+                                          "FROM product_out O " +
+                                          "INNER JOIN product P " +
+                                          "ON O.prod_id = P.prod_id " +
+                                          "INNER JOIN dept D " +
+                                          "ON O.dept_id = D.dept_id " +
+                                          "WHERE O.prod_out_type = :prod_out_type " +
+                                          "AND D.dept_name = :dept_name";
+
+                        cmd.Parameters.Add(new OracleParameter("prod_out_type", outtype_dto.Prod_out_type));
+                        cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
+
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            ProductInOutModel dto = new ProductInOutModel()
+                            {
+                                Prod_name = reader.GetString(0),
+                                Prod_out_count = reader.GetInt32(1),
+                                Prod_price = reader.GetInt32(2)
+                            };
+                            list.Add(dto);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+            return list;
+        }//GetDiscardTotalCount
+
     }//class
 
 

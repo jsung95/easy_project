@@ -23,8 +23,9 @@ namespace EasyProject.Model
         public string Prod_in_from { get; set; }
         public string Prod_in_to { get; set; }
         public string Prod_in_type { get; set; }
-        public int? prod_order_cases { get; set; } // 발주 횟수
-        public int? prod_transferIn_cases { get; set; } // 이관 횟수
+        public int? prod_order_cases { get; set; } // 신규입고 횟수
+        public int? prod_transferIn_cases { get; set; } // 이관입고 횟수
+        public int? prod_add_cases { get; set; } // 추가입고 횟수
 
         //PRODUCT_OUT
         public int? Prod_out_count { get; set; }
