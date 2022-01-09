@@ -41,6 +41,8 @@
             <Setter Property="Cursor" Value="Hand" />
         </Style>
     </Page.Resources>
+    
+    
     <Grid Height="500" Width="1200" Background="White" VerticalAlignment="Top" HorizontalAlignment="Center">
         <Grid Background="White" >
             <Grid.RowDefinitions>
@@ -147,9 +149,17 @@
 
                     <DataGrid x:Name="dataGrid" Grid.Row="1"
                             HorizontalAlignment="Left" Margin="10 0"
+                            AllowDrop="False"
                             VerticalAlignment="Top" AutoGenerateColumns="False"
-                            IsReadOnly="True" ColumnWidth="*" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" SelectionMode="Extended" SelectionUnit="FullRow" Cursor="Hand">
+                            IsReadOnly="True" ColumnWidth="*" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" SelectionUnit="FullRow" Cursor="Hand">
 
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Setter Property="Background" Value="white" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </Style>
+                        </DataGrid.RowStyle>
+                        
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="제품코드" Width="1.5*" CanUserSort="false" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -166,9 +176,13 @@
                                 <DataGridTemplateColumn.CellStyle>
                                     <Style TargetType="DataGridCell">
                                         <Style.Triggers>
-                                            <Trigger Property="IsSelected" Value="True">
+                                            <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding PSVM.IsToolTipChecked, Source={StaticResource Locator}}" Value="True"></Condition>
+                                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
+                                                </MultiDataTrigger.Conditions>
                                                 <Setter Property="IsEditing" Value="True"/>
-                                            </Trigger>
+                                            </MultiDataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </DataGridTemplateColumn.CellStyle>
@@ -188,9 +202,13 @@
                                 <DataGridTemplateColumn.CellStyle>
                                     <Style TargetType="DataGridCell">
                                         <Style.Triggers>
-                                            <Trigger Property="IsSelected" Value="True">
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding PSVM.IsToolTipChecked, Source={StaticResource Locator}}" Value="True"></Condition>
+                                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
+                                                </MultiDataTrigger.Conditions>
                                                 <Setter Property="IsEditing" Value="True"/>
-                                            </Trigger>
+                                            </MultiDataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </DataGridTemplateColumn.CellStyle>
@@ -203,16 +221,26 @@
                                 <DataGridComboBoxColumn.CellStyle>
                                     <Style TargetType="DataGridCell">
                                         <Style.Triggers>
-                                            <Trigger Property="IsSelected" Value="True">
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding PSVM.IsToolTipChecked, Source={StaticResource Locator}}" Value="True"></Condition>
+                                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
+                                                </MultiDataTrigger.Conditions>
                                                 <Setter Property="IsEditing" Value="True"/>
-                                            </Trigger>
+                                            </MultiDataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </DataGridComboBoxColumn.CellStyle>
 
                                 <DataGridComboBoxColumn.EditingElementStyle>
                                     <Style TargetType="{x:Type ComboBox}">
-                                        <EventSetter Event="SelectionChanged" Handler="SomeSelectionChanged" />
+                                        <EventSetter Event="SelectionChanged" Handler="SomeSelectionChanged"/>
+                                        <EventSetter Event="KeyDown" Handler="KeyDown"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding PSVM.ComboBoxCategoryName, Source={StaticResource Locator}}" Value="추가(입력)하기">
+                                                <Setter Property="IsEditable" Value="True"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
                                     </Style>
                                 </DataGridComboBoxColumn.EditingElementStyle>
                             </DataGridComboBoxColumn>
@@ -232,9 +260,13 @@
                                 <DataGridTemplateColumn.CellStyle>
                                     <Style TargetType="DataGridCell">
                                         <Style.Triggers>
-                                            <Trigger Property="IsSelected" Value="True">
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding PSVM.IsToolTipChecked, Source={StaticResource Locator}}" Value="True"></Condition>
+                                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
+                                                </MultiDataTrigger.Conditions>
                                                 <Setter Property="IsEditing" Value="True"/>
-                                            </Trigger>
+                                            </MultiDataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </DataGridTemplateColumn.CellStyle>
@@ -254,10 +286,14 @@
                                 <DataGridTemplateColumn.CellStyle>
                                     <Style TargetType="DataGridCell">
                                         <Style.Triggers>
-                                            <Trigger Property="IsSelected" Value="True">
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding PSVM.IsToolTipChecked, Source={StaticResource Locator}}" Value="True"></Condition>
+                                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
+                                                </MultiDataTrigger.Conditions>
                                                 <Setter Property="IsEditing" Value="True"/>
                                                 <Setter Property="ToolTip" Value="※ 입고/출고가 반영되지 않습니다." />
-                                            </Trigger>
+                                            </MultiDataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </DataGridTemplateColumn.CellStyle>
@@ -295,12 +331,12 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <Button x:Name="goDialog_Btn" Foreground="#4472C4"  FontSize="12" FontWeight="Bold" Background="{x:Null}"  Cursor="Hand"
+                                            <!--<Button x:Name="goDialog_Btn" Foreground="#4472C4"  FontSize="12" FontWeight="Bold" Background="{x:Null}"  Cursor="Hand"
                                                     VerticalAlignment="Center" Height="45"  Width="45" HorizontalAlignment="Center" Command="{Binding PSVM.ProductEditCommand, Source={StaticResource Locator}}">
                                                 <materialDesign:PackIcon Kind="LeadPencil" VerticalAlignment="Center" HorizontalAlignment="Center" Height="17" Width="17">
                                                     
                                                 </materialDesign:PackIcon>
-                                            </Button>
+                                            </Button>-->
                                             <StackPanel Orientation="Horizontal">
                                                 <!--출고 -->
                                                 <materialDesign:PopupBox Name="releasePopupBox" StaysOpen="True">
@@ -578,6 +614,25 @@
                                 </Button.Style>
                             </Button>
                             </StackPanel>
+
+                        <DockPanel Margin="10 5" HorizontalAlignment="Left" LastChildFill="True" Width="100" >
+                            <TextBlock Text="수정  " FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <ToggleButton HorizontalAlignment="Left" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                      ToolTip="재고수정을 할 수 있습니다." IsChecked="{Binding IsToolTipChecked}">
+                                <materialDesign:PackIcon Kind="Pin" RenderTransformOrigin=".5,.5">
+                                    <materialDesign:PackIcon.RenderTransform>
+                                        <RotateTransform Angle="45" />
+                                    </materialDesign:PackIcon.RenderTransform>
+                                </materialDesign:PackIcon>
+                                <materialDesign:ToggleButtonAssist.OnContent>
+                                    <materialDesign:PackIcon Kind="Pin" />
+                                </materialDesign:ToggleButtonAssist.OnContent>
+                            </ToggleButton>
+
+                            
+                        </DockPanel>
+                        
+                        
                         <ComboBox Margin="10 5" SelectedIndex="0" Width="100" SelectedItem ="{Binding SelectedRecord, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right">
                             <wookoa:Int32>10</wookoa:Int32>
                             <wookoa:Int32>15</wookoa:Int32>

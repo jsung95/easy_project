@@ -16,6 +16,7 @@ using EasyProject.ViewModel;
 using System.Windows.Data;
 using System.Globalization;
 using log4net;
+using System.Windows.Input;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -71,21 +72,33 @@ namespace EasyProject.View.TabItemPage
         {
             var comboBox = sender as ComboBox;
 
-
-            if ((comboBox.SelectedItem as CategoryModel).Category_name != 
-                ((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name)
+            if(comboBox.SelectedItem != null)
             {
-                Console.WriteLine("다르다");
+                ((ProductShowViewModel)(this.DataContext)).ComboBoxCategoryName = (comboBox.SelectedItem as CategoryModel).Category_name;
+                Console.WriteLine(((ProductShowViewModel)(this.DataContext)).ComboBoxCategoryName);
 
-                ((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name = (comboBox.SelectedItem as CategoryModel).Category_name;
-                Console.WriteLine(((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name);
+                if ((comboBox.SelectedItem as CategoryModel).Category_name !=
+                ((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name &&
+                (comboBox.SelectedItem as CategoryModel).Category_name != "직접입력")
+                {
+                    //Console.WriteLine("다르다");
+
+                    ((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name = (comboBox.SelectedItem as CategoryModel).Category_name;
+                    //Console.WriteLine(((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name);
+                }
             }
-
         }
 
-        private void DropDownClosed(object sender, System.EventArgs e)
+        private void KeyDown(object sender, KeyEventArgs e)
         {
+            var cmb = sender as ComboBox;
 
+            if(e.Key == Key.Enter)
+            {
+                ((ProductShowViewModel)(this.DataContext)).AddNewCategory(cmb.Text);
+                ((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name = cmb.Text;
+                ((ProductShowViewModel)(this.DataContext)).EditProduct();
+            } 
         }
 
         private void OnDropDownOpened(object sender, EventArgs e)
