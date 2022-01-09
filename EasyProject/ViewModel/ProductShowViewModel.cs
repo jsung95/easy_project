@@ -1622,7 +1622,32 @@ namespace EasyProject.ViewModel
             DashboardPrint_Pie();
         }
 
-        }//class
+        private ActionCommand dataGridRefreshCommand;
+        public ICommand DataGridRefreshCommand
+        {
+            get
+            {
+                if (dataGridRefreshCommand == null)
+                {
+                    dataGridRefreshCommand = new ActionCommand(DataGridRefresh);
+                }
+                return dataGridRefreshCommand;
+            }//get
+
+        }//Command
+
+        private void DataGridRefresh()
+        {
+            TextForSearch = null;
+            SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1];
+            getListbyDept();
+        }
+
+    }//class
+
+    
+
+        
 
 
 
