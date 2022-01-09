@@ -55,17 +55,19 @@ namespace EasyProject.View.TabItemPage
             dash.DashboardPrint1(dash.SelectedDept, dash.SelectedCategory1,dash.SelectedNumber);
             dash.DashboardPrint2(dash.SelectedDept);
 
-            if (deptNameText.Equals(userDeptName) || userDeptName == null)
+            if (App.nurse_dto.Nurse_auth.Equals("ADMIN"))
             {
-                Console.WriteLine(userDeptName + "같은 부서일때");
-                buttonColumn.Visibility = Visibility.Visible;
+                if (deptNameText.Equals(userDeptName) || userDeptName == null)
+                {
+                    Console.WriteLine(userDeptName + "같은 부서일때");
+                    buttonColumn.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    Console.WriteLine(userDeptName + "다른 부서일때");
+                    buttonColumn.Visibility = Visibility.Hidden;
+                }
             }
-            else
-            {
-                Console.WriteLine(userDeptName + "다른 부서일때");
-                buttonColumn.Visibility = Visibility.Hidden;
-            }
-
         }
 
         private void SomeSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -110,18 +112,22 @@ namespace EasyProject.View.TabItemPage
             var temp = Ioc.Default.GetService<ProductShowViewModel>();
             var userDept = temp.Depts[(int)App.nurse_dto.Dept_id - 1];  // 현재 사용자 소속 부서 객체
             var userDeptName = userDept.Dept_name;
-            if (isComboBoxDropDownOpened)
-            {
 
-                if (deptNameText.Equals(userDeptName) || userDeptName == null)
+            if (App.nurse_dto.Nurse_auth.Equals("ADMIN"))
+            {
+                if (isComboBoxDropDownOpened)
                 {
-                    Console.WriteLine(userDeptName + "같은 부서일때");
-                    buttonColumn.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    Console.WriteLine(userDeptName + "다른 부서일때");
-                    buttonColumn.Visibility = Visibility.Hidden;
+
+                    if (deptNameText.Equals(userDeptName) || userDeptName == null)
+                    {
+                        Console.WriteLine(userDeptName + "같은 부서일때");
+                        buttonColumn.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        Console.WriteLine(userDeptName + "다른 부서일때");
+                        buttonColumn.Visibility = Visibility.Hidden;
+                    }
                 }
             }
         }

@@ -332,7 +332,7 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             
-                            <DataGridTemplateColumn x:Name="buttonColumn" Header="신청" Width="3*" IsReadOnly="True" Visibility="Visible">
+                            <DataGridTemplateColumn x:Name="buttonColumn" Header="신청" Width="3*" IsReadOnly="True" Visibility="Hidden">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
