@@ -57,6 +57,8 @@ namespace EasyProject.View.TabItemPage
 
             if (App.nurse_dto.Nurse_auth.Equals("ADMIN"))
             {
+                ModifyToggleButtonPanel.Visibility = Visibility.Visible;
+
                 if (deptNameText.Equals(userDeptName) || userDeptName == null)
                 {
                     Console.WriteLine(userDeptName + "같은 부서일때");
