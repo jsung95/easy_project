@@ -332,7 +332,7 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             
-                            <DataGridTemplateColumn x:Name="buttonColumn" Header="신청" Width="3*" IsReadOnly="True" Visibility="Visible">
+                            <DataGridTemplateColumn x:Name="buttonColumn" Header="신청" Width="3*" IsReadOnly="True" Visibility="Hidden">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -620,7 +620,7 @@
                             </Button>
                             </StackPanel>
 
-                        <DockPanel Margin="10 5" HorizontalAlignment="Left" LastChildFill="True" Width="150" >
+                        <DockPanel x:Name="ModifyToggleButtonPanel" Margin="10 5" HorizontalAlignment="Left" LastChildFill="True" Width="150" Visibility="Hidden" >
                             <TextBlock Text="수정 " FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
                             <ToggleButton HorizontalAlignment="Left" Style="{StaticResource MaterialDesignSwitchToggleButton}"
                                       ToolTip="수정기능을 잠금/해제 할 수 있습니다." IsChecked="{Binding IsToolTipChecked}">

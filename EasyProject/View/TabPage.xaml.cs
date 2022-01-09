@@ -20,10 +20,13 @@ namespace EasyProject
     /// </summary>
     public partial class TabPage : Page
     {
+        private string CurrentButtonName = "StatusPageTabButton";
+
         public TabPage()
         {
             InitializeComponent();
             userNameTxtBox.Text = App.nurse_dto.Nurse_name;
+            this.Loaded += PageLoaded;
         }
         /*private void StatusBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -33,6 +36,25 @@ namespace EasyProject
                  );
 
         }*/
+        private void PageLoaded(object sender, RoutedEventArgs e)
+        {
+            if (App.nurse_dto.Nurse_auth.Equals("NORMAL"))
+            {
+                InsertPageTabButton.Width = 0;
+                AuthorityPageTabButton.Width = 0;
+            }
+            else if (App.nurse_dto.Nurse_auth.Equals("ADMIN"))
+            {
+                AuthorityPageTabButton.Width = 0;
+            }
+            else if (App.nurse_dto.Nurse_auth.Equals("SUPER"))
+            {
+                InsertPageTabButton.Width = 0;
+                IncomingOutgoingPageTabButton.Width = 0;
+                InsertPageTabButton.Width = 0;
+                OrderPageTabButton.Width = 0;
+            }
+        }
 
         private void btn_close(object sender, RoutedEventArgs e)       //버튼 창닫기
         {
@@ -41,32 +63,43 @@ namespace EasyProject
 
         private void TabButtonClick(object sender, RoutedEventArgs e)       //버튼 창닫기
         {
-            int index = int.Parse(((Button)e.Source).Uid);
+            string buttonName = ((Button)e.Source).Name;
+            Button currentButton = (Button)this.FindName(buttonName);
 
-            GridCursor.Margin = new Thickness((150 * index), 0, 0, 0);
-
-            switch (index)
+            //GridCursor.Margin = new Thickness((150 * index), 0, 0, 0);
+            if (!buttonName.Equals(CurrentButtonName))
             {
-                case 0:
+                var previousButton = (Button)this.FindName(CurrentButtonName);
+                previousButton.Background = null;
+            }
+
+            BrushConverter bc = new BrushConverter();
+
+            switch (buttonName)
+            {
+                case "StatusPageTabButton":
                     TabFrame.Source = new Uri("TabItemPage/StatusPage.xaml", UriKind.Relative);
                     break;
-                case 1:
+                case "GraphPageTabButton":
                     TabFrame.Source = new Uri("TabItemPage/GraphTabPage.xaml", UriKind.Relative);
                     break;
-                case 2:
+                case "InsertPageTabButton":
                     TabFrame.Source = new Uri("TabItemPage/InsertPage.xaml", UriKind.Relative);
                     break;
-                case 3:
+                case "IncomingOutgoingPageTabButton":
                     TabFrame.Source = new Uri("TabItemPage/IncomingOutgoingPageBtn.xaml", UriKind.Relative);
                     break;
-                case 4:
+                case "OrderPageTabButton":
                     TabFrame.Source = new Uri("TabItemPage/OrderPage.xaml", UriKind.Relative);
                     break;
-                case 5:
+                case "AuthorityPageTabButton":
                     TabFrame.Source = new Uri("TabItemPage/AuthorityPage.xaml", UriKind.Relative);
                     break;
 
             }
+
+            currentButton.Background = (Brush)bc.ConvertFrom("#F0EBE9");
+            CurrentButtonName = buttonName;
         }
 
         private void logoutBtn_Click(object sender, RoutedEventArgs e)
@@ -75,3 +108,6 @@ namespace EasyProject
         }
     }
 }
+
+
+

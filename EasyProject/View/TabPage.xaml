@@ -1,4 +1,4 @@
-﻿ <Page x:Class="EasyProject.TabPage"
+﻿<Page x:Class="EasyProject.TabPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -17,12 +17,12 @@
     <StackPanel Orientation="Vertical" Background="white">
         <Grid Height="40">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-                <Button Uid="0" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="재고 현황" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand"/>
-                <Button Uid="1" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="그래프 현황" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand"/>
-                <Button Uid="2" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="신규재고 입력" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" />
-                <Button Uid="3" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="입출고 현황" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" />
-                <Button Uid="4" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="신규발주 신청" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" />
-                <Button Uid="5" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="권한 변경" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" />
+                <Button Uid="0" x:Name="StatusPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="재고 현황" Background="#F0EBE9" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}"/>
+                <Button Uid="1" x:Name="GraphPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="그래프 현황" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}" />
+                <Button Uid="2" x:Name="InsertPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="신규재고 입력" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}" />
+                <Button Uid="3" x:Name="IncomingOutgoingPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="입출고 현황" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}" />
+                <Button Uid="4" x:Name="OrderPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="신규발주 신청" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}" />
+                <Button Uid="5" x:Name="AuthorityPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="권한 변경" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}" />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="10 0" VerticalAlignment="Center" HorizontalAlignment="Right">
@@ -32,8 +32,8 @@
                 <TextBlock x:Name="userNamePlusTxtBlock" Text="님" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"></TextBlock>
                 <!--<Button Content="로그아웃" Cursor="Hand" Command="{Binding LogoutCommand}"/>-->
             </StackPanel>
-            
-            <Grid x:Name="GridCursor" Width="150" Height="5" Background="#ff2196f3" VerticalAlignment="Bottom" HorizontalAlignment="Left"></Grid>
+
+            <!--<Grid x:Name="GridCursor" Width="150" Height="5" Background="#ff2196f3" VerticalAlignment="Bottom" HorizontalAlignment="Left"></Grid>-->
         </Grid>
         <Grid x:Name="TabBorder" Width="1300" Height="1" Background="LightGray" VerticalAlignment="Bottom" HorizontalAlignment="Left"></Grid>
 
@@ -41,5 +41,5 @@
             <Frame x:Name="TabFrame" NavigationUIVisibility="Hidden" Source="/View/TabItemPage/StatusPage.xaml" Height="550" VerticalAlignment="Bottom"/>
         </Grid>
     </StackPanel>
-    
+
 </Page>
