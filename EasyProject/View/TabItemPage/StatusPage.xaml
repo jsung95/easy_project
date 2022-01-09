@@ -312,10 +312,12 @@
                                         <Style.Triggers>
                                             <Trigger Property="IsSelected" Value="True">
                                                 <Setter Property="IsEditing" Value="True"/>
+                                                <Setter Property="ToolTip" Value="※ 입고/출고가 반영되지 않습니다." />
                                             </Trigger>
                                         </Style.Triggers>
                                     </Style>
                                 </DataGridTemplateColumn.CellStyle>
+                                
                             </DataGridTemplateColumn>
                             <DataGridTextColumn Binding="{Binding Prod_expire, StringFormat='yyyy-MM-dd'}"  Header="유통기한" Width="2*" CanUserSort="true" IsReadOnly="True"/>
 
