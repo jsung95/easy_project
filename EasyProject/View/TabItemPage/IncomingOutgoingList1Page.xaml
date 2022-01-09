@@ -7,14 +7,14 @@
       xmlns:bod="clr-namespace:EasyProject.Util"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:wookoa="clr-namespace:System;assembly=mscorlib"
-      xmlns:vm="clr-namespace:EasyProject.ViewModel" xmlns:conv="clr-namespace:EasyProject"
+      xmlns:vm="clr-namespace:EasyProject.ViewModel" xmlns:conv="clr-namespace:EasyProject" xmlns:model="clr-namespace:EasyProject.Model"
       mc:Ignorable="d"
       DataContext="{Binding PIOVM, Source={StaticResource Locator}}"
       Title="IncomingOutgoingList1Page" Cursor="Hand">
 
     <Page.Resources>
         <local:MultipleTextFormatConverterKey x:Key="MultipleTextFormatConverterKey" />
-
+       
         <Style x:Key="CellStyle" TargetType="DataGridCell">
             <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}}" />
         </Style>
