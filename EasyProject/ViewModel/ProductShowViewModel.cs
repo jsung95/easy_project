@@ -786,6 +786,7 @@ namespace EasyProject.ViewModel
                 SelectedProduct.InputOutCount = null;
             }
 
+            DashboardPrint2(selectedDept);
         }//OutProduct
 
         private ActionCommand outProductReset;
@@ -856,6 +857,7 @@ namespace EasyProject.ViewModel
                 SelectedProduct.InputInCount = null;
             }
 
+            DashboardPrint2(selectedDept);
         }//InProduct
 
         private ActionCommand inProductReset;
