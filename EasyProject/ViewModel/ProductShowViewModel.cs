@@ -1640,8 +1640,10 @@ namespace EasyProject.ViewModel
         {
             //데이터그리드 데이터 다시 불러와서 다시 뿌려주는 함수 호출하기
             TextForSearch = null;
-            updateSearchedProducts(true);
-            UpdateRecordCount();
+            SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1];
+            //updateSearchedProducts(true);
+            //UpdateRecordCount();
+            getListbyDept();
         }
 
     }//class
