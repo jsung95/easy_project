@@ -27,6 +27,7 @@ namespace EasyProject.Model
         public int? Prod_price { get; set; }
         public int? Prod_total { get; set; }
         public int? Imp_dept_count { get; set; }
+
         private DateTime prod_expire;
         public DateTime Prod_expire
         {
