@@ -14,8 +14,8 @@
     <Page.DataContext>
         <vm:LoginViewModel/>
     </Page.DataContext>
-    <Page.Resources>
-        <ResourceDictionary>
+    <materialDesign:DialogHost >
+        <materialDesign:DialogHost.DialogContent>
             <DataTemplate DataType="{x:Type model:ErrorNotificationMessage}">
                 <StackPanel Margin="20">
                     <Grid>
@@ -31,7 +31,7 @@
                         <StackPanel Margin="20"
                                     Grid.Column="1"
                                     MinWidth="180">
-                            <TextBlock Text="{Binding Title}" FontSize="15"></TextBlock>
+                            <TextBlock Text="{Binding Title}" FontSize="15" ></TextBlock>
                             <TextBlock Text="{Binding Message}" FontSize="13" FontWeight="SemiBold"
                                        Margin="0,20,0,0"></TextBlock>
                         </StackPanel>
@@ -42,34 +42,33 @@
                         <Button Content="확인" Background="#ff2196f3" Foreground="White" Margin="30,0,0,0"
                             Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"></Button>
 
-                    </StackPanel>                    
+                    </StackPanel>
                 </StackPanel>
             </DataTemplate>
-        </ResourceDictionary>        
-    </Page.Resources>
-    <StackPanel Orientation="Vertical" Background="white">
-        <Grid Height="40">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-                <Button Uid="0" x:Name="StatusPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="재고 현황" Background="#F0EBE9" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}"/>
-                <Button Uid="1" x:Name="GraphPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="그래프 현황" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}" />
-                <Button Uid="2" x:Name="InsertPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="신규재고 입력" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}" />
-                <Button Uid="3" x:Name="IncomingOutgoingPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="입출고 현황" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}" />
-                <Button Uid="4" x:Name="OrderPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="신규발주 신청" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}" />
-                <Button Uid="5" x:Name="AuthorityPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="권한 변경" Background="#F0EBE9" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}" />
-            </StackPanel>
+        </materialDesign:DialogHost.DialogContent>
+        <StackPanel Orientation="Vertical" Background="white">
+            <Grid Height="40">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                    <Button Uid="0" x:Name="StatusPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="재고 현황" Background="#F0EBE9" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}"/>
+                    <Button Uid="1" x:Name="GraphPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="그래프 현황" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}" />
+                    <Button Uid="2" x:Name="InsertPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="신규재고 입력" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}" />
+                    <Button Uid="3" x:Name="IncomingOutgoingPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="입출고 현황" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}" />
+                    <Button Uid="4" x:Name="OrderPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="신규발주 신청" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}" />
+                    <Button Uid="5" x:Name="AuthorityPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="권한 변경" Background="#F0EBE9" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}" />
+                </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="10 0" VerticalAlignment="Center" HorizontalAlignment="Right">
-                <materialDesign:DialogHost Identifier="RootDialog"  HorizontalAlignment="Center" 
+                <StackPanel Orientation="Horizontal" Margin="10 0" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <!--<materialDesign:DialogHost Identifier="RootDialog"  HorizontalAlignment="Center" 
                                CloseOnClickAway="True">
                     
-                </materialDesign:DialogHost>
-                <Button x:Name="dialog" Click="ButtonError_Click" Content="dialog"></Button>
-                
-                <Button x:Name="logoutBtn" Height="35" Width="90" FontSize="13" FontWeight="DemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3" Content="로그아웃" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand"
+                </materialDesign:DialogHost>-->
+                    <Button x:Name="dialog" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Content="테스트"></Button>
+
+                    <Button x:Name="logoutBtn" Height="35" Width="90" FontSize="13" FontWeight="DemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3" Content="로그아웃" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand"
                         Command="{Binding LogoutCommand}" Click="logoutBtn_Click"/>
-               <!-- <TextBlock x:Name="userNameTxtBox" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"></TextBlock>-->
-                <TextBlock FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <!-- <TextBlock x:Name="userNameTxtBox" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"></TextBlock>-->
+                    <TextBlock FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <materialDesign:PopupBox x:Name="userInfo_PopupBox" StaysOpen="True" PlacementMode="BottomAndAlignRightEdges">
                             <materialDesign:PopupBox.ToggleContent>
                                 <TextBlock x:Name="userNameTxtBox" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"/>
@@ -91,31 +90,31 @@
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                
+
                                 <TextBlock  Grid.Row="0" Style="{StaticResource MaterialDesignHeadline6TextBlock}" HorizontalAlignment="Center" VerticalAlignment="Center"
                                     FontWeight="SemiBold" FontSize="15" Foreground="#ff2196f3">
                                     <Run x:Name="user_name"/>
                                     <Run Text="반갑습니다."/>
                                 </TextBlock>
-                                
+
                                 <TextBlock  Grid.Row="1" Style="{StaticResource MaterialDesignHeadline6TextBlock}" HorizontalAlignment="Left" VerticalAlignment="Center"
                                     FontWeight="SemiBold" FontSize="12" Foreground="#ff2196f3" Margin="10,0,0,0">
                                     <Run Text="사번 :"/>
                                     <Run x:Name="user_no" Foreground="Black"/>
                                 </TextBlock>
-                                
+
                                 <TextBlock  Grid.Row="2" Style="{StaticResource MaterialDesignHeadline6TextBlock}" HorizontalAlignment="Left" VerticalAlignment="Center"
                                     FontWeight="SemiBold" FontSize="12" Foreground="#ff2196f3" Margin="10,0,0,0">
                                     <Run Text="권한 :"/>
                                     <Run x:Name="user_auth" Foreground="Black"/>
                                 </TextBlock>
-                                
+
                                 <TextBlock  Grid.Row="3" Style="{StaticResource MaterialDesignHeadline6TextBlock}" HorizontalAlignment="Left" VerticalAlignment="Center"
                                     FontWeight="SemiBold" FontSize="12" Foreground="#ff2196f3" Margin="10,0,0,0">
                                     <Run Text="부서 :"/>
                                     <Run x:Name="user_dept" Foreground="Black"/>
                                 </TextBlock>
-                                
+
                                 <Grid Grid.Row="4">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="0.5*"/>
@@ -130,7 +129,7 @@
                                             </Style>
                                         </Button.Style>
                                     </Button>
-                                    
+
                                     <Button Grid.Column="1" x:Name="pw_Change_Btn" Content="비밀번호 변경" Click="pw_Change_Btn_Click"
                                                 FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"  
                                                 VerticalAlignment="Center"  BorderThickness="0" Height="28" Width="155" Cursor="Hand"  Foreground="White" >
@@ -141,23 +140,23 @@
                                         </Button.Style>
                                     </Button>
                                 </Grid>
-                                
+
                             </Grid>
                         </materialDesign:PopupBox>
                     </StackPanel>
-               
-                <!--<TextBlock x:Name="userNameTxtBox" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"></TextBlock>-->
-                <TextBlock x:Name="userNamePlusTxtBlock" Text="님" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"></TextBlock>
-                <!--<Button Content="로그아웃" Cursor="Hand" Command="{Binding LogoutCommand}"/>-->
-            </StackPanel>
 
-            <!--<Grid x:Name="GridCursor" Width="150" Height="5" Background="#ff2196f3" VerticalAlignment="Bottom" HorizontalAlignment="Left"></Grid>-->
-        </Grid>
-        <Grid x:Name="TabBorder" Width="1300" Height="1" Background="LightGray" VerticalAlignment="Bottom" HorizontalAlignment="Left"></Grid>
+                    <!--<TextBlock x:Name="userNameTxtBox" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"></TextBlock>-->
+                    <TextBlock x:Name="userNamePlusTxtBlock" Text="님" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"></TextBlock>
+                    <!--<Button Content="로그아웃" Cursor="Hand" Command="{Binding LogoutCommand}"/>-->
+                </StackPanel>
 
-        <Grid>
-            <Frame x:Name="TabFrame" NavigationUIVisibility="Hidden" Source="/View/TabItemPage/StatusPage.xaml" Height="550" VerticalAlignment="Bottom"/>
-        </Grid>
-    </StackPanel>
+                <!--<Grid x:Name="GridCursor" Width="150" Height="5" Background="#ff2196f3" VerticalAlignment="Bottom" HorizontalAlignment="Left"></Grid>-->
+            </Grid>
+            <Grid x:Name="TabBorder" Width="1300" Height="1" Background="LightGray" VerticalAlignment="Bottom" HorizontalAlignment="Left"></Grid>
 
+            <Grid>
+                <Frame x:Name="TabFrame" NavigationUIVisibility="Hidden" Source="/View/TabItemPage/StatusPage.xaml" Height="550" VerticalAlignment="Bottom"/>
+            </Grid>
+        </StackPanel>
+    </materialDesign:DialogHost>
 </Page>
