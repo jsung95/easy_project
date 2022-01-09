@@ -43,6 +43,11 @@
                             VerticalAlignment="Top" AutoGenerateColumns="False" 
                             CanUserSortColumns="True" IsReadOnly="True" ColumnWidth="*"
                             ItemsSource="{Binding Add_list, Mode=TwoWay}">
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Background" Value="Red"/>
+                    </Style>
+                </DataGrid.RowStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Prod_in_date}" Header="입력일자" Width="1.3*" IsReadOnly="True" />
                     <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="*" IsReadOnly="True"/>

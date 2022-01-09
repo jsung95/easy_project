@@ -1042,7 +1042,8 @@ namespace EasyProject.ViewModel
         private void PreviousPage(object obj)
         {
             CurrentPage--;
-            RecordStartFrom = searchedProducts.Count() - SelectedRecord * (NumberOfPages - (CurrentPage - 1));
+            //RecordStartFrom = searchedProducts.Count() - SelectedRecord * (NumberOfPages - (CurrentPage - 1));
+            RecordStartFrom = (CurrentPage - 1) * SelectedRecord;
             var recorsToShow = searchedProducts.Skip(RecordStartFrom).Take(SelectedRecord);
             UpdateCollection(recorsToShow);
             UpdateEnableState();
