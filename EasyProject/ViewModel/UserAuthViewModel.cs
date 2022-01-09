@@ -50,6 +50,18 @@ namespace EasyProject.ViewModel
         public string AdminSearchType { get; set; }
 
         // 콤보박스에서 선택한 부서를 담을 프로퍼티
+
+        //normal-admin 통일 => 하나의 콤보박스로 (authSearchDept 추가함)
+        private DeptModel authSearchDept;
+        public DeptModel AuthSearchDept
+        {
+            get { return authSearchDept; }
+            set
+            {
+                normalSearchDept = value;
+                OnPropertyChanged("authSearchDept");
+            }
+        }
         private DeptModel normalSearchDept;
         public DeptModel NormalSearchDept
         {
@@ -73,10 +85,12 @@ namespace EasyProject.ViewModel
         }
 
         // 사용자 검색 시 나온 사용자 정보를 담을 옵저버블컬렉션 프로퍼티
+        public ObservableCollection<UserModel> Auth_searched { get; set; }
         public ObservableCollection<UserModel> Normals_searched { get; set; }
 
         public ObservableCollection<UserModel> Admins_searched { get; set; }
 
+        public List<UserModel> Auth_users { get; set; }
         public List<UserModel> Normal_users { get; set; }
 
         public List<UserModel> Admin_users { get; set; }
@@ -105,6 +119,8 @@ namespace EasyProject.ViewModel
             DeptModel deptModel = new DeptModel();
             deptModel.Dept_name = "전체";
             SearchDeptList.Insert(0, deptModel);
+            
+           // Auth_searched=  
 
             Normals_searched = new ObservableCollection<UserModel>(user_dao.GetUserInfo("NORMAL")); // 화면에 보일 리스트
             Admins_searched = new ObservableCollection<UserModel>(user_dao.GetUserInfo("ADMIN"));  // 화면에 보일 리스트

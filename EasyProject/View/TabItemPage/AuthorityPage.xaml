@@ -43,6 +43,26 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="VerticalGridLinesBrush" Value="#4472C4"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#4472C4"/>
+            <Setter Property="RowHeight" Value="32"/>
+            <Setter Property="RowHeaderWidth" Value="0"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
     </Page.Resources>
 
     <Grid Height="450" Width="1000" >
@@ -51,6 +71,28 @@
             <RowDefinition Height="5*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Label Content="부서명" Foreground="#4472C4" Grid.Column="2" FontSize="12" 
+                       FontWeight="Bold" HorizontalAlignment="Right"  
+                       VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <ComboBox Name="normal_dept_combobox"  HorizontalAlignment="Right" VerticalAlignment="Top" Width="60" SelectedItem="{Binding NormalSearchDept}" ItemsSource="{Binding SearchDeptList}" SelectedIndex="0" Margin="0,0,50,0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Dept_name}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding NormalKeywordCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </StackPanel>
+            
+        </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -75,7 +117,7 @@
                                 <ColumnDefinition Width="0.2*"/>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
-                                <ComboBox Name="normal_dept_combobox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="60" SelectedItem="{Binding NormalSearchDept}" ItemsSource="{Binding SearchDeptList}" SelectedIndex="0" Margin="0,2,0,0">
+                                <!--<ComboBox Name="normal_dept_combobox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="60" SelectedItem="{Binding NormalSearchDept}" ItemsSource="{Binding SearchDeptList}" SelectedIndex="0" Margin="0,2,0,0">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
@@ -88,8 +130,8 @@
                                             <i:InvokeCommandAction Command="{Binding NormalKeywordCommand}" />
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
-                                </ComboBox>
-                                <ComboBox Margin="0,32,0,0" Name="normal_searchType_combobox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="60" SelectedItem="{Binding NormalSearchType}" ItemsSource="{Binding SearchTypeList}" SelectedIndex="0">
+                                </ComboBox>-->
+                                <ComboBox  Name="normal_searchType_combobox" HorizontalAlignment="Center" VerticalAlignment="Center" Width="60" SelectedItem="{Binding NormalSearchType}" ItemsSource="{Binding SearchTypeList}" SelectedIndex="0">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
                                             <i:InvokeCommandAction Command="{Binding NormalKeywordCommand}" />
@@ -128,7 +170,6 @@
                                     <DataGridTextColumn Header=" 이름" Binding="{Binding Nurse_name}" IsReadOnly="True" />
                                     <DataGridTextColumn Header=" ID" Binding="{Binding Nurse_no}" IsReadOnly="True"/>
                                     <DataGridTextColumn Header=" 부서" Binding="{Binding Dept_name}" IsReadOnly="True"/>
-
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
@@ -178,7 +219,7 @@
                                 <ColumnDefinition Width="0.2*"/>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
-                                <ComboBox Margin="15,2,0,0" Name="admin_dept_combobox" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="60" SelectedItem="{Binding AdminSearchDept}" ItemsSource="{Binding SearchDeptList}" SelectedIndex="0">
+                                <!--<ComboBox Margin="15,2,0,0" Name="admin_dept_combobox" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="60" SelectedItem="{Binding AdminSearchDept}" ItemsSource="{Binding SearchDeptList}" SelectedIndex="0">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
@@ -191,8 +232,8 @@
                                             <i:InvokeCommandAction Command="{Binding AdminKeywordCommand}" />
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
-                                </ComboBox>
-                                <ComboBox Margin="15,32,0,0" Name="admin_searchType_combobox" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="60" SelectedItem="{Binding AdminSearchType}" ItemsSource="{Binding SearchTypeList}" SelectedIndex="0">
+                                </ComboBox>-->
+                                <ComboBox  Name="admin_searchType_combobox" Margin="15,0,0,0" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="60" SelectedItem="{Binding AdminSearchType}" ItemsSource="{Binding SearchTypeList}" SelectedIndex="0">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
                                             <i:InvokeCommandAction Command="{Binding AdminKeywordCommand}" />
