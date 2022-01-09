@@ -190,6 +190,10 @@ namespace EasyProject.ViewModel
 
         #endregion
 
+        #region 입고 pagination
+
+        #endregion
+
         #region 출고
 
         private ObservableCollection<ProductInOutModel> product_out;
