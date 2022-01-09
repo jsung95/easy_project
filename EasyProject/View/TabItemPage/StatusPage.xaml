@@ -567,7 +567,7 @@
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Button Height="23" HorizontalAlignment="Right"  Command="{Binding FirstCommand}"
                             Name="btnFirst" VerticalAlignment="Bottom" Width="40" Foreground="White" Background="#4472C4"
-                            Content="&lt;&lt;" ToolTip="First page"  Opacity="0.75" Margin="5">
+                            Content="&lt;&lt;" Opacity="0.75" Margin="5">
                                 <Button.Style>
                                     <Style TargetType="Button">
                                         <Setter Property="IsEnabled" Value="false"></Setter>
@@ -581,7 +581,7 @@
                             </Button>
 
                             <Button Height="23" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
-                                    Name="btnPrev" Width="40" ToolTip="Previous page" 
+                                    Name="btnPrev" Width="40" 
                                    Margin="5" Foreground="White" Background="#4472C4" Command="{Binding PreviousCommand}"
                                     Opacity="0.75" Content="&lt;" Cursor="Hand">
                                 <Button.Style>
@@ -604,7 +604,7 @@
                                 </TextBlock.Text>
                             </TextBlock>
 
-                            <Button Height="23" ToolTip="Next page" HorizontalAlignment="Left"  Foreground="White" Background="#4472C4"
+                            <Button Height="23" HorizontalAlignment="Left"  Foreground="White" Background="#4472C4"
                             Name="btnNext" VerticalAlignment="Bottom" Width="40" Margin="5" Command="{Binding NextCommand}"
                             Content="&gt;" Opacity="0.75" Cursor="Hand">
                                 <Button.Style>
@@ -619,7 +619,7 @@
                                 </Button.Style>
                             </Button>
 
-                            <Button Height="23" ToolTip="Last page" HorizontalAlignment="Left"   Foreground="White" Background="#4472C4"
+                            <Button Height="23" HorizontalAlignment="Left"   Foreground="White" Background="#4472C4"
                             VerticalAlignment="Bottom" Width="40" Name="btnLast" Margin="5" Command="{Binding LastCommand}"
                              Opacity="0.75" Content="&gt;&gt;" Cursor="Hand">
                                 <Button.Style>
