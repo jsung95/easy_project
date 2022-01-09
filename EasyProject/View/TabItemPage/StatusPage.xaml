@@ -178,7 +178,7 @@
                                         <Style.Triggers>
                                             <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding PSVM.IsToolTipChecked, Source={StaticResource Locator}}" Value="True"></Condition>
+                                                <Condition Binding="{Binding PSVM.IsToolTipChecked, Source={StaticResource Locator}}" Value="False"></Condition>
                                                     <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="IsEditing" Value="True"/>
@@ -204,7 +204,7 @@
                                         <Style.Triggers>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding PSVM.IsToolTipChecked, Source={StaticResource Locator}}" Value="True"></Condition>
+                                                    <Condition Binding="{Binding PSVM.IsToolTipChecked, Source={StaticResource Locator}}" Value="False"></Condition>
                                                     <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="IsEditing" Value="True"/>
@@ -223,7 +223,7 @@
                                         <Style.Triggers>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding PSVM.IsToolTipChecked, Source={StaticResource Locator}}" Value="True"></Condition>
+                                                    <Condition Binding="{Binding PSVM.IsToolTipChecked, Source={StaticResource Locator}}" Value="False"></Condition>
                                                     <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="IsEditing" Value="True"/>
@@ -262,7 +262,7 @@
                                         <Style.Triggers>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding PSVM.IsToolTipChecked, Source={StaticResource Locator}}" Value="True"></Condition>
+                                                    <Condition Binding="{Binding PSVM.IsToolTipChecked, Source={StaticResource Locator}}" Value="False"></Condition>
                                                     <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="IsEditing" Value="True"/>
@@ -288,7 +288,7 @@
                                         <Style.Triggers>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding PSVM.IsToolTipChecked, Source={StaticResource Locator}}" Value="True"></Condition>
+                                                    <Condition Binding="{Binding PSVM.IsToolTipChecked, Source={StaticResource Locator}}" Value="False"></Condition>
                                                     <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="IsEditing" Value="True"/>

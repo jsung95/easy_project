@@ -62,7 +62,7 @@ namespace EasyProject.ViewModel
             }
         }
 
-        private bool isToolTipChecked = false;
+        private bool isToolTipChecked = true;
         public bool IsToolTipChecked
         {
             get { return isToolTipChecked; }
