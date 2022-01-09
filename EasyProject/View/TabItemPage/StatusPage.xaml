@@ -132,6 +132,11 @@
                                     <TextBox.InputBindings>
                                         <KeyBinding Command="{Binding SearchCommand}" Key="Enter"/>
                                     </TextBox.InputBindings>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="KeyUp">
+                                            <i:InvokeCommandAction Command="{Binding SearchKeywordCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                 </TextBox>
                             </Grid>
                             <Grid Grid.Column="1">
