@@ -69,7 +69,7 @@ namespace EasyProject.ViewModel
 
             CategoryModel addCategoryDto = new CategoryModel();
             addCategoryDto.Category_id = null;
-            addCategoryDto.Category_name = "직접 입력";
+            addCategoryDto.Category_name = "추가(입력)하기";
 
             Categories.Add(addCategoryDto);
 
@@ -523,7 +523,7 @@ namespace EasyProject.ViewModel
             }//if
             else //제품입력이 모두 되었지만
             {
-                if (SelectedCategory.Category_name.Equals("직접 입력")) //만약 카테고리 선택을 직접입력으로 선택했다면
+                if (SelectedCategory.Category_name.Equals("추가(입력)하기")) //만약 카테고리 선택을 직접입력으로 선택했다면
                 {
                     if (AddCategoryName == null) //만약 직접입력란이 비어있다면
                     {

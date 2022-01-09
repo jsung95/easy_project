@@ -51,9 +51,32 @@ namespace EasyProject.ViewModel
             }
         }
 
-        
-      
-        
+        private string comboBoxCategoryName;
+        public string ComboBoxCategoryName
+        {
+            get { return comboBoxCategoryName; }
+            set
+            {
+                comboBoxCategoryName = value;
+                OnPropertyChanged("ComboBoxCategoryName");
+            }
+        }
+
+        private bool isToolTipChecked = false;
+        public bool IsToolTipChecked
+        {
+            get { return isToolTipChecked; }
+            set
+            {
+                isToolTipChecked = value;
+                OnPropertyChanged("IsToolTipChecked");
+            }
+        }
+
+
+
+
+
         public ICollectionView EmployeeCollection { get; private set; }
 
         public ProductShowViewModel()
@@ -74,7 +97,13 @@ namespace EasyProject.ViewModel
 
             DeptsForPopupBox = new ObservableCollection<DeptModel>(dept_dao.GetDepts()); // 출고 팝업의 부서 선택 콤보박스
             DeptsForPopupBox.RemoveAt((int)App.nurse_dto.Dept_id - 1); // 현재 사용자의 부서는 목록에서 제거
-            Categories = new ObservableCollection<CategoryModel>(category_dao.GetCategories());
+            Categories = new ObservableCollection<CategoryModel>(category_dao.GetCategories());                                                       
+
+            CategoryModel addCategoryDto = new CategoryModel();
+            addCategoryDto.Category_id = null;
+            addCategoryDto.Category_name = "추가(입력)하기";
+
+            Categories.Add(addCategoryDto);
 
             //App.xaml.cs 에 로그인할 때 바인딩 된 로그인 정보 객체
             Nurse = App.nurse_dto;
@@ -877,9 +906,15 @@ namespace EasyProject.ViewModel
             //    IsEditButtonClicked = true;
             //}
 
-            Console.WriteLine(SelectedProduct.Prod_code);
             product_dao.ChangeProductInfo(SelectedProduct);
             product_dao.ChangeProductInfo_IMP_DEPT(SelectedProduct);
+            //Categories = new ObservableCollection<CategoryModel>(category_dao.GetCategories());
+
+            CategoryModel newCategoryDao = new CategoryModel();
+            var cateGoryId = category_dao.GetCategoryID(SelectedProduct.Category_name);
+            newCategoryDao.Category_id = cateGoryId;
+            newCategoryDao.Category_name = SelectedProduct.Category_name;
+            Categories.Insert(0,newCategoryDao);
 
             LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
             //첫페이지 말고 다음 페이지에서 재고수정할때 성공은 되는데 첫페이지로 돌아감 해결하기
@@ -1451,6 +1486,19 @@ namespace EasyProject.ViewModel
             //UpdateCollection(LstOfRecords.Take(SelectedRecord));
             //UpdateRecordCount();
 
+        }
+
+        public void AddNewCategory(string AddCategoryName)
+        {
+            if (category_dao.IsExistsCategory(AddCategoryName)) //만약 기존 카테고리에 이미 존재한다면
+            {
+                //MessageQueue.Enqueue("이미 존재하는 카테고리명 입니다.", "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                //IsDuplicatedProduct = true;
+            }
+            else
+            {
+                category_dao.AddCategory(AddCategoryName);
+            }
         }
 
         private ActionCommand modifyProductReset;
