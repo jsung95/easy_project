@@ -1032,6 +1032,8 @@ namespace EasyProject.ViewModel
             //LstOfRecords.Add(empDetails);
 
             LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+            updateSearchedProducts(true);
+            UpdateRecordCount();
             //searchKeywordChanged();
             //RecordStartFrom = (CurrentPage - 1) * SelectedRecord;
             //var recordsToShow = LstOfRecords.Skip(RecordStartFrom).Take(SelectedRecord);
