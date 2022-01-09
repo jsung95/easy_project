@@ -111,6 +111,7 @@ namespace EasyProject.ViewModel
                 selectedStartDate_In = value;
 
                 ShowProductIn_By_Date();
+                Update_BlackOutDate_In_End();
                 searchKeyword_In = null;
                 if (selectedStartDate_In > selectedEndDate_In)
                 {
@@ -129,6 +130,7 @@ namespace EasyProject.ViewModel
                 selectedEndDate_In = value;
 
                 ShowProductIn_By_Date();
+                Update_BlackOutDate_In_Start();
                 searchKeyword_In = null;
                 if (selectedStartDate_In > selectedEndDate_In)
                 {
@@ -356,9 +358,20 @@ namespace EasyProject.ViewModel
                 OnPropertyChanged("BlackOutDates_In_Start");
             }
         }
-        
 
-        private void UpdateCalendarBlackoutDates()
+        private CalendarBlackoutDatesCollection blackOutDates_In_End;
+        public CalendarBlackoutDatesCollection BlackOutDates_In_End
+        {
+            get { return blackOutDates_In_End; }
+            set
+            {
+                blackOutDates_In_End = value;
+                OnPropertyChanged("BlackOutDates_In_End");
+            }
+        }
+
+
+        private void Update_BlackOutDate_In_Start()
         {
             
             CalendarDateRange start = new CalendarDateRange(new DateTime(SelectedEndDate_In.Value.Year, SelectedEndDate_In.Value.Month, SelectedEndDate_In.Value.Day+1), new DateTime(9999, 12, 31));
@@ -376,8 +389,26 @@ namespace EasyProject.ViewModel
 
             // Add the dateranges to the BlackOutDates property
 
-
+            if(BlackOutDates_In_Start != null)
+            {
+                BlackOutDates_In_Start.Clear();
+            }
             BlackOutDates_In_Start.Add(start);
+        }
+
+        private void Update_BlackOutDate_In_End()
+        {
+
+            CalendarDateRange end = new CalendarDateRange(new DateTime(0001, 01, 01), new DateTime(SelectedStartDate_In.Value.Year, SelectedStartDate_In.Value.Month, SelectedStartDate_In.Value.Day-1));
+
+            Calendar dummyCal = new Calendar();
+            BlackOutDates_In_End = new CalendarBlackoutDatesCollection(dummyCal);
+
+            if(blackOutDates_In_End != null)
+            {
+                blackOutDates_In_End.Clear();
+            }
+            BlackOutDates_In_End.Add(end);
         }
 
     }//class
