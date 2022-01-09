@@ -102,7 +102,7 @@
                                     <TextBlock HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center" Text="~" FontWeight="Bold" FontSize="15" />
                                 <DatePicker x:Name="expirationDate_DatePicker2" Grid.Column="2" HorizontalContentAlignment="Left" Width="90" Height="40"
                                         VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" 
-                                        SelectedDate="{Binding SelectedEndDate_In}" >
+                                        SelectedDate="{Binding SelectedEndDate_In}" bod:BlackOutDatesHelper.RegisterBlackoutDates="{Binding BlackOutDates_In_End}">
                                     <DatePicker.Resources>
                                         <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
                                             <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />

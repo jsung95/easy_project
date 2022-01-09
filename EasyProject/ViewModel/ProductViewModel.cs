@@ -570,7 +570,7 @@ namespace EasyProject.ViewModel
                                 Add_list.Insert(0, dto);
 
                                 var temp1 = Ioc.Default.GetService<ProductShowViewModel>();
-                                temp1.showListbyDept();  // 재고현황 리스트 갱신
+                                temp1.getListbyDept();  // 재고현황 리스트 갱신
 
                                 var temp2 = Ioc.Default.GetService<ProductInOutViewModel>();
                                 temp2.showInListByDept(); // 입고 목록 갱신
@@ -626,7 +626,7 @@ namespace EasyProject.ViewModel
                         Add_list.Insert(0, dto);
 
                         var temp1 = Ioc.Default.GetService<ProductShowViewModel>();
-                        temp1.showListbyDept();  // 재고현황 리스트 갱신
+                        temp1.getListbyDept();  // 재고현황 리스트 갱신
 
                         var temp2 = Ioc.Default.GetService<ProductInOutViewModel>();
                         temp2.showInListByDept(); // 입고 목록 갱신
