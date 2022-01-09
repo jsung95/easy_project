@@ -711,6 +711,8 @@ namespace EasyProject.ViewModel
 
             updateSearchedProducts(false);
             UpdateRecordCount();
+
+            DashboardPrint2(selectedDept);
         }
         #endregion
 

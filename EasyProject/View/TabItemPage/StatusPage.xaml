@@ -154,7 +154,7 @@
 
                     <DataGrid x:Name="dataGrid" Grid.Row="1"
                             HorizontalAlignment="Left" Margin="10 0"
-                            AllowDrop="False"
+                            AllowDrop="False" PreviewKeyDown="DataGridKeyDown"
                             VerticalAlignment="Top" AutoGenerateColumns="False"
                             IsReadOnly="True" ColumnWidth="*" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" SelectionUnit="FullRow" Cursor="Hand">
 
@@ -180,6 +180,7 @@
 
                                 <DataGridTemplateColumn.CellStyle>
                                     <Style TargetType="DataGridCell">
+                                        <!--<EventSetter Event="KeyDown" Handler="ProductTextKeyDown"/>-->
                                         <Style.Triggers>
                                             <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
