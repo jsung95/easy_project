@@ -76,7 +76,7 @@
                 <Label Content="부서명" Foreground="#4472C4" Grid.Column="2" FontSize="12" 
                        FontWeight="Bold" HorizontalAlignment="Right"  
                        VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <ComboBox Name="normal_dept_combobox"  HorizontalAlignment="Right" VerticalAlignment="Top" Width="60" SelectedItem="{Binding NormalSearchDept}" ItemsSource="{Binding SearchDeptList}" SelectedIndex="0" Margin="0,0,50,0">
+                <ComboBox Name="normal_dept_combobox"  HorizontalAlignment="Right" VerticalAlignment="Top" Width="60" SelectedItem="{Binding AuthSearchDept}" ItemsSource="{Binding SearchDeptList}" SelectedIndex="0" Margin="0,0,50,0">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -86,7 +86,7 @@
                     </ComboBox.ItemTemplate>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding NormalKeywordCommand}" />
+                            <i:InvokeCommandAction Command="{Binding DeptChangedCommand}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
@@ -282,7 +282,7 @@
 
         </Grid>
         <Grid Grid.Row="2">
-            <Button Content="확인" Background="#4472C4"  FontSize="11" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="15"></Button>
+            <!--<Button Content="확인" Background="#4472C4"  FontSize="11" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="15"></Button>-->
         </Grid>
     </Grid>
 </Page>

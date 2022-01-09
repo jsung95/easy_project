@@ -86,14 +86,14 @@ namespace EasyProject.ViewModel
             Products = new ObservableCollection<ProductShowModel>();
             SearchTypeList = new[] { "제품코드", "제품명", "품목/종류" };
             SelectedSearchType = SearchTypeList[0];
-
+            TextForSearch = ""; // 검색어 초기값을 null이 아닌 ""으로 설정
 
             Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts()); // 우측 상단 제품 현황 목록의 부서 선택 콤보박스
             SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1]; // 위 콤보박스의 초기값 = 현재 사용자의 부서로 설정
             
-            TextForSearch = ""; // 검색어 초기값을 null이 아닌 ""으로 설정
+            
             getListbyDept();
-            updateSearchedProducts(true);
+            //updateSearchedProducts(true);
 
             DeptsForPopupBox = new ObservableCollection<DeptModel>(dept_dao.GetDepts()); // 출고 팝업의 부서 선택 콤보박스
             DeptsForPopupBox.RemoveAt((int)App.nurse_dto.Dept_id - 1); // 현재 사용자의 부서는 목록에서 제거
@@ -892,25 +892,7 @@ namespace EasyProject.ViewModel
             }
         }
 
-        private ActionCommand searchCommand;
-        public ICommand SearchCommand
-        {
-            get
-            {
-                if (searchCommand == null)
-                {
-                    searchCommand = new ActionCommand(SearchProducts);
-                }
-                return searchCommand;
-            }//get
-        }
-
-        public void SearchProducts()
-        {
-            LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.SearchProducts(SelectedDept, SelectedSearchType, TextForSearch));
-            UpdateCollection(LstOfRecords.Take(SelectedRecord));
-            UpdateRecordCount();
-        }
+        
 
         private ActionCommand searchKeywordCommand;
         public ICommand SearchKeywordCommand
@@ -929,7 +911,7 @@ namespace EasyProject.ViewModel
             updateSearchedProducts(true);
         }
         public void updateSearchedProducts(bool isNotUpdated)
-        {
+       {
             
             //LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.SearchProducts(SelectedDept, SelectedSearchType, TextForSearch));
             //UpdateCollection(LstOfRecords.Take(SelectedRecord));
@@ -945,22 +927,22 @@ namespace EasyProject.ViewModel
             {
                 if (SelectedSearchType == "제품명")
                 {
-                    searchedProducts = LstOfRecords.Where(model => model.Prod_name.Contains(TextForSearch));
-                    Console.WriteLine("제품명 : " + searchedProducts.Count());
+                    searchedProducts = LstOfRecords.Where(model => model.Prod_name.Contains(TextForSearch) || model.Prod_name.Contains(TextForSearch.ToUpper()) || model.Prod_name.Contains(TextForSearch.ToLower()));
+                    Console.WriteLine("제품명 : " + searchedProducts.Count() + TextForSearch.ToUpper());
 
                     UpdateRecordCount();
 
                 }
                 else if (SelectedSearchType == "제품코드")
                 {
-                    searchedProducts = LstOfRecords.Where(model => model.Prod_code.Contains(TextForSearch));
+                    searchedProducts = LstOfRecords.Where(model => model.Prod_code.Contains(TextForSearch) || model.Prod_code.Contains(TextForSearch.ToUpper()) || model.Prod_code.Contains(TextForSearch.ToLower()));
                     Console.WriteLine("제품코드 : " + searchedProducts.Count());
 
                     UpdateRecordCount();
                 }
                 else // 품목/종류
                 {
-                    searchedProducts = LstOfRecords.Where(model => model.Category_name.Contains(TextForSearch));
+                    searchedProducts = LstOfRecords.Where(model => model.Category_name.Contains(TextForSearch) || model.Category_name.Contains(TextForSearch.ToUpper()) || model.Category_name.Contains(TextForSearch.ToLower()));
                     Console.WriteLine("품목/종류 : " +  searchedProducts.Count());
 
                     UpdateRecordCount();
@@ -1523,6 +1505,27 @@ namespace EasyProject.ViewModel
         public void modifyProductResetClick()
         {
             SelectedCategory = null;
+        }
+        #endregion
+        #region 검색버튼(현재 미사용)
+        private ActionCommand searchCommand;
+        public ICommand SearchCommand
+        {
+            get
+            {
+                if (searchCommand == null)
+                {
+                    searchCommand = new ActionCommand(SearchProducts);
+                }
+                return searchCommand;
+            }//get
+        }
+
+        public void SearchProducts()
+        {
+            LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.SearchProducts(SelectedDept, SelectedSearchType, TextForSearch));
+            UpdateCollection(LstOfRecords.Take(SelectedRecord));
+            UpdateRecordCount();
         }
         #endregion
 

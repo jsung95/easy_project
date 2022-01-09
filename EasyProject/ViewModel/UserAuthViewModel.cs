@@ -58,31 +58,11 @@ namespace EasyProject.ViewModel
             get { return authSearchDept; }
             set
             {
-                normalSearchDept = value;
-                OnPropertyChanged("authSearchDept");
-            }
-        }
-        private DeptModel normalSearchDept;
-        public DeptModel NormalSearchDept
-        {
-            get { return normalSearchDept; }
-            set
-            {
-                normalSearchDept = value;
-                OnPropertyChanged("NormalSearchDept");
+                authSearchDept = value;
+                OnPropertyChanged("AuthSearchDept");
             }
         }
 
-        private DeptModel adminSearchDept;
-        public DeptModel AdminSearchDept
-        {
-            get { return adminSearchDept; }
-            set
-            {
-                adminSearchDept = value;
-                OnPropertyChanged("AdminSearchDept");
-            }
-        }
 
         // 사용자 검색 시 나온 사용자 정보를 담을 옵저버블컬렉션 프로퍼티
         public ObservableCollection<UserModel> Auth_searched { get; set; }
@@ -231,7 +211,7 @@ namespace EasyProject.ViewModel
             }
             Normal_users = user_dao.GetUserInfo("NORMAL"); // 사용자들을 검색할 리스트 갱신
             Admin_users = user_dao.GetUserInfo("ADMIN");   // 사용자들을 검색할 리스트 갱신
-            AdminSearchDept = SearchDeptList[0]; // ADMIN 부서 카테고리 "전체"로 변경
+            AuthSearchDept = SearchDeptList[0]; // ADMIN 부서 카테고리 "전체"로 변경
 
         }//MoveRight
 
@@ -301,7 +281,7 @@ namespace EasyProject.ViewModel
             }
             Normal_users = user_dao.GetUserInfo("NORMAL"); // 사용자들을 검색할 리스트 갱신
             Admin_users = user_dao.GetUserInfo("ADMIN");   // 사용자들을 검색할 리스트 갱신
-            NormalSearchDept = SearchDeptList[0]; // Normal 부서 카테고리 "전체"로 변경
+            //AuthSearchDept = SearchDeptList[0]; // Normal 부서 카테고리 "전체"로 변경
         }//MoveLeft
 
         private ActionCommand normalKeywordCommand;
@@ -323,7 +303,7 @@ namespace EasyProject.ViewModel
             IEnumerable <UserModel> temp = new List<UserModel>();
             if(Normal_Keyword != null) // 키워드 있을 때
             {
-                if (NormalSearchDept.Dept_name == "전체")
+                if (AuthSearchDept.Dept_name == "전체")
                 {
                     switch (NormalSearchType)
                     {
@@ -340,10 +320,10 @@ namespace EasyProject.ViewModel
                     switch (NormalSearchType)
                     {
                         case "이름":
-                            temp = Normal_users.Where(user => user.Nurse_name.Contains(Normal_Keyword) && user.Dept_name.Equals(NormalSearchDept.Dept_name));
+                            temp = Normal_users.Where(user => user.Nurse_name.Contains(Normal_Keyword) && user.Dept_name.Equals(AuthSearchDept.Dept_name));
                             break;
                         case "아이디":
-                            temp = Normal_users.Where(user => user.Nurse_no.ToString().Contains(Normal_Keyword) && user.Dept_name.Equals(NormalSearchDept.Dept_name));
+                            temp = Normal_users.Where(user => user.Nurse_no.ToString().Contains(Normal_Keyword) && user.Dept_name.Equals(AuthSearchDept.Dept_name));
                             break;
                     }
                 }
@@ -352,13 +332,13 @@ namespace EasyProject.ViewModel
             }//if
             else // 키워드 없을 때
             {
-                if (NormalSearchDept.Dept_name == "전체")
+                if (AuthSearchDept.Dept_name == "전체")
                 {
                     temp = Normal_users;
                 }
                 else
                 {
-                    temp = Normal_users.Where(user => user.Dept_name.Equals(NormalSearchDept.Dept_name));
+                    temp = Normal_users.Where(user => user.Dept_name.Equals(AuthSearchDept.Dept_name));
                 }
 
                 Normals_searched.Clear();
@@ -390,7 +370,7 @@ namespace EasyProject.ViewModel
             IEnumerable<UserModel> temp = new List<UserModel>();
             if (Admin_Keyword != null) // 키워드 있을 때
             {
-                if (AdminSearchDept.Dept_name == "전체")
+                if (AuthSearchDept.Dept_name == "전체")
                 {
                     switch (AdminSearchType)
                     {
@@ -407,10 +387,10 @@ namespace EasyProject.ViewModel
                     switch (AdminSearchType)
                     {
                         case "이름":
-                            temp = Admin_users.Where(user => user.Nurse_name.Contains(Admin_Keyword) && user.Dept_name.Equals(AdminSearchDept.Dept_name));
+                            temp = Admin_users.Where(user => user.Nurse_name.Contains(Admin_Keyword) && user.Dept_name.Equals(AuthSearchDept.Dept_name));
                             break;
                         case "아이디":
-                            temp = Admin_users.Where(user => user.Nurse_no.ToString().Contains(Admin_Keyword) && user.Dept_name.Equals(AdminSearchDept.Dept_name));
+                            temp = Admin_users.Where(user => user.Nurse_no.ToString().Contains(Admin_Keyword) && user.Dept_name.Equals(AuthSearchDept.Dept_name));
                             break;
                     }
                 }
@@ -418,13 +398,13 @@ namespace EasyProject.ViewModel
             }// if
             else // 키워드 없을 때
             {
-                if (AdminSearchDept.Dept_name == "전체")
+                if (AuthSearchDept.Dept_name == "전체")
                 {
                     temp = Admin_users;
                 }
                 else
                 {
-                    temp = Admin_users.Where(user => user.Dept_name.Equals(AdminSearchDept.Dept_name));
+                    temp = Admin_users.Where(user => user.Dept_name.Equals(AuthSearchDept.Dept_name));
                 }
 
                 Admins_searched.Clear();
@@ -436,6 +416,25 @@ namespace EasyProject.ViewModel
             }
         }//OnAdminKeywordChanged
 
+        private ActionCommand deptChangedCommand;
+        public ICommand DeptChangedCommand
+        {
+            get
+            {
+                if (deptChangedCommand == null)
+                {
+                    deptChangedCommand = new ActionCommand(SelectedDeptChanged);
+                }
+                return deptChangedCommand;
+            }//get
+
+        }//NormalKeywordCommand
+
+        private void SelectedDeptChanged()
+        {
+            OnAdminKeywordChanged();
+            OnNormalKeywordChanged();
+        }
     }//class
 
 }//namespace
