@@ -49,10 +49,14 @@ namespace EasyProject
             }
             else if (App.nurse_dto.Nurse_auth.Equals("SUPER"))
             {
+                StatusPageTabButton.Width = 0;
+                GraphPageTabButton.Width = 0;
                 InsertPageTabButton.Width = 0;
                 IncomingOutgoingPageTabButton.Width = 0;
                 InsertPageTabButton.Width = 0;
                 OrderPageTabButton.Width = 0;
+
+                TabFrame.Source = new Uri("/View/TabItemPage/AuthorityPage.xaml", UriKind.Relative);
             }
         }
 
