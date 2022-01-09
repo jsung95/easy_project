@@ -126,7 +126,14 @@ namespace EasyProject.ViewModel
             DecidedNumber = new[] { 10, 20, 30 };
             SelectedNumber = DecidedNumber[0];
             DashboardPrint1(SelectedDept, SelectedCategory1, SelectedNumber);
-           
+
+            //파이차트
+            Depts_Pie = new ObservableCollection<DeptModel>(dept_dao.GetDepts());   //dept_od를 가져온다
+            SelectedDept_Pie = Depts_Pie[(int)App.nurse_dto.Dept_id - 1];  // 
+            ProductInout_Pie = new ObservableCollection<ProductInOutModel>(product_dao.GetProdOutType());
+            SelectedOutType_Pie = ProductInout_Pie[0];
+
+
         }//Constructor
 
         #region 대시보드
@@ -1510,7 +1517,100 @@ namespace EasyProject.ViewModel
         }
         #endregion
 
-    }//class
+        public ObservableCollection<DeptModel> Depts_Pie { get; set; }
+
+        //선택한 부서를 담을 프로퍼티
+        private DeptModel selectedDept_Pie;
+        public DeptModel SelectedDept_Pie
+        {
+            get { return selectedDept_Pie; }
+            set
+            {
+                selectedDept_Pie = value;
+                //OnPropertyChanged("SelectedDept_Pie");
+                //DashboardPrint_Pie();
+            }
+        }
+
+        public ObservableCollection<ProductInOutModel> ProductInout_Pie { get; set; }
+
+        //선택한 출고유형(사용/이관/폐기)을 담을 프로퍼티
+        private ProductInOutModel selectedOutType_Pie;
+
+        public ProductInOutModel SelectedOutType_Pie
+        {
+            get { return selectedOutType_Pie; }
+            set
+            {
+                selectedOutType_Pie = value;
+                //OnPropertyChanged("SelectedOutType_Pie");
+                //DashboardPrint_Pie();
+            }
+        }
+
+        // 도넛그래프 SerieCollection(그래프틀)
+        private SeriesCollection seriesCollection_Pie;
+        public SeriesCollection SeriesCollection_Pie
+        {
+            get { return seriesCollection_Pie; }
+            set
+            {
+                seriesCollection_Pie = value;
+                OnPropertyChanged("SeriesCollection_Pie");
+            }
+        }
+
+        //도넛그래프 출력메소드
+        public void DashboardPrint_Pie()
+        {
+            List<ProductInOutModel> list = product_dao.GetDiscardTotalCount(SelectedDept_Pie, SelectedOutType_Pie);
+
+
+
+
+            SeriesCollection_Pie = new SeriesCollection();
+
+
+            foreach (var item in list)
+            {
+                //Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} ({1:C})", item.Prod_name, chartPoint.Participation);
+                Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0:#,0}개 ({1:#,0}￦)", item.Prod_out_count, item.Prod_price);
+                SeriesCollection_Pie.Add(new PieSeries
+                {
+                    Title = item.Prod_name,
+                    Values = new ChartValues<int> { (int)item.Prod_out_count },
+                    DataLabels = true,
+                    LabelPoint = labelPoint
+                });
+
+            }//foreache
+
+
+
+        }//DashboardPrint_Pie
+
+
+        //dashboardPrint_Pie command
+        private ActionCommand command45;
+        public ICommand Command45
+        {
+            get
+            {
+                if (command45 == null)
+                {
+                    command45 = new ActionCommand(dashboardPrint_Pie);
+                }
+                return command45;
+            }//get
+
+        }//Command
+
+        public void dashboardPrint_Pie()
+        {
+            DashboardPrint_Pie();
+        }
+
+        }//class
 
 
 
