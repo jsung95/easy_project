@@ -51,28 +51,35 @@
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="0.3*"/>
             </Grid.RowDefinitions>
-
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="DataGridColumn" Width="1.9*"/>
+                <ColumnDefinition x:Name="GraphColumn" Width="*"/>
+            </Grid.ColumnDefinitions>
             <Grid Grid.Row="0">
                 <Grid Grid.Column="0" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.3*"/>
                         <RowDefinition Height="2*"/>
                     </Grid.RowDefinitions>
+                    
                     <Grid Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="0.5*"/>
-                            <ColumnDefinition Width="2.5*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="0.1*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                        <Grid Grid.Row="0">
 
-                            <DatePicker x:Name="expirationDate_DatePicker"  Grid.Column="0" HorizontalContentAlignment="Left" 
-                                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Width="90" Height="40"
+                            <Grid Grid.Column="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="160*"/>
+                                    <ColumnDefinition Width="60*"/>
+                                    <ColumnDefinition Width="340*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="0.3*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <DatePicker x:Name="expirationDate_DatePicker"  Grid.Column="0" HorizontalContentAlignment="Left" 
+                                        VerticalContentAlignment="Center" FontSize="10" VerticalAlignment="Center" Width="70" Height="30"
                                         SelectedDate="{Binding SelectedStartDate_In}">
                                 <DatePicker.Resources>
                                     <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
@@ -97,9 +104,9 @@
                                 </DatePicker.Resources>
                             </DatePicker>
 
-                            <TextBlock HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center" Text="~" FontWeight="Bold" FontSize="15" />
-                            <DatePicker x:Name="expirationDate_DatePicker2" Grid.Column="2" HorizontalContentAlignment="Left" Width="90" Height="40"
-                                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" 
+                            <TextBlock HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center" Text="~" FontWeight="Bold" FontSize="10" />
+                            <DatePicker x:Name="expirationDate_DatePicker2" Grid.Column="2" HorizontalContentAlignment="Right" Width="70" Height="30"
+                                        VerticalContentAlignment="Center" FontSize="10" VerticalAlignment="Center" 
                                         SelectedDate="{Binding SelectedEndDate_In}">
                                 <DatePicker.Resources>
                                     <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
@@ -124,33 +131,47 @@
                                 </DatePicker.Resources>
                             </DatePicker>
                         </Grid>
-                        <Grid Grid.Column="2">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요"  Width="500"
-                                        VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10" Height="30" 
+                                <Grid Grid.Column="1">
+                                    <ComboBox x:Name="searchText_ComboBox"  Width="70" Height="30"  HorizontalContentAlignment="Left" ItemsSource="{Binding Path=SearchTypeList}"
+                                            SelectedItem="{Binding selectedSearchType_Out}" FontSize="10" Margin="0,3,0,0" VerticalAlignment="Center">
+                                        <ComboBox.Resources>
+                                            <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+                                        </ComboBox.Resources>
+                                    </ComboBox>
+                                </Grid>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="6*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0">
+                                        
+                                        <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요"  Width="360"
+                                        VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="5" Height="30" 
                                         Text="{Binding searchKeyword_Out, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
 
-                                    <TextBox.InputBindings>
-                                        <KeyBinding Command="{Binding OutSearchCommand}" Key="Enter"/>
-                                    </TextBox.InputBindings>
+                                            <TextBox.InputBindings>
+                                                <KeyBinding Command="{Binding OutSearchCommand}" Key="Enter"/>
+                                            </TextBox.InputBindings>
 
-                                </TextBox>
-                                <Button x:Name="search_Btn" Grid.Column="2" Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White"
+                                        </TextBox>
+                                        
+                                    
+                                </Grid>
+                                    <Grid Grid.Column="1">
+                                        <Button x:Name="search_Btn" Grid.Column="2" Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White"
                                         VerticalAlignment="Center" Height="30"  Width="45" HorizontalAlignment="Left" 
                                         Command="{Binding OutSearchCommand}" Cursor="Hand">
-                                    <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
-                                </Button>
-                            </StackPanel>
-                        </Grid>
+                                            <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
+                                        </Button>
+                                    </Grid>
+                            </Grid>
                         <Grid Grid.Column="1" HorizontalAlignment="Left" Margin="30,0,0,0">
-                            <ComboBox x:Name="searchText_ComboBox" Margin="10" Width="100" Height="30"  HorizontalContentAlignment="Left" ItemsSource="{Binding Path=SearchTypeList}"
-                                            SelectedItem="{Binding selectedSearchType_Out}">
-                                <ComboBox.Resources>
-                                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
-                                </ComboBox.Resources>
-                            </ComboBox>
+                            
                         </Grid>
                     </Grid>
+                </Grid>
+            </Grid>
 
                     <DataGrid x:Name="dataGrid2" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Top"
                               ScrollViewer.CanContentScroll="True"         
@@ -209,7 +230,12 @@
                 </Grid>
 
             </Grid>
+            <Grid Grid.Column="1">
+                <materialDesign:Card x:Name="GraphCard" Margin="0,10,0,0" UniformCornerRadius="20" VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <Frame x:Name="Status_GraphFrame" NavigationUIVisibility="Hidden" Source="/View/TabItemPage/GraphPage/Incoming_GraphPage.xaml"  Height="430" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </materialDesign:Card>
 
+            </Grid>
             <Grid Grid.Row="1">
                 <Grid Grid.Column="0" >
 
