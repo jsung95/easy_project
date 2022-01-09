@@ -59,7 +59,7 @@ namespace EasyProject.ViewModel
             set
             {
                 selectedCategory = value;
-                DashboardPrint4(selectedCategory);
+                //DashboardPrint4(selectedCategory);
             }
         }
         
@@ -99,7 +99,11 @@ namespace EasyProject.ViewModel
         }
         // LiveChart 공통 프로퍼티
         public ChartValues<int> Values { get; set; }
+        public ChartValues<int> Values2 { get; set; }
+        public ChartValues<int> Values3 { get; set; }
         public List<string> BarLabels { get; set; }       //string[]
+        public List<string> BarLabels2 { get; set; }       //string[]
+        public List<string> BarLabels3 { get; set; }       //string[]
         public Func<double, string> Formatter { get; set; }
         public Func<double, string> Formatter1 { get; set; }
 
@@ -303,22 +307,26 @@ namespace EasyProject.ViewModel
 
             Console.WriteLine("DashboardPrint2");
             SeriesCollection2 = new SeriesCollection();
-            Values = new ChartValues<int> { }; // 컬럼의 수치 ( y 축 )
+            Values2 = new ChartValues<int> { }; // 컬럼의 수치 ( y 축 )
             ChartValues<int> useCases = new ChartValues<int>(); // 사용 횟수를 담을 변수
             ChartValues<int> transferCases = new ChartValues<int>(); // 이관 횟수를 담을 변수
             ChartValues<int> discardCases = new ChartValues<int>(); // 폐기 횟수를 담을 변수
-            BarLabels = new List<string>() { }; // 컬럼의 이름 ( x 축 )
+            BarLabels2 = new List<string>() { }; // 컬럼의 이름 ( x 축 )
             List<ProductInOutModel> datas = dashboard_dao.ReleaseCases_Info(SelectedStartDate1, SelectedEndDate1); // 부서별 출고 유형/횟수 정보
             foreach (var item in datas) // 부서명 Labels에 넣기
             {
-                BarLabels.Add(item.Dept_name);
+                BarLabels2.Add(item.Dept_name);
+                Console.WriteLine("dashboard2_dept_name" + item.Dept_name);
             }
 
             foreach (var item in datas)
             {
                 useCases.Add((int)item.prod_use_cases);
+                Console.WriteLine("prod_use_cases" + item.prod_use_cases);
                 transferCases.Add((int)item.prod_transferOut_cases);
+                Console.WriteLine("prod_tarnsferout"+item.prod_transferOut_cases);
                 discardCases.Add((int)item.prod_discard_cases);
+                Console.WriteLine("prod_discard_cases" + item.prod_discard_cases);
             }
 
             //adding series updates and animates the chart
@@ -353,14 +361,15 @@ namespace EasyProject.ViewModel
 
             Console.WriteLine("DashboardPrint3");
             SeriesCollection3 = new SeriesCollection();
-            Values = new ChartValues<int> { }; // 컬럼의 수치 ( y 축 )
+            Values3 = new ChartValues<int> { }; // 컬럼의 수치 ( y 축 )
             ChartValues<int> transferCases = new ChartValues<int>(); // 이관 횟수를 담을 변수
             ChartValues<int> orderCases = new ChartValues<int>(); // 발주 횟수를 담을 변수
-            BarLabels = new List<string>() { }; // 컬럼의 이름 ( x 축 )
+            BarLabels3 = new List<string>() { }; // 컬럼의 이름 ( x 축 )
             List<ProductInOutModel> datas = dashboard_dao.incomingCases_Info(SelectedStartDate2, SelectedEndDate2); // 부서별 출고 유형/횟수 정보
             foreach (var item in datas) // 부서명 Labels에 넣기
             {
-                BarLabels.Add(item.Dept_name);
+                BarLabels3.Add(item.Dept_name);
+                Console.WriteLine("dashboard3_dept_name" + item.Dept_name);
             }
 
             foreach (var item in datas)
@@ -388,48 +397,35 @@ namespace EasyProject.ViewModel
             Formatter = value => value.ToString("N");   //문자열 10진수 변환
         }//dashboardprint3 ---------------------------------------------------------------------------------------------------
 
-        public void DashboardPrint4(CategoryModel selected)                       //대시보드 출력(x축:제품code, y축:수량) 
-        {
-            ChartValues<int> mount = new ChartValues<int>();   //y축들어갈 임시 값
-            Console.WriteLine("DashboardPrint4");
-            SeriesCollection4 = new SeriesCollection();   //대시보드 틀
-            //Console.WriteLine(selected.Dept_id); 
-            List<ImpDeptModel> list_xy = dashboard_dao.Dept_Category_Mount(selected);
-            Console.WriteLine(selected);
-            //부서id별 제품code와 수량리스트
-            //List<string> list_x = new List<string>();                                    //x축리스트
-            //ChartValues<int> list_y = new ChartValues<int>();                          //y축리스트
-            //foreach (var item in list_xy)
-            //{
-            //    list_x.Add((string)item.Prod_code);
-            //    list_y.Add((int)item.Prod_total);
-            //}
-            //name을 2개선언 리스트
+        //public void DashboardPrint4(CategoryModel selected)                       //대시보드 출력(x축:제품code, y축:수량) 
+        //{
+        //    ChartValues<int> mount = new ChartValues<int>();   //y축들어갈 임시 값
+        //    Console.WriteLine("DashboardPrint4");
+        //    SeriesCollection4 = new SeriesCollection();   //대시보드 틀
+            
+        //    List<ImpDeptModel> list_xy = dashboard_dao.Dept_Category_Mount(selected);
+        //    Console.WriteLine(selected);
+                
+        //    foreach (var item in list_xy)
+        //    {
+        //        mount.Add((int)item.Imp_dept_count);
+        //    }
+            
+        //    Values = new ChartValues<int> { };
 
-            //List<ProductShowModel> list1 = list_y;      //y축출력
-            //List<ProductShowModel> list1 = product_dao.Prodtotal_Info();     
-            foreach (var item in list_xy)
-            {
-                mount.Add((int)item.Imp_dept_count);
-            }
-            //for (int i = 0; i < 8; i++)
-            //{
-            //    name.Add((int)list_xy[i].Prod_total);
-            //}
-            Values = new ChartValues<int> { };
-
-            SeriesCollection4.Add(new LineSeries
-            {
-                Title = "총 수량",   //+ i
-                Values = mount,
-            });
-            BarLabels = new List<string>() { };                           //x축출력
-            foreach (var item in list_xy)
-            {
-                BarLabels.Add(item.Dept_name);
-            }
-            Formatter = value => value.ToString("N");   //문자열 10진수 변환
-        }//dashboardprint4
+        //    SeriesCollection4.Add(new LineSeries
+        //    {
+        //        Title = "총 수량",   //+ i
+        //        Values = mount,
+        //    });
+        //    BarLabels = new List<string>() { };                           //x축출력
+        //    foreach (var item in list_xy)
+        //    {
+        //        BarLabels.Add(item.Dept_name);
+        //        Console.WriteLine("dept_name" + item.Dept_name);
+        //    }
+        //    Formatter = value => value.ToString("N");   //문자열 10진수 변환
+        //}//dashboardprint4
 
 
         #region 파이 차트

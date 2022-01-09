@@ -241,8 +241,11 @@
                                         <!-- LabelFormatter="{Binding Formatter}" 바인딩-->
                                     </lvc:CartesianChart.AxisY>
                                     <lvc:CartesianChart.AxisX>
-                                        <lvc:Axis    
-                                Labels="{Binding BarLabels}"/>
+                                        <lvc:Axis Labels="{Binding BarLabels2}">
+                                            <lvc:Axis.Separator>
+                                                <lvc:Separator Step="1" Stroke="{x:Null}"/>
+                                            </lvc:Axis.Separator>
+                                        </lvc:Axis>
                                         <!--Labels="{Binding BarLabels}" 바인딩-->
                                     </lvc:CartesianChart.AxisX>
                                 </lvc:CartesianChart>
@@ -318,8 +321,11 @@
                                         <!-- LabelFormatter="{Binding Formatter}" 바인딩-->
                                     </lvc:CartesianChart.AxisY>
                                     <lvc:CartesianChart.AxisX>
-                                        <lvc:Axis   
-                                Labels="{Binding BarLabels}"/>
+                                        <lvc:Axis Labels="{Binding BarLabels3}">
+                                            <lvc:Axis.Separator>
+                                                <lvc:Separator Step="1" Stroke="{x:Null}"/>
+                                            </lvc:Axis.Separator>
+                                        </lvc:Axis>
                                         <!--Labels="{Binding BarLabels}" 바인딩-->
                                     </lvc:CartesianChart.AxisX>
                                 </lvc:CartesianChart>
