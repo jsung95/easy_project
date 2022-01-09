@@ -67,9 +67,9 @@
                 
                 <Button x:Name="logoutBtn" Height="35" Width="90" FontSize="13" FontWeight="DemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3" Content="로그아웃" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand"
                         Command="{Binding LogoutCommand}" Click="logoutBtn_Click"/>
-                <TextBlock x:Name="userNameTxtBox" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"></TextBlock>
-                TextBlock FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+               <!-- <TextBlock x:Name="userNameTxtBox" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"></TextBlock>-->
+                <TextBlock FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <materialDesign:PopupBox x:Name="userInfo_PopupBox" StaysOpen="True" PlacementMode="BottomAndAlignRightEdges">
                             <materialDesign:PopupBox.ToggleContent>
                                 <TextBlock x:Name="userNameTxtBox" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"/>
@@ -146,7 +146,7 @@
                         </materialDesign:PopupBox>
                     </StackPanel>
                
-                    <TextBlock x:Name="userNameTxtBox" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"></TextBlock>
+                <!--<TextBlock x:Name="userNameTxtBox" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"></TextBlock>-->
                 <TextBlock x:Name="userNamePlusTxtBlock" Text="님" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"></TextBlock>
                 <!--<Button Content="로그아웃" Cursor="Hand" Command="{Binding LogoutCommand}"/>-->
             </StackPanel>
