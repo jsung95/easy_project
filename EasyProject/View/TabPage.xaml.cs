@@ -120,10 +120,6 @@ namespace EasyProject
             await DialogHost.Show(msg, "RootDialog");
         }
 
-        private async void logoutBtn_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Uri("/View/LoginPage.xaml", UriKind.Relative));
-        }
 
         private void pw_Change_Btn_Click(object sender, RoutedEventArgs e)
         {
