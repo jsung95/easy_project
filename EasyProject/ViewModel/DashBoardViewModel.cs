@@ -363,7 +363,8 @@ namespace EasyProject.ViewModel
             SeriesCollection3 = new SeriesCollection();
             Values3 = new ChartValues<int> { }; // 컬럼의 수치 ( y 축 )
             ChartValues<int> transferCases = new ChartValues<int>(); // 이관 횟수를 담을 변수
-            ChartValues<int> orderCases = new ChartValues<int>(); // 발주 횟수를 담을 변수
+            ChartValues<int> orderCases = new ChartValues<int>(); // 신규 횟수를 담을 변수
+            ChartValues<int> addCases = new ChartValues<int>(); // 추가 횟수를 담을 변수
             BarLabels3 = new List<string>() { }; // 컬럼의 이름 ( x 축 )
             List<ProductInOutModel> datas = dashboard_dao.incomingCases_Info(SelectedStartDate2, SelectedEndDate2); // 부서별 출고 유형/횟수 정보
             foreach (var item in datas) // 부서명 Labels에 넣기
@@ -376,21 +377,29 @@ namespace EasyProject.ViewModel
             {
                 transferCases.Add((int)item.prod_transferIn_cases);
                 orderCases.Add((int)item.prod_order_cases);
+                addCases.Add((int)item.prod_add_cases);
             }
 
             //adding series updates and animates the chart
 
             SeriesCollection3.Add(new StackedColumnSeries // 부서별 이관 횟수
             {
-                Title = "이관 횟수",
+                Title = "이관입고 횟수",
                 Values = transferCases,
                 StackMode = StackMode.Values
             });
 
-            SeriesCollection3.Add(new StackedColumnSeries // 부서별 출고 횟수
+            SeriesCollection3.Add(new StackedColumnSeries // 부서별 신규입고 횟수
             {
-                Title = "발주 횟수",
+                Title = "신규입고 횟수",
                 Values = orderCases,
+                StackMode = StackMode.Values
+            });
+
+            SeriesCollection3.Add(new StackedColumnSeries // 부서별 추가입고 횟수
+            {
+                Title = "추가입고 횟수",
+                Values = addCases,
                 StackMode = StackMode.Values
             });
 

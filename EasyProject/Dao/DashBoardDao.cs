@@ -331,7 +331,8 @@ namespace EasyProject.Dao
                         cmd.Connection = conn;
                         cmd.CommandText = "SELECT prod_in_to, " +
                                           "COUNT(CASE WHEN prod_in_type = '이관' THEN 1 END), " +
-                                          "COUNT(CASE WHEN prod_in_type = '발주' THEN 1 END) " +
+                                          "COUNT(CASE WHEN prod_in_type = '신규' THEN 1 END), " +
+                                          "COUNT(CASE WHEN prod_in_type = '추가' THEN 1 END) " +
                                           "FROM product_in " +
                                           "WHERE prod_in_date > :startDate " +
                                           "AND prod_in_date < :endDate + 1 " +
@@ -346,13 +347,17 @@ namespace EasyProject.Dao
                             string dept_name = reader.GetString(0);
                             int? prod_transferIn_cases = reader.GetInt32(1);
                             int? prod_order_cases = reader.GetInt32(2);
+                            int? prod_add_cases = reader.GetInt32(3);
+                            Console.WriteLine("prod_add_cases : " + prod_add_cases);
 
                             ProductInOutModel dto = new ProductInOutModel()
                             {
                                 Dept_name = dept_name,
                                 prod_transferIn_cases = prod_transferIn_cases,
-                                prod_order_cases = prod_order_cases
+                                prod_order_cases = prod_order_cases,
+                                prod_add_cases = prod_add_cases,
                             };
+
                             list.Add(dto);
                         }//while
 
