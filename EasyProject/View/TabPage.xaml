@@ -22,7 +22,7 @@
                 <Button Uid="2" x:Name="InsertPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="신규재고 입력" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}" />
                 <Button Uid="3" x:Name="IncomingOutgoingPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="입출고 현황" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}" />
                 <Button Uid="4" x:Name="OrderPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="신규발주 신청" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}" />
-                <Button Uid="5" x:Name="AuthorityPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="권한 변경" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}" />
+                <Button Uid="5" x:Name="AuthorityPageTabButton" Height="40" Width="150" Click="TabButtonClick" Foreground="#ff2196f3" Content="권한 변경" Background="#F0EBE9" BorderBrush="{x:Null}" Cursor="Hand" Style="{StaticResource MaterialDesignFlatButton}" />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="10 0" VerticalAlignment="Center" HorizontalAlignment="Right">
