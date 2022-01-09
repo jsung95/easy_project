@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EasyProject.Dao;
 
 namespace EasyProject
 {
@@ -21,11 +22,15 @@ namespace EasyProject
     public partial class TabPage : Page
     {
         private string CurrentButtonName = "StatusPageTabButton";
-
+        DeptDao dept_dao = new DeptDao();
         public TabPage()
         {
             InitializeComponent();
             userNameTxtBox.Text = App.nurse_dto.Nurse_name;
+            user_name.Text = App.nurse_dto.Nurse_name + "님";
+            user_no.Text = App.nurse_dto.Nurse_no;
+            user_auth.Text = App.nurse_dto.Nurse_auth;
+            user_dept.Text = dept_dao.GetDeptName_Return_String((int)App.nurse_dto.Dept_id);
             this.Loaded += PageLoaded;
         }
         /*private void StatusBtn_Click(object sender, RoutedEventArgs e)
@@ -109,6 +114,11 @@ namespace EasyProject
         private void logoutBtn_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("/View/LoginPage.xaml", UriKind.Relative));
+        }
+
+        private void pw_Change_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/View/PasswordChangePage.xaml", UriKind.Relative));
         }
     }
 }

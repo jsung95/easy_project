@@ -102,7 +102,45 @@ namespace EasyProject.Dao
             return dto;
         }//GetDeptName
 
+        public string GetDeptName_Return_String(int dept_id)
+        {
+            string result = null;
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
 
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT dept_name FROM DEPT WHERE dept_id = :dept_id";
+
+                        cmd.Parameters.Add(new OracleParameter("dept_id", dept_id));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            result = reader.GetString(0);
+                        }//while
+
+                    }//using(cmd)
+
+                }//conn
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+
+            return result;
+
+        }//GetDeptName_Return_Int
 
     }//class
 

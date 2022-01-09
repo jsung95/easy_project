@@ -8,6 +8,7 @@ namespace EasyProject.Dao
     {
         List<DeptModel> GetDepts();
         DeptModel GetDeptName(int dept_id);
+        string GetDeptName_Return_String(int dept_id);
     }//interface
 
 }//namespace

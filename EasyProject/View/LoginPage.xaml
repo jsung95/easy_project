@@ -62,15 +62,11 @@
                 </Button>
             </Grid>
 
-            <Grid Grid.Row="3" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Button x:Name="signUpBtn" Grid.Column="0" Content="회원가입" Background="#E0E0E0" BorderThickness="0" FontSize="20" 
-                    HorizontalAlignment="Right" VerticalAlignment="Center" Height="40" Width="140" Margin="0,0,10,0"/>
-                <Button x:Name="searchBtn" Grid.Column="1" Content="PW 변경" Background="#E0E0E0" BorderThickness="0" FontSize="20" 
-                    HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" Width="140" Margin="10,0,0,0" Cursor="Hand"/>
+                <Grid Grid.Row="3" >
+                    <Button x:Name="signUpBtn" Content="회원가입" Background="#E0E0E0" BorderThickness="0" FontSize="20" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="300" Margin="10" Cursor="Hand"/>
+                <!--Button x:Name="searchBtn" Grid.Column="1" Content="PW 변경" Background="#E0E0E0" BorderThickness="0" FontSize="20" 
+                    HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" Width="140" Margin="10,0,0,0" Cursor="Hand"/-->
             </Grid>
 
         </Grid>
