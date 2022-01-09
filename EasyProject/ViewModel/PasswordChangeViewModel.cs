@@ -58,8 +58,6 @@ namespace EasyProject.ViewModel
         public PasswordChangeViewModel()
         {
             Nurse = new NurseModel();
-            NewPassword = "";
-            re_NewPassword = "";
         }
 
         //public ActionCommand command;
@@ -83,13 +81,13 @@ namespace EasyProject.ViewModel
             if (dao.IdPasswordCheck(Nurse) == true) // 현재 아이디/비번이 맞는 지 확인
             {
                 // 비밀번호 변경시 새 비밀번호 공백 입력 방지
-                if (NewPassword == "")
+                if (NewPassword == "" || NewPassword == null)
                 {
                     MessageBox.Show("새로운 비밀번호를 입력하세요!");
                     pwChangeResult = false;    
                     return pwChangeResult;
                 }
-                else if (Re_NewPassword == "")
+                else if (Re_NewPassword == "" || Re_NewPassword == null)
                 {
                     MessageBox.Show("다시 입력란을 채워주세요!");
                     pwChangeResult = false;
@@ -148,7 +146,7 @@ namespace EasyProject.ViewModel
 
             if (regex.IsMatch(NewPassword)) //정규식 통과 시 * 정규식을 통과 = NewPassword는 공란이 아님.
             {
-                if (Re_NewPassword == "")
+                if (Re_NewPassword == "" || Re_NewPassword == null)
                 {
                     NewPasswordStatement = "새 비밀번호를 한번 더 입력하세요!";
                 }
