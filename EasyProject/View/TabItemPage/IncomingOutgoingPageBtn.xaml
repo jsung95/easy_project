@@ -7,7 +7,7 @@
       mc:Ignorable="d" Title="IncomingOutgoingPageBtn"
       DataContext="{Binding PIOVM, Source={StaticResource Locator}}">
 
-    <Grid>
+    <Grid Width="1200">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="8*"/>
@@ -16,37 +16,49 @@
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.3*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="0.8*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="0.5*" />
             </Grid.ColumnDefinitions>
 
             <Button x:Name="IncomingBtn" Content="입고 현황" Grid.Column="1" Background="#4472C4" FontSize="13" FontWeight="Bold" 
                     Foreground="White"   
-                    VerticalAlignment="Center"  BorderThickness="0" Height="30" Width="150" Cursor="Hand"/>
+                    VerticalAlignment="Center" HorizontalAlignment="Left"  BorderThickness="0" Height="30" Width="130" Cursor="Hand"/>
             <Button x:Name="OutgoingBtn" Content="출고 현황" Grid.Column="2" Background="#4472C4" FontSize="13" FontWeight="Bold"
                     Foreground="White"   
-                    VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="150" Cursor="Hand"/>
-            <Grid Grid.Column="3" Margin="150,0,0,0">
-                <StackPanel Orientation="Horizontal" Margin="7">
-                    <Label Content="부서명" Foreground="#4472C4"  FontSize="12"  Margin="5"
-                       FontWeight="Bold" VerticalAlignment="Center"/>
+                    VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="130" Cursor="Hand"/>
+            <Grid Grid.Column="3" Margin="40,0,0,0">
 
-                    <ComboBox x:Name="deptName_ComboBox1" Height="30" Margin="5" Width="100" HorizontalAlignment="Right"
+                <Grid Grid.Column="0">
+                    <StackPanel Orientation="Horizontal" Margin="7">
+                        <Label Content="부서명" Foreground="#4472C4"  FontSize="12"  Margin="5"
+                       FontWeight="Bold" VerticalAlignment="Center" />
+
+                        <ComboBox x:Name="deptName_ComboBox1" Height="30" Margin="5" Width="100" HorizontalAlignment="Right"
                                 ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept_In}" DropDownClosed="OnDropDownOpened">
-                        <ComboBox.Resources>
-                            <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
-                        </ComboBox.Resources>
+                            <ComboBox.Resources>
+                                <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+                            </ComboBox.Resources>
 
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Dept_name}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>                 
-                </StackPanel>                
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Dept_name}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                </Grid>
+
+            </Grid>
+            <Grid Grid.Column="4" >
+                <CheckBox x:Name="DataGridCheckbox" Style="{StaticResource MaterialDesignFilterChipOutlineCheckBox}" Grid.Column="4" HorizontalAlignment="Right" IsChecked="True" Content="표보기" Cursor="Hand" Margin="0,10,0,0" ></CheckBox>
+            </Grid>
+            <Grid Grid.Column="5" >
+                <CheckBox x:Name="GraphCheckbox" Style="{StaticResource MaterialDesignFilterChipOutlineCheckBox}" Grid.Column="5" HorizontalAlignment="Right" IsChecked="True" Content="그래프보기" Cursor="Hand" Margin="0,10,0,0"></CheckBox>
             </Grid>
         </Grid>
 
