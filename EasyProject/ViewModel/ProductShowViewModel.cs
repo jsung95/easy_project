@@ -1622,7 +1622,30 @@ namespace EasyProject.ViewModel
             DashboardPrint_Pie();
         }
 
-        }//class
+        private ActionCommand dataGridRefreshCommand;
+        public ICommand DataGridRefreshCommand
+        {
+            get
+            {
+                if (dataGridRefreshCommand == null)
+                {
+                    dataGridRefreshCommand = new ActionCommand(DataGridRefresh);
+                }
+                return dataGridRefreshCommand;
+            }//get
+
+        }//Command
+
+        private void DataGridRefresh()
+        {
+            //데이터그리드 데이터 다시 불러와서 다시 뿌려주는 함수 호출하기
+        }
+
+    }//class
+
+    
+
+        
 
 
 
