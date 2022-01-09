@@ -462,7 +462,8 @@ namespace EasyProject.ViewModel
                     MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 사용하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
 
-                    getListbyDept();
+                    LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
                     updateSearchedProducts(false);
                     UpdateRecordCount();
 
@@ -509,7 +510,8 @@ namespace EasyProject.ViewModel
                     MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 {SelectedProduct.SelectedOutDept.Dept_name} 부서로 이관하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
 
-                    getListbyDept();
+                    LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
                     updateSearchedProducts(false);
                     UpdateRecordCount();
 
@@ -552,7 +554,8 @@ namespace EasyProject.ViewModel
                     MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 폐기하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
 
-                    getListbyDept();
+                    LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
                     updateSearchedProducts(false);
                     UpdateRecordCount();
 
@@ -629,7 +632,8 @@ namespace EasyProject.ViewModel
 
                 IsInOutEnabled = true;
 
-                getListbyDept();
+                LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
                 updateSearchedProducts(false);
                 UpdateRecordCount();
                 var temp = Ioc.Default.GetService<ProductInOutViewModel>();
@@ -701,9 +705,10 @@ namespace EasyProject.ViewModel
             newCategoryDao.Category_id = cateGoryId;
             newCategoryDao.Category_name = SelectedProduct.Category_name;
             Categories.Insert(0,newCategoryDao);
-           
+
             //첫페이지 말고 다음 페이지에서 재고수정할때 성공은 되는데 첫페이지로 돌아감 해결하기
-            getListbyDept();
+            LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
             updateSearchedProducts(false);
             UpdateRecordCount();
         }
