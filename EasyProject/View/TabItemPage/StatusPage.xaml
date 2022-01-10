@@ -39,13 +39,40 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
             <Setter Property="Cursor" Value="Hand" />
-        </Style>        
+        </Style>  
+        
     </Page.Resources>
-    
-    
-    
-    <Grid Height="500" Width="1200" Background="White" VerticalAlignment="Top" HorizontalAlignment="Center">
-        <Grid Background="White" >
+    <materialDesign:DialogHost >
+        <materialDesign:DialogHost.DialogContent>
+            <StackPanel Margin="20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <materialDesign:PackIcon Kind="Error" Foreground="#4472C4"
+                                                 Height="48"
+                                                 Width="48"
+                                                 Margin="20, 25, 20, 20"
+                                                 Grid.Column="0" />
+                    <StackPanel Margin="20" Grid.Column="1"  MinWidth="180">
+                        <TextBlock Text="로그아웃" FontSize="15" FontWeight="UltraBold"></TextBlock>
+                        <TextBlock Text="로그아웃 하시겠습니까?" FontSize="13" FontWeight="SemiBold"
+                                       Margin="0,20,0,0"></TextBlock>
+                    </StackPanel>
+                </Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button Content="취소" Background="#EAEAEA" Foreground="Black"
+                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"></Button>
+                    <Button Content="확인" Background="#4472C4" Foreground="White" Margin="30,0,0,0"
+                            Command="{Binding LogoutCommand}"></Button>
+
+                </StackPanel>
+            </StackPanel>
+        </materialDesign:DialogHost.DialogContent>
+        <Grid Height="500" Width="1200" Background="White" VerticalAlignment="Top" HorizontalAlignment="Center">
+        
+            <Grid Background="White" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="0"/>
                 <RowDefinition Height="0.3*"/>
@@ -90,10 +117,7 @@
                             <i:InvokeCommandAction Command="{Binding Command}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-
-
                 </ComboBox>
-
             </Grid>
             <Grid x:Name="DataAndGraphGrid" Grid.Row="2" >
                 <Grid.ColumnDefinitions>
@@ -679,9 +703,9 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </materialDesign:Snackbar.Style>
-            
+            </materialDesign:Snackbar.Style>            
         </materialDesign:Snackbar>
+        
     </Grid>
-
+    </materialDesign:DialogHost>
 </Page>
