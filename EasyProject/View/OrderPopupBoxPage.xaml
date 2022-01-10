@@ -6,11 +6,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:EasyProject.View"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="700" d:DesignWidth="600"
       DataContext="{Binding PSVM, Source={StaticResource Locator}}"
       Title="OrderPopupBoxPage">
 
     <Grid x:Name="PlaceOrder">
+        <Grid.Background>
+            <ImageBrush ImageSource="/NewImage/OrderPageImage.jpg"></ImageBrush>
+        </Grid.Background>
         <Grid.Resources>
             <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
                 <Setter Property="Margin" Value="8,8,10,8" />
@@ -27,13 +30,6 @@
             <RowDefinition Height="0.7*"/>
             <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="#4472C4">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock FontWeight="Bold" FontSize="15" TextAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Margin="10"
-                                                                       VerticalAlignment="center"><Run Foreground="White" Text="발주 신청서" IsEnabled="False" /></TextBlock>
-        </Grid>
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
@@ -155,10 +151,10 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="4">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="40 0 0 0">
 
 
-                <Button x:Name="resetBtn"  Foreground="#4472C4" Background="white" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" 
+                <Button x:Name="resetBtn"  Foreground="#4472C4" Background="white" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"  BorderThickness="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  Height="28" Width="58" Cursor="Hand" Click="resetBtn_Click">
 
                     <materialDesign:PackIcon Grid.Row="0" Kind="Restore" VerticalAlignment="Top" HorizontalAlignment="Center" Height="17" Width="17" />
@@ -166,8 +162,8 @@
 
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="cancel_Btn2" Content="취소" Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}" 
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 40 0">
+                <Button x:Name="cancel_Btn2" Content="취소" Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}"
                                                                             FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"  
                                                                             VerticalAlignment="Center"  BorderThickness="0" Height="28" Width="55" Cursor="Hand"  Foreground="White" >
                     <Button.Style>
