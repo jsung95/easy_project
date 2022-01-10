@@ -196,7 +196,6 @@
     <Compile Include="Model\ProductInOutModel.cs" />
     <Compile Include="Model\ProductModel.cs" />
     <Compile Include="Model\UserModel.cs" />
-    <Compile Include="Util\BlackOutDatesHelper.cs" />
     <Compile Include="Util\PasswordHelper.cs" />
     <Compile Include="Util\SHA256Hash.cs" />
     <Compile Include="ViewModel\DashBoardViewModel.cs" />
