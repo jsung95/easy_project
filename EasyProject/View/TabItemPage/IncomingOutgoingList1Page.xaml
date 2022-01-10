@@ -45,12 +45,11 @@
         </Style>
     </Page.Resources>
 
-    <Grid Height="550" Width="1090" HorizontalAlignment="Left" Margin="50,0,0,0">
+    <Grid Height="450" Width="1200" HorizontalAlignment="Left" >
         <!--<materialDesign:Card Grid.Column="0"  UniformCornerRadius="20" Background="White" >-->
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
-                <RowDefinition Height="0.3*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="DataGridColumn" Width="1.9*"/>
@@ -62,6 +61,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.3*"/>
                         <RowDefinition Height="2*"/>
+                        <RowDefinition Height="0.2*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
 
@@ -163,27 +163,11 @@
                                         </i:Interaction.Triggers>
                                     </TextBox>
                                 </Grid>
-                                <Grid Grid.Column="1">
-                                    <Button x:Name="search_Btn" Grid.Column="2" Foreground="#4472C4"  FontSize="12" FontWeight="Bold"  Background="White"
-                                        VerticalAlignment="Center" Height="30"  Width="45" HorizontalAlignment="Center" 
-                                        Command="{Binding InSearchCommand}" Cursor="Hand">
-                                        <materialDesign:PackIcon  Kind="Search" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="15" Width="15" />
-                                    </Button>
-                                </Grid>
-
                             </Grid>
                         </Grid>
-                        <Grid Grid.Column="1">
-                            
-                        </Grid>
-                        
                     </Grid>
 
                     <Grid Grid.Row="1">
-                        
-
-
-
                         <DataGrid x:Name="dataGrid1" Grid.Row="1" HorizontalAlignment="Left"   VerticalAlignment="Top"
                               ScrollViewer.CanContentScroll="True"         
                               ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.HorizontalScrollBarVisibility="Visible" 
@@ -237,120 +221,104 @@
                                     <Setter Property="FontFamily" Value="Arial"/>
                                 </Style>
                             </DataGrid.RowStyle>-->
-                            
+
                         </DataGrid>
-                        <Grid Grid.Row="2">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="5 0 0 0">
-                                <Button Height="23" HorizontalAlignment="Right"  Command="{Binding InFirstCommand}"
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="5 0 0 0">
+                            <Button Height="23" HorizontalAlignment="Right"  Command="{Binding InFirstCommand}"
                             Name="btnFirst" VerticalAlignment="Bottom" Width="40" Foreground="White" Background="#4472C4"
                             Content="&lt;&lt;" Opacity="0.75" Margin="5">
-                                    <Button.Style>
-                                        <Style TargetType="Button">
-                                            <Setter Property="IsEnabled" Value="false"></Setter>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsInFirstEnabled}" Value="True">
-                                                    <Setter Property="IsEnabled" Value="True"></Setter>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="IsEnabled" Value="false"></Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsInFirstEnabled}" Value="True">
+                                                <Setter Property="IsEnabled" Value="True"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
 
-                                <Button Height="23" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                            <Button Height="23" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
                                     Name="btnPrev" Width="40" 
                                    Margin="5" Foreground="White" Background="#4472C4" Command="{Binding InPreviousCommand}"
                                     Opacity="0.75" Content="&lt;" Cursor="Hand">
-                                    <Button.Style>
-                                        <Style TargetType="Button">
-                                            <Setter Property="IsEnabled" Value="false"></Setter>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsInPreviousEnabled}" Value="True">
-                                                    <Setter Property="IsEnabled" Value="True"></Setter>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
-                                <TextBlock VerticalAlignment="Bottom" Margin="7">
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} of {1}">
-                                            <Binding Path="InCurrentPage" />
-                                            <Binding Path="InNumberOfPages" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="IsEnabled" Value="false"></Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsInPreviousEnabled}" Value="True">
+                                                <Setter Property="IsEnabled" Value="True"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                            <TextBlock VerticalAlignment="Bottom" Margin="7">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} of {1}">
+                                        <Binding Path="InCurrentPage" />
+                                        <Binding Path="InNumberOfPages" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
 
-                                <Button Height="23" HorizontalAlignment="Left"  Foreground="White" Background="#4472C4"
+                            <Button Height="23" HorizontalAlignment="Left"  Foreground="White" Background="#4472C4"
                             Name="btnNext" VerticalAlignment="Bottom" Width="40" Margin="5" Command="{Binding InNextCommand}"
                             Content="&gt;" Opacity="0.75" Cursor="Hand">
-                                    <Button.Style>
-                                        <Style TargetType="Button">
-                                            <Setter Property="IsEnabled" Value="false"></Setter>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsInNextEnabled}" Value="True">
-                                                    <Setter Property="IsEnabled" Value="True"></Setter>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="IsEnabled" Value="false"></Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsInNextEnabled}" Value="True">
+                                                <Setter Property="IsEnabled" Value="True"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
 
-                                <Button Height="23" HorizontalAlignment="Left"   Foreground="White" Background="#4472C4"
+                            <Button Height="23" HorizontalAlignment="Left"   Foreground="White" Background="#4472C4"
                             VerticalAlignment="Bottom" Width="40" Name="btnLast" Margin="5" Command="{Binding InLastCommand}"
                              Opacity="0.75" Content="&gt;&gt;" Cursor="Hand">
-                                    <Button.Style>
-                                        <Style TargetType="Button">
-                                            <Setter Property="IsEnabled" Value="false"></Setter>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsInLastEnabled}" Value="True">
-                                                    <Setter Property="IsEnabled" Value="True"></Setter>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="IsEnabled" Value="false"></Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsInLastEnabled}" Value="True">
+                                                <Setter Property="IsEnabled" Value="True"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
 
-                                <ComboBox Margin="10 5" SelectedIndex="0" Width="100" SelectedItem ="{Binding InSelectedRecord, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                                    <wookoa:Int32>10</wookoa:Int32>
-                                    <wookoa:Int32>15</wookoa:Int32>
-                                    <wookoa:Int32>20</wookoa:Int32>
-                                    <wookoa:Int32>25</wookoa:Int32>
-                                </ComboBox>
+                            <ComboBox Margin="10 5" SelectedIndex="0" Width="100" SelectedItem ="{Binding InSelectedRecord, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                <wookoa:Int32>10</wookoa:Int32>
+                                <wookoa:Int32>15</wookoa:Int32>
+                                <wookoa:Int32>20</wookoa:Int32>
+                                <wookoa:Int32>25</wookoa:Int32>
+                            </ComboBox>
+                        </StackPanel>
+                        <Button x:Name="export_btn" Height="26" HorizontalAlignment="Right" Foreground="White" Background="#4472C4"
+                                VerticalAlignment="Center" Width="150"  FontSize="13" Margin="10 5"
+                                  Opacity="0.75" Cursor="Hand">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="MicrosoftExcel"  HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" />
+                                <TextBlock Text="엑셀 다운로드" Margin="3,0,0,0" Foreground="White" FontWeight="Bold"></TextBlock>
                             </StackPanel>
-                        </Grid>
-
+                        </Button>
                     </Grid>
-                    
                 </Grid>
-                
+
             </Grid>
             <Grid Grid.Column="1">
-                
-
                 <materialDesign:Card x:Name="GraphCard" Margin="0,10,0,0" UniformCornerRadius="20" VerticalAlignment="Top" HorizontalAlignment="Right">
                     <Frame x:Name="Status_GraphFrame" NavigationUIVisibility="Hidden" Source="/View/TabItemPage/GraphPage/Incoming_GraphPage.xaml"  Height="430" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </materialDesign:Card>
-
-            </Grid>
-
-            <Grid Grid.Row="1">
-                <Grid Grid.Column="0" >
-
-                    <Button x:Name="export_btn" Height="26" HorizontalAlignment="Center" Grid.Column ="2" Foreground="White" Background="#4472C4"
-                                VerticalAlignment="Center" Width="150"  FontSize="13" Margin="0,0,0,10" 
-                                  Opacity="0.75" Cursor="Hand">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="MicrosoftExcel"  HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" />
-                            <TextBlock Text="DownLoad" Margin="3,0,0,0" Foreground="White" FontWeight="Bold"></TextBlock>
-                        </StackPanel>
-
-                    </Button>
-
-
-
-                </Grid>
             </Grid>
         </Grid>
-        <!--</materialDesign:Card>-->
     </Grid>
 </Page>
