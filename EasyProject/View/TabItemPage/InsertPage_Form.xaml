@@ -91,7 +91,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock  Text="유통기한" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13"></TextBlock>
                     <DatePicker x:Name="expirationDate_DatePicker" Grid.Column="1" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="0,0,20,0" 
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="0,0,20,0" Focusable="False"
                                 SelectedDate="{Binding Product.Prod_expire}">
                         <DatePicker.Resources>
                             <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
