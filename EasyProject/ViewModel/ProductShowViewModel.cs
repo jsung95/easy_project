@@ -455,6 +455,11 @@ namespace EasyProject.ViewModel
                     product_dao.ChangeProductInfo_ForOut(SelectedProduct);
                     MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) 모두 사용하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
+
+                    LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
+                    updateSearchedProducts(false);
+                    UpdateRecordCount();
                 }
                 else
                 {
@@ -503,6 +508,11 @@ namespace EasyProject.ViewModel
                     product_dao.ChangeProductInfo_ForOut(SelectedProduct);
                     MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) 모두 {SelectedProduct.SelectedOutDept.Dept_name} 부서로 이관하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
+
+                    LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
+                    updateSearchedProducts(false);
+                    UpdateRecordCount();
                 }
                 else
                 {
@@ -547,6 +557,11 @@ namespace EasyProject.ViewModel
                     product_dao.ChangeProductInfo_ForOut(SelectedProduct);
                     MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) 모두 폐기하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsInOutEnabled = true;
+
+                    LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
+                    updateSearchedProducts(false);
+                    UpdateRecordCount();
                 }
                 else
                 {
