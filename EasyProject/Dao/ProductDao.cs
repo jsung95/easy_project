@@ -2681,6 +2681,7 @@ namespace EasyProject.Dao
                             "INNER JOIN DEPT D " +
                             "ON I.dept_id = D.dept_id " +
                             "WHERE D.dept_name = :dept_name " +
+                            "AND I.imp_dept_count > 0 " +
                             "GROUP BY C.category_name, D.dept_name";
 
 
