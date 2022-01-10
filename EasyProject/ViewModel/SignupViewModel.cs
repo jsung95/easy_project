@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Microsoft.Expression.Interactivity.Core;
 using System.Text.RegularExpressions;
 using System.Windows;
+using MaterialDesignThemes.Wpf;
 
 namespace EasyProject.ViewModel
 {
@@ -27,6 +28,17 @@ namespace EasyProject.ViewModel
             }
         }
 
+        private bool isSignUp = false; // 콤보박스에서 선택한 부서객체
+        public bool IsSignUp
+        {
+            get { return isSignUp; }
+            set
+            {
+                isSignUp = value;
+                OnPropertyChanged("IsSignUp");
+            }
+        }
+
         // 회원가입 시에 사용자가 입력한 데이터를 담을 프로퍼티       
         public NurseModel Nurse { get; set; }
 
@@ -35,6 +47,8 @@ namespace EasyProject.ViewModel
 
         public SignupViewModel()
         {
+            messagequeue = new SnackbarMessageQueue();
+
             Nurse = new NurseModel();
             Depts = dao.GetDeptModels();
         }//생성자
@@ -66,6 +80,26 @@ namespace EasyProject.ViewModel
         }
 
 
+        //회원가입 스넥바
+        private bool isSignUpOk = false;
+        public bool IsSignUpOk 
+        {
+            get { return isSignUpOk; }
+            set { isSignUpOk = value; OnPropertyChanged("IsSignUpOk"); }
+        }
+
+        //스넥바 메세지큐
+        private SnackbarMessageQueue messagequeue;
+        public SnackbarMessageQueue MessageQueue
+        {
+            get { return messagequeue; }
+            set
+            {
+                messagequeue = value;
+                OnPropertyChanged("MessageQueue");
+            }
+        }
+
 
         // 회원가입 성공 유무를 체크하기 위한 프로퍼티
         //public bool isSignup { get; set; }
@@ -76,7 +110,9 @@ namespace EasyProject.ViewModel
 
             if (Nurse.Nurse_name == null || Nurse.Nurse_no == null || Nurse.Nurse_pw == null || Nurse_RePw == null || SelectedDept == null)
             {
-                MessageBox.Show("정보를 모두 입력해주세요.");
+                IsSignUpOk = true;
+                MessageQueue.Enqueue("정보를 모두 입력해주세요.", "닫기", (x) => { IsSignUpOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                
                 SignupResult = false;
                 return SignupResult;
             }
@@ -96,7 +132,8 @@ namespace EasyProject.ViewModel
                             if (Nurse.Nurse_pw.Equals(Nurse_RePw)) // 비밀번호, 비밀번호 재확인 값이 같다면 
                             {
                                 dao.SignUp(Nurse, SelectedDept); //회원가입
-                                MessageBox.Show("회원가입 완료!");
+                                //MessageBox.Show("회원가입 완료!");
+                                IsSignUp = true;
 
                                 //회원가입을 1회 진행하면서 바인딩 되어서 남겨진 데이터 초기화
                                 Nurse.Nurse_no = null;
@@ -108,7 +145,9 @@ namespace EasyProject.ViewModel
                             }//if
                             else // 입력한 두 비밀번호가 다르다면 
                             {
-                                MessageBox.Show("비밀번호가 맞지 않습니다.");
+                                IsSignUpOk = true;
+                                MessageQueue.Enqueue("입력한 두 비밀번호가 일치하지 않습니다.", "닫기", (x) => { IsSignUpOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
                                 SignupResult = false;
                                 return SignupResult;
                             }//else                    
@@ -122,7 +161,9 @@ namespace EasyProject.ViewModel
                     }//if
                     else
                     {
-                        MessageBox.Show("비밀번호는 숫자, 문자 조합만 6자리 이상만 가능합니다.");
+                        IsSignUpOk = true;
+                        MessageQueue.Enqueue("비밀번호는 숫자, 문자 조합만 6자리 이상만 가능합니다.", "닫기", (x) => { IsSignUpOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        
                         SignupResult = false;
                         return SignupResult;
                     }//else
@@ -130,7 +171,9 @@ namespace EasyProject.ViewModel
                 }//if
                 else
                 {
-                    MessageBox.Show("사번은 숫자 8자리만 입력가능합니다.");
+                    IsSignUpOk = true;
+                    MessageQueue.Enqueue("사번은 숫자 8자리만 입력가능합니다.", "닫기", (x) => { IsSignUpOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
                     SignupResult = false;
                     return SignupResult;
                 }//else

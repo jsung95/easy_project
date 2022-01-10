@@ -12,7 +12,7 @@
       mc:Ignorable="d" 
       DataContext="{Binding PSVM, Source={StaticResource Locator}}"
       Title="StatusPage">
-
+      
     <Page.Resources>
         <local:IsLesserThanConverter x:Key="IsLesserThanConverter" />
         <local:IsEqualOrLessGreaterThanConverter x:Key="IsEqualOrLessGreaterThanConverter" />
@@ -41,37 +41,7 @@
             <Setter Property="Cursor" Value="Hand" />
         </Style>        
     </Page.Resources>
-    <materialDesign:DialogHost >
-        <materialDesign:DialogHost.DialogContent>
-            <StackPanel Margin="20">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <materialDesign:PackIcon Kind="Error" Foreground="#ff2196f3"
-                                                 Height="48"
-                                                 Width="48"
-                                                 Margin="20, 25, 20, 20"
-                                                 Grid.Column="0" />
-                    <StackPanel Margin="20"
-                                    Grid.Column="1"
-                                    MinWidth="180">
-                        <TextBlock Text="재고수정" FontSize="15" FontWeight="UltraBold"></TextBlock>
-                        <TextBlock Text="재고수정을 하시겠습니까?" FontSize="13" FontWeight="SemiBold"
-                                       Margin="0,20,0,0"></TextBlock>
-                    </StackPanel>
-                </Grid>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Button Content="취소" Background="#EAEAEA" Foreground="Black"
-                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"></Button>
-                    <Button Content="확인" Background="#ff2196f3" Foreground="White" Margin="30,0,0,0"
-                            Command="{Binding LogoutCommand}"></Button>
-
-                </StackPanel>
-            </StackPanel>
-        </materialDesign:DialogHost.DialogContent>
-
+    
     
     
     <Grid Height="500" Width="1200" Background="White" VerticalAlignment="Top" HorizontalAlignment="Center">
@@ -161,7 +131,7 @@
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
                                 <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요" Grid.Column="5" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
+                                     VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
                                      Text="{Binding TextForSearch, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
                                     <!--<TextBox.InputBindings>
                                         <KeyBinding Command="{Binding SearchCommand}" Key="Enter"/>
@@ -713,5 +683,5 @@
             
         </materialDesign:Snackbar>
     </Grid>
-    </materialDesign:DialogHost>
+
 </Page>

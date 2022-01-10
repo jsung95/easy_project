@@ -75,7 +75,7 @@
                             <Style TargetType="TextBox">
                                 <Setter Property="IsEnabled" Value="False"></Setter>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding SelectedCategory.Category_name}" Value="직접 입력">
+                                    <DataTrigger Binding="{Binding SelectedCategory.Category_name}" Value="추가(입력)하기">
                                         <Setter Property="IsEnabled" Value="True"></Setter>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -128,11 +128,11 @@
                     <TextBlock Text="가격" Grid.Column="0" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13"></TextBlock>
                     <TextBox x:Name="productPrice_TxtBox" Grid.Column="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="0,0,20,0" Height="30" 
-                             Text="{Binding Product.Prod_price}" Cursor="IBeam" PreviewTextInput="productPrice_TxtBox_PreviewTextInput"/>
+                             Text="{Binding Input_Prod_price}" Cursor="IBeam" PreviewTextInput="productPrice_TxtBox_PreviewTextInput"/>
                     <TextBlock Text="수량" Grid.Column="2" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13"></TextBlock>
                     <TextBox x:Name="productQuantity_TxtBox" Grid.Column="3" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="0,0,20,0" Height="30" 
-                             Text="{Binding Product.Prod_total}" PreviewTextInput="productQuantity_TxtBox_PreviewTextInput"/>
+                             Text="{Binding Input_Prod_total}" PreviewTextInput="productQuantity_TxtBox_PreviewTextInput"/>
                 </Grid>
 
                 <Grid Grid.Row="5">

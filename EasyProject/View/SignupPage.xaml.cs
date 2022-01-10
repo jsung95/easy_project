@@ -1,9 +1,12 @@
-﻿using EasyProject.ViewModel;
+﻿using EasyProject.Model;
+using EasyProject.ViewModel;
+using MaterialDesignThemes.Wpf;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,14 +30,13 @@ namespace EasyProject
             InitializeComponent();
             backBtn.Click += backBtn_Click;
             //rewriteBtn.Click += rewriteBtn_Click;
-            signUpBtn.Click += signUpBtn_Click;
         }
         private void backBtn_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate
                 (
-                new Uri("/View/LoginPage.xaml", UriKind.Relative) //회원가입화면
-                );
+               new Uri("/View/LoginPage.xaml", UriKind.Relative) //회원가입화면
+               );
         }
         /*
         private void rewriteBtn_Click(object sender, RoutedEventArgs e)
@@ -45,6 +47,13 @@ namespace EasyProject
             //rePassword_PwBox.Password = "";
         }
         */
+        //private async void ButtonError_Click(object sender, RoutedEventArgs e)
+        //{
+        //    ErrorNotificationMessage msg = new ErrorNotificationMessage();
+        //    msg.Message = "회원가입 성공";
+
+        //    await DialogHost.Show(msg, "RootDialog");
+        //}
         private async void signUpBtn_Click(object sender, RoutedEventArgs e)
         {
             //await Task.Delay(1500);
@@ -55,6 +64,8 @@ namespace EasyProject
             {
                 Console.WriteLine("isSignup : " + signupResult);
                 Console.WriteLine("회원가입 성공");
+                //ErrorNotificationMessage msg = new ErrorNotificationMessage();
+                //msg.Message = "회원가입 성공";
 
                 NavigationService.Navigate
                     (
@@ -80,5 +91,14 @@ namespace EasyProject
             }*/
 
         }
+
+        private void id_TxtBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+
+
     }
 }
