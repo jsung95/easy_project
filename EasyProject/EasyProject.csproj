@@ -56,6 +56,9 @@
     <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
     </Reference>
+    <Reference Include="JetBrains.Annotations, Version=2021.3.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.2021.3.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
       <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
     </Reference>
@@ -184,7 +187,9 @@
     <Compile Include="Locator.cs" />
     <Compile Include="Model\CategoryModel.cs" />
     <Compile Include="Model\DeptModel.cs" />
+    <Compile Include="Model\ErrorNotificationMessage.cs" />
     <Compile Include="Model\ImpDeptModel.cs" />
+    <Compile Include="Model\NotificationMessage.cs" />
     <Compile Include="Model\NurseModel.cs" />
     <Compile Include="Model\Notifier.cs" />
     <Compile Include="Model\ProductShowModel.cs" />
@@ -196,6 +201,7 @@
     <Compile Include="Util\SHA256Hash.cs" />
     <Compile Include="ViewModel\DashBoardViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\NewProjectViewModel.cs" />
     <Compile Include="ViewModel\OrderViewModel.cs" />
     <Compile Include="ViewModel\PasswordChangeViewModel.cs" />
     <Compile Include="ViewModel\ProductInOutViewModel.cs" />
@@ -431,6 +437,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="NewImage\OrderPageImage.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

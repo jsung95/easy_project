@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EasyProject.Model;
+using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using EasyProject.Dao;
+using System.Windows.Media.Animation; using EasyProject.Dao;
 
 namespace EasyProject
 {
@@ -110,11 +112,14 @@ namespace EasyProject
             currentButton.Background = (Brush)bc.ConvertFrom("#F0EBE9");
             CurrentButtonName = buttonName;
         }
-
-        private void logoutBtn_Click(object sender, RoutedEventArgs e)
+        private async void ButtonError_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/View/LoginPage.xaml", UriKind.Relative));
+            ErrorNotificationMessage msg = new ErrorNotificationMessage();
+            msg.Message = "로그아웃을 하시겠습니까?";
+
+            await DialogHost.Show(msg, "RootDialog");
         }
+
 
         private void pw_Change_Btn_Click(object sender, RoutedEventArgs e)
         {
