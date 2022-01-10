@@ -249,9 +249,6 @@
     <Compile Include="View\TabItemPage\GraphPage\Incoming_GraphPage.xaml.cs">
       <DependentUpon>Incoming_GraphPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TabItemPage\GraphPage\Outcoming_GraphPage.xaml.cs">
-      <DependentUpon>Outcoming_GraphPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\TabItemPage\GraphPage\Outgoing_GraphPage.xaml.cs">
       <DependentUpon>Outgoing_GraphPage.xaml</DependentUpon>
     </Compile>
@@ -346,10 +343,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TabItemPage\GraphPage\Incoming_GraphPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\TabItemPage\GraphPage\Outcoming_GraphPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
