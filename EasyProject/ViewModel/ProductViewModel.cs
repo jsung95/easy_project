@@ -270,8 +270,7 @@ namespace EasyProject.ViewModel
                 log.Error(e.Message);
 
                 IsDuplicatedProduct = true;
-                MessageQueue.Enqueue("업로드 할 파일을 닫고 다시 시도하십시오.");
-                
+                MessageQueue.Enqueue("업로드 할 파일을 닫고 다시 시도하십시오.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
             }//catch
 
         }//CsvReader
