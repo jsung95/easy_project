@@ -214,9 +214,10 @@ namespace EasyProject.ViewModel
                         }//if
                         else
                         {
-                            MessageQueue.Enqueue("이미 존재하는 재고 입력은 불가합니다.", "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                            Console.WriteLine("중복이다.");
                             IsDuplicatedProduct = true;
+                            MessageQueue.Enqueue("이미 존재하는 재고 입력은 불가합니다.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                            Console.WriteLine("중복이다.");
+                            
                             excelProductList = new List<ProductShowModel>();
                         }//else
                     }//for
@@ -232,6 +233,9 @@ namespace EasyProject.ViewModel
                 {
                     foreach (ProductShowModel elem in excelProductList)
                     {
+                        IsDuplicatedProduct = false;
+                        MessageQueue.Enqueue("신규 재고가 추가되었습니다.", "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
                         //MessageBox.Show(product.Prod_code+".."+product.Prod_name+
                         //   ".." + product.Category_name+".."+product.Prod_expire
                         //   + ".." + product.Prod_price + ".." + product.Prod_total);
@@ -264,9 +268,10 @@ namespace EasyProject.ViewModel
             catch (Exception e)
             {
                 log.Error(e.Message);
-                
-                MessageQueue.Enqueue("업로드 할 파일을 닫고 다시 시도하십시오.");
+
                 IsDuplicatedProduct = true;
+                MessageQueue.Enqueue("업로드 할 파일을 닫고 다시 시도하십시오.");
+                
             }//catch
 
         }//CsvReader
@@ -314,9 +319,10 @@ namespace EasyProject.ViewModel
                         }
                         else
                         {
-                            MessageQueue.Enqueue("이미 존재하는 재고 입력은 불가합니다.", "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                            Console.WriteLine("중복이다.");
                             IsDuplicatedProduct = true;
+                            MessageQueue.Enqueue("이미 존재하는 재고 입력은 불가합니다.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                            Console.WriteLine("중복이다.");
+                            
                             excelProductList.Clear();
                         }
                     }
@@ -330,6 +336,9 @@ namespace EasyProject.ViewModel
                 {
                     foreach (ProductShowModel elem in excelProductList)
                     {
+                        IsDuplicatedProduct = false;
+                        MessageQueue.Enqueue("신규 재고가 추가되었습니다.", "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
                         //MessageBox.Show(product.Prod_code+".."+product.Prod_name+
                         //   ".." + product.Category_name+".."+product.Prod_expire
                         //   + ".." + product.Prod_price + ".." + product.Prod_total);
@@ -473,6 +482,21 @@ namespace EasyProject.ViewModel
 
         #region 재고입력
 
+        //제품 가격, 수량을 임시로 담을 프로퍼티
+        private string input_Prod_price;
+        public string Input_Prod_price
+        {
+            get { return input_Prod_price; }
+            set { input_Prod_price = value; OnPropertyChanged("Input_Prod_price"); }
+        }
+        private string input_Prod_total;
+        public string Input_Prod_total
+        {
+            get { return input_Prod_total; }
+            set { input_Prod_total = value; OnPropertyChanged("Input_Prod_total"); }
+        }
+
+
         //선택한 카테고리를 담을 프로퍼티
         private CategoryModel selectedCategory;
         public CategoryModel SelectedCategory
@@ -515,35 +539,38 @@ namespace EasyProject.ViewModel
         {
 
             // 만약 제품입력이 하나라도 안되었다면
-            if (Product.Prod_code == null || Product.Prod_name == null || SelectedCategory == null || Product.Prod_expire == null || Product.Prod_price == null || Product.Prod_total == null)
+            if (Product.Prod_code == null || Product.Prod_code.Equals("") || Product.Prod_name == null || Product.Prod_name.Equals("") || SelectedCategory == null || Product.Prod_expire == null || Product.Prod_expire.Equals("") || Input_Prod_price == null || Input_Prod_price.Equals("") || Input_Prod_total == null || Input_Prod_total.Equals(""))
             {
                 //스넥바 메세지 출력
-                MessageQueue.Enqueue("입력할 제품의 정보를 모두 기입해주세요.", "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                 IsDuplicatedProduct = true;
+                MessageQueue.Enqueue("입력할 제품의 정보를 모두 기입해주세요.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
             }//if
             else //제품입력이 모두 되었지만
             {
+                Product.Prod_price = Int32.Parse(Input_Prod_price);
+                Product.Prod_total = Int32.Parse(Input_Prod_total);
+
                 if (SelectedCategory.Category_name.Equals("추가(입력)하기")) //만약 카테고리 선택을 직접입력으로 선택했다면
                 {
-                    if (AddCategoryName == null) //만약 직접입력란이 비어있다면
+                    if (AddCategoryName == null || AddCategoryName.Equals("")) //만약 직접입력란이 비어있다면
                     {
-                        MessageQueue.Enqueue("추가할 카테고리명을 입력해주세요.", "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                         IsDuplicatedProduct = true;
+                        MessageQueue.Enqueue("추가할 카테고리명을 입력해주세요.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     }//if
                     else //만약 직접입력라인 비어있지 않고 입력했다면
                     {
                         if (categoryDao.IsExistsCategory(AddCategoryName)) //만약 기존 카테고리에 이미 존재한다면
                         {
-                            MessageQueue.Enqueue("이미 존재하는 카테고리명 입니다.", "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                             IsDuplicatedProduct = true;
+                            MessageQueue.Enqueue("이미 존재하는 카테고리명 입니다.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                         }//if
                         else // 만약 기존 카테고리에 존재하지 않아서 추가할수 있다면
                         {
                             if (!dao.IsProductDuplicateCheck(Product, AddCategoryName)) //만약 입력하려는 정보가 기존 제품과 중복되지 않는다면
                             {
                                 categoryDao.AddCategory(AddCategoryName);
-                                MessageQueue.Enqueue("카테고리가 추가되었습니다.", "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                                IsDuplicatedProduct = true;
+                                IsDuplicatedProduct = false;
+                                MessageQueue.Enqueue("신규 재고가 추가되었습니다. (카테고리가 추가되었습니다.)", "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
 
                                 //재고입력
                                 dao.AddProduct(Product, AddCategoryName);
@@ -579,11 +606,12 @@ namespace EasyProject.ViewModel
                             }//if
                             else //만약 입력하려는 정보가 기존 제품과 중복된다면
                             {
+                                IsDuplicatedProduct = true;
                                 string message = Product.Prod_code + "(" + Product.Prod_name + ") / " +
                                     AddCategoryName + "/" + Product.Prod_expire + "/" + Product.Prod_price + "는 이미 존재하여 재고 입력이 불가합니다.";
-                                MessageQueue.Enqueue(message, "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                                MessageQueue.Enqueue(message, "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                                 Console.WriteLine(message);
-                                IsDuplicatedProduct = true;
+                                
                             }//else
                         }//else
                     }//else
@@ -594,6 +622,9 @@ namespace EasyProject.ViewModel
 
                     if (!dao.IsProductDuplicateCheck(Product, SelectedCategory))
                     {
+                        IsDuplicatedProduct = false;
+                        MessageQueue.Enqueue("신규 재고가 추가되었습니다.", "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
                         //재고입력
                         dao.AddProduct(Product, SelectedCategory);
 
@@ -610,13 +641,13 @@ namespace EasyProject.ViewModel
                         dto.Prod_in_date = DateTime.Now;
                         dto.Prod_code = Product.Prod_code;
                         dto.Prod_name = Product.Prod_name;
-                        if (AddCategoryName != null)
+                        if (AddCategoryName == null || AddCategoryName.Equals(""))
                         {
-                            dto.Category_name = AddCategoryName;
+                            dto.Category_name = SelectedCategory.Category_name;
                         }
                         else
                         {
-                            dto.Category_name = SelectedCategory.Category_name;
+                            dto.Category_name = AddCategoryName;
                         }
                         dto.Prod_expire = Product.Prod_expire;
                         dto.Prod_price = Product.Prod_price;
@@ -635,11 +666,12 @@ namespace EasyProject.ViewModel
                     }//if
                     else
                     {
+                        IsDuplicatedProduct = true;
                         string message = Product.Prod_code + "(" + Product.Prod_name + ") / " +
                             SelectedCategory.Category_name + "/" + Product.Prod_expire + "/" + Product.Prod_price + "는 이미 존재하여 재고 입력이 불가합니다.";
-                        MessageQueue.Enqueue(message, "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        MessageQueue.Enqueue(message, "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                         Console.WriteLine(message);
-                        IsDuplicatedProduct = true;
+                        
                     }//else
                 }//else
 
@@ -667,9 +699,12 @@ namespace EasyProject.ViewModel
             Product.Prod_expire = DateTime.Now;
             Product.Prod_name = null;
             Product.Prod_price = null;
+            Input_Prod_price = null;
             Product.Prod_total = null;
+            Input_Prod_total = null;
             Product.Prod_code = null;
             SelectedCategory = null;
+            AddCategoryName = null;
         }
         #endregion
 

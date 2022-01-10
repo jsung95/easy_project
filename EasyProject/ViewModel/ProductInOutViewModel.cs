@@ -65,11 +65,11 @@ namespace EasyProject.ViewModel
             searchKeyword_Out = null; //검색 텍스트 초기화
             SelectedStartDate_In = Convert.ToDateTime(product_dao.GetProductIn_MinDate(SelectedDept)); //날짜 컨트롤 최대, 최소 날짜로 설정
             SelectedEndDate_In = Convert.ToDateTime(product_dao.GetProductIn_MaxDate(SelectedDept));
-            SelectedStartDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MinDate(SelectedDept_Out));
-            SelectedEndDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MaxDate(SelectedDept_Out));
+            SelectedStartDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MinDate(SelectedDept));
+            SelectedEndDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MaxDate(SelectedDept));
 
             getProductIn_By_Date();
-            showOutListByDept();
+            getProductOut_By_Date();
         }
 
         public ProductInOutViewModel()
@@ -78,16 +78,15 @@ namespace EasyProject.ViewModel
 
             SearchTypeList = new[] { "제품코드", "제품명", "품목/종류" };
             SelectedSearchType_In = SearchTypeList[0];
+            SelectedSearchType_Out = SearchTypeList[0];
 
             Depts = new ObservableCollection<DeptModel>(dept_dao.GetDepts());
             SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1];
 
-            selectedSearchType_Out = SearchTypeList[0];
-            SelectedDept_Out = Depts[(int)App.nurse_dto.Dept_id - 1];
-
+            
             //Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept));
             Product_in = new ObservableCollection<ProductInOutModel>();
-            Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept_Out));
+            Product_out = new ObservableCollection<ProductInOutModel>();
 
 
             //날짜 컨트롤 부서별 해당 최소 날짜 및 최대 날짜로 초기화
@@ -96,8 +95,8 @@ namespace EasyProject.ViewModel
             SelectedEndDate_In = Convert.ToDateTime(product_dao.GetProductIn_MaxDate(SelectedDept));
 
             //출고
-            SelectedStartDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MinDate(SelectedDept_Out));
-            SelectedEndDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MaxDate(SelectedDept_Out));
+            SelectedStartDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MinDate(SelectedDept));
+            SelectedEndDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MaxDate(SelectedDept));
 
             //부서별 입고 유형별 빈도 그래프 (기간 선택 가능 * 초기 설정 : 현재날짜로부터 1주일)
             SelectedStartDate2 = DateTime.Today.AddDays(-7);
@@ -392,26 +391,7 @@ namespace EasyProject.ViewModel
 
             Formatter = value => value.ToString("N");   //문자열 10진수 변환
         }//dashboardprint3 ---------------------------------------------------------------------------------------------------
-        #region 입고      
-        ////입고 - 선택한 부서를 담을 프로퍼티
-        //private DeptModel selectedDept_In;
-        //public DeptModel SelectedDept_In
-        //{
-        //    get { return selectedDept_In; }
-        //    set
-        //    {
-        //        selectedDept_In = value;
-
-        //        //부서 변경 시에
-        //        searchKeyword_In = null; //검색 텍스트 초기화
-        //        SelectedStartDate_In = Convert.ToDateTime(product_dao.GetProductIn_MinDate(SelectedDept_In)); //날짜 컨트롤 최대, 최소 날짜로 설정
-        //        SelectedEndDate_In = Convert.ToDateTime(product_dao.GetProductIn_MaxDate(SelectedDept_In));
-
-        //        OnPropertyChanged("SelectedDept_In");
-        //        showInListByDept();
-        //    }
-        //}
-
+        #region 입고 pagination
         //검색 텍스트 - 입고
         private string searchKeyword_In;
         public string SearchKeyword_In
@@ -431,10 +411,7 @@ namespace EasyProject.ViewModel
             set
             {
                 selectedStartDate_In = value;
-
-                //ShowProductIn_By_Date();
-                
-                
+                                                                                         
                 SearchKeyword_In = null;
                 getProductIn_By_Date();
                 if (selectedStartDate_In > selectedEndDate_In)
@@ -464,62 +441,11 @@ namespace EasyProject.ViewModel
                     SelectedStartDate_In = SelectedEndDate_In.Value.AddDays(-1);
                 }
                 OnPropertyChanged("SelectedEndDate_In");
+
                 DashboardPrint2();
                 DashboardPrint3();
             }
         }
-
-
-        ////입고 - 검색 수행
-        //private ActionCommand inSearchCommand;
-        //public ICommand InSearchCommand
-        //{
-        //    get
-        //    {
-        //        if (inSearchCommand == null)
-        //        {
-        //            inSearchCommand = new ActionCommand(InListSearch);
-        //        }
-        //        return inSearchCommand;
-        //    }//get
-
-        //}//Command
-
-        //public void InListSearch()
-        //{
-        //    if (SelectedStartDate_In != null && SelectedEndDate_In != null)
-        //    {
-        //        Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, selectedSearchType_In, searchKeyword_In, SelectedStartDate_In, SelectedEndDate_In));
-        //    }
-        //    else
-        //    {
-        //        MessageQueue.Enqueue("날짜를 모두 선택해주세요.", "닫기", (x) => { IsInOutEnable = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-        //        IsInOutEnable = true;
-        //        //Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, selectedSearchType_In, searchKeyword_In));
-        //    }
-
-        //}// InListSearch
-
-
-        //입고 - 부서별 입고 리스트
-        //public void showInListByDept()
-        //{
-        //    Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept));
-
-        //}//showInListByDept
-
-        //// 입고 - 시작, 끝 날짜 지정해서 입고 데이터 조회
-        //public void ShowProductIn_By_Date()
-        //{
-        //    if (SelectedStartDate_In != null && SelectedEndDate_In != null)
-        //    {
-        //        Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept, SelectedStartDate_In, SelectedEndDate_In));
-        //    }
-        //}//ShowProductIn_By_Date
-
-        #endregion
-
-        #region 입고 pagination
         //화면에 보여줄 리스트 입고 내역 담을 프로퍼티
         private ObservableCollection<ProductInOutModel> product_in;
         public ObservableCollection<ProductInOutModel> Product_in
@@ -599,7 +525,7 @@ namespace EasyProject.ViewModel
             {
                 InLstOfRecords = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept, SelectedStartDate_In, SelectedEndDate_In));
                 updateInSearchedProducts();
-                UpdateInRecordCount();
+                //UpdateInRecordCount();
             }
         }//getProductIn_By_Date
 
@@ -607,7 +533,7 @@ namespace EasyProject.ViewModel
         {
             InLstOfRecords = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept));
             updateInSearchedProducts();
-            UpdateInRecordCount();
+            //UpdateInRecordCount();
 
         }//getInListByDept
 
@@ -615,7 +541,7 @@ namespace EasyProject.ViewModel
         private void InPreviousPage(object obj)
         {
             InCurrentPage--;
-            InRecordStartFrom = searchedInProducts.Count() - InSelectedRecord * (InNumberOfPages - (InCurrentPage - 1));
+            InRecordStartFrom = (InCurrentPage - 1) * InSelectedRecord;
             var recorsToShow = searchedInProducts.Skip(InRecordStartFrom).Take(InSelectedRecord);
             UpdateInCollection(recorsToShow);
             UpdateInEnableState();
@@ -773,7 +699,7 @@ namespace EasyProject.ViewModel
             set
             {
                 isInPreviousEnabled = value;
-                OnPropertyChanged(nameof(isInPreviousEnabled));
+                OnPropertyChanged(nameof(IsInPreviousEnabled));
             }
         }
         private bool isInLastEnabled;
@@ -824,52 +750,19 @@ namespace EasyProject.ViewModel
         }
         #endregion
 
-        #region 출고
-
-        private ObservableCollection<ProductInOutModel> product_out;
-        //출고 내역을 담을 프로퍼티
-        public ObservableCollection<ProductInOutModel> Product_out
+        #region 출고 pagination
+        //검색 텍스트 - 입고
+        private string searchKeyword_Out;
+        public string SearchKeyword_Out
         {
-            get { return product_out; }
-            set
-            {
-                product_out = value;
-                OnPropertyChanged("Product_out");
-            }
+            get { return searchKeyword_Out; }
+            set { searchKeyword_Out = value; OnPropertyChanged("SearchKeyword_Out"); }
         }
 
-        //출고 - 선택한 부서를 담을 프로퍼티
-        private DeptModel selectedDept_Out;
-        public DeptModel SelectedDept_Out
-        {
-            get { return selectedDept_Out; }
-            set
-            {
-                selectedDept_Out = value;
 
-                //부서 변경 시에 
-                searchKeyword_Out = null; // 검색 텍스트 초기화
-                SelectedStartDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MinDate(SelectedDept_Out)); //날짜 컨트롤 최대, 최소 날짜로 설정
-                SelectedEndDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MaxDate(SelectedDept_Out));
+        public string SelectedSearchType_Out { get; set; }
 
-                OnPropertyChanged("SelectedDept_Out");
-                showOutListByDept();
-            }
-        }
-
-        //검색 텍스트 - 출고
-        private string _searchKeyword_Out;
-        public string searchKeyword_Out
-        {
-            get { return _searchKeyword_Out; }
-            set { _searchKeyword_Out = value; OnPropertyChanged("searchKeyword_Out"); }
-        }
-
-        public string selectedSearchType_Out { get; set; }
-
-
-        //출고
-        //시작일을 담을 프로퍼티
+        //입고 시작일을 담을 프로퍼티
         private DateTime? selectedStartDate_Out;
         public DateTime? SelectedStartDate_Out
         {
@@ -878,7 +771,9 @@ namespace EasyProject.ViewModel
             {
                 selectedStartDate_Out = value;
 
-                ShowProductOut_By_Date();
+                //ShowProductIn_By_Date();
+                SearchKeyword_Out = null;
+                getProductOut_By_Date();
                 if (selectedStartDate_Out > selectedEndDate_Out)
                 {
                     SelectedStartDate_Out = SelectedEndDate_Out.Value.AddDays(-1);
@@ -895,7 +790,9 @@ namespace EasyProject.ViewModel
             {
                 selectedEndDate_Out = value;
 
-                ShowProductOut_By_Date();
+                //ShowProductIn_By_Date();                
+                SearchKeyword_Out = null;
+                getProductOut_By_Date();
                 if (selectedStartDate_Out > selectedEndDate_Out)
                 {
                     SelectedStartDate_Out = SelectedEndDate_Out.Value.AddDays(-1);
@@ -903,52 +800,501 @@ namespace EasyProject.ViewModel
                 OnPropertyChanged("SelectedEndDate_Out");
             }
         }
+        //화면에 보여줄 리스트 입고 내역 담을 프로퍼티
+        private ObservableCollection<ProductInOutModel> product_out;
+        public ObservableCollection<ProductInOutModel> Product_out
+        {
+            get { return product_out; }
+            set
+            {
+                product_out = value;
+                OnPropertyChanged("Product_out");
+            }
+        }
+        public IEnumerable<ProductInOutModel> searchedOutProducts { get; set; } // 검색결과에 해당하는 객체들을 임시로 담아놓을 프로퍼티
 
-        //출고- 검색 수행
-        private ActionCommand outSearchCommand;
-        public ICommand OutSearchCommand
+        private ActionCommand outSearchKeywordCommand;
+        public ICommand OutSearchKeywordCommand
         {
             get
             {
-                if (outSearchCommand == null)
+                if (outSearchKeywordCommand == null)
                 {
-                    outSearchCommand = new ActionCommand(OutListSearch);
+                    outSearchKeywordCommand = new ActionCommand(updateOutSearchedProducts);
                 }
-                return outSearchCommand;
+                return outSearchKeywordCommand;
             }//get
+        }
 
-        }//Command
+        public void updateOutSearchedProducts()
+        {
 
-        public void OutListSearch()
+            Console.WriteLine("updateOutSearchedProducts() 검색어 : " + SearchKeyword_Out);
+
+            OutCurrentPage = 1; // 검색어 바뀔 때마다 1페이지로 이동
+
+
+            if (SearchKeyword_Out != null) // 키워드 있을 때
+            {
+                if (SelectedSearchType_Out == "제품명")
+                {
+                    searchedOutProducts = OutLstOfRecords.Where(model => model.Prod_name.Contains(SearchKeyword_Out) || model.Prod_name.Contains(SearchKeyword_Out.ToUpper()) || model.Prod_name.Contains(SearchKeyword_Out.ToLower()));
+                    Console.WriteLine("제품명 : " + searchedOutProducts.Count() + SearchKeyword_Out.ToUpper());
+
+                    UpdateOutRecordCount();
+
+                }
+                else if (SelectedSearchType_Out == "제품코드")
+                {
+                    searchedOutProducts = OutLstOfRecords.Where(model => model.Prod_code.Contains(SearchKeyword_Out) || model.Prod_code.Contains(SearchKeyword_Out.ToUpper()) || model.Prod_code.Contains(SearchKeyword_Out.ToLower()));
+                    Console.WriteLine("제품코드 : " + searchedOutProducts.Count());
+
+                    UpdateOutRecordCount();
+                }
+                else // 품목/종류
+                {
+                    searchedOutProducts = OutLstOfRecords.Where(model => model.Category_name.Contains(SearchKeyword_Out) || model.Category_name.Contains(SearchKeyword_Out.ToUpper()) || model.Category_name.Contains(SearchKeyword_Out.ToLower()));
+                    Console.WriteLine("품목/종류 : " + searchedInProducts.Count());
+
+                    UpdateOutRecordCount();
+                }
+
+            }//if
+            else // 키워드 없을 때
+            {
+                searchedOutProducts = OutLstOfRecords;
+                Console.WriteLine("검색어없음: " + searchedOutProducts.Count());
+
+                UpdateOutRecordCount();
+
+            }//else
+
+        }//updateInSearchedProducts
+
+        public ObservableCollection<ProductInOutModel> OutLstOfRecords { get; set; }
+
+        public void getProductOut_By_Date()
         {
             if (SelectedStartDate_Out != null && SelectedEndDate_Out != null)
             {
-                Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept_Out, selectedSearchType_Out, searchKeyword_Out, SelectedStartDate_Out, SelectedEndDate_Out));
+                OutLstOfRecords = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept, SelectedStartDate_Out, SelectedEndDate_Out));
+                updateOutSearchedProducts();
+                UpdateOutRecordCount();
+            }
+        }//getProductOut_By_Date
+
+        public void getOutListByDept()
+        {
+            OutLstOfRecords = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept));
+            updateOutSearchedProducts();
+            UpdateOutRecordCount();
+
+        }//getOutListByDept
+
+        int OutRecordStartFrom = 0;
+        private void OutPreviousPage(object obj)
+        {
+            OutCurrentPage--;
+            OutRecordStartFrom = (OutCurrentPage - 1) * OutSelectedRecord;
+            var recorsToShow = searchedOutProducts.Skip(OutRecordStartFrom).Take(OutSelectedRecord);
+            UpdateOutCollection(recorsToShow);
+            UpdateOutEnableState();
+
+        }
+
+        private ActionCommand outNextCommand;
+        public ICommand OutNextCommand
+        {
+            get
+            {
+                if (outNextCommand == null)
+                {
+                    outNextCommand = new ActionCommand(OutNextPage);
+                }
+                return outNextCommand;
+            }//get
+        }
+
+
+
+        private ActionCommand outfirstCommand;
+        public ICommand OutFirstCommand
+        {
+            get
+            {
+                if (outfirstCommand == null)
+                {
+                    outfirstCommand = new ActionCommand(OutFirstPage);
+                }
+                return outfirstCommand;
+            }//get
+        }
+
+        private ActionCommand outLastCommand;
+        public ICommand OutLastCommand
+        {
+            get
+            {
+                if (outLastCommand == null)
+                {
+                    outLastCommand = new ActionCommand(OutLastPage);
+                }
+                return outLastCommand;
+            }//get
+        }
+
+        private ActionCommand outPreviouCommand;
+        public ICommand OutPreviousCommand
+        {
+            get
+            {
+                if (outPreviouCommand == null)
+                {
+                    outPreviouCommand = new ActionCommand(OutPreviousPage);
+                }
+                return outPreviouCommand;
+            }//get
+        }
+        private void OutLastPage(object obj)
+        {
+
+            var recordsToskip = OutSelectedRecord * (OutNumberOfPages - 1);
+            UpdateInCollection(searchedOutProducts.Skip(recordsToskip));
+            OutCurrentPage = OutNumberOfPages;
+            //MessageBox.Show(CurrentPage + "페이지");
+            UpdateOutEnableState();
+        }
+        private void OutFirstPage(object obj)
+        {
+            UpdateOutCollection(searchedOutProducts.Take(OutSelectedRecord));
+            OutCurrentPage = 1;
+            UpdateOutEnableState();
+        }
+        private void OutNextPage(object obj)
+        {
+            OutRecordStartFrom = OutCurrentPage * OutSelectedRecord;
+            var recordsToShow = searchedOutProducts.Skip(OutRecordStartFrom).Take(OutSelectedRecord);
+            UpdateOutCollection(recordsToShow);
+            OutCurrentPage++;
+            UpdateOutEnableState();
+        }
+
+        private void UpdateOutCollection(IEnumerable<ProductInOutModel> enumerable)
+        {
+            if (Product_out != null)
+            {
+                Product_out.Clear();
             }
             else
             {
-                MessageQueue.Enqueue("날짜를 모두 선택해주세요.", "닫기", (x) => { IsInOutEnable = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                IsInOutEnable = true;
+                Product_out = new ObservableCollection<ProductInOutModel>();
             }
 
-        }// OutListSearch
-
-
-        //출고 - 부서별 출고 리스트
-        public void showOutListByDept()
-        {
-            Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept_Out));
-
-        }//showOutListByDept
-
-        // 출고 - 시작, 끝 날짜 지정해서 입고 데이터 조회
-        public void ShowProductOut_By_Date()
-        {
-            if (SelectedStartDate_Out != null && SelectedEndDate_Out != null)
+            foreach (var item in enumerable)
             {
-                Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept_Out, SelectedStartDate_Out, SelectedEndDate_Out));
+                Product_out.Add(item);
             }
-        }//ShowProductOut_By_Date
+        }
+        private int outCurrentPage = 1;
+
+        public int OutCurrentPage
+        {
+            get { return outCurrentPage; }
+            set
+            {
+                outCurrentPage = value;
+                OnPropertyChanged(nameof(OutCurrentPage));
+                UpdateOutEnableState();
+            }
+        }
+        private void UpdateOutEnableState()
+        {
+            IsOutFirstEnabled = OutCurrentPage > 1;
+            IsOutPreviousEnabled = OutCurrentPage > 1;
+            IsOutNextEnabled = OutCurrentPage < OutNumberOfPages;
+            IsOutLastEnabled = OutCurrentPage < OutNumberOfPages;
+        }
+
+        private int outNumberOfPages = 10;
+
+        public int OutNumberOfPages
+        {
+            get { return outNumberOfPages; }
+            set
+            {
+                outNumberOfPages = value;
+                OnPropertyChanged(nameof(OutNumberOfPages));
+                UpdateOutEnableState();
+            }
+        }
+        private bool isOutFirstEnabled;
+
+        public bool IsOutFirstEnabled
+        {
+            get { return isOutFirstEnabled; }
+            set
+            {
+                isOutFirstEnabled = value;
+                OnPropertyChanged(nameof(IsOutFirstEnabled));
+            }
+        }
+
+        private bool isOutPreviousEnabled;
+
+        public bool IsOutPreviousEnabled
+        {
+            get { return isOutPreviousEnabled; }
+            set
+            {
+                isOutPreviousEnabled = value;
+                OnPropertyChanged(nameof(IsOutPreviousEnabled));
+            }
+        }
+        private bool isOutLastEnabled;
+
+        public bool IsOutLastEnabled
+        {
+            get { return isOutLastEnabled; }
+            set
+            {
+                isOutLastEnabled = value;
+                OnPropertyChanged(nameof(IsOutLastEnabled));
+            }
+        }
+
+        private bool isOutNextEnabled;
+
+        public bool IsOutNextEnabled
+        {
+            get { return isOutNextEnabled; }
+            set
+            {
+                isOutNextEnabled = value;
+                OnPropertyChanged(nameof(IsOutNextEnabled));
+            }
+        }
+
+        private int outSelectedRecord = 10;
+
+        public int OutSelectedRecord
+        {
+            get { return outSelectedRecord; }
+            set
+            {
+                outSelectedRecord = value;
+                OnPropertyChanged(nameof(OutSelectedRecord));
+                UpdateOutRecordCount();
+            }
+        }
+        private void UpdateOutRecordCount()
+        {
+            OutNumberOfPages = (int)Math.Ceiling((double)searchedOutProducts.Count() / OutSelectedRecord);
+            OutNumberOfPages = OutNumberOfPages == 0 ? 1 : OutNumberOfPages;
+
+            OutRecordStartFrom = (OutCurrentPage - 1) * OutSelectedRecord;
+            var recordsToShow = searchedOutProducts.Skip(OutRecordStartFrom).Take(OutSelectedRecord);
+
+            UpdateOutCollection(recordsToShow);
+        }
+        #endregion
+
+
+        #region 입고 (미사용) 
+        ////입고 - 선택한 부서를 담을 프로퍼티
+        //private DeptModel selectedDept_In;
+        //public DeptModel SelectedDept_In
+        //{
+        //    get { return selectedDept_In; }
+        //    set
+        //    {
+        //        selectedDept_In = value;
+
+        //        //부서 변경 시에
+        //        searchKeyword_In = null; //검색 텍스트 초기화
+        //        SelectedStartDate_In = Convert.ToDateTime(product_dao.GetProductIn_MinDate(SelectedDept_In)); //날짜 컨트롤 최대, 최소 날짜로 설정
+        //        SelectedEndDate_In = Convert.ToDateTime(product_dao.GetProductIn_MaxDate(SelectedDept_In));
+
+        //        OnPropertyChanged("SelectedDept_In");
+        //        showInListByDept();
+        //    }
+        //}
+
+
+
+
+        ////입고 - 검색 수행
+        //private ActionCommand inSearchCommand;
+        //public ICommand InSearchCommand
+        //{
+        //    get
+        //    {
+        //        if (inSearchCommand == null)
+        //        {
+        //            inSearchCommand = new ActionCommand(InListSearch);
+        //        }
+        //        return inSearchCommand;
+        //    }//get
+
+        //}//Command
+
+        //public void InListSearch()
+        //{
+        //    if (SelectedStartDate_In != null && SelectedEndDate_In != null)
+        //    {
+        //        Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, selectedSearchType_In, searchKeyword_In, SelectedStartDate_In, SelectedEndDate_In));
+        //    }
+        //    else
+        //    {
+        //        MessageQueue.Enqueue("날짜를 모두 선택해주세요.", "닫기", (x) => { IsInOutEnable = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+        //        IsInOutEnable = true;
+        //        //Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept_In, selectedSearchType_In, searchKeyword_In));
+        //    }
+
+        //}// InListSearch
+
+
+        //입고 - 부서별 입고 리스트
+        //public void showInListByDept()
+        //{
+        //    Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept));
+
+        //}//showInListByDept
+
+        //// 입고 - 시작, 끝 날짜 지정해서 입고 데이터 조회
+        //public void ShowProductIn_By_Date()
+        //{
+        //    if (SelectedStartDate_In != null && SelectedEndDate_In != null)
+        //    {
+        //        Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept, SelectedStartDate_In, SelectedEndDate_In));
+        //    }
+        //}//ShowProductIn_By_Date
+
+        #endregion
+        #region 출고 (미사용)
+
+        //private ObservableCollection<ProductInOutModel> product_out;
+        ////출고 내역을 담을 프로퍼티
+        //public ObservableCollection<ProductInOutModel> Product_out
+        //{
+        //    get { return product_out; }
+        //    set
+        //    {
+        //        product_out = value;
+        //        OnPropertyChanged("Product_out");
+        //    }
+        //}
+
+        ////출고 - 선택한 부서를 담을 프로퍼티
+        //private DeptModel selectedDept_Out;
+        //public DeptModel SelectedDept_Out
+        //{
+        //    get { return selectedDept_Out; }
+        //    set
+        //    {
+        //        selectedDept_Out = value;
+
+        //        //부서 변경 시에 
+        //        searchKeyword_Out = null; // 검색 텍스트 초기화
+        //        SelectedStartDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MinDate(SelectedDept_Out)); //날짜 컨트롤 최대, 최소 날짜로 설정
+        //        SelectedEndDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MaxDate(SelectedDept_Out));
+
+        //        OnPropertyChanged("SelectedDept_Out");
+        //        showOutListByDept();
+        //    }
+        //}
+
+        ////검색 텍스트 - 출고
+        //private string _searchKeyword_Out;
+        //public string searchKeyword_Out
+        //{
+        //    get { return _searchKeyword_Out; }
+        //    set { _searchKeyword_Out = value; OnPropertyChanged("searchKeyword_Out"); }
+        //}
+
+        //public string selectedSearchType_Out { get; set; }
+
+
+        ////출고
+        ////시작일을 담을 프로퍼티
+        //private DateTime? selectedStartDate_Out;
+        //public DateTime? SelectedStartDate_Out
+        //{
+        //    get { return selectedStartDate_Out; }
+        //    set
+        //    {
+        //        selectedStartDate_Out = value;
+
+        //        ShowProductOut_By_Date();
+        //        if (selectedStartDate_Out > selectedEndDate_Out)
+        //        {
+        //            SelectedStartDate_Out = SelectedEndDate_Out.Value.AddDays(-1);
+        //        }
+        //        OnPropertyChanged("SelectedStartDate_Out");
+        //    }
+        //}
+        ////종료일을 담을 프로퍼티
+        //private DateTime? selectedEndDate_Out;
+        //public DateTime? SelectedEndDate_Out
+        //{
+        //    get { return selectedEndDate_Out; }
+        //    set
+        //    {
+        //        selectedEndDate_Out = value;
+
+        //        ShowProductOut_By_Date();
+        //        if (selectedStartDate_Out > selectedEndDate_Out)
+        //        {
+        //            SelectedStartDate_Out = SelectedEndDate_Out.Value.AddDays(-1);
+        //        }
+        //        OnPropertyChanged("SelectedEndDate_Out");
+        //    }
+        //}
+
+        ////출고- 검색 수행
+        //private ActionCommand outSearchCommand;
+        //public ICommand OutSearchCommand
+        //{
+        //    get
+        //    {
+        //        if (outSearchCommand == null)
+        //        {
+        //            outSearchCommand = new ActionCommand(OutListSearch);
+        //        }
+        //        return outSearchCommand;
+        //    }//get
+
+        //}//Command
+
+        //public void OutListSearch()
+        //{
+        //    if (SelectedStartDate_Out != null && SelectedEndDate_Out != null)
+        //    {
+        //        Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept_Out, selectedSearchType_Out, searchKeyword_Out, SelectedStartDate_Out, SelectedEndDate_Out));
+        //    }
+        //    else
+        //    {
+        //        MessageQueue.Enqueue("날짜를 모두 선택해주세요.", "닫기", (x) => { IsInOutEnable = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+        //        IsInOutEnable = true;
+        //    }
+
+        //}// OutListSearch
+
+
+        ////출고 - 부서별 출고 리스트
+        //public void showOutListByDept()
+        //{
+        //    Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept_Out));
+
+        //}//showOutListByDept
+
+        //// 출고 - 시작, 끝 날짜 지정해서 입고 데이터 조회
+        //public void ShowProductOut_By_Date()
+        //{
+        //    if (SelectedStartDate_Out != null && SelectedEndDate_Out != null)
+        //    {
+        //        Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept_Out, SelectedStartDate_Out, SelectedEndDate_Out));
+        //    }
+        //}//ShowProductOut_By_Date
 
 
         #endregion

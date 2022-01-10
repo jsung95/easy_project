@@ -94,7 +94,8 @@
                             <Label Content="아이디" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
                             <TextBox x:Name="id_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="아이디" Grid.Column="1" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Text="{Binding Nurse.Nurse_no}"/>
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Text="{Binding Nurse.Nurse_no}"
+                                     PreviewTextInput="id_TxtBox_PreviewTextInput"/>
                         </Grid>
                         <Grid Grid.Row="3" >
                             <Grid.ColumnDefinitions>
@@ -139,6 +140,32 @@
                         </Grid>
                     </Grid>
                 </materialDesign:Card>
+
+            <Grid>
+                <materialDesign:Snackbar x:Name="Snackbar" Background="#Ea4a2d" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+
+                    
+
+                    <materialDesign:Snackbar.Style>
+                        <Style TargetType="materialDesign:Snackbar">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsSignUpOk}" Value="True">
+                                    <Setter Property="MessageQueue" Value="{Binding MessageQueue}"></Setter>
+                                    <Setter Property="Background" Value="#Ea4a2d"></Setter>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsSignUpOk}" Value="False">
+                                    <Setter Property="MessageQueue" Value="{Binding MessageQueue}"></Setter>
+                                    <Setter Property="Background" Value="Green"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </materialDesign:Snackbar.Style>
+
+                </materialDesign:Snackbar>
             </Grid>
+
+
+        </Grid>
+        
      </materialDesign:DialogHost >
 </Page>

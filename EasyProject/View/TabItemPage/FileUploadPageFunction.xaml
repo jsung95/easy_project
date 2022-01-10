@@ -12,6 +12,34 @@
     mc:Ignorable="d"
     DataContext="{Binding PVM, Source={StaticResource Locator}}"
     Title="FileUploadPageFunction">
+    <materialDesign:DialogHost >
+        <materialDesign:DialogHost.DialogContent>
+            <StackPanel Margin="20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <materialDesign:PackIcon Kind="Error" Foreground="#4472C4"
+                                                 Height="48"
+                                                 Width="48"
+                                                 Margin="20, 25, 20, 20"
+                                                 Grid.Column="0" />
+                    <StackPanel Margin="20" Grid.Column="1"  MinWidth="180">
+                        <TextBlock Text="추가" FontSize="15" FontWeight="UltraBold"></TextBlock>
+                        <TextBlock Text="파일을 추가하시겠습니까?" FontSize="13" FontWeight="SemiBold"
+                                       Margin="0,20,0,0"></TextBlock>
+                    </StackPanel>
+                </Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button Content="취소" Background="#EAEAEA" Foreground="Black"
+                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"></Button>
+                    <Button Content="확인" Background="#4472C4" Foreground="White" Margin="30,0,0,0"
+                            Command="{Binding ListCommand}" Cursor="Hand" ></Button>
+
+                </StackPanel>
+            </StackPanel>
+        </materialDesign:DialogHost.DialogContent>
 
     <Grid Height="450">
         <materialDesign:Card Grid.Column="0" Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
@@ -53,9 +81,10 @@
                     </ItemsControl>
                     -->
                     <Button Content="추가하기" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
-                       VerticalAlignment="Center" BorderThickness="0" Height="30" Width="90" Cursor="Hand" Command="{Binding ListCommand}"/>
+                       VerticalAlignment="Center" BorderThickness="0" Height="30" Width="90" Cursor="Hand"  Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" />
                 </Grid>
             </Grid>
         </materialDesign:Card>
     </Grid>
+  </materialDesign:DialogHost >
 </PageFunction>

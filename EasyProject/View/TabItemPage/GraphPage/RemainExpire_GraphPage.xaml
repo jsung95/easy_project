@@ -13,10 +13,14 @@
 
     <Grid Height="450" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.2*" />
+            <RowDefinition Height="0.1*" />
+            <RowDefinition Height="0.1*" />
             <RowDefinition Height="0.8*" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
+            <Label Content="제품 코드별 남은 유통기한" FontSize="15" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,0,0"></Label>
+        </Grid>
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.3*"/>
                 <ColumnDefinition Width="0.3*"/>
@@ -31,7 +35,7 @@
                 <Grid Grid.Column="0">
                     <Grid>
                         <ComboBox x:Name="category_ComboBox" 
-                       ItemsSource="{Binding Path=Category1}" SelectedItem="{Binding SelectedCategory1}"  VerticalAlignment="Bottom" HorizontalAlignment="Center"  Height="30" Width="100"  TextBlock.FontSize="10"     >
+                       ItemsSource="{Binding Path=Category1}" SelectedItem="{Binding SelectedCategory1}"  VerticalAlignment="Bottom" HorizontalAlignment="Center"  Height="25" Width="100"  TextBlock.FontSize="10"     >
                             <ComboBox.Resources>
                                 <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
                             </ComboBox.Resources>
@@ -59,16 +63,16 @@
                         </ComboBox>
                     </Grid>
                     <Grid>
-                        <Label Content="카테고리명" Foreground="#4472C4" Grid.Column="2" FontSize="12" 
+                        <Label Content="카테고리명" Foreground="#4472C4" Grid.Column="2" FontSize="10" 
                        FontWeight="Bold" HorizontalAlignment="Center"  
-                       VerticalAlignment="Center" Margin="30"/>
+                       VerticalAlignment="Top" />
                     </Grid>
                 </Grid>
 
                 <Grid Grid.Column="1">
                     <Grid>
                         <ComboBox x:Name="Number" 
-                       ItemsSource="{Binding Path=DecidedNumber}" SelectedItem="{Binding SelectedNumber}"  VerticalAlignment="Bottom" HorizontalAlignment="Center"  Height="30" Width="100"  TextBlock.FontSize="10"     >
+                       ItemsSource="{Binding Path=DecidedNumber}" SelectedItem="{Binding SelectedNumber}"  VerticalAlignment="Bottom" HorizontalAlignment="Center"  Height="25" Width="100"  TextBlock.FontSize="10"     >
                             <ComboBox.Resources>
                                 <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
                             </ComboBox.Resources>
@@ -89,9 +93,9 @@
                     </Grid>
                     <Grid>
                         <Grid>
-                            <Label Content="표시할 개수" Foreground="#4472C4" Grid.Column="2" FontSize="12" 
-                       FontWeight="Bold" HorizontalAlignment="Center"  
-                       VerticalAlignment="Center" />
+                            <Label Content="표시할 개수" Foreground="#4472C4" Grid.Column="2" FontSize="10" 
+                       FontWeight="Bold" HorizontalAlignment="Center" 
+                       VerticalAlignment="Top" />
                         </Grid>
                     </Grid>
                 </Grid>
@@ -109,7 +113,7 @@
 
             </Grid>
         </Grid>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <lvc:CartesianChart x:Name="chart1" BorderThickness="2" Series="{Binding SeriesCollection1}" 
                              LegendLocation="Top" Height="300" Width="400"  VerticalAlignment="Center" >
                 <!--Series="{Binding SeriesCollection}"-->

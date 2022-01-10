@@ -470,7 +470,7 @@ namespace EasyProject.ViewModel
                     UpdateRecordCount();
 
                     var temp = Ioc.Default.GetService<ProductInOutViewModel>();
-                    temp.Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
+                    temp.Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(temp.SelectedDept)); // 입출고현황 페이지 출고목록 갱신
                 }
 
             }//else if
@@ -518,7 +518,7 @@ namespace EasyProject.ViewModel
                     UpdateRecordCount();
 
                     var temp = Ioc.Default.GetService<ProductInOutViewModel>();
-                    temp.Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
+                    temp.Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(temp.SelectedDept)); // 입출고현황 페이지 출고목록 갱신
                 }
 
             }//else if
@@ -562,7 +562,7 @@ namespace EasyProject.ViewModel
                     UpdateRecordCount();
 
                     var temp = Ioc.Default.GetService<ProductInOutViewModel>();
-                    temp.Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
+                    temp.Product_out = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(temp.SelectedDept)); // 입출고현황 페이지 출고목록 갱신
                 }
 
             }//else if
@@ -639,7 +639,7 @@ namespace EasyProject.ViewModel
                 updateSearchedProducts(false);
                 UpdateRecordCount();
                 var temp = Ioc.Default.GetService<ProductInOutViewModel>();
-                temp.Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(temp.SelectedDept_Out)); // 입출고현황 페이지 출고목록 갱신
+                temp.Product_in = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(temp.SelectedDept)); // 입출고현황 페이지 출고목록 갱신
             }
 
             if (SelectedProduct != null)

@@ -9,8 +9,35 @@
       d:DesignHeight="500" d:DesignWidth="800"
       DataContext="{Binding PVM, Source={StaticResource Locator}}"
       Title="InsertPage" Cursor="Hand">
+    <materialDesign:DialogHost >
+        <materialDesign:DialogHost.DialogContent>
+            <StackPanel Margin="20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <materialDesign:PackIcon Kind="Error" Foreground="#4472C4"
+                                                 Height="48"
+                                                 Width="48"
+                                                 Margin="20, 25, 20, 20"
+                                                 Grid.Column="0" />
+                    <StackPanel Margin="20" Grid.Column="1"  MinWidth="180">
+                        <TextBlock Text="추가" FontSize="15" FontWeight="UltraBold"></TextBlock>
+                        <TextBlock Text="파일을 추가하시겠습니까?" FontSize="13" FontWeight="SemiBold"
+                                       Margin="0,20,0,0"></TextBlock>
+                    </StackPanel>
+                </Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button Content="취소" Background="#EAEAEA" Foreground="Black"
+                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"></Button>
+                    <Button Content="확인" Background="#4472C4" Foreground="White" Margin="30,0,0,0"
+                            Command="{Binding ListCommand}" Cursor="Hand" ></Button>
 
-    <Grid Height="500">
+                </StackPanel>
+            </StackPanel>
+        </materialDesign:DialogHost.DialogContent>
+        <Grid Height="500">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="9*"/>
@@ -43,7 +70,7 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <materialDesign:Snackbar x:Name="Snackbar" Background="#Ea4a2d" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+            <materialDesign:Snackbar x:Name="Snackbar" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
 
                 <!-- 닫기버튼이 안생겨서 일단 주석처리함 -->
                 <!--materialDesign:SnackbarMessage ActionContent="닫기" ActionCommand="{Binding SnackBarCommand}">
@@ -76,6 +103,11 @@
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsDuplicatedProduct}" Value="True">
                                 <Setter Property="MessageQueue" Value="{Binding MessageQueue}"></Setter>
+                                <Setter Property="Background" Value="#Ea4a2d"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsDuplicatedProduct}" Value="False">
+                                <Setter Property="MessageQueue" Value="{Binding MessageQueue}"></Setter>
+                                <Setter Property="Background" Value="Green"></Setter>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -84,4 +116,5 @@
             </materialDesign:Snackbar>
         </Grid>
     </Grid>
+        </materialDesign:DialogHost >
 </Page>
