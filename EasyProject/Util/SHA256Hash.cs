@@ -10,7 +10,8 @@ namespace EasyProject.Util
         public static string StringToHash(string userPW)
         {
             SHA256 sha = new SHA256Managed();
-            byte[] hash = sha.ComputeHash(Encoding.ASCII.GetBytes(userPW));
+            string salt = CreateSalt(userPW);
+            byte[] hash = sha.ComputeHash(Encoding.ASCII.GetBytes(userPW + salt));
 
             StringBuilder stringBuilder = new StringBuilder();
             foreach (byte b in hash)
@@ -19,5 +20,26 @@ namespace EasyProject.Util
             }//foreach
             return stringBuilder.ToString();
         }//StringToHash(string)
+
+
+        private static string CreateSalt(string userPW)
+        {
+            byte[] userBytes;
+            string salt;
+            userBytes = Encoding.ASCII.GetBytes(userPW);
+            long XORED = 0x00;
+
+            foreach (int x in userBytes)
+                XORED = XORED ^ x;
+
+            Random rand = new Random(Convert.ToInt32(XORED));
+            salt = rand.Next().ToString();
+            salt += rand.Next().ToString();
+            salt += rand.Next().ToString();
+            salt += rand.Next().ToString();
+            return salt;
+        }
+
+
     }//class
 }//namespace
