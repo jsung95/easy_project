@@ -39,8 +39,7 @@
                                     <TextBlock Text="파일 선택하기" FontSize="10" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
-                        </StackPanel>
-                        
+                        </StackPanel>                       
 
                     </StackPanel>
                 </Grid>
