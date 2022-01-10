@@ -12,7 +12,7 @@
 
     <Grid x:Name="PlaceOrder">
         <Grid.Background>
-            <ImageBrush ImageSource="/NewImage/OrderPageImage.jpg"></ImageBrush>
+            <ImageBrush ImageSource="/NewImage/OrderPageImage.png"></ImageBrush>
         </Grid.Background>
         <Grid.Resources>
             <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
