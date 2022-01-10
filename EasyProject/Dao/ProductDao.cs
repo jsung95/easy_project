@@ -2990,7 +2990,7 @@ namespace EasyProject.Dao
             return list;
         }//GetDiscardTotalCount
 
-        public List<ProductInOutModel> incomingCases_Info(DateTime startDate, DateTime endDate)
+        public List<ProductInOutModel> incomingCases_Info(DateTime? startDate, DateTime? endDate)
         {
             List<ProductInOutModel> list = new List<ProductInOutModel>();
             try
@@ -3050,7 +3050,7 @@ namespace EasyProject.Dao
             return list;
         }//orderCases_Info
 
-        public List<ProductInOutModel> ReleaseCases_Info(DateTime startDate, DateTime endDate) // 부서별 출고 횟수 정보를 담은 리스트
+        public List<ProductInOutModel> ReleaseCases_Info(DateTime? startDate, DateTime? endDate) // 부서별 출고 횟수 정보를 담은 리스트
         {
             List<ProductInOutModel> list = new List<ProductInOutModel>();
             try

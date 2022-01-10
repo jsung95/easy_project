@@ -299,7 +299,7 @@ namespace EasyProject.ViewModel
             ChartValues<int> transferCases = new ChartValues<int>(); // 이관 횟수를 담을 변수
             ChartValues<int> discardCases = new ChartValues<int>(); // 폐기 횟수를 담을 변수
             BarLabels2 = new List<string>() { }; // 컬럼의 이름 ( x 축 )
-            List<ProductInOutModel> datas = product_dao.ReleaseCases_Info(SelectedStartDate1, SelectedEndDate1); // 부서별 출고 유형/횟수 정보
+            List<ProductInOutModel> datas = product_dao.ReleaseCases_Info(SelectedStartDate_In, SelectedEndDate_In); // 부서별 출고 유형/횟수 정보
             foreach (var item in datas) // 부서명 Labels에 넣기
             {
                 BarLabels2.Add(item.Dept_name);
@@ -353,7 +353,7 @@ namespace EasyProject.ViewModel
             ChartValues<int> orderCases = new ChartValues<int>(); // 신규 횟수를 담을 변수
             ChartValues<int> addCases = new ChartValues<int>(); // 추가 횟수를 담을 변수
             BarLabels3 = new List<string>() { }; // 컬럼의 이름 ( x 축 )
-            List<ProductInOutModel> datas = product_dao.incomingCases_Info(SelectedStartDate2, SelectedEndDate2); // 부서별 출고 유형/횟수 정보
+            List<ProductInOutModel> datas = product_dao.incomingCases_Info(SelectedStartDate_In, SelectedEndDate_In); // 부서별 출고 유형/횟수 정보
             foreach (var item in datas) // 부서명 Labels에 넣기
             {
                 BarLabels3.Add(item.Dept_name);
@@ -434,7 +434,7 @@ namespace EasyProject.ViewModel
 
                 //ShowProductIn_By_Date();
                 
-                Update_BlackOutDate_In_End();
+                
                 SearchKeyword_In = null;
                 getProductIn_By_Date();
                 if (selectedStartDate_In > selectedEndDate_In)
@@ -442,6 +442,8 @@ namespace EasyProject.ViewModel
                     SelectedStartDate_In = SelectedEndDate_In.Value.AddDays(-1);
                 }
                 OnPropertyChanged("SelectedStartDate_In");
+                DashboardPrint2();
+                DashboardPrint3();
             }
         }
         //종료일을 담을 프로퍼티
@@ -461,7 +463,9 @@ namespace EasyProject.ViewModel
                 {
                     SelectedStartDate_In = SelectedEndDate_In.Value.AddDays(-1);
                 }
-                OnPropertyChanged("SelectedEndDate_In");                
+                OnPropertyChanged("SelectedEndDate_In");
+                DashboardPrint2();
+                DashboardPrint3();
             }
         }
 
@@ -1024,20 +1028,7 @@ namespace EasyProject.ViewModel
             BlackOutDates_In_Start.Add(start);
         }
 
-        private void Update_BlackOutDate_In_End()
-        {
-
-            CalendarDateRange end = new CalendarDateRange(new DateTime(0001, 01, 01), new DateTime(SelectedStartDate_In.Value.Year, SelectedStartDate_In.Value.Month, SelectedStartDate_In.Value.Day-1));
-
-            Calendar dummyCal = new Calendar();
-            BlackOutDates_In_End = new CalendarBlackoutDatesCollection(dummyCal);
-
-            if(blackOutDates_In_End != null)
-            {
-                blackOutDates_In_End.Clear();
-            }
-            BlackOutDates_In_End.Add(end);
-        }
+        
 
     }//class
 
