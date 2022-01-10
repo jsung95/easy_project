@@ -28,7 +28,7 @@ namespace EasyProject.View.TabItemPage.GraphPage
             InitializeComponent();
             var dash = Ioc.Default.GetService<ProductInOutViewModel>();
             //temp.DashboardPrint();
-            dash.DashboardPrint3();
+            //dash.DashboardPrint3();
         }
 
         private void rightBtn_Click(object sender, RoutedEventArgs e)
@@ -39,7 +39,7 @@ namespace EasyProject.View.TabItemPage.GraphPage
                 );
             var dash = Ioc.Default.GetService<ProductInOutViewModel>();
             //temp.DashboardPrint();
-            dash.DashboardPrint3();
+            //dash.DashboardPrint3();
             //dash.DashboardPrint2(dash.SelectedDept);
         }
     }

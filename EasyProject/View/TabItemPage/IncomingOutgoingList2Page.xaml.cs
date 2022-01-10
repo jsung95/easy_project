@@ -38,8 +38,8 @@ namespace EasyProject.View.TabItemPage
             var dash = Ioc.Default.GetService<ProductInOutViewModel>();
             //temp.DashboardPrint();
             dash.DashboardPrint_Pie();
-            dash.DashboardPrint2();
-            dash.DashboardPrint3();
+            dash.DashboardPrint2(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
+            dash.DashboardPrint3(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
         }
         private void OnDropDownOpened(object sender, EventArgs e)
         {

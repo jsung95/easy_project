@@ -153,7 +153,9 @@ namespace EasyProject.ViewModel
             {
                 selectedStartDate1 = value;
                 OnPropertyChanged("SelectedStartDate1");
-                DashboardPrint2();
+                //DashboardPrint2();
+                //DashboardPrint3();
+                //DashboardPrint_Pie();
             }
         }
         public DateTime selectedEndDate1;
@@ -164,7 +166,9 @@ namespace EasyProject.ViewModel
             {
                 selectedEndDate1 = value;
                 OnPropertyChanged("SelectedEndDate1");
-                DashboardPrint2();
+                //DashboardPrint2();
+                //DashboardPrint3();
+                //DashboardPrint_Pie();
             }
         }
 
@@ -187,7 +191,7 @@ namespace EasyProject.ViewModel
             {
                 selectedStartDate2 = value;
                 OnPropertyChanged("SelectedStartDate2");
-                DashboardPrint3();
+                //DashboardPrint3();
             }
         }
         public DateTime selectedEndDate2;
@@ -198,7 +202,7 @@ namespace EasyProject.ViewModel
             {
                 selectedEndDate2 = value;
                 OnPropertyChanged("SelectedEndDate2");
-                DashboardPrint3();
+                //DashboardPrint3();
             }
         }
 
@@ -294,7 +298,7 @@ namespace EasyProject.ViewModel
         {
             DashboardPrint_Pie();
         }
-        public void DashboardPrint2()
+        public void DashboardPrint2(DateTime? start, DateTime? end)//출고
         {
 
             Console.WriteLine("DashboardPrint2");
@@ -304,7 +308,7 @@ namespace EasyProject.ViewModel
             ChartValues<int> transferCases = new ChartValues<int>(); // 이관 횟수를 담을 변수
             ChartValues<int> discardCases = new ChartValues<int>(); // 폐기 횟수를 담을 변수
             BarLabels2 = new List<string>() { }; // 컬럼의 이름 ( x 축 )
-            List<ProductInOutModel> datas = product_dao.ReleaseCases_Info(SelectedStartDate_In, SelectedEndDate_In); // 부서별 출고 유형/횟수 정보
+            List<ProductInOutModel> datas = product_dao.ReleaseCases_Info(start, end); // 부서별 출고 유형/횟수 정보
             foreach (var item in datas) // 부서명 Labels에 넣기
             {
                 BarLabels2.Add(item.Dept_name);
@@ -348,7 +352,7 @@ namespace EasyProject.ViewModel
         }//dashboardprint2 ---------------------------------------------------------------------------------------------------
 
         // 부서별 입고 유형별 빈도 그래프 (기간 선택 가능) (VIEW : 좌측하단 위치)---------------------
-        public void DashboardPrint3()
+        public void DashboardPrint3(DateTime? start, DateTime? end)
         {
 
             Console.WriteLine("DashboardPrint3");
@@ -358,7 +362,7 @@ namespace EasyProject.ViewModel
             ChartValues<int> orderCases = new ChartValues<int>(); // 신규 횟수를 담을 변수
             ChartValues<int> addCases = new ChartValues<int>(); // 추가 횟수를 담을 변수
             BarLabels3 = new List<string>() { }; // 컬럼의 이름 ( x 축 )
-            List<ProductInOutModel> datas = product_dao.incomingCases_Info(SelectedStartDate_In, SelectedEndDate_In); // 부서별 출고 유형/횟수 정보
+            List<ProductInOutModel> datas = product_dao.incomingCases_Info(start, end); // 부서별 출고 유형/횟수 정보
             foreach (var item in datas) // 부서명 Labels에 넣기
             {
                 BarLabels3.Add(item.Dept_name);
@@ -425,8 +429,8 @@ namespace EasyProject.ViewModel
                     SelectedStartDate_In = SelectedEndDate_In.Value.AddDays(-1);
                 }
                 OnPropertyChanged("SelectedStartDate_In");
-                DashboardPrint2();
-                DashboardPrint3();
+                DashboardPrint2(selectedStartDate_In, selectedEndDate_In);
+                DashboardPrint3(selectedStartDate_In, selectedEndDate_In);
             }
         }
         //종료일을 담을 프로퍼티
@@ -447,8 +451,8 @@ namespace EasyProject.ViewModel
                 }
                 OnPropertyChanged("SelectedEndDate_In");
 
-                DashboardPrint2();
-                DashboardPrint3();
+                DashboardPrint2(selectedStartDate_In, selectedEndDate_In);
+                DashboardPrint3(selectedStartDate_In, selectedEndDate_In);
             }
         }
         //화면에 보여줄 리스트 입고 내역 담을 프로퍼티
@@ -783,6 +787,8 @@ namespace EasyProject.ViewModel
                 {
                     SelectedStartDate_Out = SelectedEndDate_Out.Value.AddDays(-1);
                 }
+                DashboardPrint2(selectedStartDate_Out, selectedEndDate_Out);
+                DashboardPrint3(selectedStartDate_Out, selectedEndDate_Out);
                 OnPropertyChanged("SelectedStartDate_Out");
             }
         }
@@ -802,6 +808,8 @@ namespace EasyProject.ViewModel
                 {
                     SelectedStartDate_Out = SelectedEndDate_Out.Value.AddDays(-1);
                 }
+                DashboardPrint2(selectedStartDate_Out, selectedEndDate_Out);
+                DashboardPrint3(selectedStartDate_Out, selectedEndDate_Out);
                 OnPropertyChanged("SelectedEndDate_Out");
             }
         }
