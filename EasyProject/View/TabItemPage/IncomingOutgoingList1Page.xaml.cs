@@ -43,7 +43,6 @@ namespace EasyProject.View.TabItemPage
             dash.DashboardPrint_Pie();
         }      
        
-
         //private void OnDropDownOpened(object sender, EventArgs e)
         //{
         //    isComboBoxDropDownOpened = true;
@@ -53,7 +52,16 @@ namespace EasyProject.View.TabItemPage
         //    userDept00= deptNameText.ToString();
         //}
 
-      
+        private void OnDropDownOpened(object sender, EventArgs e)
+        {
+            isComboBoxDropDownOpened = true;
+
+            var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
+            var deptNameText = deptModelObject.Dept_name;
+            userDept00 = deptNameText.ToString();
+        }
+
+
         private void Export_btn_Click(object sender, RoutedEventArgs e)
         {
             try

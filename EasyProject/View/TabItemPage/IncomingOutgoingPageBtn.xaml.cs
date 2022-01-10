@@ -29,14 +29,6 @@ namespace EasyProject.View.TabItemPage
             IncomingBtn.Click += Incoming_Click;
             OutgoingBtn.Click += Outgoing_Click;
         }
-        private void OnDropDownOpened(object sender, EventArgs e)
-        {
-            isComboBoxDropDownOpened = true;
-
-            var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
-            var deptNameText = deptModelObject.Dept_name;
-            userDept00 = deptNameText.ToString();
-        }
 
         private void Incoming_Click(object sender, RoutedEventArgs e)
         {
