@@ -13,7 +13,9 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using EasyProject.Model;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Excel = Microsoft.Office.Interop.Excel;
+using EasyProject.ViewModel;
 
 
 namespace EasyProject.View.TabItemPage
@@ -33,6 +35,12 @@ namespace EasyProject.View.TabItemPage
            
             export_btn.Click += Export_btn_Click;
             //userDept00 = (deptName_ComboBox1.SelectedValue as DeptModel).Dept_name;
+            var dash = Ioc.Default.GetService<ProductInOutViewModel>();
+            //temp.DashboardPrint();
+            dash.DashboardPrint2(dash.SelectedStartDate_In, dash.SelectedEndDate_In);
+            dash.DashboardPrint3(dash.SelectedStartDate_In, dash.SelectedEndDate_In);   //입고
+            //temp.DashboardPrint4(temp.SelectedCategory1);
+            dash.DashboardPrint_Pie();
         }      
        
 

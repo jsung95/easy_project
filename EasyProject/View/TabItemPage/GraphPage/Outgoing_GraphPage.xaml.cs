@@ -29,10 +29,10 @@ namespace EasyProject.View.TabItemPage.GraphPage
             var temp = Ioc.Default.GetService<ProductInOutViewModel>();
             //temp.DashboardPrint();
 
-            temp.DashboardPrint2();   //출고
+            //temp.DashboardPrint2();   //출고
             //temp.DashboardPrint3();   //입고
             //temp.DashboardPrint4(temp.SelectedCategory1);
-            //temp.DashboardPrint_Pie();
+            temp.DashboardPrint_Pie();
         }
         
 
@@ -44,7 +44,7 @@ namespace EasyProject.View.TabItemPage.GraphPage
                 );
             var dash = Ioc.Default.GetService<ProductInOutViewModel>();
             //temp.DashboardPrint();
-            dash.DashboardPrint2();
+            //dash.DashboardPrint2();
             //dash.DashboardPrint2(dash.SelectedDept);
         }
 
@@ -56,7 +56,10 @@ namespace EasyProject.View.TabItemPage.GraphPage
                 );
             var dash = Ioc.Default.GetService<ProductInOutViewModel>();
             //temp.DashboardPrint();
-            dash.DashboardPrint2();
+            //dash.DashboardPrint2();
+            //dash.DashboardPrint3();   //입고
+            //temp.DashboardPrint4(temp.SelectedCategory1);
+            dash.DashboardPrint_Pie();
             //dash.DashboardPrint2(dash.SelectedDept);
         }
     }
