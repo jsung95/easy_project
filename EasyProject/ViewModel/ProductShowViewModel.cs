@@ -698,13 +698,22 @@ namespace EasyProject.ViewModel
 
             product_dao.ChangeProductInfo(SelectedProduct);
             product_dao.ChangeProductInfo_IMP_DEPT(SelectedProduct);
-            //Categories = new ObservableCollection<CategoryModel>(category_dao.GetCategories());
+            ObservableCollection<CategoryModel> list = new ObservableCollection<CategoryModel>(category_dao.GetCategories());
+            Categories.Clear();
+            foreach (var item in list)
+            {
+                Categories.Add(item);
+            }
+            CategoryModel addCategoryDto = new CategoryModel();
+            addCategoryDto.Category_id = null;
+            addCategoryDto.Category_name = "추가(입력)하기";
 
-            CategoryModel newCategoryDao = new CategoryModel();
-            var cateGoryId = category_dao.GetCategoryID(SelectedProduct.Category_name);
-            newCategoryDao.Category_id = cateGoryId;
-            newCategoryDao.Category_name = SelectedProduct.Category_name;
-            Categories.Insert(0,newCategoryDao);
+            Categories.Add(addCategoryDto);
+            //CategoryModel newCategoryDao = new CategoryModel();
+            //var cateGoryId = category_dao.GetCategoryID(SelectedProduct.Category_name);
+            //newCategoryDao.Category_id = cateGoryId;
+            //newCategoryDao.Category_name = SelectedProduct.Category_name;
+            //Categories.Insert(0,newCategoryDao);
 
             //첫페이지 말고 다음 페이지에서 재고수정할때 성공은 되는데 첫페이지로 돌아감 해결하기
             LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
