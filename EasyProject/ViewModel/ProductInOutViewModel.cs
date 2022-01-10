@@ -122,14 +122,20 @@ namespace EasyProject.ViewModel
             SelectedDept_Pie = Depts_Pie[(int)App.nurse_dto.Dept_id - 1];  // 
             ProductInout_Pie = new ObservableCollection<ProductInOutModel>(product_dao.GetProdOutType());
             SelectedOutType_Pie = ProductInout_Pie[0];
+            DashboardPrint_Pie();
+            DashboardPrint_Pie1();
 
             //UpdateCalendarBlackoutDates();
         }//Constructor
 
         public List<string> BarLabels2 { get; set; }       //string[]
         public List<string> BarLabels3 { get; set; }       //string[]
+        public List<string> BarLabels4 { get; set; }       //string[]
+        public List<string> BarLabels5 { get; set; }       //string[]
         public ChartValues<int> Values2 { get; set; }
         public ChartValues<int> Values3 { get; set; }
+        public ChartValues<int> Values4 { get; set; }
+        public ChartValues<int> Values5 { get; set; }
         public Func<double, string> Formatter { get; set; }
 
         // DashboardPrint() 그래프
@@ -205,7 +211,29 @@ namespace EasyProject.ViewModel
                 //DashboardPrint3();
             }
         }
+        // 입고 차트 복제 프로퍼티
+        private SeriesCollection seriesCollection4;
+        public SeriesCollection SeriesCollection4               //그래프 큰 틀 만드는거
+        {
+            get { return seriesCollection4; }
+            set
+            {
+                seriesCollection4 = value;
+                OnPropertyChanged("SeriesCollection4");
+            }
+        }
 
+        // 출고 차트 복제 프로퍼티
+        private SeriesCollection seriesCollection5;
+        public SeriesCollection SeriesCollection5               //그래프 큰 틀 만드는거
+        {
+            get { return seriesCollection5; }
+            set
+            {
+                seriesCollection5 = value;
+                OnPropertyChanged("SeriesCollection5");
+            }
+        }
         //파이 차트 프로퍼티
         public ObservableCollection<DeptModel> Depts_Pie { get; set; }
 
@@ -248,8 +276,69 @@ namespace EasyProject.ViewModel
                 OnPropertyChanged("SeriesCollection_Pie");
             }
         }
+        //도넛그래프 복제 그래프 틀
+        private SeriesCollection seriesCollection_Pie1;
+        public SeriesCollection SeriesCollection_Pie1
+        {
+            get { return seriesCollection_Pie1; }
+            set
+            {
+                seriesCollection_Pie1 = value;
+                OnPropertyChanged("SeriesCollection_Pie1");
+            }
+        }
 
-       
+
+
+        //도넛그래프 출력메소드
+        public void DashboardPrint_Pie1()
+        {
+            List<ProductInOutModel> list = product_dao.GetDiscardTotalCount(SelectedDept_Pie, SelectedOutType_Pie);
+
+
+
+
+            SeriesCollection_Pie1 = new SeriesCollection();
+
+
+            foreach (var item in list)
+            {
+                //Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} ({1:C})", item.Prod_name, chartPoint.Participation);
+                Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0:#,0}개 ({1:#,0}￦)", item.Prod_out_count, item.Prod_price);
+                SeriesCollection_Pie1.Add(new PieSeries
+                {
+                    Title = item.Prod_name,
+                    Values = new ChartValues<int> { (int)item.Prod_out_count },
+                    DataLabels = true,
+                    LabelPoint = labelPoint
+                });
+
+            }//foreache
+
+
+
+        }//DashboardPrint_Pie
+
+        //dashboardPrint_Pie command
+        private ActionCommand command46;
+        public ICommand Command46
+        {
+            get
+            {
+                if (command46 == null)
+                {
+                    command46 = new ActionCommand(dashboardPrint_Pie1);
+                }
+                return command46;
+            }//get
+
+        }//Command
+
+        public void dashboardPrint_Pie1()
+        {
+            DashboardPrint_Pie1();
+        }
+
         //도넛그래프 출력메소드
         public void DashboardPrint_Pie()
         {
@@ -401,6 +490,111 @@ namespace EasyProject.ViewModel
 
             Formatter = value => value.ToString("N");   //문자열 10진수 변환
         }//dashboardprint3 ---------------------------------------------------------------------------------------------------
+
+         // 부서별 입고 그래프 복제
+        public void DashboardPrint4(DateTime? start, DateTime? end)
+        {
+
+            Console.WriteLine("DashboardPrint3");
+            SeriesCollection4 = new SeriesCollection();
+            Values4 = new ChartValues<int> { }; // 컬럼의 수치 ( y 축 )
+            ChartValues<int> transferCases = new ChartValues<int>(); // 이관 횟수를 담을 변수
+            ChartValues<int> orderCases = new ChartValues<int>(); // 신규 횟수를 담을 변수
+            ChartValues<int> addCases = new ChartValues<int>(); // 추가 횟수를 담을 변수
+            BarLabels4 = new List<string>() { }; // 컬럼의 이름 ( x 축 )
+            List<ProductInOutModel> datas = product_dao.incomingCases_Info(start, end); // 부서별 출고 유형/횟수 정보
+            foreach (var item in datas) // 부서명 Labels에 넣기
+            {
+                BarLabels4.Add(item.Dept_name);
+                Console.WriteLine("dashboard3_dept_name" + item.Dept_name);
+            }
+
+            foreach (var item in datas)
+            {
+                transferCases.Add((int)item.prod_transferIn_cases);
+                orderCases.Add((int)item.prod_order_cases);
+                addCases.Add((int)item.prod_add_cases);
+            }
+
+            //adding series updates and animates the chart
+
+            SeriesCollection4.Add(new StackedColumnSeries // 부서별 이관 횟수
+            {
+                Title = "이관입고 횟수",
+                Values = transferCases,
+                StackMode = StackMode.Values
+            });
+
+            SeriesCollection4.Add(new StackedColumnSeries // 부서별 신규입고 횟수
+            {
+                Title = "신규입고 횟수",
+                Values = orderCases,
+                StackMode = StackMode.Values
+            });
+
+            SeriesCollection4.Add(new StackedColumnSeries // 부서별 추가입고 횟수
+            {
+                Title = "추가입고 횟수",
+                Values = addCases,
+                StackMode = StackMode.Values
+            });
+
+            Formatter = value => value.ToString("N");   //문자열 10진수 변환
+        }//dashboardprint4 ---------------------------------------------------------------------------------------------------
+
+        // 부서별 출고 그래프 복제
+        public void DashboardPrint5(DateTime? start, DateTime? end)//출고
+        {
+
+            Console.WriteLine("DashboardPrint5");
+            SeriesCollection5 = new SeriesCollection();
+            Values5 = new ChartValues<int> { }; // 컬럼의 수치 ( y 축 )
+            ChartValues<int> useCases = new ChartValues<int>(); // 사용 횟수를 담을 변수
+            ChartValues<int> transferCases = new ChartValues<int>(); // 이관 횟수를 담을 변수
+            ChartValues<int> discardCases = new ChartValues<int>(); // 폐기 횟수를 담을 변수
+            BarLabels5 = new List<string>() { }; // 컬럼의 이름 ( x 축 )
+            List<ProductInOutModel> datas = product_dao.ReleaseCases_Info(start, end); // 부서별 출고 유형/횟수 정보
+            foreach (var item in datas) // 부서명 Labels에 넣기
+            {
+                BarLabels5.Add(item.Dept_name);
+                Console.WriteLine("dashboard2_dept_name" + item.Dept_name);
+            }
+
+            foreach (var item in datas)
+            {
+                useCases.Add((int)item.prod_use_cases);
+                Console.WriteLine("prod_use_cases" + item.prod_use_cases);
+                transferCases.Add((int)item.prod_transferOut_cases);
+                Console.WriteLine("prod_tarnsferout" + item.prod_transferOut_cases);
+                discardCases.Add((int)item.prod_discard_cases);
+                Console.WriteLine("prod_discard_cases" + item.prod_discard_cases);
+            }
+
+            //adding series updates and animates the chart
+
+            SeriesCollection5.Add(new StackedColumnSeries // 부서별 사용 횟수
+            {
+                Title = "사용 횟수",
+                Values = useCases,
+                StackMode = StackMode.Values
+            });
+
+            SeriesCollection5.Add(new StackedColumnSeries // 부서별 이관 횟수
+            {
+                Title = "이관 횟수",
+                Values = transferCases,
+                StackMode = StackMode.Values
+            });
+
+            SeriesCollection5.Add(new StackedColumnSeries // 부서별 출고 횟수
+            {
+                Title = "폐기 횟수",
+                Values = discardCases,
+                StackMode = StackMode.Values
+            });
+
+            Formatter = value => value.ToString("N");   //문자열 10진수 변환
+        }//dashboardprint5 ---------------------------------------------------------------------------------------------------
         #region 입고 pagination
         //검색 텍스트 - 입고
         private string searchKeyword_In;
@@ -787,8 +981,8 @@ namespace EasyProject.ViewModel
                 {
                     SelectedStartDate_Out = SelectedEndDate_Out.Value.AddDays(-1);
                 }
-                DashboardPrint2(selectedStartDate_Out, selectedEndDate_Out);
-                DashboardPrint3(selectedStartDate_Out, selectedEndDate_Out);
+                DashboardPrint4(selectedStartDate_Out, selectedEndDate_Out);
+                DashboardPrint5(selectedStartDate_Out, selectedEndDate_Out);
                 OnPropertyChanged("SelectedStartDate_Out");
             }
         }
@@ -808,8 +1002,8 @@ namespace EasyProject.ViewModel
                 {
                     SelectedStartDate_Out = SelectedEndDate_Out.Value.AddDays(-1);
                 }
-                DashboardPrint2(selectedStartDate_Out, selectedEndDate_Out);
-                DashboardPrint3(selectedStartDate_Out, selectedEndDate_Out);
+                DashboardPrint4(selectedStartDate_Out, selectedEndDate_Out);
+                DashboardPrint5(selectedStartDate_Out, selectedEndDate_Out);
                 OnPropertyChanged("SelectedEndDate_Out");
             }
         }

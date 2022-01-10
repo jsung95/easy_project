@@ -1,5 +1,4 @@
-﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,36 +14,36 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using EasyProject.ViewModel;
 using EasyProject.Model;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 
 namespace EasyProject.View.TabItemPage.GraphPage
 {
     /// <summary>
-    /// DiscardProdPrice_GraphPage.xaml에 대한 상호 작용 논리
+    /// DiscardProdPrice_GraphPage_Copy.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class DiscardProdPrice_GraphPage : Page
+    public partial class DiscardProdPrice_GraphPage_Copy : Page
     {
-        public DiscardProdPrice_GraphPage()
+        public DiscardProdPrice_GraphPage_Copy()
         {
             InitializeComponent();
             var dash = Ioc.Default.GetService<ProductInOutViewModel>();
             //temp.DashboardPrint();
-            dash.DashboardPrint_Pie();
-            dash.DashboardPrint2(dash.SelectedStartDate_In, dash.SelectedEndDate_In);
-            dash.DashboardPrint3(dash.SelectedStartDate_In, dash.SelectedEndDate_In);
+            dash.DashboardPrint_Pie1();
+            dash.DashboardPrint4(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
+            dash.DashboardPrint5(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
         }
 
         private void LeftBtn_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate
                (
-               new Uri("/View/TabItemPage/GraphPage/Outgoing_GraphPage.xaml", UriKind.Relative) //재고현황화면 --테스트
+               new Uri("/View/TabItemPage/GraphPage/Outgoing_GraphPage_Copy.xaml", UriKind.Relative) //재고현황화면 --테스트
                );
             var dash = Ioc.Default.GetService<ProductInOutViewModel>();
             //temp.DashboardPrint();
-            dash.DashboardPrint_Pie();
-            dash.DashboardPrint2(dash.SelectedStartDate_In, dash.SelectedEndDate_In);
-            dash.DashboardPrint3(dash.SelectedStartDate_In, dash.SelectedEndDate_In);
-            //dash.DashboardPrint2(dash.SelectedDept);
+            dash.DashboardPrint_Pie1();
+            dash.DashboardPrint4(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
+            dash.DashboardPrint5(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
         }
     }
 }
