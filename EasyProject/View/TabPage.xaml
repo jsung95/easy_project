@@ -27,9 +27,7 @@
                                                  Width="48"
                                                  Margin="20, 25, 20, 20"
                                                  Grid.Column="0" />
-                    <StackPanel Margin="20"
-                                    Grid.Column="1"
-                                    MinWidth="180">
+                    <StackPanel Margin="20" Grid.Column="1"  MinWidth="180">
                         <TextBlock Text="로그아웃" FontSize="15" FontWeight="UltraBold"></TextBlock>
                         <TextBlock Text="로그아웃 하시겠습니까?" FontSize="13" FontWeight="SemiBold"
                                        Margin="0,20,0,0"></TextBlock>
@@ -60,7 +58,9 @@
                                CloseOnClickAway="True">
                     
                 </materialDesign:DialogHost>-->
-                    <Button x:Name="logoutBtn" Height="35" Width="90" FontSize="13" FontWeight="DemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3" Content="로그아웃" Background="{x:Null}" BorderBrush="{x:Null}" Cursor="Hand"
+                    <Button x:Name="logoutBtn" Height="35" Width="90" FontSize="13" FontWeight="DemiBold" VerticalAlignment="Center"
+                            HorizontalAlignment="Center" Foreground="#ff2196f3" Content="로그아웃" Background="{x:Null}"
+                            BorderBrush="{x:Null}" Cursor="Hand"
                         Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"/>
                     <!-- <TextBlock x:Name="userNameTxtBox" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"></TextBlock>-->
                     <TextBlock FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ff2196f3"/>
