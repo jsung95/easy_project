@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:EasyProject.View.TabItemPage"
+      xmlns:local="clr-namespace:EasyProject.View.TabItemPage" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d" Title="IncomingOutgoingPageBtn"
       DataContext="{Binding PIOVM, Source={StaticResource Locator}}">
 
@@ -37,7 +37,7 @@
                        FontWeight="Bold" VerticalAlignment="Center" />
 
                         <ComboBox x:Name="deptName_ComboBox1" Height="30" Margin="5" Width="100" HorizontalAlignment="Right"
-                                ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept_In}" DropDownClosed="OnDropDownOpened">
+                                ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept}" DropDownClosed="OnDropDownOpened">
                             <ComboBox.Resources>
                                 <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
                             </ComboBox.Resources>
@@ -49,6 +49,12 @@
                                     </StackPanel>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding DeptChangedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
                         </ComboBox>
                     </StackPanel>
                 </Grid>

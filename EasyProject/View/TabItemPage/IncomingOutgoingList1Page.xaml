@@ -7,7 +7,7 @@
       xmlns:bod="clr-namespace:EasyProject.Util"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:wookoa="clr-namespace:System;assembly=mscorlib"
-      xmlns:vm="clr-namespace:EasyProject.ViewModel" xmlns:conv="clr-namespace:EasyProject" xmlns:model="clr-namespace:EasyProject.Model"
+      xmlns:vm="clr-namespace:EasyProject.ViewModel" xmlns:conv="clr-namespace:EasyProject" xmlns:model="clr-namespace:EasyProject.Model" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d"
       DataContext="{Binding PIOVM, Source={StaticResource Locator}}"
       Title="IncomingOutgoingList1Page" Cursor="Hand">
@@ -134,7 +134,7 @@
                             <Grid Grid.Column="1" >
                                 <Grid  HorizontalAlignment="Center" >
                                     <ComboBox x:Name="searchText_ComboBox"  Width="70" Height="30"  HorizontalContentAlignment="Center" Grid.Column="2" VerticalAlignment="Center" ItemsSource="{Binding Path=SearchTypeList}"
-                                            SelectedItem="{Binding selectedSearchType_In}" FontSize="10" Margin="0,3,0,0">
+                                            SelectedItem="{Binding SelectedSearchType_In}" FontSize="10" Margin="0,3,0,0">
                                         <ComboBox.Resources>
                                             <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
                                         </ComboBox.Resources>
@@ -151,12 +151,16 @@
 
                                     <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요"  Width="360"
                                         VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="5" Height="30"  
-                                        Text="{Binding searchKeyword_In, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
+                                        Text="{Binding SearchKeyword_In, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
 
-                                        <TextBox.InputBindings>
+                                        <!--<TextBox.InputBindings>
                                             <KeyBinding Command="{Binding InSearchCommand}" Key="Enter" />
-                                        </TextBox.InputBindings>
-
+                                        </TextBox.InputBindings>-->
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="KeyUp">
+                                                <i:InvokeCommandAction Command="{Binding InSearchKeywordCommand}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
                                     </TextBox>
                                 </Grid>
                                 <Grid Grid.Column="1">
@@ -170,13 +174,13 @@
                             </Grid>
                         </Grid>
                         <Grid Grid.Column="1">
-
+                            
                         </Grid>
-
+                        
                     </Grid>
 
                     <Grid Grid.Row="1">
-
+                        
 
 
 
@@ -233,12 +237,92 @@
                                     <Setter Property="FontFamily" Value="Arial"/>
                                 </Style>
                             </DataGrid.RowStyle>-->
+                            
                         </DataGrid>
+                        <Grid Grid.Row="2">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="5 0 0 0">
+                                <Button Height="23" HorizontalAlignment="Right"  Command="{Binding InFirstCommand}"
+                            Name="btnFirst" VerticalAlignment="Bottom" Width="40" Foreground="White" Background="#4472C4"
+                            Content="&lt;&lt;" Opacity="0.75" Margin="5">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="IsEnabled" Value="false"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsInFirstEnabled}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="True"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
 
+                                <Button Height="23" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                                    Name="btnPrev" Width="40" 
+                                   Margin="5" Foreground="White" Background="#4472C4" Command="{Binding InPreviousCommand}"
+                                    Opacity="0.75" Content="&lt;" Cursor="Hand">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="IsEnabled" Value="false"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsInPreviousEnabled}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="True"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <TextBlock VerticalAlignment="Bottom" Margin="7">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} of {1}">
+                                            <Binding Path="InCurrentPage" />
+                                            <Binding Path="InNumberOfPages" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+
+                                <Button Height="23" HorizontalAlignment="Left"  Foreground="White" Background="#4472C4"
+                            Name="btnNext" VerticalAlignment="Bottom" Width="40" Margin="5" Command="{Binding InNextCommand}"
+                            Content="&gt;" Opacity="0.75" Cursor="Hand">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="IsEnabled" Value="false"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsInNextEnabled}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="True"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+
+                                <Button Height="23" HorizontalAlignment="Left"   Foreground="White" Background="#4472C4"
+                            VerticalAlignment="Bottom" Width="40" Name="btnLast" Margin="5" Command="{Binding InLastCommand}"
+                             Opacity="0.75" Content="&gt;&gt;" Cursor="Hand">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="IsEnabled" Value="false"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsInLastEnabled}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="True"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+
+                                <ComboBox Margin="10 5" SelectedIndex="0" Width="100" SelectedItem ="{Binding InSelectedRecord, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                    <wookoa:Int32>10</wookoa:Int32>
+                                    <wookoa:Int32>15</wookoa:Int32>
+                                    <wookoa:Int32>20</wookoa:Int32>
+                                    <wookoa:Int32>25</wookoa:Int32>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
 
                     </Grid>
+                    
                 </Grid>
-
+                
             </Grid>
             <Grid Grid.Column="1">
 
