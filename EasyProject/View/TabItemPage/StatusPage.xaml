@@ -473,7 +473,7 @@
                                                     <materialDesign:PopupBox.ToggleContent>
                                                         <materialDesign:PackIcon  Kind="Input" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="50"/>
                                                     </materialDesign:PopupBox.ToggleContent>
-                                                    <Grid Width="600" Height="700" Margin="8,8,8,8">
+                                                    <Grid Width="550" Height="500" Margin="8,8,8,8">
                                                         <Frame Source="/View/OrderPopupBoxPage.xaml"/>
                                                     </Grid>
 

@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace EasyProject.View.TabItemPage.GraphPage
 {
     /// <summary>
-    /// Incoming_GraphPage.xaml에 대한 상호 작용 논리
+    /// Outcoming_GraphPage.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class Incoming_GraphPage : Page
+    public partial class Outcoming_GraphPage : Page
     {
-        public Incoming_GraphPage()
+        public Outcoming_GraphPage()
         {
             InitializeComponent();
         }

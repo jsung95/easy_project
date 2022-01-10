@@ -43,7 +43,7 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <materialDesign:Snackbar x:Name="Snackbar"  VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+            <materialDesign:Snackbar x:Name="Snackbar" Background="#Ea4a2d" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
 
                 <!-- 닫기버튼이 안생겨서 일단 주석처리함 -->
                 <!--materialDesign:SnackbarMessage ActionContent="닫기" ActionCommand="{Binding SnackBarCommand}">
@@ -76,11 +76,6 @@
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsDuplicatedProduct}" Value="True">
                                 <Setter Property="MessageQueue" Value="{Binding MessageQueue}"></Setter>
-                                <Setter Property="Background" Value="#Ea4a2d"></Setter>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding IsDuplicatedProduct}" Value="False">
-                                <Setter Property="MessageQueue" Value="{Binding MessageQueue}"></Setter>
-                                <Setter Property="Background" Value="Green"></Setter>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

@@ -16,8 +16,6 @@ using System.Windows.Shapes;
 using Excel = Microsoft.Office.Interop.Excel;
 using EasyProject.Model;
 using System.Globalization;
-using EasyProject.ViewModel;
-using Microsoft.Toolkit.Mvvm.DependencyInjection;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -43,20 +41,6 @@ namespace EasyProject.View.TabItemPage
         //    var deptNameText = deptModelObject.Dept_name;
         //    userDept00 = deptNameText.ToString();
         //}
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            var temp = Ioc.Default.GetService<ProductInOutViewModel>();
-            //temp.DashboardPrint();
-
-            temp.DashboardPrint2();
-            temp.DashboardPrint3();
-            //temp.DashboardPrint4(temp.SelectedCategory1);
-            //temp.DashboardPrint_Pie();
-
-
-        }
-
-
         private void Export_btn_Click(object sender, RoutedEventArgs e)
         {
             try
