@@ -102,17 +102,18 @@ namespace EasyProject.View.TabItemPage
 
             if (App.nurse_dto.Nurse_auth.Equals("ADMIN"))
             {
-                ModifyToggleButtonPanel.Visibility = Visibility.Visible;
-
+                
                 if (deptNameText.Equals(userDeptName) || userDeptName == null)
                 {
                     Console.WriteLine(userDeptName + "같은 부서일때");
                     buttonColumn.Visibility = Visibility.Visible;
+                    ModifyToggleButtonPanel.Visibility = Visibility.Visible;
                 }
                 else
                 {
                     Console.WriteLine(userDeptName + "다른 부서일때");
                     buttonColumn.Visibility = Visibility.Hidden;
+                    ModifyToggleButtonPanel.Visibility = Visibility.Hidden;
                 }
             }
         }
@@ -180,11 +181,13 @@ namespace EasyProject.View.TabItemPage
                     {
                         Console.WriteLine(userDeptName + "같은 부서일때");
                         buttonColumn.Visibility = Visibility.Visible;
+                        ModifyToggleButtonPanel.Visibility = Visibility.Visible;
                     }
                     else
                     {
                         Console.WriteLine(userDeptName + "다른 부서일때");
                         buttonColumn.Visibility = Visibility.Hidden;
+                        ModifyToggleButtonPanel.Visibility = Visibility.Hidden;
                     }
                 }
             }
