@@ -42,7 +42,7 @@
         </Style>  
         
     </Page.Resources>
-    <materialDesign:DialogHost >
+    <materialDesign:DialogHost x:Name="DialogHost">
         <materialDesign:DialogHost.DialogContent>
             <StackPanel Margin="20">
                 <Grid>

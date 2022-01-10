@@ -138,16 +138,13 @@ namespace EasyProject.View.TabItemPage
             }
         }
 
-        private async void DataGridKeyDown(object sender, KeyEventArgs e)
+        private void DataGridKeyDown(object sender, KeyEventArgs e)
         {
-            var cmb = sender as ComboBox;
-
             if (e.Key == Key.Enter)
             {
                 //ErrorNotificationMessage msg = new ErrorNotificationMessage();
                 //msg.Message = "재고수정을 하시겠습니까?";
                 //await DialogHost.Show(msg, "RootDialog");
-                
 
                 ((ProductShowViewModel)(this.DataContext)).EditProduct();
             }
@@ -156,7 +153,7 @@ namespace EasyProject.View.TabItemPage
         {
             var cmb = sender as ComboBox;
 
-            if(e.Key == Key.Enter)
+            if(e.Key == Key.Enter || e.Key == Key.Tab)
             {
                 ((ProductShowViewModel)(this.DataContext)).AddNewCategory(cmb.Text);
                 ((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name = cmb.Text;
