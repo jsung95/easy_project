@@ -42,7 +42,7 @@ namespace EasyProject.View
                 resetBtn.Visibility = Visibility.Hidden;
 
                 //이미지로 저장(스크린 샷)
-                RenderTargetBitmap rtb = new RenderTargetBitmap((int)PlaceOrder.ActualWidth, (int)PlaceOrder.ActualHeight, 74, 74, PixelFormats.Pbgra32);
+                RenderTargetBitmap rtb = new RenderTargetBitmap((int)PlaceOrder.ActualWidth, (int)PlaceOrder.ActualHeight, 96, 96, PixelFormats.Pbgra32);
                 rtb.Render(PlaceOrder);
                 PngBitmapEncoder png = new PngBitmapEncoder();
                 png.Frames.Add(BitmapFrame.Create(rtb));
@@ -70,7 +70,7 @@ namespace EasyProject.View
 
                 XImage im = XImage.FromFile(@"C:\Users\user\Desktop\" + $"발주신청서{index}.png");
 
-                gfx.DrawImage(im, 20, 100, 600, 700);
+                gfx.DrawImage(im, 0, 100, 600, 700);
 
 
 
@@ -100,11 +100,12 @@ namespace EasyProject.View
         //초기화버튼
         public void resetBtn_Click(object e, RoutedEventArgs arg)
         {
-           
+
             prodprice_Textbox.Text = null;
-            memo_TxtBox.Text= null;
+            memo_TxtBox.Text = null;
         }
 
+        //인쇄버튼
         private void PrintBtn(object sender, RoutedEventArgs e)
         {
 
