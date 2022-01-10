@@ -17,6 +17,7 @@ using System.Windows.Data;
 using System.Globalization;
 using log4net;
 using System.Windows.Input;
+using MaterialDesignThemes.Wpf;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -137,12 +138,17 @@ namespace EasyProject.View.TabItemPage
             }
         }
 
-        private void DataGridKeyDown(object sender, KeyEventArgs e)
+        private async void DataGridKeyDown(object sender, KeyEventArgs e)
         {
             var cmb = sender as ComboBox;
 
             if (e.Key == Key.Enter)
             {
+                ErrorNotificationMessage msg = new ErrorNotificationMessage();
+                msg.Message = "재고수정을 하시겠습니까?";
+                await DialogHost.Show(msg, "RootDialog");
+
+
                 ((ProductShowViewModel)(this.DataContext)).EditProduct();
             }
         }

@@ -573,7 +573,7 @@ namespace EasyProject.ViewModel
                                 temp1.getListbyDept();  // 재고현황 리스트 갱신
 
                                 var temp2 = Ioc.Default.GetService<ProductInOutViewModel>();
-                                temp2.showInListByDept(); // 입고 목록 갱신
+                                temp2.getInListByDept(); // 입고 목록 갱신
 
                                 ResetForm();
                             }//if
@@ -629,7 +629,7 @@ namespace EasyProject.ViewModel
                         temp1.getListbyDept();  // 재고현황 리스트 갱신
 
                         var temp2 = Ioc.Default.GetService<ProductInOutViewModel>();
-                        temp2.showInListByDept(); // 입고 목록 갱신
+                        temp2.getInListByDept(); // 입고 목록 갱신
 
                         ResetForm();
                     }//if
