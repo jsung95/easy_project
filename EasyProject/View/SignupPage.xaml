@@ -149,8 +149,13 @@
                     <materialDesign:Snackbar.Style>
                         <Style TargetType="materialDesign:Snackbar">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsDuplicatedProduct}" Value="True">
+                                <DataTrigger Binding="{Binding IsSignUpOk}" Value="True">
                                     <Setter Property="MessageQueue" Value="{Binding MessageQueue}"></Setter>
+                                    <Setter Property="Background" Value="#Ea4a2d"></Setter>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsSignUpOk}" Value="False">
+                                    <Setter Property="MessageQueue" Value="{Binding MessageQueue}"></Setter>
+                                    <Setter Property="Background" Value="Green"></Setter>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
