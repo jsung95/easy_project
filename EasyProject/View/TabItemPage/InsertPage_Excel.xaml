@@ -26,21 +26,20 @@
                         <materialDesign:PackIcon Grid.Row="0" Kind="MicrosoftExcel" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="60" Width="60" />
                         <StackPanel Margin="0 20" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Button x:Name="fileUploadBtn" Margin="20 0"  Grid.Row="1" Background="LightBlue" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
-                       VerticalAlignment="Top" BorderThickness="0" Height="30" Width="120" Cursor="Hand">
+                       VerticalAlignment="Top" BorderThickness="0" Height="30" Width="120" Cursor="Hand" Click="fileDownLoadBtn_Click">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="FileDownloadOutline" VerticalAlignment="Center" Height="20" Width="20" />
                                     <TextBlock Text="파일 다운받기" FontSize="10" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
                             <Button x:Name="fileDownLoadBtn" Margin="20 0" Grid.Row="1" Background="LightGreen" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
-                       VerticalAlignment="Top" BorderThickness="0" Height="30" Width="120" Cursor="Hand">
+                       VerticalAlignment="Top" BorderThickness="0" Height="30" Width="120" Cursor="Hand" Click="fileUploadBtn_Click">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="FileUploadOutline" VerticalAlignment="Center" Height="20" Width="20" />
                                     <TextBlock Text="파일 선택하기" FontSize="10" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
-                        </StackPanel>
-                        
+                        </StackPanel>                       
 
                     </StackPanel>
                 </Grid>

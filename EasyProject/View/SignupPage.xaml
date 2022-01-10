@@ -13,7 +13,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SignupPage">
     
-    <materialDesign:DialogHost>
+    <materialDesign:DialogHost x:Name="SignUpDialog">
         <materialDesign:DialogHost.DialogContent>
             <StackPanel Margin="20">
                 <Grid>
@@ -36,7 +36,7 @@
                     <Button Content="취소" Background="#EAEAEA" Foreground="Black"
                             Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"></Button>
                     <Button Content="확인" Background="#4472C4" Foreground="White" Margin="30,0,0,0"
-                            Click="signUpBtn_Click"></Button>
+                            Click="signUpBtn_Click" Cursor="Hand"></Button>
 
                 </StackPanel>
             </StackPanel>

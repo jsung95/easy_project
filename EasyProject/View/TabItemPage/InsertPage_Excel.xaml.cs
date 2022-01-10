@@ -28,8 +28,8 @@ namespace EasyProject.View.TabItemPage
         {
             InitializeComponent();
 
-            fileUploadBtn.Click += fileUploadBtn_Click;
-            fileDownLoadBtn.Click += fileDownLoadBtn_Click;
+            //fileUploadBtn.Click += fileUploadBtn_Click;
+            //fileDownLoadBtn.Click += fileDownLoadBtn_Click;
         }
 
         private void fileDownLoadBtn_Click(object sender, RoutedEventArgs e)

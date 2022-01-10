@@ -1,5 +1,6 @@
 ﻿using EasyProject.Dao;
 using EasyProject.Model;
+using MaterialDesignThemes.Wpf;
 using Microsoft.Expression.Interactivity.Core;
 using System;
 using System.Collections.Generic;
@@ -55,8 +56,34 @@ namespace EasyProject.ViewModel
             }
         }
 
+
+        //스넥바 메세지큐
+        private SnackbarMessageQueue messagequeue;
+        public SnackbarMessageQueue MessageQueue
+        {
+            get { return messagequeue; }
+            set
+            {
+                messagequeue = value;
+                OnPropertyChanged("MessageQueue");
+            }
+        }
+
+        private bool isPwChangOk = false;
+        public bool IsPwChangOk
+        {
+            get { return isPwChangOk; }
+            set
+            {
+                isPwChangOk = value;
+                OnPropertyChanged("IsPwChangOk");
+            }
+        }
+
+
         public PasswordChangeViewModel()
         {
+            messagequeue = new SnackbarMessageQueue();
             Nurse = new NurseModel();
         }
 
@@ -83,19 +110,25 @@ namespace EasyProject.ViewModel
                 // 비밀번호 변경시 새 비밀번호 공백 입력 방지
                 if (NewPassword == "" || NewPassword == null)
                 {
-                    MessageBox.Show("새로운 비밀번호를 입력하세요!");
+                    IsPwChangOk = true;
+                    MessageQueue.Enqueue("새로운 비밀번호를 입력하세요!", "닫기", (x) => { IsPwChangOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
                     pwChangeResult = false;    
                     return pwChangeResult;
                 }
                 else if (Re_NewPassword == "" || Re_NewPassword == null)
                 {
-                    MessageBox.Show("다시 입력란을 채워주세요!");
+                    IsPwChangOk = true;
+                    MessageQueue.Enqueue("다시 입력란을 채워주세요!", "닫기", (x) => { IsPwChangOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
                     pwChangeResult = false;
                     return pwChangeResult;
                 }
                 else if(NewPassword == Nurse.Nurse_pw)
                 {
-                    MessageBox.Show("현재 비밀번호와 다른 비밀번호를 입력해주세요!");
+                    IsPwChangOk = true;
+                    MessageQueue.Enqueue("현재 비밀번호와 다른 비밀번호를 입력해주세요!", "닫기", (x) => { IsPwChangOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
                     pwChangeResult = false;
                     return pwChangeResult;
                 }
@@ -105,7 +138,9 @@ namespace EasyProject.ViewModel
                     Regex regex = new Regex(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"); //비밀번호는 숫자,문자 조합
                     if(regex.IsMatch(NewPassword))
                     {
-                        MessageBox.Show("비밀번호 변경.");
+                        IsPwChangOk = false;
+                        MessageQueue.Enqueue("비밀번호 변경 완료!", "닫기", (x) => { IsPwChangOk = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
                         dao.PasswordChange(Nurse, NewPassword);
                         //비밀번호 변경을 1회 진행하면서 바인딩 되어서 남겨진 데이터 초기화
                         Nurse.Nurse_no = null;
@@ -116,21 +151,27 @@ namespace EasyProject.ViewModel
                     }
                     else
                     {
-                        MessageBox.Show("비밀번호는 숫자, 문자 조합만 6자리 이상만 가능합니다.");
+                        IsPwChangOk = true;
+                        MessageQueue.Enqueue("비밀번호는 숫자, 문자 조합만 6자리 이상만 가능합니다.", "닫기", (x) => { IsPwChangOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
                         pwChangeResult = false;
                         return pwChangeResult;
                     }
                 }//else if
                 else
                 {
-                    MessageBox.Show("새 비밀번호가 일치하지 않습니다.");
+                    IsPwChangOk = true;
+                    MessageQueue.Enqueue("새 비밀번호가 일치하지 않습니다.", "닫기", (x) => { IsPwChangOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
                     pwChangeResult = false;
                     return pwChangeResult;
                 }
             }//if
             else
             {
-                MessageBox.Show("아이디나 비밀번호를 다시 확인해주세요.");
+                IsPwChangOk = true;
+                MessageQueue.Enqueue("아이디 또는 비밀번호를 다시 확인해주세요.", "닫기", (x) => { IsPwChangOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
                 pwChangeResult = false;
                 return pwChangeResult;
             }//else

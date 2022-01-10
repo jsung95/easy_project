@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -30,6 +31,8 @@ namespace EasyProject
             InitializeComponent();
             backBtn.Click += backBtn_Click;
             //rewriteBtn.Click += rewriteBtn_Click;
+           
+            // SignUpDialog=false;
         }
         private void backBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -67,6 +70,9 @@ namespace EasyProject
                 //ErrorNotificationMessage msg = new ErrorNotificationMessage();
                 //msg.Message = "회원가입 성공";
 
+                //SignUpDialog.DialogClosingCallback
+               //DialogResult = false;
+
                 NavigationService.Navigate
                     (
                     new Uri("/View/LoginPage.xaml", UriKind.Relative) //로그인화면으로 이동
@@ -97,8 +103,8 @@ namespace EasyProject
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
-
-
-
-    }
+        private void SignUpDialog_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            throw new NotImplementedException();
+        }    }
 }

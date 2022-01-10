@@ -26,7 +26,7 @@ namespace EasyProject.View
         {
             InitializeComponent();
             backBtn.Click += backBtn_Click;
-            pwChangeBtn.Click += pwChangeBtn_Click;
+            //pwChangeBtn.Click += pwChangeBtn_Click;
 
             id_TxtBox.Text = App.nurse_dto.Nurse_no;
             id_TxtBox.Focus();

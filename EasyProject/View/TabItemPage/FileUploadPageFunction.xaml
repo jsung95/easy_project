@@ -13,6 +13,7 @@
     DataContext="{Binding PVM, Source={StaticResource Locator}}"
     Title="FileUploadPageFunction">
 
+
     <Grid Height="450">
         <materialDesign:Card Grid.Column="0" Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
             <Grid>
@@ -53,9 +54,10 @@
                     </ItemsControl>
                     -->
                     <Button Content="추가하기" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
-                       VerticalAlignment="Center" BorderThickness="0" Height="30" Width="90" Cursor="Hand" Command="{Binding ListCommand}"/>
+                       VerticalAlignment="Center" BorderThickness="0" Height="30" Width="90" Cursor="Hand"  Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" />
                 </Grid>
             </Grid>
         </materialDesign:Card>
     </Grid>
+
 </PageFunction>
