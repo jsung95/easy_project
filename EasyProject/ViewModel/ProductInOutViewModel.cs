@@ -63,10 +63,14 @@ namespace EasyProject.ViewModel
             Console.WriteLine("DeptChanged!--------------------------------------------------------------------");
             SearchKeyword_In = null; //검색 텍스트 초기화
             searchKeyword_Out = null; //검색 텍스트 초기화
+            
             SelectedStartDate_In = Convert.ToDateTime(product_dao.GetProductIn_MinDate(SelectedDept)); //날짜 컨트롤 최대, 최소 날짜로 설정
-            SelectedEndDate_In = Convert.ToDateTime(product_dao.GetProductIn_MaxDate(SelectedDept));
+            //SelectedEndDate_In = Convert.ToDateTime(product_dao.GetProductIn_MaxDate(SelectedDept));
+            SelectedEndDate_In = DateTime.Today;
+
             SelectedStartDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MinDate(SelectedDept));
-            SelectedEndDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MaxDate(SelectedDept));
+            //SelectedEndDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MaxDate(SelectedDept));
+            SelectedEndDate_Out = DateTime.Today;
 
             getProductIn_By_Date();
             getProductOut_By_Date();
@@ -92,11 +96,13 @@ namespace EasyProject.ViewModel
             //날짜 컨트롤 부서별 해당 최소 날짜 및 최대 날짜로 초기화
             //입고
             SelectedStartDate_In = Convert.ToDateTime(product_dao.GetProductIn_MinDate(SelectedDept));
-            SelectedEndDate_In = Convert.ToDateTime(product_dao.GetProductIn_MaxDate(SelectedDept));
+            //SelectedEndDate_In = Convert.ToDateTime(product_dao.GetProductIn_MaxDate(SelectedDept));
+            SelectedEndDate_In = DateTime.Today;
 
             //출고
             SelectedStartDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MinDate(SelectedDept));
-            SelectedEndDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MaxDate(SelectedDept));
+            //SelectedEndDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MaxDate(SelectedDept));
+            SelectedEndDate_Out = DateTime.Today;
 
             //부서별 입고 유형별 빈도 그래프 (기간 선택 가능 * 초기 설정 : 현재날짜로부터 1주일)
             SelectedStartDate2 = DateTime.Today.AddDays(-7);
@@ -432,8 +438,7 @@ namespace EasyProject.ViewModel
             {
                 selectedEndDate_In = value;
 
-                //ShowProductIn_By_Date();                
-                Update_BlackOutDate_In_Start();
+                //ShowProductIn_By_Date();
                 SearchKeyword_In = null;
                 getProductIn_By_Date();
                 if (selectedStartDate_In > selectedEndDate_In)
@@ -1326,54 +1331,6 @@ namespace EasyProject.ViewModel
         #endregion
 
         
-        private CalendarBlackoutDatesCollection blackOutDates_In_Start;
-        public CalendarBlackoutDatesCollection BlackOutDates_In_Start
-        {
-            get { return blackOutDates_In_Start; }
-            set
-            {
-                blackOutDates_In_Start = value;
-                OnPropertyChanged("BlackOutDates_In_Start");
-            }
-        }
-
-        private CalendarBlackoutDatesCollection blackOutDates_In_End;
-        public CalendarBlackoutDatesCollection BlackOutDates_In_End
-        {
-            get { return blackOutDates_In_End; }
-            set
-            {
-                blackOutDates_In_End = value;
-                OnPropertyChanged("BlackOutDates_In_End");
-            }
-        }
-
-
-        private void Update_BlackOutDate_In_Start()
-        {
-            
-            CalendarDateRange start = new CalendarDateRange(new DateTime(SelectedEndDate_In.Value.Year, SelectedEndDate_In.Value.Month, SelectedEndDate_In.Value.Day+1), new DateTime(9999, 12, 31));
-
-
-            // Because we can't reach the real calendar from the viewmodel, and we can't create a
-            // new CalendarBlackoutDatesCollection without specifying a Calendar to
-            // the constructor, we provide a "Dummy calendar", only to satisfy
-            // the CalendarBlackoutDatesCollection...
-            // because you can't do: BlackoutDates = new CalendarBlackoutDatesCollection().
-
-
-            Calendar dummyCal = new Calendar();
-            BlackOutDates_In_Start = new CalendarBlackoutDatesCollection(dummyCal);
-
-            // Add the dateranges to the BlackOutDates property
-
-            if(BlackOutDates_In_Start != null)
-            {
-                BlackOutDates_In_Start.Clear();
-            }
-            BlackOutDates_In_Start.Add(start);
-        }
-
         
 
     }//class
