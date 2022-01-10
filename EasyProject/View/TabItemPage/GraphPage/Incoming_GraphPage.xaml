@@ -14,16 +14,20 @@
     <Grid Height="450" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.2*" />
+                <RowDefinition Height="0.1*" />
+                <RowDefinition Height="0.1*" />
                 <RowDefinition Height="0.8*" />
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0">
+            <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.3*"/>
                     <ColumnDefinition Width="0.3*"/>
                     <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions>
+                <Grid Grid.Column="1">
+                    <Label Content="부서별 입고 유형" FontSize="15" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,0,0"></Label>
+                </Grid>
                 <Grid Grid.Column="2">
                     <Button x:Name="rightBtn"  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
                         VerticalAlignment="Bottom"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Background="{x:Null}" Click="rightBtn_Click" >
@@ -33,7 +37,7 @@
                 
                 
             </Grid>
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="2">
                 
                 <lvc:CartesianChart x:Name="incoming_type_chart" BorderThickness="2" Series="{Binding SeriesCollection3}" 
                              LegendLocation="Top" Height="288" VerticalAlignment="Center"  Width="300">

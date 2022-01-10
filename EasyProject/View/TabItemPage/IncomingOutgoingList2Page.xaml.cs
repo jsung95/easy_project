@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 using Excel = Microsoft.Office.Interop.Excel;
 using EasyProject.Model;
 using System.Globalization;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using EasyProject.ViewModel;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -31,7 +33,13 @@ namespace EasyProject.View.TabItemPage
         {
             InitializeComponent();
             export_btn.Click += Export_btn_Click;
-           // userDept00 = (deptName_ComboBox1.SelectedValue as DeptModel).Dept_name;
+            // userDept00 = (deptName_ComboBox1.SelectedValue as DeptModel).Dept_name;
+            
+            var dash = Ioc.Default.GetService<ProductInOutViewModel>();
+            //temp.DashboardPrint();
+            dash.DashboardPrint_Pie();
+            dash.DashboardPrint2();
+            dash.DashboardPrint3();
         }
         //private void OnDropDownOpened(object sender, EventArgs e)
         //{
