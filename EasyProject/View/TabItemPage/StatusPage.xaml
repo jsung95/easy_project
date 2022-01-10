@@ -132,9 +132,9 @@
                                 <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요" Grid.Column="5" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
                                      Text="{Binding TextForSearch, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
-                                    <TextBox.InputBindings>
+                                    <!--<TextBox.InputBindings>
                                         <KeyBinding Command="{Binding SearchCommand}" Key="Enter"/>
-                                    </TextBox.InputBindings>
+                                    </TextBox.InputBindings>-->
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="KeyUp">
                                             <i:InvokeCommandAction Command="{Binding SearchKeywordCommand}" />
