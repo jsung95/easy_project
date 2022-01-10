@@ -95,10 +95,10 @@
 
             </Grid>
             <Grid Grid.Column="5" >
-                <CheckBox x:Name="DataGridCheckbox" Style="{StaticResource MaterialDesignFilterChipOutlineCheckBox}" Grid.Column="4" HorizontalAlignment="Right" IsChecked="True" Content="표보기" Cursor="Hand" ></CheckBox>
+                <CheckBox x:Name="DataGridCheckbox" Style="{StaticResource MaterialDesignFilterChipOutlineCheckBox}" Grid.Column="4" HorizontalAlignment="Right" IsChecked="{Binding IsDataGridCheckBoxChecked}" Content="표보기" Cursor="Hand" ></CheckBox>
             </Grid>
             <Grid Grid.Column="6" >
-                <CheckBox x:Name="GraphCheckbox" Style="{StaticResource MaterialDesignFilterChipOutlineCheckBox}" Grid.Column="5" HorizontalAlignment="Right" IsChecked="True" Content="그래프보기" Cursor="Hand"></CheckBox>
+                <CheckBox x:Name="GraphCheckbox" Style="{StaticResource MaterialDesignFilterChipOutlineCheckBox}" Grid.Column="5" HorizontalAlignment="Right" IsChecked="{Binding IsGraphCheckBoxChecked}" Content="그래프보기" Cursor="Hand"></CheckBox>
             </Grid>
         </Grid>
 

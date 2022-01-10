@@ -44,6 +44,31 @@ namespace EasyProject.ViewModel
                 //getInListByDept();
             }
         }
+
+        private bool isDataGridCheckBoxChecked = true;
+        public bool IsDataGridCheckBoxChecked
+        {
+            get { return isDataGridCheckBoxChecked; }
+            set
+            {
+                isDataGridCheckBoxChecked = value;
+
+                OnPropertyChanged("IsDataGridCheckBoxChecked");
+            }
+        }
+
+        private bool isGraphCheckBoxChecked = true;
+        public bool IsGraphCheckBoxChecked
+        {
+            get { return isGraphCheckBoxChecked; }
+            set
+            {
+                isGraphCheckBoxChecked = value;
+
+                OnPropertyChanged("IsGraphCheckBoxChecked");
+            }
+        }
+
         private ActionCommand deptChangedCommand;
         public ICommand DeptChangedCommand
         {
