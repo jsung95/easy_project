@@ -2990,6 +2990,123 @@ namespace EasyProject.Dao
             return list;
         }//GetDiscardTotalCount
 
+        public List<ProductInOutModel> incomingCases_Info(DateTime startDate, DateTime endDate)
+        {
+            List<ProductInOutModel> list = new List<ProductInOutModel>();
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT prod_in_to, " +
+                                          "COUNT(CASE WHEN prod_in_type = '이관' THEN 1 END), " +
+                                          "COUNT(CASE WHEN prod_in_type = '신규' THEN 1 END), " +
+                                          "COUNT(CASE WHEN prod_in_type = '추가' THEN 1 END) " +
+                                          "FROM product_in " +
+                                          "WHERE prod_in_date > :startDate " +
+                                          "AND prod_in_date < :endDate + 1 " +
+                                          "GROUP BY prod_in_to";
+
+                        cmd.Parameters.Add(new OracleParameter("startDate", startDate));
+                        cmd.Parameters.Add(new OracleParameter("endDate", endDate));
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string dept_name = reader.GetString(0);
+                            int? prod_transferIn_cases = reader.GetInt32(1);
+                            int? prod_order_cases = reader.GetInt32(2);
+                            int? prod_add_cases = reader.GetInt32(3);
+                            Console.WriteLine("prod_add_cases : " + prod_add_cases);
+
+                            ProductInOutModel dto = new ProductInOutModel()
+                            {
+                                Dept_name = dept_name,
+                                prod_transferIn_cases = prod_transferIn_cases,
+                                prod_order_cases = prod_order_cases,
+                                prod_add_cases = prod_add_cases,
+                            };
+
+                            list.Add(dto);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+            return list;
+        }//orderCases_Info
+
+        public List<ProductInOutModel> ReleaseCases_Info(DateTime startDate, DateTime endDate) // 부서별 출고 횟수 정보를 담은 리스트
+        {
+            List<ProductInOutModel> list = new List<ProductInOutModel>();
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT prod_out_from, " +
+                                          "COUNT(CASE WHEN prod_out_type = '사용' THEN 1 END), " +
+                                          "COUNT(CASE WHEN prod_out_type = '이관' THEN 1 END), " +
+                                          "COUNT(CASE WHEN prod_out_type = '폐기' THEN 1 END) " +
+                                          "FROM product_out " +
+                                          "WHERE prod_out_date > :startDate " +
+                                          "AND prod_out_date < :endDate + 1 " +
+                                          "GROUP BY prod_out_from";
+
+                        cmd.Parameters.Add(new OracleParameter("startDate", startDate));
+                        cmd.Parameters.Add(new OracleParameter("endDate", endDate));
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string dept_name = reader.GetString(0);
+                            int? prod_use_cases = reader.GetInt32(1);
+                            int? prod_transferOut_cases = reader.GetInt32(2);
+                            int? prod_discard_cases = reader.GetInt32(3);
+
+                            ProductInOutModel dto = new ProductInOutModel()
+                            {
+                                Dept_name = dept_name,
+                                prod_use_cases = prod_use_cases,
+                                prod_transferOut_cases = prod_transferOut_cases,
+                                prod_discard_cases = prod_discard_cases
+                            };
+                            list.Add(dto);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }//catch
+            return list;
+        }//ReleaseCases_Info
     }//class
 
 
