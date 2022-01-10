@@ -22,7 +22,7 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <materialDesign:PackIcon Kind="Error" Foreground="#ff2196f3"
+                    <materialDesign:PackIcon Kind="Error" Foreground="#4472C4"
                                                  Height="48"
                                                  Width="48"
                                                  Margin="20, 25, 20, 20"
@@ -36,7 +36,7 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Button Content="취소" Background="#EAEAEA" Foreground="Black"
                             Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"></Button>
-                    <Button Content="확인" Background="#ff2196f3" Foreground="White" Margin="30,0,0,0"
+                    <Button Content="확인" Background="#4472C4" Foreground="White" Margin="30,0,0,0"
                             Command="{Binding LogoutCommand}"></Button>
 
                 </StackPanel>
@@ -131,7 +131,7 @@
                                                 VerticalAlignment="Center"  BorderThickness="0" Height="28" Width="155" Cursor="Hand"  Foreground="White" >
                                         <Button.Style>
                                             <Style TargetType="Button"  BasedOn="{StaticResource {x:Type Button}}">
-                                                <Setter  Property="Background" Value="#ff2196f3" />
+                                                <Setter  Property="Background" Value="#4472C4" />
                                             </Style>
                                         </Button.Style>
                                     </Button>

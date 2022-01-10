@@ -27,6 +27,17 @@ namespace EasyProject.ViewModel
             }
         }
 
+        private bool isSignUp = false; // 콤보박스에서 선택한 부서객체
+        public bool IsSignUp
+        {
+            get { return isSignUp; }
+            set
+            {
+                isSignUp = value;
+                OnPropertyChanged("IsSignUp");
+            }
+        }
+
         // 회원가입 시에 사용자가 입력한 데이터를 담을 프로퍼티       
         public NurseModel Nurse { get; set; }
 
@@ -96,7 +107,8 @@ namespace EasyProject.ViewModel
                             if (Nurse.Nurse_pw.Equals(Nurse_RePw)) // 비밀번호, 비밀번호 재확인 값이 같다면 
                             {
                                 dao.SignUp(Nurse, SelectedDept); //회원가입
-                                MessageBox.Show("회원가입 완료!");
+                                //MessageBox.Show("회원가입 완료!");
+                                IsSignUp = true;
 
                                 //회원가입을 1회 진행하면서 바인딩 되어서 남겨진 데이터 초기화
                                 Nurse.Nurse_no = null;
