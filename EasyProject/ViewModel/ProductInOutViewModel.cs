@@ -15,11 +15,88 @@ namespace EasyProject.ViewModel
 {
     public class ProductInOutViewModel : Notifier
     {
+                                                                                                                                                                                                                            
         ProductDao product_dao = new ProductDao();
         DeptDao dept_dao = new DeptDao();
 
         public string[] SearchTypeList { get; set; }
 
+        //대시보드 프로퍼티
+        public List<string> BarLabels2 { get; set; }       //string[]
+        public List<string> BarLabels3 { get; set; }       //string[]
+        public ChartValues<int> Values2 { get; set; }
+        public ChartValues<int> Values3 { get; set; }
+        public Func<double, string> Formatter { get; set; }
+
+        // DashboardPrint() 그래프
+        // 부서별 출고 유형 그래프 (기간 선택 가능) -----------------------------------
+        private SeriesCollection seriesCollection2;
+        public SeriesCollection SeriesCollection2
+        {
+            get { return seriesCollection2; }
+            set
+            {
+                seriesCollection2 = value;
+                OnPropertyChanged("SeriesCollection2");
+            }
+        }
+
+        public DateTime selectedStartDate1;
+        public DateTime SelectedStartDate1
+        {
+            get { return selectedStartDate1; }
+            set
+            {
+                selectedStartDate1 = value;
+                OnPropertyChanged("SelectedStartDate1");
+                DashboardPrint2();
+            }
+        }
+        public DateTime selectedEndDate1;
+        public DateTime SelectedEndDate1
+        {
+            get { return selectedEndDate1; }
+            set
+            {
+                selectedEndDate1 = value;
+                OnPropertyChanged("SelectedEndDate1");
+                DashboardPrint2();
+            }
+        }
+
+        //부서별 입고 유형 그래프
+        private SeriesCollection seriesCollection3;
+        public SeriesCollection SeriesCollection3               //그래프 큰 틀 만드는거
+        {
+            get { return seriesCollection3; }
+            set
+            {
+                seriesCollection3 = value;
+                OnPropertyChanged("SeriesCollection3");
+            }
+        }
+        public DateTime selectedStartDate2;
+        public DateTime SelectedStartDate2
+        {
+            get { return selectedStartDate2; }
+            set
+            {
+                selectedStartDate2 = value;
+                OnPropertyChanged("SelectedStartDate2");
+                DashboardPrint3();
+            }
+        }
+        public DateTime selectedEndDate2;
+        public DateTime SelectedEndDate2
+        {
+            get { return selectedEndDate2; }
+            set
+            {
+                selectedEndDate2 = value;
+                OnPropertyChanged("SelectedEndDate2");
+                DashboardPrint3();
+            }
+        }
 
         //부서 리스트를 담을 프로퍼티
         public ObservableCollection<DeptModel> Depts { get; set; }
@@ -95,6 +172,15 @@ namespace EasyProject.ViewModel
             //출고
             SelectedStartDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MinDate(SelectedDept_Out));
             SelectedEndDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MaxDate(SelectedDept_Out));
+
+            //부서별 입고 유형별 빈도 그래프 (기간 선택 가능 * 초기 설정 : 현재날짜로부터 1주일)
+            SelectedStartDate2 = DateTime.Today.AddDays(-7);
+            SelectedEndDate2 = DateTime.Today;
+
+            //부서별 출고 유형별 빈도 그래프 (기간 선택 가능 * 초기 설정 : 현재날짜로부터 1주일)
+            SelectedStartDate1 = DateTime.Today.AddDays(-7);
+            SelectedEndDate1 = DateTime.Today;
+
 
             //UpdateCalendarBlackoutDates();
         }//Constructor
@@ -750,6 +836,114 @@ namespace EasyProject.ViewModel
             BlackOutDates_In_End.Add(end);
         }
 
+        // 부서별 출고 유형별 빈도 그래프 (기간 선택 가능) (VIEW : 좌측하단 위치)------------------------------------------------------------------------------------------------------------
+        public void DashboardPrint2()
+        {
+
+            Console.WriteLine("DashboardPrint2");
+            SeriesCollection2 = new SeriesCollection();
+            Values2 = new ChartValues<int> { }; // 컬럼의 수치 ( y 축 )
+            ChartValues<int> useCases = new ChartValues<int>(); // 사용 횟수를 담을 변수
+            ChartValues<int> transferCases = new ChartValues<int>(); // 이관 횟수를 담을 변수
+            ChartValues<int> discardCases = new ChartValues<int>(); // 폐기 횟수를 담을 변수
+            BarLabels2 = new List<string>() { }; // 컬럼의 이름 ( x 축 )
+            List<ProductInOutModel> datas = product_dao.ReleaseCases_Info(SelectedStartDate1, SelectedEndDate1); // 부서별 출고 유형/횟수 정보
+            foreach (var item in datas) // 부서명 Labels에 넣기
+            {
+                BarLabels2.Add(item.Dept_name);
+                Console.WriteLine("dashboard2_dept_name" + item.Dept_name);
+            }
+
+            foreach (var item in datas)
+            {
+                useCases.Add((int)item.prod_use_cases);
+                Console.WriteLine("prod_use_cases" + item.prod_use_cases);
+                transferCases.Add((int)item.prod_transferOut_cases);
+                Console.WriteLine("prod_tarnsferout" + item.prod_transferOut_cases);
+                discardCases.Add((int)item.prod_discard_cases);
+                Console.WriteLine("prod_discard_cases" + item.prod_discard_cases);
+            }
+
+            //adding series updates and animates the chart
+
+            SeriesCollection2.Add(new StackedColumnSeries // 부서별 사용 횟수
+            {
+                Title = "사용 횟수",
+                Values = useCases,
+                StackMode = StackMode.Values
+            });
+
+            SeriesCollection2.Add(new StackedColumnSeries // 부서별 이관 횟수
+            {
+                Title = "이관 횟수",
+                Values = transferCases,
+                StackMode = StackMode.Values
+            });
+
+            SeriesCollection2.Add(new StackedColumnSeries // 부서별 출고 횟수
+            {
+                Title = "폐기 횟수",
+                Values = discardCases,
+                StackMode = StackMode.Values
+            });
+
+            Formatter = value => value.ToString("N");   //문자열 10진수 변환
+        }//dashboardprint2 ---------------------------------------------------------------------------------------------------
+         
+        // 부서별 입고 유형별 빈도 그래프 (기간 선택 가능) (VIEW : 좌측하단 위치)---------------------
+        public void DashboardPrint3()
+        {
+
+            Console.WriteLine("DashboardPrint3");
+            SeriesCollection3 = new SeriesCollection();
+            Values3 = new ChartValues<int> { }; // 컬럼의 수치 ( y 축 )
+            ChartValues<int> transferCases = new ChartValues<int>(); // 이관 횟수를 담을 변수
+            ChartValues<int> orderCases = new ChartValues<int>(); // 신규 횟수를 담을 변수
+            ChartValues<int> addCases = new ChartValues<int>(); // 추가 횟수를 담을 변수
+            BarLabels3 = new List<string>() { }; // 컬럼의 이름 ( x 축 )
+            List<ProductInOutModel> datas = product_dao.incomingCases_Info(SelectedStartDate2, SelectedEndDate2); // 부서별 출고 유형/횟수 정보
+            foreach (var item in datas) // 부서명 Labels에 넣기
+            {
+                BarLabels3.Add(item.Dept_name);
+                Console.WriteLine("dashboard3_dept_name" + item.Dept_name);
+            }
+
+            foreach (var item in datas)
+            {
+                transferCases.Add((int)item.prod_transferIn_cases);
+                orderCases.Add((int)item.prod_order_cases);
+                addCases.Add((int)item.prod_add_cases);
+            }
+
+            //adding series updates and animates the chart
+
+            SeriesCollection3.Add(new StackedColumnSeries // 부서별 이관 횟수
+            {
+                Title = "이관입고 횟수",
+                Values = transferCases,
+                StackMode = StackMode.Values
+            });
+
+            SeriesCollection3.Add(new StackedColumnSeries // 부서별 신규입고 횟수
+            {
+                Title = "신규입고 횟수",
+                Values = orderCases,
+                StackMode = StackMode.Values
+            });
+
+            SeriesCollection3.Add(new StackedColumnSeries // 부서별 추가입고 횟수
+            {
+                Title = "추가입고 횟수",
+                Values = addCases,
+                StackMode = StackMode.Values
+            });
+
+            Formatter = value => value.ToString("N");   //문자열 10진수 변환
+        }//dashboardprint3 ---------------------------------------------------------------------------------------------------
+
+
     }//class
+
+
 
 }//namespace

@@ -13,6 +13,8 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using EasyProject.Model;
+using EasyProject.ViewModel;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Excel = Microsoft.Office.Interop.Excel;
 
 
@@ -33,8 +35,8 @@ namespace EasyProject.View.TabItemPage
            
             export_btn.Click += Export_btn_Click;
             //userDept00 = (deptName_ComboBox1.SelectedValue as DeptModel).Dept_name;
-        }      
-       
+        }
+
 
         //private void OnDropDownOpened(object sender, EventArgs e)
         //{
@@ -45,7 +47,18 @@ namespace EasyProject.View.TabItemPage
         //    userDept00= deptNameText.ToString();
         //}
 
-      
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            var temp = Ioc.Default.GetService<ProductInOutViewModel>();
+            //temp.DashboardPrint();
+
+            temp.DashboardPrint2();
+            temp.DashboardPrint3();
+            //temp.DashboardPrint4(temp.SelectedCategory1);
+            //temp.DashboardPrint_Pie();
+
+
+        }
         private void Export_btn_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -113,4 +126,5 @@ namespace EasyProject.View.TabItemPage
              return null;
         }
     }
+
 }

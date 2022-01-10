@@ -133,7 +133,8 @@ namespace EasyProject.ViewModel
             ProductInout_Pie = new ObservableCollection<ProductInOutModel>(product_dao.GetProdOutType());
             SelectedOutType_Pie = ProductInout_Pie[0];
 
-
+            //오늘 날짜
+            testdate = DateTime.Now.Year.ToString() + "년 " + DateTime.Now.Month.ToString() + "월 " + DateTime.Now.Day.ToString() + "일";
         }//Constructor
 
         #region 대시보드
@@ -1644,6 +1645,9 @@ namespace EasyProject.ViewModel
             getListbyDept();
         }
 
+
+        //오는 날짜 프로퍼티
+        public string testdate { get; set; }
     }//class
 
     
