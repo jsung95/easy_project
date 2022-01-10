@@ -41,14 +41,14 @@ namespace EasyProject.View.TabItemPage
             dash.DashboardPrint2();
             dash.DashboardPrint3();
         }
-        //private void OnDropDownOpened(object sender, EventArgs e)
-        //{
-        //    isComboBoxDropDownOpened = true;
+        private void OnDropDownOpened(object sender, EventArgs e)
+        {
+            isComboBoxDropDownOpened = true;
 
-        //    var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
-        //    var deptNameText = deptModelObject.Dept_name;
-        //    userDept00 = deptNameText.ToString();
-        //}
+            var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
+            var deptNameText = deptModelObject.Dept_name;
+            userDept00 = deptNameText.ToString();
+        }
         private void Export_btn_Click(object sender, RoutedEventArgs e)
         {
             try
