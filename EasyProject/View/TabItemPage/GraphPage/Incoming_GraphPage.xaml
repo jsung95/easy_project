@@ -14,63 +14,23 @@
     <Grid Height="450" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.1*"/>
-                <RowDefinition Height="0.9*"/>
+                <RowDefinition Height="0.2*" />
+                <RowDefinition Height="0.8*" />
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*"/>
-                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions>
-                <DatePicker x:Name="startDate_DatePicker2" HorizontalContentAlignment="Left" HorizontalAlignment="Right" Grid.Column="0" Height="20" Width="100" Margin="0,0,20,0"  
-                       VerticalContentAlignment="Center" FontSize="9" VerticalAlignment="Bottom"  SelectedDate="{Binding SelectedStartDate2}">
-                    <DatePicker.Resources>
-                        <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
-                            <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />
-                            <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="white" />
-                        </Style>
-                        <Style x:Key="CustomCalendarButton" TargetType="CalendarButton" BasedOn="{StaticResource MaterialDesignCalendarButton}">
-                            <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />
-                            <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="White" />
-                        </Style>
-                        <Style x:Key="CustomCalendar" TargetType="{x:Type Calendar}" BasedOn="{StaticResource MaterialDesignDatePickerCalendarPortrait}">
-                            <Setter Property="Background" Value="White" />
-                            <Setter Property="Foreground" Value="lightGray" />
-                            <Setter Property="materialDesign:CalendarAssist.HeaderBackground" Value="DarkGray" />
-                            <Setter Property="materialDesign:CalendarAssist.HeaderForeground" Value="White" />
-                            <Setter Property="CalendarDayButtonStyle" Value="{StaticResource CustomCalendarDayButton}" />
-                            <Setter Property="CalendarButtonStyle" Value="{StaticResource CustomCalendarButton}" />
-                        </Style>
-                        <Style TargetType="DatePicker" BasedOn="{StaticResource MaterialDesignFloatingHintDatePicker}">
-                            <Setter Property="CalendarStyle" Value="{StaticResource CustomCalendar}" />
-                        </Style>
-                    </DatePicker.Resources>
-                </DatePicker>
-                <DatePicker x:Name="endDate_DatePicker2" HorizontalContentAlignment="Left" Grid.Column="1"  Height="20" Width="100"  Margin="20,0,0,0"
-                       VerticalContentAlignment="Center" FontSize="9" HorizontalAlignment="Left" VerticalAlignment="Bottom"  SelectedDate="{Binding SelectedEndDate2}">
-                    <DatePicker.Resources>
-                        <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
-                            <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />
-                            <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="white" />
-                        </Style>
-                        <Style x:Key="CustomCalendarButton" TargetType="CalendarButton" BasedOn="{StaticResource MaterialDesignCalendarButton}">
-                            <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />
-                            <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="White" />
-                        </Style>
-                        <Style x:Key="CustomCalendar" TargetType="{x:Type Calendar}" BasedOn="{StaticResource MaterialDesignDatePickerCalendarPortrait}">
-                            <Setter Property="Background" Value="White" />
-                            <Setter Property="Foreground" Value="lightGray" />
-                            <Setter Property="materialDesign:CalendarAssist.HeaderBackground" Value="DarkGray" />
-                            <Setter Property="materialDesign:CalendarAssist.HeaderForeground" Value="White" />
-                            <Setter Property="CalendarDayButtonStyle" Value="{StaticResource CustomCalendarDayButton}" />
-                            <Setter Property="CalendarButtonStyle" Value="{StaticResource CustomCalendarButton}" />
-                        </Style>
-                        <Style TargetType="DatePicker" BasedOn="{StaticResource MaterialDesignFloatingHintDatePicker}">
-                            <Setter Property="CalendarStyle" Value="{StaticResource CustomCalendar}" />
-                        </Style>
-                    </DatePicker.Resources>
-                </DatePicker>
+                <Grid Grid.Column="2">
+                    <Button x:Name="rightBtn"  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
+                        VerticalAlignment="Bottom"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Background="{x:Null}" Click="rightBtn_Click" >
+                        <materialDesign:PackIcon  Kind="ArrowRight" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="26" />
+                    </Button>
+                </Grid>
+                
                 
             </Grid>
             <Grid Grid.Row="1">

@@ -26,18 +26,38 @@ namespace EasyProject.View.TabItemPage.GraphPage
         public Outgoing_GraphPage()
         {
             InitializeComponent();
-        }
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
             var temp = Ioc.Default.GetService<ProductInOutViewModel>();
             //temp.DashboardPrint();
 
-            temp.DashboardPrint2();
-            temp.DashboardPrint3();
+            temp.DashboardPrint2();   //출고
+            //temp.DashboardPrint3();   //입고
             //temp.DashboardPrint4(temp.SelectedCategory1);
             //temp.DashboardPrint_Pie();
+        }
+        
 
+        private void LeftBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate
+                (
+                new Uri("/View/TabItemPage/GraphPage/Incoming_GraphPage.xaml", UriKind.Relative) //재고현황화면 --테스트
+                );
+            var dash = Ioc.Default.GetService<ProductInOutViewModel>();
+            //temp.DashboardPrint();
+            dash.DashboardPrint2();
+            //dash.DashboardPrint2(dash.SelectedDept);
+        }
 
+        private void RightBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate
+                (
+                new Uri("/View/TabItemPage/GraphPage/DiscardProdPrice_GraphPage.xaml", UriKind.Relative) //재고현황화면 --테스트
+                );
+            var dash = Ioc.Default.GetService<ProductInOutViewModel>();
+            //temp.DashboardPrint();
+            dash.DashboardPrint2();
+            //dash.DashboardPrint2(dash.SelectedDept);
         }
     }
 }

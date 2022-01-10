@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EasyProject.ViewModel;
+using EasyProject.Model;
 
 namespace EasyProject.View.TabItemPage.GraphPage
 {
@@ -23,6 +26,21 @@ namespace EasyProject.View.TabItemPage.GraphPage
         public Incoming_GraphPage()
         {
             InitializeComponent();
+            var dash = Ioc.Default.GetService<ProductInOutViewModel>();
+            //temp.DashboardPrint();
+            dash.DashboardPrint3();
+        }
+
+        private void rightBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate
+                (
+                new Uri("/View/TabItemPage/GraphPage/Outgoing_GraphPage.xaml", UriKind.Relative) //재고현황화면 --테스트
+                );
+            var dash = Ioc.Default.GetService<ProductInOutViewModel>();
+            //temp.DashboardPrint();
+            dash.DashboardPrint3();
+            //dash.DashboardPrint2(dash.SelectedDept);
         }
     }
 }

@@ -108,8 +108,8 @@ namespace EasyProject.ViewModel
             SelectedEndDate1 = DateTime.Today;
 
             //입고 출고 그래프 출력
-            DashboardPrint2();
-            DashboardPrint3();
+            //DashboardPrint2();
+            //DashboardPrint3();
 
             //파이차트
             //파이차트
