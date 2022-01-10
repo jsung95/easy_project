@@ -8,7 +8,7 @@
       xmlns:wookoa="clr-namespace:System;assembly=mscorlib"
       xmlns:vm ="clr-namespace:EasyProject.ViewModel" 
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" 
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:model="clr-namespace:EasyProject.Model"
       mc:Ignorable="d" 
       DataContext="{Binding PSVM, Source={StaticResource Locator}}"
       Title="StatusPage">
@@ -39,8 +39,39 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
             <Setter Property="Cursor" Value="Hand" />
-        </Style>
+        </Style>        
     </Page.Resources>
+    <materialDesign:DialogHost >
+        <materialDesign:DialogHost.DialogContent>
+            <StackPanel Margin="20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <materialDesign:PackIcon Kind="Error" Foreground="#ff2196f3"
+                                                 Height="48"
+                                                 Width="48"
+                                                 Margin="20, 25, 20, 20"
+                                                 Grid.Column="0" />
+                    <StackPanel Margin="20"
+                                    Grid.Column="1"
+                                    MinWidth="180">
+                        <TextBlock Text="재고수정" FontSize="15" FontWeight="UltraBold"></TextBlock>
+                        <TextBlock Text="재고수정을 하시겠습니까?" FontSize="13" FontWeight="SemiBold"
+                                       Margin="0,20,0,0"></TextBlock>
+                    </StackPanel>
+                </Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button Content="취소" Background="#EAEAEA" Foreground="Black"
+                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"></Button>
+                    <Button Content="확인" Background="#ff2196f3" Foreground="White" Margin="30,0,0,0"
+                            Command="{Binding LogoutCommand}"></Button>
+
+                </StackPanel>
+            </StackPanel>
+        </materialDesign:DialogHost.DialogContent>
+
     
     
     <Grid Height="500" Width="1200" Background="White" VerticalAlignment="Top" HorizontalAlignment="Center">
@@ -145,9 +176,10 @@
                             <Grid Grid.Column="1">
                                 <StackPanel x:Name="ModifyToggleButtonPanel" Orientation="Horizontal" Margin="10 5" HorizontalAlignment="Right" Visibility="Hidden" >
                                     <TextBlock Text="수정  " FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                                    <ToggleButton HorizontalAlignment="Left" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                        
+                                        <ToggleButton HorizontalAlignment="Left" Style="{StaticResource MaterialDesignSwitchToggleButton}"
                                       ToolTip="수정기능을 잠금/해제 할 수 있습니다." IsChecked="{Binding IsToolTipChecked}">
-                                        <materialDesign:PackIcon Kind="Pin" RenderTransformOrigin=".5,.5">
+                                        <materialDesign:PackIcon Kind="Pin" RenderTransformOrigin=".5,.5" >
                                             <materialDesign:PackIcon.RenderTransform>
                                                 <RotateTransform Angle="45" />
                                             </materialDesign:PackIcon.RenderTransform>
@@ -657,12 +689,7 @@
                                 <wookoa:Int32>20</wookoa:Int32>
                                 <wookoa:Int32>25</wookoa:Int32>
                             </ComboBox>
-                        </StackPanel>
-
-                        
-                        
-                        
-                        
+                        </StackPanel>                        
                     </Grid>
                 </Grid>
                 <Grid Grid.Column="1">
@@ -686,4 +713,5 @@
             
         </materialDesign:Snackbar>
     </Grid>
+    </materialDesign:DialogHost>
 </Page>
