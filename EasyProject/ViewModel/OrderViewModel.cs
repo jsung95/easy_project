@@ -1,5 +1,6 @@
 ﻿using EasyProject.Dao;
 using EasyProject.Model;
+using log4net;
 using Microsoft.Expression.Interactivity.Core;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace EasyProject.ViewModel
 {
     public class OrderViewModel : Notifier
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
 
         OrderDao dao = new OrderDao();
 
@@ -31,6 +33,7 @@ namespace EasyProject.ViewModel
 
         public OrderViewModel()
         {
+            log.Info("Constructor OrderViewModel() invoked.");
             Depts = dao.GetDeptModels();
         }
 
@@ -50,7 +53,17 @@ namespace EasyProject.ViewModel
 
         public void ResetSelectedDept()
         {
-            SelectedDept = null;
+            log.Info("ResetSelectedDept() invoked.");
+            try
+            {
+                SelectedDept = null;
+            }//try
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+            
         }// ProductInsert
+
     }//OrderViewModel
 }//namespace

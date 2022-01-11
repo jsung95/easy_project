@@ -1,5 +1,6 @@
 ﻿using EasyProject.Dao;
 using EasyProject.Model;
+using log4net;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Expression.Interactivity.Core;
 using System;
@@ -16,6 +17,8 @@ namespace EasyProject.ViewModel
 {
     public class PasswordChangeViewModel : Notifier
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
+
         LoginDao dao = new LoginDao();
 
         public string Nurse_no { get; set; }
@@ -83,6 +86,7 @@ namespace EasyProject.ViewModel
 
         public PasswordChangeViewModel()
         {
+            log.Info("Constructor PasswordChangeViewModel() invoked.");
             messagequeue = new SnackbarMessageQueue();
             Nurse = new NurseModel();
         }
@@ -101,113 +105,136 @@ namespace EasyProject.ViewModel
         //    }
         //}
 
+        public bool pwChangeResult { get; set; }
+
         public bool PasswordChange()
         {
-            bool pwChangeResult;
+            log.Info("Constructor PasswordChange() invoked.");
 
-            if (dao.IdPasswordCheck(Nurse) == true) // 현재 아이디/비번이 맞는 지 확인
+            //bool pwChangeResult;
+
+            try
             {
-                // 비밀번호 변경시 새 비밀번호 공백 입력 방지
-                if (NewPassword == "" || NewPassword == null)
+                if (dao.IdPasswordCheck(Nurse) == true) // 현재 아이디/비번이 맞는 지 확인
                 {
-                    IsPwChangOk = true;
-                    MessageQueue.Enqueue("새로운 비밀번호를 입력하세요!", "닫기", (x) => { IsPwChangOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-
-                    pwChangeResult = false;    
-                    return pwChangeResult;
-                }
-                else if (Re_NewPassword == "" || Re_NewPassword == null)
-                {
-                    IsPwChangOk = true;
-                    MessageQueue.Enqueue("다시 입력란을 채워주세요!", "닫기", (x) => { IsPwChangOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-
-                    pwChangeResult = false;
-                    return pwChangeResult;
-                }
-                else if(NewPassword == Nurse.Nurse_pw)
-                {
-                    IsPwChangOk = true;
-                    MessageQueue.Enqueue("현재 비밀번호와 다른 비밀번호를 입력해주세요!", "닫기", (x) => { IsPwChangOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-
-                    pwChangeResult = false;
-                    return pwChangeResult;
-                }
-                // 새 비밀번호와 다시입력 같은지 확인
-                else if (NewPassword == Re_NewPassword)
-                {
-                    Regex regex = new Regex(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"); //비밀번호는 숫자,문자 조합
-                    if(regex.IsMatch(NewPassword))
-                    {
-                        IsPwChangOk = false;
-                        MessageQueue.Enqueue("비밀번호 변경 완료!", "닫기", (x) => { IsPwChangOk = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-
-                        dao.PasswordChange(Nurse, NewPassword);
-                        //비밀번호 변경을 1회 진행하면서 바인딩 되어서 남겨진 데이터 초기화
-                        Nurse.Nurse_no = null;
-                        Nurse.Nurse_pw = null;
-
-                        pwChangeResult = true;
-                        return pwChangeResult;
-                    }
-                    else
+                    // 비밀번호 변경시 새 비밀번호 공백 입력 방지
+                    if (NewPassword == "" || NewPassword == null)
                     {
                         IsPwChangOk = true;
-                        MessageQueue.Enqueue("비밀번호는 숫자, 문자 조합만 6자리 이상만 가능합니다.", "닫기", (x) => { IsPwChangOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        MessageQueue.Enqueue("새로운 비밀번호를 입력하세요!", "닫기", (x) => { IsPwChangOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
 
                         pwChangeResult = false;
                         return pwChangeResult;
                     }
-                }//else if
+                    else if (Re_NewPassword == "" || Re_NewPassword == null)
+                    {
+                        IsPwChangOk = true;
+                        MessageQueue.Enqueue("다시 입력란을 채워주세요!", "닫기", (x) => { IsPwChangOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
+                        pwChangeResult = false;
+                        return pwChangeResult;
+                    }
+                    else if (NewPassword == Nurse.Nurse_pw)
+                    {
+                        IsPwChangOk = true;
+                        MessageQueue.Enqueue("현재 비밀번호와 다른 비밀번호를 입력해주세요!", "닫기", (x) => { IsPwChangOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
+                        pwChangeResult = false;
+                        return pwChangeResult;
+                    }
+                    // 새 비밀번호와 다시입력 같은지 확인
+                    else if (NewPassword == Re_NewPassword)
+                    {
+                        Regex regex = new Regex(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"); //비밀번호는 숫자,문자 조합
+                        if (regex.IsMatch(NewPassword))
+                        {
+                            IsPwChangOk = false;
+                            MessageQueue.Enqueue("비밀번호 변경 완료!", "닫기", (x) => { IsPwChangOk = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
+                            dao.PasswordChange(Nurse, NewPassword);
+                            //비밀번호 변경을 1회 진행하면서 바인딩 되어서 남겨진 데이터 초기화
+                            Nurse.Nurse_no = null;
+                            Nurse.Nurse_pw = null;
+
+                            pwChangeResult = true;
+                            return pwChangeResult;
+                        }
+                        else
+                        {
+                            IsPwChangOk = true;
+                            MessageQueue.Enqueue("비밀번호는 숫자, 문자 조합만 6자리 이상만 가능합니다.", "닫기", (x) => { IsPwChangOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
+                            pwChangeResult = false;
+                            return pwChangeResult;
+                        }
+                    }//else if
+                    else
+                    {
+                        IsPwChangOk = true;
+                        MessageQueue.Enqueue("새 비밀번호가 일치하지 않습니다.", "닫기", (x) => { IsPwChangOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
+                        pwChangeResult = false;
+                        return pwChangeResult;
+                    }
+                }//if
                 else
                 {
                     IsPwChangOk = true;
-                    MessageQueue.Enqueue("새 비밀번호가 일치하지 않습니다.", "닫기", (x) => { IsPwChangOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                    MessageQueue.Enqueue("아이디 또는 비밀번호를 다시 확인해주세요.", "닫기", (x) => { IsPwChangOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
 
                     pwChangeResult = false;
                     return pwChangeResult;
-                }
-            }//if
-            else
+                }//else
+            }//try
+            catch (Exception ex)
             {
-                IsPwChangOk = true;
-                MessageQueue.Enqueue("아이디 또는 비밀번호를 다시 확인해주세요.", "닫기", (x) => { IsPwChangOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-
-                pwChangeResult = false;
+                log.Error(ex.Message);
                 return pwChangeResult;
-            }//else
+            }//catch
+            
         }//PasswordChange
 
         public void OnNewPasswordChanged()
         {
-            //if (NewPassword == "" || Re_NewPassword == "")
-            //{
-            //    NewPasswordStatement = "";
-            //}
-            Regex regex = new Regex(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"); //비밀번호는 숫자,문자 조합 6자리
+            log.Info("OnNewPasswordChanged() invoked.");
 
-            if (regex.IsMatch(NewPassword)) //정규식 통과 시 * 정규식을 통과 = NewPassword는 공란이 아님.
+            try
             {
-                if (Re_NewPassword == "" || Re_NewPassword == null)
+                //if (NewPassword == "" || Re_NewPassword == "")
+                //{
+                //    NewPasswordStatement = "";
+                //}
+                Regex regex = new Regex(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"); //비밀번호는 숫자,문자 조합 6자리
+
+                if (regex.IsMatch(NewPassword)) //정규식 통과 시 * 정규식을 통과 = NewPassword는 공란이 아님.
                 {
-                    NewPasswordStatement = "새 비밀번호를 한번 더 입력하세요!";
-                }
-                else
-                {
-                    if (NewPassword == Re_NewPassword)
+                    if (Re_NewPassword == "" || Re_NewPassword == null)
                     {
-                        NewPasswordStatement = "두 비밀번호가 일치합니다.";
+                        NewPasswordStatement = "새 비밀번호를 한번 더 입력하세요!";
                     }
                     else
                     {
-                        NewPasswordStatement = "두 비밀번호가 일치하지 않습니다.";
+                        if (NewPassword == Re_NewPassword)
+                        {
+                            NewPasswordStatement = "두 비밀번호가 일치합니다.";
+                        }
+                        else
+                        {
+                            NewPasswordStatement = "두 비밀번호가 일치하지 않습니다.";
+                        }
                     }
-                }
-                
-            }//if 
-            else
+
+                }//if 
+                else
+                {
+                    NewPasswordStatement = "비밀번호는 숫자,문자 조합 6자리 이상입니다";
+                }//else            
+            }//try
+            catch(Exception ex)
             {
-                NewPasswordStatement = "비밀번호는 숫자,문자 조합 6자리 이상입니다";
-            }//else            
+                log.Error(ex.Message);
+            }//catch
+            
         }//OnPasswordChange
     }//class
 }//namespace
