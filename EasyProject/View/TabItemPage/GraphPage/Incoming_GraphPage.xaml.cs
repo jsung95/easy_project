@@ -33,7 +33,7 @@ namespace EasyProject.View.TabItemPage.GraphPage
             var dash = Ioc.Default.GetService<ProductInOutViewModel>();
             dash.DashboardPrint3(dash.SelectedStartDate_In, dash.SelectedEndDate_In);
             dash.DashboardPrint2(dash.SelectedStartDate_In, dash.SelectedEndDate_In);
-            dash.dashboardPrint_Pie1();
+            
             
         }
 

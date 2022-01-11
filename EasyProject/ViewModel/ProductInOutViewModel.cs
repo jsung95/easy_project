@@ -163,7 +163,8 @@ namespace EasyProject.ViewModel
             ProductInout_Pie = new ObservableCollection<ProductInOutModel>(product_dao.GetProdOutType());
             SelectedOutType_Pie = ProductInout_Pie[0];
             DashboardPrint_Pie();
-            DashboardPrint_Pie1();
+            
+
 
             //UpdateCalendarBlackoutDates();
         }//Constructor
@@ -330,71 +331,7 @@ namespace EasyProject.ViewModel
 
 
 
-        //도넛그래프 출력메소드
-        public void DashboardPrint_Pie1()
-        {
-            log.Info("DashboardPrint_Pie1() invoked.");
-
-            try
-            {
-                List<ProductInOutModel> list = product_dao.GetDiscardTotalCount(SelectedDept_Pie, SelectedOutType_Pie);
-
-
-
-
-                SeriesCollection_Pie1 = new SeriesCollection();
-
-
-                foreach (var item in list)
-                {
-                    //Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} ({1:C})", item.Prod_name, chartPoint.Participation);
-                    Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0:#,0}개 ({1:#,0}￦)", item.Prod_out_count, item.Prod_price);
-                    SeriesCollection_Pie1.Add(new PieSeries
-                    {
-                        Title = item.Prod_name,
-                        Values = new ChartValues<int> { (int)item.Prod_out_count },
-                        DataLabels = true,
-                        LabelPoint = labelPoint
-                    });
-
-                }//foreache
-            }//try
-            catch(Exception ex)
-            {
-                log.Error(ex.Message);
-            }//catch
-            
-
-        }//DashboardPrint_Pie
-
-        //dashboardPrint_Pie command
-        private ActionCommand command46;
-        public ICommand Command46
-        {
-            get
-            {
-                if (command46 == null)
-                {
-                    command46 = new ActionCommand(dashboardPrint_Pie1);
-                }
-                return command46;
-            }//get
-
-        }//Command
-
-        public void dashboardPrint_Pie1()
-        {
-            log.Info("dashboardPrint_Pie1() invoked.");
-            try
-            {
-                DashboardPrint_Pie1();
-            }//try
-            catch(Exception ex)
-            {
-                log.Error(ex.Message);
-            }//catch
-
-        }//dashboardPrint_Pie1
+        
 
         //도넛그래프 출력메소드
         public void DashboardPrint_Pie()
@@ -419,8 +356,7 @@ namespace EasyProject.ViewModel
                     {
                         Title = item.Prod_name,
                         Values = new ChartValues<int> { (int)item.Prod_out_count },
-                        DataLabels = true,
-                        LabelPoint = labelPoint
+                       
                     });
 
                 }//foreache

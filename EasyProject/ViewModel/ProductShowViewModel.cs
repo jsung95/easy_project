@@ -350,7 +350,7 @@ namespace EasyProject.ViewModel
             //}
             Values = new ChartValues<int> { };
 
-            SeriesCollection2.Add(new LineSeries
+            SeriesCollection2.Add(new ColumnSeries
             {
                 Title = "총 수량",   //+ i
                 Values = mount,
