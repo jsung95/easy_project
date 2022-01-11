@@ -63,7 +63,7 @@
                         </ComboBox>
                     </Grid>
                     <Grid>
-                        <Label Content="카테고리명" Foreground="#4472C4" Grid.Column="2" FontSize="10" 
+                        <Label Content="품목/종류명" Foreground="#4472C4" Grid.Column="2" FontSize="10" 
                        FontWeight="Bold" HorizontalAlignment="Center"  
                        VerticalAlignment="Top" />
                     </Grid>
