@@ -33,7 +33,7 @@ namespace EasyProject
 
         public MainWindow()
         {
-            log.Info("Initialize MainWindow.xaml");
+            log.Info("Constructor MainWindow() invoked.");
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;  //화면버튼
             this.Loaded += new RoutedEventHandler(Window1_Loaded);
@@ -44,79 +44,139 @@ namespace EasyProject
 
         void MainWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)       //드래그 무브
         {
-            this.DragMove();           
+            try
+            {
+                this.DragMove();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }     
         }
 
         void Window1_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            ChangeSize(e.NewSize.Width, e.NewSize.Height);
+            try
+            {
+                ChangeSize(e.NewSize.Width, e.NewSize.Height);
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+            
         }
 
         void Window1_Loaded(object sender, RoutedEventArgs e)
         {
-            orginalWidth = this.Width;
-            originalHeight = this.Height;
-
-            if (this.WindowState == WindowState.Maximized)
+            log.Info("Window1_Loaded(object, RoutedEventArgs) invoked.");
+            try
             {
-                ChangeSize(this.ActualWidth, this.ActualHeight);
+                orginalWidth = this.Width;
+                originalHeight = this.Height;
+
+                if (this.WindowState == WindowState.Maximized)
+                {
+                    ChangeSize(this.ActualWidth, this.ActualHeight);
+                }
+                this.SizeChanged += new SizeChangedEventHandler(Window1_SizeChanged);
             }
-            this.SizeChanged += new SizeChangedEventHandler(Window1_SizeChanged);
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+            
         }
 
         private void ChangeSize(double width, double height)
         {
-            scale.ScaleX = width / orginalWidth;
-            scale.ScaleY = height / originalHeight;
+            log.Info("ChangeSize(double, double) invoked.");
+            try
+            {
+                scale.ScaleX = width / orginalWidth;
+                scale.ScaleY = height / originalHeight;
 
-            FrameworkElement rootElement = this.Content as FrameworkElement;
-            rootElement.LayoutTransform = scale;
+                FrameworkElement rootElement = this.Content as FrameworkElement;
+                rootElement.LayoutTransform = scale;
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+            
         }
 
         private void btn_close(object sender, RoutedEventArgs e)       //버튼 창닫기
         {
-            var temp = Ioc.Default.GetService<LoginViewModel>();
+            log.Info("btn_close(object, RoutedEventArgs) invoked.");
+            try
+            {
+                var temp = Ioc.Default.GetService<LoginViewModel>();
 
-            if (temp.idCheckResult) //만약 로그인에 성공했던 상태라면
-            {
-                log.Info("Terminated Program");
-                temp.Logout_For_QuitProgram(); //로그아웃 로깅 데이터를 추가하고
-                Window.GetWindow(this).Close(); //프로그램 종료
+                if (temp.idCheckResult) //만약 로그인에 성공했던 상태라면
+                {
+                    log.Info("Terminated Program");
+                    temp.Logout_For_QuitProgram(); //로그아웃 로깅 데이터를 추가하고
+                    Window.GetWindow(this).Close(); //프로그램 종료
+                }
+                else
+                {
+                    log.Info("Terminated Program");
+                    Window.GetWindow(this).Close();
+                }
             }
-            else
+            catch(Exception ex)
             {
-                log.Info("Terminated Program");
-                Window.GetWindow(this).Close();
+                log.Error(ex.Message);
             }
+            
 
         }
 
         private void btn_minimize(object sender, RoutedEventArgs e)       //화면 내리기
         {
-            if (this.WindowState == WindowState.Normal)
+            log.Info("btn_minimize(object, RoutedEventArgs) invoked.");
+            try
             {
-                this.WindowState = WindowState.Minimized;
+                if (this.WindowState == WindowState.Normal)
+                {
+                    this.WindowState = WindowState.Minimized;
+                }
+                else if (this.WindowState == WindowState.Minimized)
+                {
+                    this.WindowState = WindowState.Normal;
+                }
+                else
+                {
+                    this.WindowState = WindowState.Minimized;
+                }
             }
-            else if (this.WindowState == WindowState.Minimized)
+            catch(Exception ex)
             {
-                this.WindowState = WindowState.Normal;
+                log.Error(ex.Message);
             }
-            else
-            {
-                this.WindowState = WindowState.Minimized;
-            }
+            
         }
 
         private void btn_extend(object sender, RoutedEventArgs e)       //화면 확대 축소
         {
-            if (this.WindowState == WindowState.Normal)
+            log.Info("btn_extend(object, RoutedEventArgs) invoked.");
+            try
             {
-                this.WindowState = WindowState.Maximized;
+                if (this.WindowState == WindowState.Normal)
+                {
+                    this.WindowState = WindowState.Maximized;
+                }
+                else if (this.WindowState == WindowState.Maximized)
+                {
+                    this.WindowState = WindowState.Normal;
+                }
             }
-            else if (this.WindowState == WindowState.Maximized)
+            catch(Exception ex)
             {
-                this.WindowState = WindowState.Normal;
+                log.Error(ex.Message);
             }
+            
 
         }
 
@@ -136,17 +196,26 @@ namespace EasyProject
 
         private void exit_Program()       //버튼 창닫기
         {
-            var temp = Ioc.Default.GetService<LoginViewModel>();
+            log.Info("exit_Program() invoked.");
+            try
+            {
+                var temp = Ioc.Default.GetService<LoginViewModel>();
 
-            if (temp.idCheckResult) //만약 로그인에 성공했던 상태라면
-            {
-                temp.Logout_For_QuitProgram(); //로그아웃 로깅 데이터를 추가하고
-                Window.GetWindow(this).Close(); //프로그램 종료
+                if (temp.idCheckResult) //만약 로그인에 성공했던 상태라면
+                {
+                    temp.Logout_For_QuitProgram(); //로그아웃 로깅 데이터를 추가하고
+                    Window.GetWindow(this).Close(); //프로그램 종료
+                }
+                else
+                {
+                    Window.GetWindow(this).Close();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Window.GetWindow(this).Close();
+                log.Error(ex.Message);
             }
+            
 
         }
 
