@@ -220,7 +220,7 @@
                             <DataGridTemplateColumn Header="제품코드" Width="1.5*" CanUserSort="false" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding Prod_code}" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="{Binding Prod_code}" VerticalAlignment="Center" Margin="10 0"></TextBlock>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                                 <DataGridTemplateColumn.CellEditingTemplate>
@@ -247,7 +247,7 @@
                             <DataGridTemplateColumn Header="제품명" Width="1.5*" CanUserSort="false" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding Prod_name}" VerticalAlignment="Center"></TextBlock>
+                                        <TextBlock Text="{Binding Prod_name}" VerticalAlignment="Center" Margin="10 0"></TextBlock>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                                 <DataGridTemplateColumn.CellEditingTemplate>
@@ -271,11 +271,11 @@
                                 </DataGridTemplateColumn.CellStyle>
                             </DataGridTemplateColumn>
 
-                            <DataGridComboBoxColumn ItemsSource="{Binding PSVM.Categories, Source={StaticResource Locator}}" 
+                                <DataGridComboBoxColumn ItemsSource="{Binding PSVM.Categories, Source={StaticResource Locator}}" 
                                                     TextBinding="{Binding Category_name}"
                                                     DisplayMemberPath="Category_name" Header="품목/종류" Width="1.5*" CanUserSort="false" IsReadOnly="True">
 
-                                <DataGridComboBoxColumn.CellStyle>
+                                    <DataGridComboBoxColumn.CellStyle>
                                     <Style TargetType="DataGridCell">
                                         <Style.Triggers>
                                             <MultiDataTrigger>
@@ -283,24 +283,31 @@
                                                     <Condition Binding="{Binding PSVM.IsToolTipChecked, Source={StaticResource Locator}}" Value="False"></Condition>
                                                     <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
                                                 </MultiDataTrigger.Conditions>
-                                                <Setter Property="IsEditing" Value="True"/>
-                                            </MultiDataTrigger>
+                                                    <Setter Property="IsEditing" Value="True"/>
+                                                </MultiDataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </DataGridComboBoxColumn.CellStyle>
 
                                 <DataGridComboBoxColumn.EditingElementStyle>
-                                    <Style TargetType="{x:Type ComboBox}">
-                                        <EventSetter Event="SelectionChanged" Handler="SomeSelectionChanged"/>
+                                        <Style TargetType="{x:Type ComboBox}">
+                                            <EventSetter Event="SelectionChanged" Handler="SomeSelectionChanged"/>
 
                                         </Style>
                                 </DataGridComboBoxColumn.EditingElementStyle>
+
+                                    <DataGridComboBoxColumn.ElementStyle>
+                                        <Style TargetType="{x:Type ComboBox}">
+                                            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                            <Setter Property="Margin" Value="10 0"></Setter>
+                                        </Style>
+                                    </DataGridComboBoxColumn.ElementStyle>
                             </DataGridComboBoxColumn>
 
-                            <DataGridTemplateColumn CanUserSort="true" Header="제품가격" Width="1*"  IsReadOnly="True">
+                            <DataGridTemplateColumn CanUserSort="true" Header="제품가격" Width="1.8*"  IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"></TextBlock>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                                 <DataGridTemplateColumn.CellEditingTemplate>
@@ -323,10 +330,10 @@
                                     </Style>
                                 </DataGridTemplateColumn.CellStyle>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn CanUserSort="true" Header="수량" Width="1*" IsReadOnly="True">
+                            <DataGridTemplateColumn CanUserSort="true" Header="수량" Width="1.5*" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding Imp_dept_count, StringFormat='{}{0:#,0} 개'}" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="{Binding Imp_dept_count, StringFormat='{}{0:#,0} 개'}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"></TextBlock>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                                 <DataGridTemplateColumn.CellEditingTemplate>
@@ -379,7 +386,7 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             
-                            <DataGridTemplateColumn x:Name="buttonColumn" Header="신청" Width="3*" IsReadOnly="True" Visibility="Hidden">
+                            <DataGridTemplateColumn x:Name="buttonColumn" Width="3*" IsReadOnly="True" Visibility="Hidden">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
