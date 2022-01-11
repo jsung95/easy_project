@@ -29,10 +29,7 @@
                     <Label Content="부서별 입고 유형" FontSize="15" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,0,0"></Label>
                 </Grid>
                 <Grid Grid.Column="2">
-                    <Button x:Name="rightBtn"  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
-                        VerticalAlignment="Bottom"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Background="{x:Null}" Click="rightBtn_Click" >
-                        <materialDesign:PackIcon  Kind="ArrowRight" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="26" />
-                    </Button>
+                    
                 </Grid>
                 
                 

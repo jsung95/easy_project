@@ -154,6 +154,9 @@ namespace EasyProject.ViewModel
                         }//if
                         else // 중복 있으면 ( Nurse.Nurse_no가 dao.IdCheck(Nurse)에 의해 null 값임 )
                         {
+                            IsSignUpOk = true;
+                            MessageQueue.Enqueue("사용할 수 없는 아이디 입니다.", "닫기", (x) => { IsSignUpOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
                             SignupResult = false;
                             return SignupResult;
                         }

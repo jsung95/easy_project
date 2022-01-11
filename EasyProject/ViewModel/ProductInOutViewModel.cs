@@ -61,19 +61,19 @@ namespace EasyProject.ViewModel
         private void DeptChanged()
         {
             Console.WriteLine("DeptChanged!--------------------------------------------------------------------");
-            SearchKeyword_In = null; //검색 텍스트 초기화
-            searchKeyword_Out = null; //검색 텍스트 초기화
+            SearchKeyword_In = ""; //검색 텍스트 초기화
+            searchKeyword_Out = ""; //검색 텍스트 초기화
 
             SelectedStartDate_In = Convert.ToDateTime(product_dao.GetProductIn_MinDate(SelectedDept)); //날짜 컨트롤 최대, 최소 날짜로 설정
             //SelectedEndDate_In = Convert.ToDateTime(product_dao.GetProductIn_MaxDate(SelectedDept));
             SelectedEndDate_In = DateTime.Today;
 
-            SelectedStartDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MinDate(SelectedDept));
+            //SelectedStartDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MinDate(SelectedDept));
             //SelectedEndDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MaxDate(SelectedDept));
-            SelectedEndDate_Out = DateTime.Today;
+            //SelectedEndDate_Out = DateTime.Today;
 
-            getProductIn_By_Date();
-            getProductOut_By_Date();
+            //getProductIn_By_Date(); -> 날짜 바뀌는 부분에서 실행됨
+            //getProductOut_By_Date();
         }
 
         private bool isDataGridCheckBoxChecked = true;
@@ -642,9 +642,10 @@ namespace EasyProject.ViewModel
             {
                 selectedStartDate_In = value;
                                                                                          
-                SearchKeyword_In = null;
-                SearchKeyword_Out = null;
+                SearchKeyword_In = "";
+                SearchKeyword_Out = "";
                 getProductIn_By_Date();
+                getProductOut_By_Date();
                 if (selectedStartDate_In > selectedEndDate_In)
                 {
                     SelectedStartDate_In = SelectedEndDate_In.Value.AddDays(-1);
@@ -666,8 +667,8 @@ namespace EasyProject.ViewModel
                 selectedEndDate_In = value;
 
                 //ShowProductIn_By_Date();
-                SearchKeyword_In = null;
-                SearchKeyword_Out = null;
+                SearchKeyword_In = "";
+                SearchKeyword_Out = "";
 
                 getProductIn_By_Date();
                 getProductOut_By_Date();

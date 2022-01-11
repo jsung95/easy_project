@@ -231,8 +231,8 @@
                             <TextBlock VerticalAlignment="Bottom" Margin="7">
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}{0} of {1}">
-                                        <Binding Path="InCurrentPage" />
-                                        <Binding Path="InNumberOfPages" />
+                                        <Binding Path="OutCurrentPage" />
+                                        <Binding Path="OutNumberOfPages" />
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>

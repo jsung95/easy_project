@@ -211,7 +211,7 @@ namespace EasyProject.ViewModel
             }
             Normal_users = user_dao.GetUserInfo("NORMAL"); // 사용자들을 검색할 리스트 갱신
             Admin_users = user_dao.GetUserInfo("ADMIN");   // 사용자들을 검색할 리스트 갱신
-            AuthSearchDept = SearchDeptList[0]; // ADMIN 부서 카테고리 "전체"로 변경
+            //AuthSearchDept = SearchDeptList[0]; // ADMIN 부서 카테고리 "전체"로 변경
 
         }//MoveRight
 
