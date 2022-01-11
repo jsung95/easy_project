@@ -1,4 +1,5 @@
 ﻿using EasyProject.ViewModel;
+using log4net;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
@@ -23,8 +24,10 @@ namespace EasyProject.View
     /// </summary>
     public partial class PasswordChangePage : Page
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         public PasswordChangePage()
         {
+            log.Info("Constructor PasswordChangePage() invoked.");
             InitializeComponent();
             backBtn.Click += backBtn_Click;
             //pwChangeBtn.Click += pwChangeBtn_Click;
@@ -35,14 +38,44 @@ namespace EasyProject.View
 
         private async void pwChangeBtn_Click(object sender, RoutedEventArgs e)
         {
-            //다이얼로그 창 먼저 끄기 
-            PasswordDialogHost.IsOpen = false;
+            log.Info("pwChangeBtn_Click(object, RoutedEventArgs) invoked.");
+            try
+            {
+                //다이얼로그 창 먼저 끄기 
+                PasswordDialogHost.IsOpen = false;
 
-            var temp = Ioc.Default.GetService<PasswordChangeViewModel>();
-            var pwChangeTask = Task.Run(() => temp.PasswordChange());
-            bool pwChangeResult = await pwChangeTask; // loginTask가 끝나면 결과를 loginResult에 할당
+                var temp = Ioc.Default.GetService<PasswordChangeViewModel>();
+                var pwChangeTask = Task.Run(() => temp.PasswordChange());
+                bool pwChangeResult = await pwChangeTask; // loginTask가 끝나면 결과를 loginResult에 할당
+
+                if (pwChangeResult == true)
+                {
+                    if (this.NavigationService.CanGoBack)
+                    {
+                        this.NavigationService.GoBack();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No entries in back navigation history.");
+                    }
+                    //NavigationService.Navigate( new Uri("/View/LoginPage.xaml", UriKind.Relative) ); //로그인 화면
+                }
+                else
+                {
+                    return;
+                }
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
             
-            if (pwChangeResult == true)
+        }//pwChangeBtn_Click
+
+        private void backBtn_Click(object sender, RoutedEventArgs e)
+        {
+            log.Info("backBtn_Click(object, RoutedEventArgs) invoked");
+            try
             {
                 if (this.NavigationService.CanGoBack)
                 {
@@ -52,24 +85,12 @@ namespace EasyProject.View
                 {
                     MessageBox.Show("No entries in back navigation history.");
                 }
-                //NavigationService.Navigate( new Uri("/View/LoginPage.xaml", UriKind.Relative) ); //로그인 화면
             }
-            else
+            catch(Exception ex)
             {
-                return;
+                log.Error(ex.Message);
             }
-        }//pwChangeBtn_Click
-
-        private void backBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.NavigationService.CanGoBack)
-            {
-                this.NavigationService.GoBack();
-            }
-            else
-            {
-                MessageBox.Show("No entries in back navigation history.");
-            }
+        
         }
 
 
