@@ -6,13 +6,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Oracle.ManagedDataAccess.Client;
+using log4net;
 
 namespace EasyProject.Dao
 {
     public class CategoryDao : CommonDBConn
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
+
         public List<CategoryModel> GetCategories()
         {
+            log.Info("GetCategories() invoked.");
+
             List<CategoryModel> list = new List<CategoryModel>();
 
             try
@@ -48,7 +53,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return list;
@@ -57,6 +62,7 @@ namespace EasyProject.Dao
 
         public int GetCategoryID(string category_name)
         {
+            log.Info("GetCategoryID(string) invoked");
             int category_id = 0;
 
             try
@@ -89,7 +95,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return category_id;
@@ -97,6 +103,7 @@ namespace EasyProject.Dao
 
         public List<CategoryModel> GetCategoriesvalues()
         {
+            log.Info("GetCategoriesvalues() invoked.");
             List<CategoryModel> list = new List<CategoryModel>();
 
             try
@@ -133,7 +140,8 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+
+                log.Error(e.Message);
             }//catch
 
             return list;
@@ -145,6 +153,7 @@ namespace EasyProject.Dao
 
         public bool IsExistsCategory(string Category_name)
         {
+            log.Info("IsExistsCategory(string) invoked.");
             bool result = false;
             try
             {
@@ -178,7 +187,7 @@ namespace EasyProject.Dao
             }//try
             catch(Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return result;
@@ -188,6 +197,7 @@ namespace EasyProject.Dao
 
         public void AddCategory(string Category_name)
         {
+            log.Info("AddCategory(string) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -213,7 +223,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
         }//AddCategory
 

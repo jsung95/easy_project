@@ -1,5 +1,6 @@
 ﻿using EasyProject.Model;
 using EasyProject.Util;
+using log4net;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,10 @@ namespace EasyProject.Dao
 {
     public class SignupDao : CommonDBConn, ISignupDao //DB연결 Class 및 인터페이스 상속
     {
-
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         public List<DeptModel> GetDeptModels()
         {
+            log.Info("GetDeptModels() invoked.");
             List<DeptModel> list = new List<DeptModel>();
             try
             {
@@ -50,7 +52,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return list; // DeptModel 객체들이 담긴 list 리턴
@@ -59,7 +61,7 @@ namespace EasyProject.Dao
 
         public void SignUp(NurseModel nurse_dto, DeptModel dept_dto)
         {
-            
+            log.Info("SignUp(NurseModel, DeptModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -92,13 +94,14 @@ namespace EasyProject.Dao
             }//try
             catch(Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
         }//SignUp(string sql)
 
         public NurseModel IdCheck(NurseModel nurse_dto)
         {
+            log.Info("IdCheck(NurseModel) invoked.");
             
             try
             {
@@ -131,7 +134,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return nurse_dto;

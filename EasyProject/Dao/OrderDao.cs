@@ -1,4 +1,5 @@
 ﻿using EasyProject.Model;
+using log4net;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,10 @@ namespace EasyProject.Dao
 {
     public class OrderDao : CommonDBConn, IOrderDao
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         public List<DeptModel> GetDeptModels()
         {
+            log.Info("GetDeptModels() invoked.");
             List<DeptModel> list = new List<DeptModel>();
             try
             {
@@ -48,7 +51,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return list; // DeptModel 객체들이 담긴 list 리턴
