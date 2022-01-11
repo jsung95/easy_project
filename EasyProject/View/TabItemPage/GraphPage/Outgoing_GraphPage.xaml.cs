@@ -36,18 +36,7 @@ namespace EasyProject.View.TabItemPage.GraphPage
         }
         
 
-        private void LeftBtn_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate
-                (
-                new Uri("/View/TabItemPage/GraphPage/Incoming_GraphPage.xaml", UriKind.Relative) //재고현황화면 --테스트
-                );
-            var dash = Ioc.Default.GetService<ProductInOutViewModel>();
-            //temp.DashboardPrint();
-            dash.DashboardPrint2(dash.SelectedStartDate_In, dash.SelectedEndDate_In);
-            dash.DashboardPrint3(dash.SelectedStartDate_In, dash.SelectedEndDate_In);
-            dash.DashboardPrint_Pie();
-        }
+      
 
         private void RightBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -57,8 +46,8 @@ namespace EasyProject.View.TabItemPage.GraphPage
                 );
             var dash = Ioc.Default.GetService<ProductInOutViewModel>();
             //temp.DashboardPrint();
-            dash.DashboardPrint2(dash.SelectedStartDate_In, dash.SelectedEndDate_In);
-            dash.DashboardPrint3(dash.SelectedStartDate_In, dash.SelectedEndDate_In);   //입고
+            dash.DashboardPrint2(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
+            
             //temp.DashboardPrint4(temp.SelectedCategory1);
             dash.DashboardPrint_Pie();
             //dash.DashboardPrint2(dash.SelectedDept);

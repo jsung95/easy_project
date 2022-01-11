@@ -6,16 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Oracle.ManagedDataAccess.Client;
-
+using log4net;
 
 namespace EasyProject.Dao
 {
     public class DeptDao : CommonDBConn, IDeptDao
     {
-        
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
 
         public List<DeptModel> GetDepts()
         {
+            log.Info("GetDepts() invoked.");
             List<DeptModel> list = new List<DeptModel>();
 
             try
@@ -54,7 +55,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return list;
@@ -65,6 +66,7 @@ namespace EasyProject.Dao
 
         public DeptModel GetDeptName(int dept_id)
         {
+            log.Info("GetDeptName(int) invoked.");
             DeptModel dto = new DeptModel();
             try
             {
@@ -96,7 +98,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return dto;
@@ -104,6 +106,7 @@ namespace EasyProject.Dao
 
         public string GetDeptName_Return_String(int dept_id)
         {
+            log.Info("GetDeptName_Return_String(int) invoked.");
             string result = null;
             try
             {
@@ -135,7 +138,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return result;

@@ -6,15 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Oracle.ManagedDataAccess.Client;
+using log4net;
 
 namespace EasyProject.Dao
 {
     public class LoginDao : CommonDBConn, ILoginDao
-    {       
-
+    {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         public NurseModel LoginUserInfo(NurseModel nurse_dto)
         {
-            
+            log.Info("LoginUserInfo(NurseModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -57,7 +58,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return nurse_dto;
@@ -65,6 +66,7 @@ namespace EasyProject.Dao
 
         public bool IdPasswordCheck(string nurse_no, string nurse_pw)
         {
+            log.Info("IdPasswordCheck(string, string) invoked.");
             bool result = false;
             try
             {
@@ -100,7 +102,7 @@ namespace EasyProject.Dao
             }//try
             catch(Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return result;
@@ -108,6 +110,7 @@ namespace EasyProject.Dao
 
         public bool IdPasswordCheck(NurseModel nurse_dto)
         {
+            log.Info("IdPasswordCheck(NurseModel) invoked.");
             bool result = false;
             try
             {
@@ -144,13 +147,14 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
             return result;
         }//IdPasswordCheck()
 
         public void PasswordChange(NurseModel nurse_dto, string newPassword)
         {
+            log.Info("PasswordChange(NurseModel, string) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -180,7 +184,7 @@ namespace EasyProject.Dao
 
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
         }//PasswordChange
@@ -188,6 +192,7 @@ namespace EasyProject.Dao
         
         public void Login_Logging(NurseModel nurse_dto)
         {
+            log.Info("Login_Logging(NurseModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -219,7 +224,7 @@ namespace EasyProject.Dao
             }//try
             catch(Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
         }//Login_Logging
@@ -227,6 +232,7 @@ namespace EasyProject.Dao
 
         public void Logout_Logging(NurseModel nurse_dto)
         {
+            log.Info("Logout_Logging(NurseModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -258,7 +264,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
         }//Logout_Logging

@@ -43,14 +43,13 @@ namespace EasyProject.View
 
         private void resetBtn_Click(object sender, RoutedEventArgs e)
         {
-            //id_TxtBox.Text = null;
-            //dept_TxtBox = null;
-            //phone_TxtBox.Text = null;
-            prodcode_TxtBox.Text = null;
-            prodname_TxtBox.Text = null;
-            categoryname_TxtBox.Text = null;
-            prodprice_TxtBox.Text = null;
-            prodcount_TxtBox.Text = null;
+            
+            //prodcode_TxtBox.Text = null;
+            //prodname_TxtBox.Text = null;
+            //categoryname_TxtBox.Text = null;
+            //prodprice_TxtBox.Text = null;
+            //prodcount_TxtBox.Text = null;
+
             memo_TxtBox.Text = null;
 
         }
