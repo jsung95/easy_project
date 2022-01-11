@@ -18,6 +18,7 @@ using EasyProject.Model;
 using System.Globalization;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using EasyProject.ViewModel;
+using log4net;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -26,11 +27,13 @@ namespace EasyProject.View.TabItemPage
     /// </summary>
     public partial class IncomingOutgoingList2Page : Page
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         public int i = 0;
         public String userDept00 = null;
         public bool isComboBoxDropDownOpened = false;
         public IncomingOutgoingList2Page()
         {
+            log.Info("Constructor IncomingOutgoingList2Page() invoked.");
             InitializeComponent();
             export_btn.Click += Export_btn_Click;
             // userDept00 = (deptName_ComboBox1.SelectedValue as DeptModel).Dept_name;
@@ -43,14 +46,23 @@ namespace EasyProject.View.TabItemPage
         }
         private void OnDropDownOpened(object sender, EventArgs e)
         {
-            isComboBoxDropDownOpened = true;
-
-            var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
-            var deptNameText = deptModelObject.Dept_name;
-            userDept00 = deptNameText.ToString();
+            log.Info("OnDropDownOpened(object, EventArgs) invoked.");
+            try
+            {
+                isComboBoxDropDownOpened = true;
+                var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
+                var deptNameText = deptModelObject.Dept_name;
+                userDept00 = deptNameText.ToString();
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+            
         }
         private void Export_btn_Click(object sender, RoutedEventArgs e)
         {
+            log.Info("Export_btn_Click(object, RoutedEventArgs) invoked.");
             try
             {
                 dataGrid2.SelectAllCells();
@@ -94,6 +106,7 @@ namespace EasyProject.View.TabItemPage
             }
             catch (Exception ex)
             {
+                log.Error(ex.Message);
                 //로그 Level : error
             }
         }

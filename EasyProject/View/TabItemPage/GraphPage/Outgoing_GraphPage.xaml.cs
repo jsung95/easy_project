@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using EasyProject.Model;
 using EasyProject.ViewModel;
+using log4net;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 
 namespace EasyProject.View.TabItemPage.GraphPage
@@ -23,15 +24,12 @@ namespace EasyProject.View.TabItemPage.GraphPage
     /// </summary>
     public partial class Outgoing_GraphPage : Page
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         public Outgoing_GraphPage()
         {
+            log.Info("Constructor Outgoing_GraphPage() invoked.");
             InitializeComponent();
             var temp = Ioc.Default.GetService<ProductInOutViewModel>();
-            //temp.DashboardPrint();
-
-            //temp.DashboardPrint2();   //출고
-            //temp.DashboardPrint3();   //입고
-            //temp.DashboardPrint4(temp.SelectedCategory1);
             temp.DashboardPrint_Pie();
         }
         
@@ -40,17 +38,23 @@ namespace EasyProject.View.TabItemPage.GraphPage
 
         private void RightBtn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate
+            log.Info("RightBtn_Click(object, RoutedEventArgs) invoked.");
+            try
+            {
+                NavigationService.Navigate
                 (
                 new Uri("/View/TabItemPage/GraphPage/DiscardProdPrice_GraphPage.xaml", UriKind.Relative) //재고현황화면 --테스트
                 );
-            var dash = Ioc.Default.GetService<ProductInOutViewModel>();
-            //temp.DashboardPrint();
-            dash.DashboardPrint2(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
+                var dash = Ioc.Default.GetService<ProductInOutViewModel>();
+                dash.DashboardPrint2(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
+                dash.DashboardPrint_Pie();
+                
+            }
+            catch (Exception ex) 
+            {
+                log.Error(ex.Message);
+            }
             
-            //temp.DashboardPrint4(temp.SelectedCategory1);
-            dash.DashboardPrint_Pie();
-            //dash.DashboardPrint2(dash.SelectedDept);
         }
     }
 }

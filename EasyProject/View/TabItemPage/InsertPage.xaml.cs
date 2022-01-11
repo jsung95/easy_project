@@ -1,4 +1,5 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using log4net;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,19 +22,39 @@ namespace EasyProject.View
     /// </summary>
     public partial class InsertPage : Page
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         public InsertPage()
         {
+            log.Info("Constructor InsertPage() invoked.");
             InitializeComponent();
             formBtn.Click += formBtn_Click;
             excelBtn.Click += excelBtn_Click;
         }
         private void formBtn_Click(object sender, RoutedEventArgs e)
         {
-            InsertPageFrame.Source = new Uri("InsertPage_Form.xaml", UriKind.Relative);
+            log.Info("formBtn_Click(object, RoutedEventArgs) invoked.");
+            try
+            {
+                InsertPageFrame.Source = new Uri("InsertPage_Form.xaml", UriKind.Relative);
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+            
         }
         private void excelBtn_Click(object sender, RoutedEventArgs e)
         {
-            InsertPageFrame.Source = new Uri("InsertPage_Excel.xaml", UriKind.Relative);
+            log.Info("excelBtn_Click(object, RoutedEventArgs) invoked.");
+            try
+            {
+                InsertPageFrame.Source = new Uri("InsertPage_Excel.xaml", UriKind.Relative);
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+            
         }
     }
 }

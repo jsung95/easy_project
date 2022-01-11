@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,27 +21,38 @@ namespace EasyProject.View.TabItemPage
     /// </summary>
     public partial class GraphTabPage : Page
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         public GraphTabPage()
         {
+            log.Info("Constructor GraphTabPage() invoked.");
             InitializeComponent();
         }
 
         private void TabButtonClick(object sender, RoutedEventArgs e)       //버튼 창닫기
         {
-            int index = int.Parse(((Button)e.Source).Uid);
-
-            GridCursor.Margin = new Thickness((150 * index), 0, 0, 0);
-
-            switch (index)
+            log.Info("TabButtonClick(object, RoutedEventArgs) invoked.");
+            try
             {
-                case 0:
-                    TabFrame.Source = new Uri("GraphPage/AllGraphPage.xaml", UriKind.Relative);
-                    break;
-                case 1:
-                    TabFrame.Source = new Uri("GraphPage/ChoiceGraphPage.xaml", UriKind.Relative);
-                    break;
-               
+                int index = int.Parse(((Button)e.Source).Uid);
+
+                GridCursor.Margin = new Thickness((150 * index), 0, 0, 0);
+
+                switch (index)
+                {
+                    case 0:
+                        TabFrame.Source = new Uri("GraphPage/AllGraphPage.xaml", UriKind.Relative);
+                        break;
+                    case 1:
+                        TabFrame.Source = new Uri("GraphPage/ChoiceGraphPage.xaml", UriKind.Relative);
+                        break;
+
+                }
             }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+            
         }
     }
 }

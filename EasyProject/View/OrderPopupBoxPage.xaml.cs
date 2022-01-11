@@ -1,4 +1,5 @@
 ﻿using EasyProject.ViewModel;
+using log4net;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
@@ -26,16 +27,18 @@ namespace EasyProject.View
     /// </summary>
     public partial class OrderPopupBoxPage : Page
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         private int index = 1;
 
         public OrderPopupBoxPage()
         {
             InitializeComponent();
-
+            log.Info("Constructor OrderPopupBoxPage() invoked.");
 
         }
         public void pdfBtn_Click(object e, RoutedEventArgs arg)
         {
+            log.Info("pdfBtn_Click(object, RoutedEventArgs) invoked.");
             try
             {
                 printBtn.Visibility = Visibility.Hidden;
@@ -90,7 +93,7 @@ namespace EasyProject.View
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                log.Error(ex.Message);
             }
             finally
             {
@@ -105,15 +108,23 @@ namespace EasyProject.View
         //초기화버튼
         public void resetBtn_Click(object e, RoutedEventArgs arg)
         {
-
-            prodprice_Textbox.Text = null;
-            memo_TxtBox.Text = null;
+            log.Info("resetBtn_Click(object, RoutedEventArgs) invoked.");
+            try
+            {     
+                prodprice_Textbox.Text = null;
+                memo_TxtBox.Text = null;
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+          
         }
 
         //인쇄버튼
         private void PrintBtn(object sender, RoutedEventArgs e)
         {
-
+            log.Info("PrintBtn(object, RoutedEventArgs) invoked.");
             try
             {
                 printBtn.Visibility = Visibility.Hidden;
@@ -130,7 +141,7 @@ namespace EasyProject.View
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                log.Error(ex.Message);
             }
             finally
             {

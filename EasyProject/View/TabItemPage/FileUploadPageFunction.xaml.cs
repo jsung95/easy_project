@@ -10,6 +10,7 @@ using System.Windows.Data;
 using EasyProject.ViewModel;
 using EasyProject.Model;
 using System.Collections.Generic;
+using log4net;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -18,10 +19,12 @@ namespace EasyProject.View.TabItemPage
     /// </summary>
     public partial class FileUploadPageFunction : PageFunction<String>
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         private OpenFileDialog openFileDialog;
 
         public FileUploadPageFunction(OpenFileDialog openFileDialog)
         {
+            log.Info("Constructor FileUploadPageFunction() invoked.");
             InitializeComponent();
             //this.DataContext = new ProductViewModel();
 
@@ -31,11 +34,21 @@ namespace EasyProject.View.TabItemPage
 
             ((ProductViewModel)(this.DataContext)).OpenFileDialog = openFileDialog.FileName;
             SetFileNameTxtBlock();
-        }
+        }//FileUploadPageFunction
 
         private string GetFileName(OpenFileDialog openFileDialog)
         {
-            return System.IO.Path.GetFileName(openFileDialog.FileName);
+            log.Info(" GetFileName(OpenFileDialog) invoked.");
+            try
+            {
+                return System.IO.Path.GetFileName(openFileDialog.FileName);
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+            
         }
         private void SetFileNameTxtBlock()
         {

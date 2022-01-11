@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using EasyProject.ViewModel;
 using EasyProject.Model;
+using log4net;
 
 namespace EasyProject.View.TabItemPage.GraphPage
 {
@@ -23,8 +24,10 @@ namespace EasyProject.View.TabItemPage.GraphPage
     /// </summary>
     public partial class DeptCate_GraphPage : Page
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         public DeptCate_GraphPage()
         {
+            log.Info("Constructor DeptCate_GraphPage() invoked.");
             InitializeComponent();
             var dash = Ioc.Default.GetService<ProductShowViewModel>();
             //temp.DashboardPrint();
@@ -33,15 +36,22 @@ namespace EasyProject.View.TabItemPage.GraphPage
 
         private void rightBtn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate
-                (
-                new Uri("/View/TabItemPage/GraphPage/RemainExpire_GraphPage.xaml", UriKind.Relative) //재고현황화면 --테스트
-                );
+            log.Info("rightBtn_Click(object, RoutedEventArgs) invoked.");
+            try
+            {
+                NavigationService.Navigate
+                               (
+                               new Uri("/View/TabItemPage/GraphPage/RemainExpire_GraphPage.xaml", UriKind.Relative) //재고현황화면 --테스트
+                               );
 
-            var dash = Ioc.Default.GetService<ProductShowViewModel>();
-            //temp.DashboardPrint();
-            //dash.DashboardPrint1(dash.SelectedDept, dash.SelectedCategory1);
-            dash.DashboardPrint2(dash.SelectedDept);
+                var dash = Ioc.Default.GetService<ProductShowViewModel>();
+                dash.DashboardPrint2(dash.SelectedDept);
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+            
         }
     }
 }
