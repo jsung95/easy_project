@@ -23,7 +23,8 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="1" Margin="5" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <materialDesign:PackIcon Grid.Row="0" Kind="MicrosoftExcel" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="60" Width="60" />
+                        <materialDesign:PackIcon Grid.Row="0" Kind="filecsv" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="60" Width="60" />
+                        <Label VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="SemiBold">csv파일을 선택해주세요</Label>
                         <StackPanel Margin="0 20" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Button x:Name="fileUploadBtn" Margin="20 0"  Grid.Row="1" Background="LightBlue" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
                        VerticalAlignment="Top" BorderThickness="0" Height="30" Width="120" Cursor="Hand" Click="fileDownLoadBtn_Click">

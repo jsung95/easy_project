@@ -39,12 +39,8 @@ namespace EasyProject.View.TabItemPage
         {
             log.Info("fileDownLoadBtn_Click(object, RoutedEventArgs) invoked.");
             try
-            {
-                String result = "제품코드,제품명,품목/종류,유통기한,가격,수량\n";
-                result += "ex) A123,주사기,치과재료,2022-11-12,25000,10";
-                string today = String.Format(DateTime.Now.ToString("yyyyMMddhhmmss"));
-                string f_path = @"c:\temp\재고입력폼" + today + ".csv";
-                File.AppendAllText(f_path, result, UnicodeEncoding.UTF8);
+            {    
+                string f_path = @"C:\Users\user\Documents\GitHub\easy_project\EasyProject\ExcelFile\재고입력폼.xlsx";
 
                 Excel.Application excel_app = new Excel.Application();
 
@@ -85,7 +81,8 @@ namespace EasyProject.View.TabItemPage
             try
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "csv 파일 (*.csv)|*.csv|엑셀 파일 (*.xls)|*.xls|엑셀 파일 (*.xlsx)|*.xlsx";
+                //openFileDialog.Filter = "csv 파일 (*.csv)|*.csv|엑셀 파일 (*.xls)|*.xls|엑셀 파일 (*.xlsx)|*.xlsx";
+                openFileDialog.Filter = "csv 파일 (*.csv)|*.csv";
 
                 if (openFileDialog.ShowDialog() == true)
                 {
