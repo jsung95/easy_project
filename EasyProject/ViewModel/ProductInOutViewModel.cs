@@ -645,6 +645,7 @@ namespace EasyProject.ViewModel
                 SearchKeyword_In = null;
                 SearchKeyword_Out = null;
                 getProductIn_By_Date();
+                getProductOut_By_Date();
                 if (selectedStartDate_In > selectedEndDate_In)
                 {
                     SelectedStartDate_In = SelectedEndDate_In.Value.AddDays(-1);
