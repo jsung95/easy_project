@@ -37,6 +37,7 @@
             <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
             <Setter Property="Cursor" Value="Hand" />
         </Style>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Page.Resources>
 
     <Grid Height="450" Width="1200" HorizontalAlignment="Left" >
@@ -138,7 +139,7 @@
                             </Grid>
                         </Grid>
                     </Grid>
-
+                    <TextBlock Text="조회 가능한 데이터가 없습니다." TextAlignment="Center"  Visibility="{Binding Items.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=dataGrid}" Margin="0,27,0,279" Grid.Row="1"/>
                     <Grid Grid.Row="1">
                         <DataGrid x:Name="dataGrid1" Grid.Row="1" HorizontalAlignment="Left" Margin="10 0"
                             AllowDrop="False" VerticalAlignment="Top" AutoGenerateColumns="False"
