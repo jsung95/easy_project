@@ -67,12 +67,6 @@ namespace EasyProject.ViewModel
             List<CategoryModel> list = dao.GetCategoryModels();
             Categories = new ObservableCollection<CategoryModel>(list); // List타입 객체 list를 OC 타입 Products에 넣음                                                           
 
-            CategoryModel addCategoryDto = new CategoryModel();
-            addCategoryDto.Category_id = null;
-            addCategoryDto.Category_name = "추가(입력)하기";
-
-            Categories.Add(addCategoryDto);
-
             //App.xaml.cs 에 로그인할 때 바인딩 된 로그인 정보 객체
             Nurse = App.nurse_dto;
 

@@ -99,12 +99,6 @@ namespace EasyProject.ViewModel
             DeptsForPopupBox.RemoveAt((int)App.nurse_dto.Dept_id - 1); // 현재 사용자의 부서는 목록에서 제거
             Categories = new ObservableCollection<CategoryModel>(category_dao.GetCategories());                                                       
 
-            CategoryModel addCategoryDto = new CategoryModel();
-            addCategoryDto.Category_id = null;
-            addCategoryDto.Category_name = "추가(입력)하기";
-
-            Categories.Add(addCategoryDto);
-
             //App.xaml.cs 에 로그인할 때 바인딩 된 로그인 정보 객체
             Nurse = App.nurse_dto;
             //SelectedProductList = new List<ProductShowModel>();
@@ -704,32 +698,15 @@ namespace EasyProject.ViewModel
 
         public void EditProduct()
         {
-            Console.WriteLine("재고수정");
-            //var selectedProductRowNumber = LstOfRecords.IndexOf(SelectedProduct);
-            //Console.WriteLine(selectedProductRowNumber+"번째 제품의 재고수정 버튼을 클릭하였습니다.");
-
-            //Console.WriteLine(selectedProductRowNumber + "리스트에 있는 몇번째 ?");
-            //Console.WriteLine(SelectedProductIndex + "데이터그리드에 있는 몇번째 ?");
-
-            //if (selectedProductRowNumber == SelectedProductIndex + SelectedRecord * (CurrentPage - 1))
-            //{
-            //    Console.WriteLine("정답!");
-            //    IsEditButtonClicked = true;
-            //}
-
             product_dao.ChangeProductInfo(SelectedProduct);
             product_dao.ChangeProductInfo_IMP_DEPT(SelectedProduct);
-            ObservableCollection<CategoryModel> list = new ObservableCollection<CategoryModel>(category_dao.GetCategories());
-            Categories.Clear();
-            foreach (var item in list)
-            {
-                Categories.Add(item);
-            }
-            CategoryModel addCategoryDto = new CategoryModel();
-            addCategoryDto.Category_id = null;
-            addCategoryDto.Category_name = "추가(입력)하기";
+            //ObservableCollection<CategoryModel> list = new ObservableCollection<CategoryModel>(category_dao.GetCategories());
+            //Categories.Clear();
+            //foreach (var item in list)
+            //{
+            //    Categories.Add(item);
+            //}
 
-            Categories.Add(addCategoryDto);
             //CategoryModel newCategoryDao = new CategoryModel();
             //var cateGoryId = category_dao.GetCategoryID(SelectedProduct.Category_name);
             //newCategoryDao.Category_id = cateGoryId;
@@ -743,6 +720,8 @@ namespace EasyProject.ViewModel
             UpdateRecordCount();
 
             DashboardPrint2(selectedDept);
+
+            //DialogHost.ShowDialog(null);
         }
         #endregion
 

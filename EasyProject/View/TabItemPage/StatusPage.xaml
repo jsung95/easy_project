@@ -58,8 +58,8 @@
                                                  Margin="20, 25, 20, 20"
                                                  Grid.Column="0" />
                     <StackPanel Margin="20" Grid.Column="1"  MinWidth="180">
-                        <TextBlock Text="로그아웃" FontSize="15" FontWeight="UltraBold"></TextBlock>
-                        <TextBlock Text="로그아웃 하시겠습니까?" FontSize="13" FontWeight="SemiBold"
+                        <TextBlock Text="재고수정" FontSize="15" FontWeight="UltraBold"></TextBlock>
+                        <TextBlock Text="재고수정 하시겠습니까?" FontSize="13" FontWeight="SemiBold"
                                        Margin="0,20,0,0"></TextBlock>
                     </StackPanel>
                 </Grid>
@@ -67,7 +67,7 @@
                     <Button Content="취소" Background="#EAEAEA" Foreground="Black"
                             Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"></Button>
                     <Button Content="확인" Background="#4472C4" Foreground="White" Margin="30,0,0,0"
-                            ></Button>
+                            Command="{Binding ProductEditCommand}"></Button>
 
                 </StackPanel>
             </StackPanel>
@@ -203,7 +203,7 @@
                         </Grid>
                     </Grid>
                         <TextBlock Text="조회 가능한 데이터가 없습니다." TextAlignment="Center"  Visibility="{Binding Items.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=dataGrid}" Margin="10,28,0,268" Grid.Row="1" />
-                        <DataGrid x:Name="dataGrid" Grid.Row="1"
+                        <DataGrid x:Name="dataGrid" Grid.Row="1" FocusVisualStyle="{x:Null}"
                             HorizontalAlignment="Left" Margin="10 0"
                             AllowDrop="False" PreviewKeyDown="DataGridKeyDown"
                             VerticalAlignment="Top" AutoGenerateColumns="False"
@@ -292,13 +292,8 @@
                                 <DataGridComboBoxColumn.EditingElementStyle>
                                     <Style TargetType="{x:Type ComboBox}">
                                         <EventSetter Event="SelectionChanged" Handler="SomeSelectionChanged"/>
-                                        <EventSetter Event="KeyDown" Handler="KeyDown"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding PSVM.ComboBoxCategoryName, Source={StaticResource Locator}}" Value="추가(입력)하기">
-                                                <Setter Property="IsEditable" Value="True"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
+
+                                        </Style>
                                 </DataGridComboBoxColumn.EditingElementStyle>
                             </DataGridComboBoxColumn>
 

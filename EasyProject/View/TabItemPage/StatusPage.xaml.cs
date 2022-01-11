@@ -107,8 +107,8 @@ namespace EasyProject.View.TabItemPage
                 {
                     Console.WriteLine(userDeptName + "같은 부서일때");
                     buttonColumn.Visibility = Visibility.Visible;
-                    //ModifyToggleButtonPanel.Visibility = Visibility.Visible;
-                    ModifyToggleButtonPanel.Visibility = Visibility.Hidden;
+                    ModifyToggleButtonPanel.Visibility = Visibility.Visible;
+                    //ModifyToggleButtonPanel.Visibility = Visibility.Hidden;
                 }
                 else
                 {
@@ -144,25 +144,32 @@ namespace EasyProject.View.TabItemPage
         {
             if (e.Key == Key.Enter)
             {
+
+
+                //dataGrid.SelectedCells[0].Column.GetCellContent;
+                dataGrid.Focus();
+                
+
                 //ErrorNotificationMessage msg = new ErrorNotificationMessage();
                 //msg.Message = "재고수정을 하시겠습니까?";
                 //await DialogHost.Show(msg, "RootDialog");
+                //DialogHost.ShowDialog(DialogHost.DialogContent);
 
-                
                 ((ProductShowViewModel)(this.DataContext)).EditProduct();
+                //DialogHost.CloseDialogCommand.Execute(null, null);
             }
         }
-        private void KeyDown(object sender, KeyEventArgs e)
-        {
-            var cmb = sender as ComboBox;
+        //private void KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    var cmb = sender as ComboBox;
 
-            if(e.Key == Key.Enter || e.Key == Key.Tab)
-            {
-                ((ProductShowViewModel)(this.DataContext)).AddNewCategory(cmb.Text);
-                ((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name = cmb.Text;
-                ((ProductShowViewModel)(this.DataContext)).EditProduct();
-            } 
-        }
+        //    if(e.Key == Key.Enter || e.Key == Key.Tab)
+        //    {
+        //        ((ProductShowViewModel)(this.DataContext)).AddNewCategory(cmb.Text);
+        //        ((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name = cmb.Text;
+        //        ((ProductShowViewModel)(this.DataContext)).EditProduct();
+        //    } 
+        //}
 
         private void OnDropDownOpened(object sender, EventArgs e)
         {
@@ -183,8 +190,8 @@ namespace EasyProject.View.TabItemPage
                     {
                         Console.WriteLine(userDeptName + "같은 부서일때");
                         buttonColumn.Visibility = Visibility.Visible;
-                        //ModifyToggleButtonPanel.Visibility = Visibility.Visible;
-                        ModifyToggleButtonPanel.Visibility = Visibility.Hidden;
+                        ModifyToggleButtonPanel.Visibility = Visibility.Visible;
+                        //ModifyToggleButtonPanel.Visibility = Visibility.Hidden;
                     }
                     else
                     {
