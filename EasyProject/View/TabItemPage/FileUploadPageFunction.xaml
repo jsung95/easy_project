@@ -53,8 +53,13 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                     -->
-                    <Button Content="추가하기" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
-                       VerticalAlignment="Center" BorderThickness="0" Height="30" Width="90" Cursor="Hand"  Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" />
+                    <Button  Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
+                       VerticalAlignment="Center" BorderThickness="0" Height="30" Width="90" Cursor="Hand"  Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" >
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="PlusBoxOutline" VerticalAlignment="Center" Height="20" Width="15" />
+                            <TextBlock Text="추가하기" FontSize="10" Margin="3" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
                 </Grid>
             </Grid>
         </materialDesign:Card>
