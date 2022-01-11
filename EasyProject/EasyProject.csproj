@@ -168,7 +168,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Dao\CategoryDao.cs" />
-    <Compile Include="Dao\DashBoardDao.cs" />
     <Compile Include="Dao\CommonDBConn.cs" />
     <Compile Include="Dao\DeptDao.cs" />
     <Compile Include="Dao\ICategoryDao.cs" />
@@ -198,7 +197,6 @@
     <Compile Include="Model\UserModel.cs" />
     <Compile Include="Util\PasswordHelper.cs" />
     <Compile Include="Util\SHA256Hash.cs" />
-    <Compile Include="ViewModel\DashBoardViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\NewProjectViewModel.cs" />
     <Compile Include="ViewModel\OrderViewModel.cs" />
@@ -233,17 +231,11 @@
     <Compile Include="View\TabItemPage\GraphPage\ChoiceGraphPage.xaml.cs">
       <DependentUpon>ChoiceGraphPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TabItemPage\GraphPage\AllGraphPage.xaml.cs">
-      <DependentUpon>AllGraphPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\TabItemPage\GraphPage\DeptCate_GraphPage.xaml.cs">
       <DependentUpon>DeptCate_GraphPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TabItemPage\GraphPage\DiscardProdPrice_GraphPage.xaml.cs">
       <DependentUpon>DiscardProdPrice_GraphPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\TabItemPage\GraphPage\DiscardProdPrice_GraphPage_Copy.xaml.cs">
-      <DependentUpon>DiscardProdPrice_GraphPage_Copy.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TabItemPage\GraphPage\Disposal_GraphPage.xaml.cs">
       <DependentUpon>Disposal_GraphPage.xaml</DependentUpon>
@@ -251,14 +243,8 @@
     <Compile Include="View\TabItemPage\GraphPage\Incoming_GraphPage.xaml.cs">
       <DependentUpon>Incoming_GraphPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TabItemPage\GraphPage\Incoming_GraphPage_Copy.xaml.cs">
-      <DependentUpon>Incoming_GraphPage_Copy.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\TabItemPage\GraphPage\Outgoing_GraphPage.xaml.cs">
       <DependentUpon>Outgoing_GraphPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\TabItemPage\GraphPage\Outgoing_GraphPage_Copy.xaml.cs">
-      <DependentUpon>Outgoing_GraphPage_Copy.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TabItemPage\GraphPage\RemainExpire_GraphPage.xaml.cs">
       <DependentUpon>RemainExpire_GraphPage.xaml</DependentUpon>
@@ -334,19 +320,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\TabItemPage\GraphPage\AllGraphPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\TabItemPage\GraphPage\DeptCate_GraphPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TabItemPage\GraphPage\DiscardProdPrice_GraphPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\TabItemPage\GraphPage\DiscardProdPrice_GraphPage_Copy.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -358,17 +336,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\TabItemPage\GraphPage\Incoming_GraphPage_Copy.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\TabItemPage\GraphPage\Outgoing_GraphPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\TabItemPage\GraphPage\Outgoing_GraphPage_Copy.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TabItemPage\GraphPage\RemainExpire_GraphPage.xaml">
       <SubType>Designer</SubType>

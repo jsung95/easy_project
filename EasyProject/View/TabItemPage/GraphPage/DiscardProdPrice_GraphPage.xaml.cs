@@ -29,8 +29,8 @@ namespace EasyProject.View.TabItemPage.GraphPage
             var dash = Ioc.Default.GetService<ProductInOutViewModel>();
             //temp.DashboardPrint();
             dash.DashboardPrint_Pie();
-            dash.DashboardPrint2(dash.SelectedStartDate_In, dash.SelectedEndDate_In);
-            dash.DashboardPrint3(dash.SelectedStartDate_In, dash.SelectedEndDate_In);
+            dash.DashboardPrint2(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
+            dash.DashboardPrint3(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
         }
 
         private void LeftBtn_Click(object sender, RoutedEventArgs e)
@@ -42,8 +42,8 @@ namespace EasyProject.View.TabItemPage.GraphPage
             var dash = Ioc.Default.GetService<ProductInOutViewModel>();
             //temp.DashboardPrint();
             dash.DashboardPrint_Pie();
-            dash.DashboardPrint2(dash.SelectedStartDate_In, dash.SelectedEndDate_In);
-            dash.DashboardPrint3(dash.SelectedStartDate_In, dash.SelectedEndDate_In);
+            dash.DashboardPrint2(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
+            dash.DashboardPrint3(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
             //dash.DashboardPrint2(dash.SelectedDept);
         }
     }

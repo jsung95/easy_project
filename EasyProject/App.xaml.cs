@@ -38,7 +38,6 @@ namespace EasyProject
                 .AddSingleton<SignupViewModel>()
                 .AddSingleton<PasswordChangeViewModel>()
                 .AddSingleton<ProductInOutViewModel>()
-                .AddSingleton<DashBoardViewModel>()
                 .AddSingleton<UserAuthViewModel>()
                 .BuildServiceProvider());
 
