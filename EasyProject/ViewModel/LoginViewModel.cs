@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using log4net;
+using MaterialDesignThemes.Wpf;
 
 namespace EasyProject.ViewModel
 {
@@ -32,8 +33,30 @@ namespace EasyProject.ViewModel
 
         public INavigation Navigation { get; set; }
 
+
+        //스넥바 메세지큐
+        private SnackbarMessageQueue messagequeue;
+        public SnackbarMessageQueue MessageQueue
+        {
+            get { return messagequeue; }
+            set
+            {
+                messagequeue = value;
+                OnPropertyChanged("MessageQueue");
+            }
+        }
+
+        private bool isLoginOk = false;
+        public bool IsLoginOk
+        {
+            get { return isLoginOk; }
+            set { isLoginOk = value; OnPropertyChanged("IsLoginOk"); }
+        }
+
+
         public LoginViewModel()
         {
+            messagequeue = new SnackbarMessageQueue();
             Nurse = new NurseModel();
         }
 
