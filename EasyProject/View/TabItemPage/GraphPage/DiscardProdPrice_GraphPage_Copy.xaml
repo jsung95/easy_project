@@ -19,7 +19,7 @@
             <RowDefinition Height="0.8*" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <Label Content="부서별 출고 유형의 총 수량 및 총 가격 " FontSize="15" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,0,0"></Label>
+            <Label Content="부서별 출고 유형의 제품 수량의 총 가격 TOP 5 " FontSize="15" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,0,0"></Label>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
