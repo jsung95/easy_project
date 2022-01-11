@@ -1903,6 +1903,7 @@ namespace EasyProject.Dao
                                           "LEFT OUTER JOIN NURSE N " +
                                           "ON I.nurse_no = N.nurse_no " +
                                           "WHERE I.nurse_no = :no " +
+                                          "AND I.PROD_IN_TYPE = '신규' " +
                                           "ORDER BY I.prod_in_date DESC";
 
                         cmd.Parameters.Add(new OracleParameter(":no", nurse_dto.Nurse_no));

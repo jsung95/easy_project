@@ -1,4 +1,6 @@
-﻿using PdfSharp.Drawing;
+﻿using EasyProject.ViewModel;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using System;
 using System.Collections.Generic;
@@ -78,7 +80,10 @@ namespace EasyProject.View
                 // Save the document...
                 string filename = @"C:\Users\user\Desktop\" + $"발주신청서{index}.pdf";
                 document.Save(filename);
-                MessageBox.Show($"발주신청서{index}.pdf 생성");
+
+                var temp = Ioc.Default.GetService<ProductShowViewModel>();
+                temp.IsInOutEnabled = false;
+                temp.MessageQueue.Enqueue($"발주신청서{index}.pdf 생성", "닫기", (x) => { temp.IsInOutEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                 index++;
                 Process.Start(filename);
 

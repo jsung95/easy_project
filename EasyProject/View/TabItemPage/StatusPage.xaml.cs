@@ -148,6 +148,7 @@ namespace EasyProject.View.TabItemPage
                 //msg.Message = "재고수정을 하시겠습니까?";
                 //await DialogHost.Show(msg, "RootDialog");
 
+                
                 ((ProductShowViewModel)(this.DataContext)).EditProduct();
             }
         }
