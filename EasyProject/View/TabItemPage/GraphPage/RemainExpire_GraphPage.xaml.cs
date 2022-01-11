@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using EasyProject.ViewModel;
 using EasyProject.Model;
+using log4net;
 
 namespace EasyProject.View.TabItemPage.GraphPage
 {
@@ -23,24 +24,34 @@ namespace EasyProject.View.TabItemPage.GraphPage
     /// </summary>
     public partial class RemainExpire_GraphPage : Page
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         public RemainExpire_GraphPage()
         {
+            log.Info("Constructor RemainExpire_GraphPage() invoked.");
             InitializeComponent();
             var dash = Ioc.Default.GetService<ProductShowViewModel>();
-            //temp.DashboardPrint();
             dash.DashboardPrint1(dash.SelectedDept, dash.SelectedCategory1, dash.SelectedNumber);
         }
 
         private void LeftBtn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate
+            log.Info("LeftBtn_Click(object, RoutedEventArgs) invoked.");
+            try 
+            {
+                NavigationService.Navigate
                 (
                 new Uri("/View/TabItemPage/GraphPage/DeptCate_GraphPage.xaml", UriKind.Relative) //재고현황화면 --테스트
                 );
-            var dash = Ioc.Default.GetService<ProductShowViewModel>();
-            //temp.DashboardPrint();
-            dash.DashboardPrint1(dash.SelectedDept, dash.SelectedCategory1, dash.SelectedNumber);
-            //dash.DashboardPrint2(dash.SelectedDept);
+                var dash = Ioc.Default.GetService<ProductShowViewModel>();
+               
+                dash.DashboardPrint1(dash.SelectedDept, dash.SelectedCategory1, dash.SelectedNumber);
+                
+            }
+            catch (Exception ex) 
+            {
+                log.Error(ex.Message);
+            }
+            
         }
     }
 }

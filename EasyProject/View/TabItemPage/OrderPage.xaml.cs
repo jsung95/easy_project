@@ -1,4 +1,5 @@
-﻿using PdfSharp.Drawing;
+﻿using log4net;
+using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,10 @@ namespace EasyProject.View
     public partial class OrderPage : Page
     {
         private int index = 1;
-        
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         public OrderPage()
         {
+            log.Info("Constructor OrderPage() invoked.");
             InitializeComponent();
         }
 
@@ -43,106 +45,131 @@ namespace EasyProject.View
 
         private void resetBtn_Click(object sender, RoutedEventArgs e)
         {
-            
+            log.Info("resetBtn_Click(object, RoutedEventArgs) invoked.");
+            try
+            {
+                memo_TxtBox.Text = null;
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
             //prodcode_TxtBox.Text = null;
             //prodname_TxtBox.Text = null;
             //categoryname_TxtBox.Text = null;
             //prodprice_TxtBox.Text = null;
             //prodcount_TxtBox.Text = null;
 
-            memo_TxtBox.Text = null;
+            
 
         }
 
         //인쇄 버튼
         private void printBtn_Click(object sender, RoutedEventArgs e)
         {
+            log.Info("printBtn_Click(object, RoutedEventArgs) invoked.");
             try
             {
-                printBtn.Visibility = Visibility.Hidden;
-                pdfBtn.Visibility = Visibility.Hidden;
-
-                PrintDialog printDialog = new PrintDialog();
-                if (printDialog.ShowDialog().GetValueOrDefault(false))
+                try
                 {
-                    printDialog.PrintVisual(NewPlaceOrder, "PlaceOrder");
+                    printBtn.Visibility = Visibility.Hidden;
+                    pdfBtn.Visibility = Visibility.Hidden;
+
+                    PrintDialog printDialog = new PrintDialog();
+                    if (printDialog.ShowDialog().GetValueOrDefault(false))
+                    {
+                        printDialog.PrintVisual(NewPlaceOrder, "PlaceOrder");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+                finally
+                {
+                    printBtn.Visibility = Visibility.Visible;
+                    pdfBtn.Visibility = Visibility.Visible;
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                log.Error(ex.Message);
             }
-            finally
-            {
-                printBtn.Visibility = Visibility.Visible;
-                pdfBtn.Visibility = Visibility.Visible;
-            }
-         
+            
 
         }
 
         //pdf 버튼
         private void pdfBtn_Click(object sender, RoutedEventArgs e)
         {
+            log.Info("pdfBtn_Click(object, RoutedEventArgs) invoked.");
             try
             {
-                printBtn.Visibility = Visibility.Hidden;
-                pdfBtn.Visibility = Visibility.Hidden;
+                try
+                {
+                    printBtn.Visibility = Visibility.Hidden;
+                    pdfBtn.Visibility = Visibility.Hidden;
 
-                //이미지로 저장(스크린 샷)
-                RenderTargetBitmap rtb = new RenderTargetBitmap((int)NewPlaceOrder.ActualWidth, (int)NewPlaceOrder.ActualHeight, 74, 74, PixelFormats.Pbgra32);
-                rtb.Render(NewPlaceOrder);
-                PngBitmapEncoder png = new PngBitmapEncoder();
-                png.Frames.Add(BitmapFrame.Create(rtb));
-                MemoryStream stream = new MemoryStream();
-                png.Save(stream);
+                    //이미지로 저장(스크린 샷)
+                    RenderTargetBitmap rtb = new RenderTargetBitmap((int)NewPlaceOrder.ActualWidth, (int)NewPlaceOrder.ActualHeight, 74, 74, PixelFormats.Pbgra32);
+                    rtb.Render(NewPlaceOrder);
+                    PngBitmapEncoder png = new PngBitmapEncoder();
+                    png.Frames.Add(BitmapFrame.Create(rtb));
+                    MemoryStream stream = new MemoryStream();
+                    png.Save(stream);
 
-                System.Drawing.Image image = System.Drawing.Image.FromStream(stream);
-                string stampFileName = @"C:\Users\user\Desktop\" + $"신규발주신청서{index}.png";
-                image.Save(stampFileName);
-
-
-
-
-                //sharpPDF이용해서 넣기
-                PdfDocument document = new PdfDocument();
-
-                // Create an empty page
-                PdfPage page = document.AddPage();
-
-                // Get an XGraphics object for drawing
-                XGraphics gfx = XGraphics.FromPdfPage(page);
-
-                // Create a font
-                XFont font = new XFont("Verdana", 20, XFontStyle.Bold);
-
-                XImage im = XImage.FromFile(@"C:\Users\user\Desktop\" + $"신규발주신청서{index}.png");
-
-                gfx.DrawImage(im, -150, 100, 700, 450);
+                    System.Drawing.Image image = System.Drawing.Image.FromStream(stream);
+                    string stampFileName = @"C:\Users\user\Desktop\" + $"신규발주신청서{index}.png";
+                    image.Save(stampFileName);
 
 
 
 
+                    //sharpPDF이용해서 넣기
+                    PdfDocument document = new PdfDocument();
 
-                // Save the document...
-                string filename = @"C:\Users\user\Desktop\" + $"신규발주신청서{index}.pdf";
-                document.Save(filename);
-                MessageBox.Show($"신규발주신청서{index}.pdf 생성");
-                index++;
-                Process.Start(filename);
+                    // Create an empty page
+                    PdfPage page = document.AddPage();
 
+                    // Get an XGraphics object for drawing
+                    XGraphics gfx = XGraphics.FromPdfPage(page);
+
+                    // Create a font
+                    XFont font = new XFont("Verdana", 20, XFontStyle.Bold);
+
+                    XImage im = XImage.FromFile(@"C:\Users\user\Desktop\" + $"신규발주신청서{index}.png");
+
+                    gfx.DrawImage(im, -150, 100, 700, 450);
+
+
+
+
+
+                    // Save the document...
+                    string filename = @"C:\Users\user\Desktop\" + $"신규발주신청서{index}.pdf";
+                    document.Save(filename);
+                    MessageBox.Show($"신규발주신청서{index}.pdf 생성");
+                    index++;
+                    Process.Start(filename);
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+                finally
+                {
+                    printBtn.Visibility = Visibility.Visible;
+                    pdfBtn.Visibility = Visibility.Visible;
+
+
+                }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                log.Error(ex.Message);
             }
-            finally
-            {
-                printBtn.Visibility = Visibility.Visible;
-                pdfBtn.Visibility = Visibility.Visible;
-              
-           
-            }
+            
             
        
 

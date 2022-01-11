@@ -16,7 +16,7 @@ using EasyProject.Model;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Excel = Microsoft.Office.Interop.Excel;
 using EasyProject.ViewModel;
-
+using log4net;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -25,12 +25,14 @@ namespace EasyProject.View.TabItemPage
     /// </summary>
     public partial class IncomingOutgoingList1Page : Page
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         public String userDept00 = null;
         public bool isComboBoxDropDownOpened = false;
         //Boolean headerflag = false;
 
         public IncomingOutgoingList1Page()
         {
+            log.Info("Constructor IncomingOutgoingList1Page() invoked.");
             InitializeComponent();
            
             export_btn.Click += Export_btn_Click;
@@ -54,16 +56,25 @@ namespace EasyProject.View.TabItemPage
 
         private void OnDropDownOpened(object sender, EventArgs e)
         {
-            isComboBoxDropDownOpened = true;
+            log.Info("OnDropDownOpened(object, EventArgs) invoked.");
+            try
+            {
+                isComboBoxDropDownOpened = true;
 
-            var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
-            var deptNameText = deptModelObject.Dept_name;
-            userDept00 = deptNameText.ToString();
+                var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
+                var deptNameText = deptModelObject.Dept_name;
+                userDept00 = deptNameText.ToString();
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
         }
 
 
         private void Export_btn_Click(object sender, RoutedEventArgs e)
         {
+            log.Info(" Export_btn_Click(object, RoutedEventArgs) invoked.");
             try
             {
                 dataGrid1.SelectAllCells();
@@ -111,6 +122,7 @@ namespace EasyProject.View.TabItemPage
             }
             catch (Exception ex)
             {
+                log.Error(ex.Message);
                 //로그 Level : error
             }
             
@@ -119,6 +131,7 @@ namespace EasyProject.View.TabItemPage
     }//class
     public class MultipleTextFormatConverterKey : IMultiValueConverter  
     {
+       
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             return string.Format((string)parameter, values);

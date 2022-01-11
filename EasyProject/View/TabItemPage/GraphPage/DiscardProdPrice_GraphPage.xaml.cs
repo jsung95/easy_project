@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using EasyProject.ViewModel;
 using EasyProject.Model;
+using log4net;
 
 namespace EasyProject.View.TabItemPage.GraphPage
 {
@@ -23,8 +24,10 @@ namespace EasyProject.View.TabItemPage.GraphPage
     /// </summary>
     public partial class DiscardProdPrice_GraphPage : Page
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         public DiscardProdPrice_GraphPage()
         {
+            log.Info("Constructor DiscardProdPrice_GraphPage() invoked.");
             InitializeComponent();
             var dash = Ioc.Default.GetService<ProductInOutViewModel>();
             //temp.DashboardPrint();
@@ -35,16 +38,24 @@ namespace EasyProject.View.TabItemPage.GraphPage
 
         private void LeftBtn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate
+            log.Info("LeftBtn_Click(object, RoutedEventArgs) invoked.");
+            try
+            {
+                NavigationService.Navigate
                (
                new Uri("/View/TabItemPage/GraphPage/Outgoing_GraphPage.xaml", UriKind.Relative) //재고현황화면 --테스트
                );
-            var dash = Ioc.Default.GetService<ProductInOutViewModel>();
-            //temp.DashboardPrint();
-            dash.DashboardPrint_Pie();
-            dash.DashboardPrint2(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
-            dash.DashboardPrint3(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
-            //dash.DashboardPrint2(dash.SelectedDept);
+                var dash = Ioc.Default.GetService<ProductInOutViewModel>();
+                dash.DashboardPrint_Pie();
+                dash.DashboardPrint2(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
+                dash.DashboardPrint3(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
+                
+            }
+            catch (Exception ex) 
+            {
+                log.Error(ex.Message);
+            }
+           
         }
     }
 }

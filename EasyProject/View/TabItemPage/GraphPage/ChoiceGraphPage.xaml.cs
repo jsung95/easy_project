@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,8 +21,10 @@ namespace EasyProject.View.TabItemPage.GraphPage
     /// </summary>
     public partial class ChoiceGraphPage : Page
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         public ChoiceGraphPage()
         {
+            log.Info("Constructor ChoiceGraphPage() invoked.");
             InitializeComponent();
         }
     }

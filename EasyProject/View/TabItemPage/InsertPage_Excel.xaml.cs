@@ -16,6 +16,7 @@ using System.IO;
 using Microsoft.Win32;
 using EasyProject.ViewModel;
 using Excel = Microsoft.Office.Interop.Excel;
+using log4net;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -24,8 +25,10 @@ namespace EasyProject.View.TabItemPage
     /// </summary>
     public partial class InsertPage_Excel : Page
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         public InsertPage_Excel()
         {
+            log.Info("Constructor InsertPage_Excel() invoked.");
             InitializeComponent();
 
             //fileUploadBtn.Click += fileUploadBtn_Click;
@@ -34,51 +37,69 @@ namespace EasyProject.View.TabItemPage
 
         private void fileDownLoadBtn_Click(object sender, RoutedEventArgs e)
         {
-            String result = "제품코드,제품명,품목/종류,유통기한,가격,수량\n";
-            result += "ex) A123,주사기,치과재료,2022-11-12,25000,10";
-            string today = String.Format(DateTime.Now.ToString("yyyyMMddhhmmss"));
-            string f_path = @"c:\temp\재고입력폼" + today + ".csv";
-            File.AppendAllText(f_path, result, UnicodeEncoding.UTF8);
+            log.Info("fileDownLoadBtn_Click(object, RoutedEventArgs) invoked.");
+            try
+            {
+                String result = "제품코드,제품명,품목/종류,유통기한,가격,수량\n";
+                result += "ex) A123,주사기,치과재료,2022-11-12,25000,10";
+                string today = String.Format(DateTime.Now.ToString("yyyyMMddhhmmss"));
+                string f_path = @"c:\temp\재고입력폼" + today + ".csv";
+                File.AppendAllText(f_path, result, UnicodeEncoding.UTF8);
 
-            Excel.Application excel_app = new Excel.Application();
+                Excel.Application excel_app = new Excel.Application();
 
-            // Make Excel visible (optional).
-            excel_app.Visible = true;
+                // Make Excel visible (optional).
+                excel_app.Visible = true;
 
-            // Open the file.
-            excel_app.Workbooks.Open(
-                f_path,               // Filename
-                Type.Missing,
-                Type.Missing,
+                // Open the file.
+                excel_app.Workbooks.Open(
+                    f_path,               // Filename
+                    Type.Missing,
+                    Type.Missing,
 
-                   Excel.XlFileFormat.xlCSV,   // Format
-                   Type.Missing,
-                   Type.Missing,
-                   Type.Missing,
-                   Type.Missing,
+                       Excel.XlFileFormat.xlCSV,   // Format
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
 
-                   ",",          // Delimiter
-                   Type.Missing,
-                   Type.Missing,
-                   Type.Missing,
-                   Type.Missing,
-                   Type.Missing,
-                   Type.Missing
-            );
+                       ",",          // Delimiter
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing
+                );
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+            
         }
 
         private void fileUploadBtn_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "csv 파일 (*.csv)|*.csv|엑셀 파일 (*.xls)|*.xls|엑셀 파일 (*.xlsx)|*.xlsx";
-
-            if (openFileDialog.ShowDialog() == true)
+            log.Info("fileUploadBtn_Click(object, RoutedEventArgs) invoked.");
+            try
             {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "csv 파일 (*.csv)|*.csv|엑셀 파일 (*.xls)|*.xls|엑셀 파일 (*.xlsx)|*.xlsx";
 
-                //MessageBox.Show(System.IO.Path.GetFullPath(openFileDialog.FileName));
-                FileUploadPageFunction uploadPFunction = new FileUploadPageFunction(openFileDialog);
-                NavigationService.Navigate(uploadPFunction);
+                if (openFileDialog.ShowDialog() == true)
+                {
+
+                    //MessageBox.Show(System.IO.Path.GetFullPath(openFileDialog.FileName));
+                    FileUploadPageFunction uploadPFunction = new FileUploadPageFunction(openFileDialog);
+                    NavigationService.Navigate(uploadPFunction);
+                }
             }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+            
         }
     }
 }

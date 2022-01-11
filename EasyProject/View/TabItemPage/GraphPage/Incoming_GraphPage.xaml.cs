@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using EasyProject.ViewModel;
 using EasyProject.Model;
+using log4net;
 
 namespace EasyProject.View.TabItemPage.GraphPage
 {
@@ -23,15 +24,17 @@ namespace EasyProject.View.TabItemPage.GraphPage
     /// </summary>
     public partial class Incoming_GraphPage : Page
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         public Incoming_GraphPage()
         {
+
+            log.Info("Constructor Incoming_GraphPage() invoked.");
             InitializeComponent();
             var dash = Ioc.Default.GetService<ProductInOutViewModel>();
             dash.DashboardPrint3(dash.SelectedStartDate_In, dash.SelectedEndDate_In);
             dash.DashboardPrint2(dash.SelectedStartDate_In, dash.SelectedEndDate_In);
             dash.dashboardPrint_Pie1();
-            //temp.DashboardPrint();
-            //dash.DashboardPrint3();
+            
         }
 
         
