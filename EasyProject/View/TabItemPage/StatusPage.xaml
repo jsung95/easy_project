@@ -121,8 +121,8 @@
                     </i:Interaction.Triggers>
                 </ComboBox>
             </Grid>
-            <Grid x:Name="DataAndGraphGrid" Grid.Row="2" >
-                <Grid.ColumnDefinitions>
+                <Grid x:Name="DataAndGraphGrid" Grid.Row="2" >
+                    <Grid.ColumnDefinitions>
                     <ColumnDefinition x:Name="DataGridColumn" Width="1.8*"/>
                     <ColumnDefinition x:Name="GraphColumn" Width="*"/>
                 </Grid.ColumnDefinitions>

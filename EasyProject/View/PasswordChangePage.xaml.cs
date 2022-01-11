@@ -1,4 +1,5 @@
 ﻿using EasyProject.ViewModel;
+using MaterialDesignThemes.Wpf;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,9 @@ namespace EasyProject.View
 
         private async void pwChangeBtn_Click(object sender, RoutedEventArgs e)
         {
+            //다이얼로그 창 먼저 끄기 
+            PasswordDialogHost.IsOpen = false;
+
             var temp = Ioc.Default.GetService<PasswordChangeViewModel>();
             var pwChangeTask = Task.Run(() => temp.PasswordChange());
             bool pwChangeResult = await pwChangeTask; // loginTask가 끝나면 결과를 loginResult에 할당

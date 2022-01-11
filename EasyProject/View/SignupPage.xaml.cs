@@ -61,6 +61,8 @@ namespace EasyProject
         //}
         private async void signUpBtn_Click(object sender, RoutedEventArgs e)
         {
+            SignUpDialogHost.IsOpen = false;
+
             //await Task.Delay(1500);
             var temp = Ioc.Default.GetService<SignupViewModel>();
             var signupTask = Task.Run(() => temp.SignupInsert());

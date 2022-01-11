@@ -9,7 +9,7 @@
       d:DesignHeight="500" d:DesignWidth="800"
       DataContext="{Binding PVM, Source={StaticResource Locator}}"
       Title="InsertPage" Cursor="Hand">
-    <materialDesign:DialogHost >
+    <materialDesign:DialogHost x:Name="InsertDialogHost" IsOpen="{Binding IsInsertDialogHostOpen}">
         <materialDesign:DialogHost.DialogContent>
             <StackPanel Margin="20">
                 <Grid>

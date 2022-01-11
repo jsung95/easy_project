@@ -52,6 +52,8 @@ namespace EasyProject.ViewModel
 
         private List<ProductShowModel> excelProductList;
 
+        
+
 
         public ProductViewModel()
         {
@@ -75,6 +77,22 @@ namespace EasyProject.ViewModel
             
             excelProductList = new List<ProductShowModel>();
 
+        }
+        
+        //재고추가 다이얼로그
+        private bool isInsertDialogHostOpen;
+        public bool IsInsertDialogHostOpen
+        {
+            get
+            {
+                return isInsertDialogHostOpen;
+            }
+
+            set
+            {
+                this.isInsertDialogHostOpen = value;
+                OnPropertyChanged("IsInsertDialogHostOpen");
+            }
         }
 
 
@@ -209,7 +227,6 @@ namespace EasyProject.ViewModel
                         else
                         {
                             IsDuplicatedProduct = true;
-                            MessageQueue.Enqueue("이미 존재하는 재고 입력은 불가합니다.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                             Console.WriteLine("중복이다.");
                             
                             excelProductList = new List<ProductShowModel>();
@@ -222,6 +239,12 @@ namespace EasyProject.ViewModel
                     }//if
 
                 }//while
+
+                if (isDuplicatedProduct)
+                {
+                    IsInsertDialogHostOpen = false;
+                    MessageQueue.Enqueue("이미 존재하는 재고 입력은 불가합니다.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                }
 
                 if (excelProductList.Count > 0)
                 {
@@ -270,6 +293,7 @@ namespace EasyProject.ViewModel
                 log.Error(e.Message);
 
                 IsDuplicatedProduct = true;
+                IsInsertDialogHostOpen = false;
                 MessageQueue.Enqueue("업로드 할 파일을 닫고 다시 시도하십시오.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
             }//catch
 
@@ -319,7 +343,6 @@ namespace EasyProject.ViewModel
                         else
                         {
                             IsDuplicatedProduct = true;
-                            MessageQueue.Enqueue("이미 존재하는 재고 입력은 불가합니다.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                             Console.WriteLine("중복이다.");
                             
                             excelProductList.Clear();
@@ -331,11 +354,18 @@ namespace EasyProject.ViewModel
                     }
                 }
 
+                if (isDuplicatedProduct)
+                {
+                    IsInsertDialogHostOpen = false;
+                    MessageQueue.Enqueue("이미 존재하는 재고 입력은 불가합니다.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                }
+
                 if (excelProductList.Count > 0)
                 {
                     foreach (ProductShowModel elem in excelProductList)
                     {
                         IsDuplicatedProduct = false;
+                        IsInsertDialogHostOpen = false;
                         MessageQueue.Enqueue("신규 재고가 추가되었습니다.", "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
 
                         //MessageBox.Show(product.Prod_code+".."+product.Prod_name+
@@ -389,6 +419,7 @@ namespace EasyProject.ViewModel
             {
                 log.Error(ex.Message);
                 IsDuplicatedProduct = true;
+                IsInsertDialogHostOpen = false;
                 MessageQueue.Enqueue("업로드 할 파일을 닫고 다시 시도하십시오.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
             }
 

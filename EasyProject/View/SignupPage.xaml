@@ -13,7 +13,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SignupPage">
     
-    <materialDesign:DialogHost x:Name="SignUpDialog">
+    <materialDesign:DialogHost x:Name="SignUpDialogHost">
         <materialDesign:DialogHost.DialogContent>
             <StackPanel Margin="20">
                 <Grid>
