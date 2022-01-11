@@ -726,7 +726,7 @@ namespace EasyProject.Dao
                                           "ON I.nurse_no = N.nurse_no " +
                                           "INNER JOIN DEPT D " +
                                           "ON N.dept_id = D.dept_id " +
-                                          "ORDER BY I.prod_in_date, P.prod_name";
+                                          "ORDER BY I.prod_in_date desc, P.prod_name";
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
@@ -807,7 +807,7 @@ namespace EasyProject.Dao
                                           "INNER JOIN DEPT D " +
                                           "ON N.dept_id = D.dept_id " +
                                           "WHERE I.prod_in_to = :name " +
-                                          "ORDER BY I.prod_in_date, P.prod_name";
+                                          "ORDER BY I.prod_in_date desc, P.prod_name";
 
                         cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
                         Console.WriteLine("ProductDao - GetProductIn() 부서명 파라미터: " + dept_dto.Dept_name);
@@ -892,7 +892,7 @@ namespace EasyProject.Dao
                                           "ON N.dept_id = D.dept_id " +
                                           "WHERE I.prod_in_to = :name " +
                                           "AND I.prod_in_date BETWEEN :start_date AND :end_date + 1 " +
-                                          "ORDER BY I.prod_in_date, P.prod_name ";
+                                          "ORDER BY I.prod_in_date desc, P.prod_name ";
 
                         cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
                         cmd.Parameters.Add(new OracleParameter("start_date", start_date));
@@ -983,7 +983,7 @@ namespace EasyProject.Dao
                                             "((:search_combo = '제품명' AND I.prod_in_to = :dept_name ) AND (P.prod_name LIKE '%'||:search_text||'%')) " +
                                           "OR " +
                                             "((:search_combo = '품목/종류' AND I.prod_in_to = :dept_name ) AND (C.category_name LIKE '%'||:search_text||'%')) " +
-                                          "ORDER BY I.prod_in_date, P.prod_name ";
+                                          "ORDER BY I.prod_in_date desc, P.prod_name ";
 
                         cmd.BindByName = true;
 
@@ -1080,7 +1080,7 @@ namespace EasyProject.Dao
                                             "((:search_combo = '제품명' AND I.prod_in_to = :dept_name AND I.prod_in_date BETWEEN :start_date AND :end_date  +1 ) AND (P.prod_name LIKE '%'||:search_text||'%')) " +
                                           "OR " +
                                             "((:search_combo = '품목/종류' AND I.prod_in_to = :dept_name AND I.prod_in_date BETWEEN :start_date AND :end_date +1 ) AND (C.category_name LIKE '%'||:search_text||'%')) " +
-                                          "ORDER BY I.prod_in_date, P.prod_name";
+                                          "ORDER BY I.prod_in_date desc, P.prod_name";
 
                         cmd.BindByName = true;
 
@@ -1173,7 +1173,7 @@ namespace EasyProject.Dao
                                           "INNER JOIN DEPT D " +
                                           "ON N.dept_id = D.dept_id " +
                                           "WHERE I.prod_in_to = :name " +
-                                          "ORDER BY I.prod_in_date, P.prod_name ";
+                                          "ORDER BY I.prod_in_date desc, P.prod_name ";
 
 
                         cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
@@ -1225,7 +1225,7 @@ namespace EasyProject.Dao
                                           "INNER JOIN DEPT D " +
                                           "ON N.dept_id = D.dept_id " +
                                           "WHERE I.prod_in_to = :name " +
-                                          "ORDER BY I.prod_in_date, P.prod_name ";
+                                          "ORDER BY I.prod_in_date desc, P.prod_name ";
 
 
                         cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
@@ -1278,7 +1278,7 @@ namespace EasyProject.Dao
                                           "ON O.nurse_no = N.nurse_no " +
                                           "INNER JOIN DEPT D " +
                                           "ON N.dept_id = D.dept_id " +
-                                          "ORDER BY O.prod_out_date, P.prod_name";
+                                          "ORDER BY O.prod_out_date desc, P.prod_name";
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
@@ -1358,7 +1358,7 @@ namespace EasyProject.Dao
                                           "INNER JOIN DEPT D " +
                                           "ON N.dept_id = D.dept_id " +
                                           "WHERE O.prod_out_from = :name " +
-                                          "ORDER BY O.prod_out_date, P.prod_name";
+                                          "ORDER BY O.prod_out_date desc, P.prod_name";
 
                         cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
                         Console.WriteLine("ProductDao - GetProductOut() 부서명 파라미터: " + dept_dto.Dept_name);
@@ -1442,7 +1442,7 @@ namespace EasyProject.Dao
                                           "ON N.dept_id = D.dept_id " +
                                           "WHERE O.prod_out_from = :name " +
                                           "AND O.prod_out_date BETWEEN :start_date AND :end_date + 1 " +
-                                          "ORDER BY O.prod_out_date, P.prod_name";
+                                          "ORDER BY O.prod_out_date desc, P.prod_name";
 
                         cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
                         cmd.Parameters.Add(new OracleParameter("start_date", start_date));
@@ -1532,7 +1532,7 @@ namespace EasyProject.Dao
                                             "((:search_combo = '제품명' AND O.prod_out_from = :dept_name ) AND (P.prod_name LIKE '%'||:search_text||'%')) " +
                                           "OR " +
                                             "((:search_combo = '품목/종류' AND O.prod_out_from = :dept_name ) AND (C.category_name LIKE '%'||:search_text||'%')) " +
-                                          "ORDER BY O.prod_out_date, P.prod_name";
+                                          "ORDER BY O.prod_out_date desc, P.prod_name";
 
                         cmd.BindByName = true;
 
@@ -1628,7 +1628,7 @@ namespace EasyProject.Dao
                                             "((:search_combo = '제품명' AND O.prod_out_from = :dept_name AND O.prod_out_date BETWEEN :start_date AND :end_date + 1 ) AND (P.prod_name LIKE '%'||:search_text||'%')) " +
                                           "OR " +
                                             "((:search_combo = '품목/종류' AND O.prod_out_from = :dept_name AND O.prod_out_date BETWEEN :start_date AND :end_date + 1 ) AND (C.category_name LIKE '%'||:search_text||'%')) " +
-                                          "ORDER BY O.prod_out_date, P.prod_name";
+                                          "ORDER BY O.prod_out_date desc, P.prod_name";
 
                         cmd.BindByName = true;
 
@@ -1721,7 +1721,7 @@ namespace EasyProject.Dao
                                           "INNER JOIN DEPT D " +
                                           "ON N.dept_id = D.dept_id " +
                                           "WHERE O.prod_out_to = :name " +
-                                          "ORDER BY O.prod_out_date, P.prod_name ";
+                                          "ORDER BY O.prod_out_date desc, P.prod_name ";
 
 
                         cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
@@ -1774,7 +1774,7 @@ namespace EasyProject.Dao
                                           "INNER JOIN DEPT D " +
                                           "ON N.dept_id = D.dept_id " +
                                           "WHERE O.prod_out_to = :name " +
-                                          "ORDER BY O.prod_out_date, P.prod_name ";
+                                          "ORDER BY O.prod_out_date desc, P.prod_name ";
 
 
                         cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
