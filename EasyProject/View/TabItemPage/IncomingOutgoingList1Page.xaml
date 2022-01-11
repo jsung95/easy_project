@@ -139,7 +139,7 @@
                             </Grid>
                         </Grid>
                     </Grid>
-                    <TextBlock Text="조회 가능한 데이터가 없습니다." TextAlignment="Center"  Visibility="{Binding Items.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=dataGrid}" Margin="0,27,0,279" Grid.Row="1"/>
+                    <TextBlock Text="조회 가능한 데이터가 없습니다." TextAlignment="Center"  Visibility="{Binding Items.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=dataGrid1}" Margin="0,27,0,279" Grid.Row="1"/>
                     <Grid Grid.Row="1">
                         <DataGrid x:Name="dataGrid1" Grid.Row="1" HorizontalAlignment="Left" Margin="10 0"
                             AllowDrop="False" VerticalAlignment="Top" AutoGenerateColumns="False"

@@ -67,7 +67,7 @@
                     <Button Content="취소" Background="#EAEAEA" Foreground="Black"
                             Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"></Button>
                     <Button Content="확인" Background="#4472C4" Foreground="White" Margin="30,0,0,0"
-                            Command="{Binding LogoutCommand}"></Button>
+                            ></Button>
 
                 </StackPanel>
             </StackPanel>
