@@ -107,7 +107,8 @@ namespace EasyProject.View.TabItemPage
                 {
                     Console.WriteLine(userDeptName + "같은 부서일때");
                     buttonColumn.Visibility = Visibility.Visible;
-                    ModifyToggleButtonPanel.Visibility = Visibility.Visible;
+                    //ModifyToggleButtonPanel.Visibility = Visibility.Visible;
+                    ModifyToggleButtonPanel.Visibility = Visibility.Hidden;
                 }
                 else
                 {
@@ -181,7 +182,8 @@ namespace EasyProject.View.TabItemPage
                     {
                         Console.WriteLine(userDeptName + "같은 부서일때");
                         buttonColumn.Visibility = Visibility.Visible;
-                        ModifyToggleButtonPanel.Visibility = Visibility.Visible;
+                        //ModifyToggleButtonPanel.Visibility = Visibility.Visible;
+                        ModifyToggleButtonPanel.Visibility = Visibility.Hidden;
                     }
                     else
                     {
