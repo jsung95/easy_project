@@ -50,6 +50,7 @@ namespace EasyProject
                 InsertPageTabButton.Width = 0;
                 AuthorityPageTabButton.Width = 0;
                 GraphPageTabButton.Width = 0;
+                OrderPageTabButton.Width = 0;
             }
             else if (App.nurse_dto.Nurse_auth.Equals("ADMIN"))
             {
