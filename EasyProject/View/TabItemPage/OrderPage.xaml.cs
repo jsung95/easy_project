@@ -54,13 +54,13 @@ namespace EasyProject.View
             {
                 log.Error(ex.Message);
             }
-            //prodcode_TxtBox.Text = null;
-            //prodname_TxtBox.Text = null;
-            //categoryname_TxtBox.Text = null;
-            //prodprice_TxtBox.Text = null;
-            //prodcount_TxtBox.Text = null;
+            prodcode_TxtBox.Text = null;
+            prodname_TxtBox.Text = null;
+            categoryname_TxtBox.Text = null;
+            prodprice_TxtBox.Text = null;
+            prodcount_TxtBox.Text = null;
 
-            
+
 
         }
 
