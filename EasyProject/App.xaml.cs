@@ -23,7 +23,7 @@ namespace EasyProject
         
         protected override void OnStartup(StartupEventArgs e)
         {
-            log.Info("==== START UP EASY_PROJECT ====");
+            log.Info("OnStartup(StartupEventArgs) invoked.");
             base.OnStartup(e);
         }
 
@@ -31,6 +31,8 @@ namespace EasyProject
         public static CategoryModel category_dto = null;
         public App()
         {
+            log.Info("==== START UP EASY_PROJECT ====");
+            log.Info("Constructor App() invoked.");
             Ioc.Default.ConfigureServices(new ServiceCollection()
                 .AddSingleton<ProductViewModel>()
                 .AddSingleton<LoginViewModel>()
