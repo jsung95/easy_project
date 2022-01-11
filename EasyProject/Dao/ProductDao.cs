@@ -682,7 +682,7 @@ namespace EasyProject.Dao
 
                         cmd.Parameters.Add(new OracleParameter("in_from", "발주처"));
                         cmd.Parameters.Add(new OracleParameter("dept_id2", nurse_dto.Dept_id));
-                        cmd.Parameters.Add(new OracleParameter("in_type", "발주"));
+                        cmd.Parameters.Add(new OracleParameter("in_type", "신규"));
 
                         cmd.ExecuteNonQuery();
                     }//using(cmd)
