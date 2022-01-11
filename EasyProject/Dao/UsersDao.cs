@@ -4,13 +4,16 @@ using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
+using log4net;
 
 namespace EasyProject.Dao
 {
     public class UsersDao : CommonDBConn, IUsersDao
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         public List<UserModel> GetUserInfo(string auth)
         {
+            log.Info("GetUserInfo(string) invoked.");
             List<UserModel> list = new List<UserModel>();
 
             try
@@ -68,7 +71,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return list;
@@ -77,6 +80,7 @@ namespace EasyProject.Dao
 
         public List<UserModel> GetUsersExceptSuper() // super 제외한 사용자들 가져옴
         {
+            log.Info("GetUsersExceptSuper() invoked.");
             List<UserModel> list = new List<UserModel>();
 
             try
@@ -125,7 +129,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return list;
@@ -133,6 +137,7 @@ namespace EasyProject.Dao
         }//GetUserInfo()
         public void UserAuthChange(string auth, List<UserModel> no)
         {
+            log.Info("UserAuthChange(string, List<UserModel>) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -168,13 +173,14 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
         }//UserAuthChange()
 
         public List<UserModel> SearchUser(string auth, string searchType, string keyword)
         {
+            log.Info("SearchUser(string, string, string) invoked.");
             Console.WriteLine($"SearchUser({auth}, {keyword})");
             List<UserModel> list = new List<UserModel>();
 
@@ -254,7 +260,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             if (list.Count == 0)
@@ -268,6 +274,7 @@ namespace EasyProject.Dao
 
         public UserModel GetUserInfoWithDept(NurseModel nurse_dto)
         {
+            log.Info("GetUserInfoWithDept(NurseModel) invoked.");
             UserModel user_dto = new UserModel();
             try
             {
@@ -309,7 +316,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return user_dto;
