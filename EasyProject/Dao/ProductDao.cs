@@ -336,7 +336,7 @@ namespace EasyProject.Dao
                                           "ON I.dept_id = D.dept_id " +
                                           "WHERE D.dept_status != '폐지' " +
                                           "AND D.dept_name = :dept_name " +
-                                          "AND I.imp_dept_count != 0 " +
+                                          "AND I.imp_dept_count > 0 " +
                                           "ORDER BY P.prod_code, P.prod_expire ";
 
                         cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
