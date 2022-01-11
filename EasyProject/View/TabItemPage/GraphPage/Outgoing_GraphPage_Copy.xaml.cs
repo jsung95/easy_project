@@ -33,17 +33,7 @@ namespace EasyProject.View.TabItemPage.GraphPage
             dash.dashboardPrint_Pie();
         }
 
-        private void LeftBtn_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate
-                (
-                new Uri("/View/TabItemPage/GraphPage/Incoming_GraphPage_Copy.xaml", UriKind.Relative) //재고현황화면 --테스트
-                );
-            var dash = Ioc.Default.GetService<ProductInOutViewModel>();
-            dash.DashboardPrint4(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
-            dash.DashboardPrint5(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
-            dash.dashboardPrint_Pie1();
-        }
+        
 
         private void RightBtn_Click(object sender, RoutedEventArgs e)
         {

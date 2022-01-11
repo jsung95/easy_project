@@ -34,17 +34,6 @@ namespace EasyProject.View.TabItemPage.GraphPage
             //dash.DashboardPrint3();
         }
 
-        private void rightBtn_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate
-                (
-                new Uri("/View/TabItemPage/GraphPage/Outgoing_GraphPage.xaml", UriKind.Relative) //재고현황화면 --테스트
-                );
-            var dash = Ioc.Default.GetService<ProductInOutViewModel>();
-            //temp.DashboardPrint();
-            dash.DashboardPrint3(dash.SelectedStartDate_In, dash.SelectedEndDate_In);
-            dash.DashboardPrint2(dash.SelectedStartDate_In, dash.SelectedEndDate_In);
-            dash.dashboardPrint_Pie1();
-        }
+        
     }
 }
