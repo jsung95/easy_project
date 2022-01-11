@@ -3,14 +3,17 @@ using System;
 using System.Collections.Generic;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.ObjectModel;
+using log4net;
 
 namespace EasyProject.Dao
 {
     public class ProductDao : CommonDBConn, IProductDao //DB연결 Class 및 인터페이스 상속
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
 
         public List<ProductShowModel> GetProducts()
         {
+            log.Info("GetProducts() invoked.");
             Console.WriteLine("GetProducts !");
             List<ProductShowModel> list = new List<ProductShowModel>();
             try
@@ -80,7 +83,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return list;
@@ -90,6 +93,8 @@ namespace EasyProject.Dao
 
         public bool IsProductDuplicateCheck(ProductModel product_dto)
         {
+            log.Info("IsProductDuplicateCheck(ProductModel) invoked.");
+
             bool isDuplicated = false;
             try
             {
@@ -153,7 +158,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return isDuplicated;
@@ -163,6 +168,7 @@ namespace EasyProject.Dao
 
         public bool IsProductDuplicateCheck(ProductModel product_dto, CategoryModel cateogry_dto)//오버로딩
         {
+            log.Info("IsProductDuplicateCheck(ProductModel, CategoryModel) invoked.");
             bool isDuplicated = false;
             try
             {
@@ -208,7 +214,7 @@ namespace EasyProject.Dao
 
 
                         Console.WriteLine(product_dto.Prod_expire);
-                        Console.WriteLine(product_dto.Category_id+"카페고리id");
+                        Console.WriteLine(product_dto.Category_id + "카페고리id");
                         OracleDataReader reader = cmd.ExecuteReader();
 
                         if (reader.Read() == false)
@@ -227,7 +233,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return isDuplicated;
@@ -237,6 +243,7 @@ namespace EasyProject.Dao
 
         public bool IsProductDuplicateCheck(ProductModel product_dto, string category_name) //오버로딩
         {
+            log.Info("IsProductDuplicateCheck(ProductModel, string) invoked.");
             bool isDuplicated = false;
             try
             {
@@ -301,7 +308,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return isDuplicated;
@@ -312,6 +319,7 @@ namespace EasyProject.Dao
 
         public List<ProductShowModel> GetProductsByDept(DeptModel dept_dto)
         {
+            log.Info("GetProductsByDept(DeptModel) invoked.");
             List<ProductShowModel> list = new List<ProductShowModel>();
             try
             {
@@ -379,7 +387,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return list;
@@ -389,6 +397,7 @@ namespace EasyProject.Dao
 
         public List<CategoryModel> GetCategoryModels()
         {
+            log.Info("GetCategoryModels() invoked.");
             List<CategoryModel> list = new List<CategoryModel>();
             try
             {
@@ -424,7 +433,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return list;
@@ -433,6 +442,8 @@ namespace EasyProject.Dao
 
         public void AddProduct(ProductModel prod_dto, CategoryModel category_dto)
         {
+            log.Info("AddProduct(ProductModel, CategoryModel) invoked.");
+
             CategoryDao category_dao = new CategoryDao();
             try
             {
@@ -488,13 +499,14 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
         }//AddProduct
 
         public void AddProductForExcel(ProductShowModel prod_dto, String categoryName)
         {
+            log.Info("AddProductForExcel(ProductShowModel, string) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -535,7 +547,7 @@ namespace EasyProject.Dao
                         string expireText = prod_dto.Prod_expire.Year.ToString() + month + day;
                         Console.WriteLine("Insert DATE : {0}", expireText);
                         ////////////////////////////////////////////////////////////////////////////
-                        
+
 
                         /*String expireText = prod_dto.Prod_expire.Year.ToString()+
                             prod_dto.Prod_expire.Month.ToString()+ prod_dto.Prod_expire.Day.ToString();*/
@@ -552,12 +564,14 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
         }
 
         public void AddProduct(ProductModel prod_dto, string category_name) //오버로딩
         {
+            log.Info("AddProduct(ProductModel, string) invoked.");
+
             CategoryDao category_dao = new CategoryDao();
             try
             {
@@ -612,7 +626,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
         }//AddProduct
@@ -621,6 +635,7 @@ namespace EasyProject.Dao
 
         public void StoredProduct(ProductModel prod_dto, NurseModel nurse_dto)
         {
+            log.Info("StoredProduct(ProductModel, NurseModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -653,13 +668,14 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
         }// StoredProduct()
 
         public void StoredProductForExcel(ProductShowModel prod_dto, NurseModel nurse_dto)
         {
+            log.Info("StoredProductForExcel(ProductShowModel, NurseModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -693,7 +709,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
         }// StoredProduct()
@@ -701,6 +717,7 @@ namespace EasyProject.Dao
 
         public List<ProductInOutModel> GetProductIn()
         {
+            log.Info("GetProductIn() invoked.");
             List<ProductInOutModel> list = new List<ProductInOutModel>();
 
             try
@@ -772,7 +789,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return list;
@@ -781,6 +798,7 @@ namespace EasyProject.Dao
 
         public List<ProductInOutModel> GetProductIn(DeptModel dept_dto) // 오버로딩
         {
+            log.Info("GetProductIn(DeptModel) invoked.");
             List<ProductInOutModel> list = new List<ProductInOutModel>();
 
             try
@@ -865,6 +883,7 @@ namespace EasyProject.Dao
 
         public List<ProductInOutModel> GetProductIn(DeptModel dept_dto, DateTime? start_date, DateTime? end_date) // 오버로딩
         {
+            log.Info("GetProductIn(DeptModel, DateTime?, DateTime?) invoked.");
             List<ProductInOutModel> list = new List<ProductInOutModel>();
 
             try
@@ -943,7 +962,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return list;
@@ -952,6 +971,7 @@ namespace EasyProject.Dao
 
         public List<ProductInOutModel> GetProductIn(DeptModel dept_dto, string search_type, string search_text) // 오버로딩
         {
+            log.Info("GetProductIn(DeptModel, string, string) invoked.");
             List<ProductInOutModel> list = new List<ProductInOutModel>();
 
             try
@@ -1038,7 +1058,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return list;
@@ -1049,6 +1069,8 @@ namespace EasyProject.Dao
 
         public List<ProductInOutModel> GetProductIn(DeptModel dept_dto, string search_type, string search_text, DateTime? start_date, DateTime? end_date) // 오버로딩
         {
+            log.Info("GetProductIn(DeptModel, string, string, DateTime?, DateTime?) invoked.");
+
             List<ProductInOutModel> list = new List<ProductInOutModel>();
 
             try
@@ -1138,7 +1160,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return list;
@@ -1148,6 +1170,8 @@ namespace EasyProject.Dao
 
         public string GetProductIn_MaxDate(DeptModel dept_dto)
         {
+
+            log.Info("GetProductIn_MaxDate(DeptModel) invoked.");
             string result = null;
 
             try
@@ -1190,9 +1214,9 @@ namespace EasyProject.Dao
                 }//using(conn)
 
             }//try
-            catch(Exception e)
+            catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return result;
@@ -1200,6 +1224,7 @@ namespace EasyProject.Dao
 
         public string GetProductIn_MinDate(DeptModel dept_dto)
         {
+            log.Info("GetProductIn_MinDate(DeptModel) invoked.");
             string result = null;
 
             try
@@ -1244,7 +1269,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return result;
@@ -1253,6 +1278,7 @@ namespace EasyProject.Dao
 
         public List<ProductInOutModel> GetProductOut()
         {
+            log.Info("GetProductOut() invoked.");
             List<ProductInOutModel> list = new List<ProductInOutModel>();
 
             try
@@ -1323,7 +1349,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return list;
@@ -1332,6 +1358,8 @@ namespace EasyProject.Dao
 
         public List<ProductInOutModel> GetProductOut(DeptModel dept_dto) // 오버로딩
         {
+            log.Info("GetProductOut(DeptModel) invoked.");
+
             List<ProductInOutModel> list = new List<ProductInOutModel>();
 
             try
@@ -1406,7 +1434,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return list;
@@ -1415,6 +1443,8 @@ namespace EasyProject.Dao
 
         public List<ProductInOutModel> GetProductOut(DeptModel dept_dto, DateTime? start_date, DateTime? end_date) // 오버로딩
         {
+            log.Info("GetProductOut(DeptModel, DateTime?, DateTime?) invoked.");
+
             List<ProductInOutModel> list = new List<ProductInOutModel>();
 
             try
@@ -1492,7 +1522,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return list;
@@ -1501,6 +1531,8 @@ namespace EasyProject.Dao
 
         public List<ProductInOutModel> GetProductOut(DeptModel dept_dto, string search_type, string search_text)
         {
+            log.Info("GetProductOut(DeptModel, string, string) invoked.");
+
             List<ProductInOutModel> list = new List<ProductInOutModel>();
 
             try
@@ -1543,7 +1575,7 @@ namespace EasyProject.Dao
                         Console.WriteLine("dept_name : " + dept_dto.Dept_name);
                         Console.WriteLine("search_combo : " + search_type);
                         Console.WriteLine("search_text : " + search_text);
-                    
+
                         OracleDataReader reader = cmd.ExecuteReader();
 
                         while (reader.Read())
@@ -1587,7 +1619,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return list;
@@ -1597,6 +1629,7 @@ namespace EasyProject.Dao
 
         public List<ProductInOutModel> GetProductOut(DeptModel dept_dto, string search_type, string search_text, DateTime? start_date, DateTime? end_date)
         {
+            log.Info("GetProductOut(DeptModel, string, string, DateTime?, DateTime?) invoked.");
             List<ProductInOutModel> list = new List<ProductInOutModel>();
 
             try
@@ -1686,7 +1719,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return list;
@@ -1696,6 +1729,7 @@ namespace EasyProject.Dao
 
         public string GetProductOut_MaxDate(DeptModel dept_dto)
         {
+            log.Info("GetProductOut_MaxDate(DeptModel) invoked.");
             string result = null;
 
             try
@@ -1740,7 +1774,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return result;
@@ -1749,6 +1783,7 @@ namespace EasyProject.Dao
 
         public string GetProductOut_MinDate(DeptModel dept_dto)
         {
+            log.Info("GetProductOut_MinDate(DeptModel) invoked.");
             string result = null;
 
             try
@@ -1793,7 +1828,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return result;
@@ -1803,6 +1838,7 @@ namespace EasyProject.Dao
 
         public void AddImpDept(ProductModel prod_dto, NurseModel nurse_dto)
         {
+            log.Info("AddImpDept(ProductModel, NurseModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -1834,13 +1870,14 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
         }//AddImpDept
 
         public void AddImpDeptForExcel(ProductShowModel prod_dto, NurseModel nurse_dto)
         {
+            log.Info("AddImpDeptForExcel(ProductShowModel, NurseModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -1872,13 +1909,14 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
         }//AddImpDept
 
         public ObservableCollection<ProductInOutModel> GetProductInByNurse(NurseModel nurse_dto)
         {
+            log.Info("GetProductInByNurse(NurseModel) invoked.");
             ObservableCollection<ProductInOutModel> list = new ObservableCollection<ProductInOutModel>();
             Console.WriteLine("GetProductInByNurse 실행");
             try
@@ -1949,7 +1987,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return list;
@@ -1958,6 +1996,7 @@ namespace EasyProject.Dao
 
         public List<ProductShowModel> SearchProducts(DeptModel dept_dto, string search_type, string search_text)
         {
+            log.Info("SearchProducts(DeptModel, string, string) invoked.");
             List<ProductShowModel> list = new List<ProductShowModel>();
             try
             {
@@ -2025,7 +2064,7 @@ namespace EasyProject.Dao
                             };
 
                             list.Add(dto);
-                            
+
                         }// while
 
                     } //using(cmd)
@@ -2035,7 +2074,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return list;
@@ -2045,6 +2084,7 @@ namespace EasyProject.Dao
 
         public void ChangeProductInfo(ProductShowModel prod_dto)
         {
+            log.Info("ChangeProductInfo(ProductShowModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -2102,14 +2142,15 @@ namespace EasyProject.Dao
 
                 }//using(conn)
             }//try
-            catch(Exception e)
+            catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
         }//ChangeProductInfo()
 
         public void ChangeProductInfo_IMP_DEPT(ProductShowModel prod_dto)
         {
+            log.Info("ChangeProductInfo_IMP_DEPT(ProductShowModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -2140,12 +2181,13 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
         }//ChangeProductInfo_IMP_DEPT()
 
         public void OutProduct(int? InputOutCount, ProductShowModel prod_dto, NurseModel nurse_dto, string SelectedOutType, DeptModel dept_dto)
         {
+            log.Info("OutProduct(int?, ProductShowModel, NurseModel, string, DeptModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -2185,7 +2227,7 @@ namespace EasyProject.Dao
                             cmd.Parameters.Add(new OracleParameter("out_to", SelectedOutType));
                         }
                         ///////////////////////////////////////////////////////////////////////
-                        
+
                         cmd.Parameters.Add(new OracleParameter("out_type", SelectedOutType));
 
 
@@ -2199,13 +2241,14 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
         }// OutProduct()
 
         public void OutProduct(ProductShowModel prod_dto, NurseModel nurse_dto)//오버로딩
         {
+            log.Info("OutProduct(ProductShowModel, NurseModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -2259,12 +2302,13 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
         }// OutProduct()
         public string GetNurseDeptName(NurseModel nurse_dto)
         {
+            log.Info("GetNurseDeptName(NurseModel) invoked.");
             string dept_name = "";
             try
             {
@@ -2295,7 +2339,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return dept_name;
@@ -2308,6 +2352,7 @@ namespace EasyProject.Dao
 
         public void OutProduct_FromTo(int? InputOutCount, ProductShowModel prod_dto, NurseModel nurse_dto, string SelectedOutType, DeptModel dept_dto)
         {
+            log.Info("OutProduct_FromTo(int?, ProductShowModel, NurseModel, string, DeptModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -2340,15 +2385,16 @@ namespace EasyProject.Dao
                 }//using(conn)
 
             }//try
-            catch(Exception e)
+            catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
         }//OutPorduct_FromTo()
 
         public void OutProduct_FromTo(ProductShowModel prod_dto, NurseModel nurse_dto) //오버로딩
         {
+            log.Info("OutProduct_FromTo(ProductShowModel, NurseModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -2383,13 +2429,14 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
         }//OutPorduct_FromTo()
 
         public void OutProduct_FromTo_IMP_DEPT(int? InputOutCount, ProductShowModel prod_dto, DeptModel dept_dto)
         {
+            log.Info("OutProduct_FromTo_IMP_DEPT(int?, ProductShowModel, DeptModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -2433,7 +2480,7 @@ namespace EasyProject.Dao
                         cmd.Parameters.Add(new OracleParameter("count", InputOutCount));
                         cmd.Parameters.Add(new OracleParameter("dept_id", dept_dto.Dept_id));
                         cmd.Parameters.Add(new OracleParameter("pord_id", prod_dto.Prod_id));
-                        
+
 
 
                         cmd.ExecuteNonQuery();
@@ -2445,13 +2492,14 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
-            
+
         }//OutProduct_FromTo_IMP_DEPT
 
         public void OutProduct_FromTo_IMP_DEPT(ProductShowModel prod_dto)//오버로딩
         {
+            log.Info("OutProduct_FromTo_IMP_DEPT(ProductShowModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -2507,13 +2555,14 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
         }//OutProduct_FromTo_IMP_DEPT
 
         public void ChangeProductInfo_IMP_DEPT_ForOut(int? InputOutCount, ProductShowModel prod_dto)
         {
+            log.Info("ChangeProductInfo_IMP_DEPT_ForOut(int?, ProductShowModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -2544,13 +2593,14 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
         }//ChangeProductInfo_IMP_DEPT_ForOut
 
         public void ChangeProductInfo_IMP_DEPT_ForOut(ProductShowModel prod_dto)//오버로딩
         {
+            log.Info("ChangeProductInfo_IMP_DEPT_ForOut(ProductShowModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -2581,12 +2631,13 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
         }//ChangeProductInfo_IMP_DEPT_ForOut
         public void ChangeProductInfo_ForOut(int? InputOutCount, ProductShowModel prod_dto)
         {
+            log.Info("ChangeProductInfo_ForOut(int?, ProductShowModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -2616,13 +2667,14 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
         }//ChangeProductInfo_ForOut
 
         public void ChangeProductInfo_ForOut(ProductShowModel prod_dto) //오버로딩
         {
+            log.Info("ChangeProductInfo_ForOut(ProductShowModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -2652,14 +2704,15 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
         }//ChangeProductInfo_ForOut 
-        
+
         //부서별 카테고리별//제품 총수량 그래프 
         public List<ImpDeptModel> Dept_Category_Mount(DeptModel SelectedDepts)
         {
+            log.Info("Dept_Category_Mount(DeptModel) invoked.");
             List<ImpDeptModel> list = new List<ImpDeptModel>();
             try
             {
@@ -2711,14 +2764,14 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
             return list;
         }///Dept_Category_Mount
 
         public List<ProductShowModel> Get_Dept_Category_Number_RemainExpire(DeptModel SelectedDept, CategoryModel SelectedCategory, int SelectedNumber)
         {
-            Console.WriteLine("start");
+            log.Info("Get_Dept_Category_Number_RemainExpire(DeptModel, CategoryModel, int) invoked.");
             List<ProductShowModel> list = new List<ProductShowModel>();
             try
             {
@@ -2775,13 +2828,14 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
             return list;
         } //Get_Dept_Category_RemainExpire
 
         public void InProduct(ProductShowModel prod_dto, NurseModel nurse_dto)
         {
+            log.Info("InProduct(ProductShowModel, NurseModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -2816,13 +2870,14 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
         }//InProduct()
-      
+
         public void ChangeProductInfo_IMP_DEPT_ForIn(ProductShowModel prod_dto)
         {
+            log.Info("ChangeProductInfo_IMP_DEPT_ForIn(ProductShowModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -2851,12 +2906,13 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
         }//ChangeProductInfo_IMP_DEPT_ForIn
 
         public void ChangeProductInfo_ForIn(ProductShowModel prod_dto)
         {
+            log.Info("ChangeProductInfo_ForIn(ProductShowModel) invoked.");
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -2886,13 +2942,14 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
         }//ChangeProductInfo_ForIn
 
         // 사용/이관/폐기 리스트로 얻기
         public List<ProductInOutModel> GetProdOutType()
         {
+            log.Info("GetProdOutType() invoked.");
             List<ProductInOutModel> list = new List<ProductInOutModel>();
 
             try
@@ -2930,7 +2987,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
 
             return list;
@@ -2940,6 +2997,7 @@ namespace EasyProject.Dao
         //도넛그래프 dao
         public List<ProductInOutModel> GetDiscardTotalCount(DeptModel dept_dto, ProductInOutModel outtype_dto)
         {
+            log.Info("GetDiscardTotalCount(DeptModel, ProductInOutModel) invoked.");
             List<ProductInOutModel> list = new List<ProductInOutModel>();
             try
             {
@@ -2965,6 +3023,7 @@ namespace EasyProject.Dao
                                           "AND ROWNUM<=5 " +
                                           "ORDER BY O.prod_out_count * P.prod_price DESC";
 
+
                         cmd.Parameters.Add(new OracleParameter("prod_out_type", outtype_dto.Prod_out_type));
                         cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
 
@@ -2989,13 +3048,14 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
             return list;
         }//GetDiscardTotalCount
 
         public List<ProductInOutModel> incomingCases_Info(DateTime? startDate, DateTime? endDate)
         {
+            log.Info("incomingCases_Info(DateTime?, DateTime?) invoked.");
             List<ProductInOutModel> list = new List<ProductInOutModel>();
             try
             {
@@ -3049,13 +3109,14 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
             return list;
         }//orderCases_Info
 
         public List<ProductInOutModel> ReleaseCases_Info(DateTime? startDate, DateTime? endDate) // 부서별 출고 횟수 정보를 담은 리스트
         {
+            log.Info("ReleaseCases_Info(DateTime?, DateTime?) invoked.");
             List<ProductInOutModel> list = new List<ProductInOutModel>();
             try
             {
@@ -3107,7 +3168,7 @@ namespace EasyProject.Dao
             }//try
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                log.Error(e.Message);
             }//catch
             return list;
         }//ReleaseCases_Info
