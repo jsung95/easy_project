@@ -39,8 +39,10 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
             <Setter Property="Cursor" Value="Hand" />
-        </Style>  
-        
+        </Style>
+
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
     </Page.Resources>
     <materialDesign:DialogHost x:Name="DialogHost">
         <materialDesign:DialogHost.DialogContent>
@@ -200,8 +202,8 @@
 
                         </Grid>
                     </Grid>
-
-                    <DataGrid x:Name="dataGrid" Grid.Row="1"
+                        <TextBlock Text="조회 가능한 데이터가 없습니다." TextAlignment="Center"  Visibility="{Binding Items.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=dataGrid}" Margin="10,28,0,268" Grid.Row="1" />
+                        <DataGrid x:Name="dataGrid" Grid.Row="1"
                             HorizontalAlignment="Left" Margin="10 0"
                             AllowDrop="False" PreviewKeyDown="DataGridKeyDown"
                             VerticalAlignment="Top" AutoGenerateColumns="False"
@@ -597,7 +599,9 @@
 
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
+                        
                     </DataGrid>
+                        
                     <Grid Grid.Row="2">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 5">
                             <materialDesign:PackIcon Kind="Circle" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"></materialDesign:PackIcon>
