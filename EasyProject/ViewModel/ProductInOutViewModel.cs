@@ -44,6 +44,37 @@ namespace EasyProject.ViewModel
                 //getInListByDept();
             }
         }
+        private ActionCommand deptChangedCommand;
+        public ICommand DeptChangedCommand
+        {
+            get
+            {
+                if (deptChangedCommand == null)
+                {
+                    deptChangedCommand = new ActionCommand(DeptChanged);
+                }
+                return deptChangedCommand;
+            }//get
+
+        }//Command
+
+        private void DeptChanged()
+        {
+            Console.WriteLine("DeptChanged!--------------------------------------------------------------------");
+            SearchKeyword_In = ""; //검색 텍스트 초기화
+            searchKeyword_Out = ""; //검색 텍스트 초기화
+
+            SelectedStartDate_In = Convert.ToDateTime(product_dao.GetProductIn_MinDate(SelectedDept)); //날짜 컨트롤 최대, 최소 날짜로 설정
+            //SelectedEndDate_In = Convert.ToDateTime(product_dao.GetProductIn_MaxDate(SelectedDept));
+            SelectedEndDate_In = DateTime.Today;
+
+            //SelectedStartDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MinDate(SelectedDept));
+            //SelectedEndDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MaxDate(SelectedDept));
+            //SelectedEndDate_Out = DateTime.Today;
+
+            //getProductIn_By_Date(); -> 날짜 바뀌는 부분에서 실행됨
+            //getProductOut_By_Date();
+        }
 
         private bool isDataGridCheckBoxChecked = true;
         public bool IsDataGridCheckBoxChecked
@@ -69,37 +100,7 @@ namespace EasyProject.ViewModel
             }
         }
 
-        private ActionCommand deptChangedCommand;
-        public ICommand DeptChangedCommand
-        {
-            get
-            {
-                if (deptChangedCommand == null)
-                {
-                    deptChangedCommand = new ActionCommand(DeptChanged);
-                }
-                return deptChangedCommand;
-            }//get
-
-        }//Command
-
-        private void DeptChanged()
-        {
-            Console.WriteLine("DeptChanged!--------------------------------------------------------------------");
-            SearchKeyword_In = null; //검색 텍스트 초기화
-            searchKeyword_Out = null; //검색 텍스트 초기화
-            
-            SelectedStartDate_In = Convert.ToDateTime(product_dao.GetProductIn_MinDate(SelectedDept)); //날짜 컨트롤 최대, 최소 날짜로 설정
-            //SelectedEndDate_In = Convert.ToDateTime(product_dao.GetProductIn_MaxDate(SelectedDept));
-            SelectedEndDate_In = DateTime.Today;
-
-            SelectedStartDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MinDate(SelectedDept));
-            //SelectedEndDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MaxDate(SelectedDept));
-            SelectedEndDate_Out = DateTime.Today;
-
-            getProductIn_By_Date();
-            getProductOut_By_Date();
-        }
+        
 
         public ProductInOutViewModel()
         {
@@ -415,7 +416,7 @@ namespace EasyProject.ViewModel
         public void DashboardPrint2(DateTime? start, DateTime? end)//출고
         {
 
-            Console.WriteLine("DashboardPrint2");
+            Console.WriteLine("DashboardPrint2 실행(출고그래프)---------------");
             SeriesCollection2 = new SeriesCollection();
             Values2 = new ChartValues<int> { }; // 컬럼의 수치 ( y 축 )
             ChartValues<int> useCases = new ChartValues<int>(); // 사용 횟수를 담을 변수
@@ -462,7 +463,7 @@ namespace EasyProject.ViewModel
                 StackMode = StackMode.Values
             });
 
-            Formatter = value => value.ToString("N");   //문자열 10진수 변환
+            Formatter = value => value.ToString("N0");   //문자열 10진수 변환
         }//dashboardprint2 ---------------------------------------------------------------------------------------------------
 
         // 부서별 입고 유형별 빈도 그래프 (기간 선택 가능) (VIEW : 좌측하단 위치)---------------------
@@ -513,7 +514,7 @@ namespace EasyProject.ViewModel
                 StackMode = StackMode.Values
             });
 
-            Formatter = value => value.ToString("N");   //문자열 10진수 변환
+            Formatter = value => value.ToString("N0");   //문자열 10진수 변환
         }//dashboardprint3 ---------------------------------------------------------------------------------------------------
 
          // 부서별 입고 그래프 복제
@@ -564,7 +565,7 @@ namespace EasyProject.ViewModel
                 StackMode = StackMode.Values
             });
 
-            Formatter = value => value.ToString("N");   //문자열 10진수 변환
+            Formatter = value => value.ToString("N0");   //문자열 10진수 변환
         }//dashboardprint4 ---------------------------------------------------------------------------------------------------
 
         // 부서별 출고 그래프 복제
@@ -618,7 +619,7 @@ namespace EasyProject.ViewModel
                 StackMode = StackMode.Values
             });
 
-            Formatter = value => value.ToString("N");   //문자열 10진수 변환
+            Formatter = value => value.ToString("N0");   //문자열 10진수 변환
         }//dashboardprint5 ---------------------------------------------------------------------------------------------------
         #region 입고 pagination
         //검색 텍스트 - 입고
@@ -641,8 +642,10 @@ namespace EasyProject.ViewModel
             {
                 selectedStartDate_In = value;
                                                                                          
-                SearchKeyword_In = null;
+                SearchKeyword_In = "";
+                SearchKeyword_Out = "";
                 getProductIn_By_Date();
+                getProductOut_By_Date();
                 if (selectedStartDate_In > selectedEndDate_In)
                 {
                     SelectedStartDate_In = SelectedEndDate_In.Value.AddDays(-1);
@@ -650,6 +653,8 @@ namespace EasyProject.ViewModel
                 OnPropertyChanged("SelectedStartDate_In");
                 DashboardPrint2(selectedStartDate_In, selectedEndDate_In);
                 DashboardPrint3(selectedStartDate_In, selectedEndDate_In);
+                DashboardPrint4(selectedStartDate_In, selectedEndDate_In);
+                DashboardPrint5(selectedStartDate_In, selectedEndDate_In);
             }
         }
         //종료일을 담을 프로퍼티
@@ -662,8 +667,11 @@ namespace EasyProject.ViewModel
                 selectedEndDate_In = value;
 
                 //ShowProductIn_By_Date();
-                SearchKeyword_In = null;
+                SearchKeyword_In = "";
+                SearchKeyword_Out = "";
+
                 getProductIn_By_Date();
+                getProductOut_By_Date();
                 if (selectedStartDate_In > selectedEndDate_In)
                 {
                     SelectedStartDate_In = SelectedEndDate_In.Value.AddDays(-1);
@@ -672,6 +680,8 @@ namespace EasyProject.ViewModel
 
                 DashboardPrint2(selectedStartDate_In, selectedEndDate_In);
                 DashboardPrint3(selectedStartDate_In, selectedEndDate_In);
+                DashboardPrint4(selectedStartDate_In, selectedEndDate_In);
+                DashboardPrint5(selectedStartDate_In, selectedEndDate_In);
             }
         }
         //화면에 보여줄 리스트 입고 내역 담을 프로퍼티
@@ -1109,7 +1119,7 @@ namespace EasyProject.ViewModel
         {
             if (SelectedStartDate_Out != null && SelectedEndDate_Out != null)
             {
-                OutLstOfRecords = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept, SelectedStartDate_Out, SelectedEndDate_Out));
+                OutLstOfRecords = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept, SelectedStartDate_In, SelectedEndDate_In));
                 updateOutSearchedProducts();
                 UpdateOutRecordCount();
             }

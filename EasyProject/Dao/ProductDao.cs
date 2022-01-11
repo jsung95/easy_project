@@ -336,7 +336,7 @@ namespace EasyProject.Dao
                                           "ON I.dept_id = D.dept_id " +
                                           "WHERE D.dept_status != '폐지' " +
                                           "AND D.dept_name = :dept_name " +
-                                          "AND I.imp_dept_count != 0 " +
+                                          "AND I.imp_dept_count > 0 " +
                                           "ORDER BY P.prod_code, P.prod_expire ";
 
                         cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
@@ -2732,7 +2732,7 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
                         cmd.CommandText = "SELECT A.* " +
-                            "FROM (SELECT P.prod_code, TO_CHAR(TO_DATE(TO_CHAR(P.prod_expire, 'YYYYMMDD')) - TO_DATE(TO_CHAR(CURRENT_DATE, 'YYYYMMDD'))) " +
+                            "FROM (SELECT P.prod_code, TO_NUMBER(TO_DATE(TO_CHAR(P.prod_expire, 'YYYYMMDD')) - TO_DATE(TO_CHAR(CURRENT_DATE, 'YYYYMMDD'))) " +
                             "FROM product P " +
                             "INNER JOIN category C " +
                             "ON P.category_id = C.category_id " +
@@ -2740,9 +2740,9 @@ namespace EasyProject.Dao
                             "ON P.prod_id = I.prod_id " +
                             "INNER JOIN dept D " +
                             "ON I.dept_id = D.dept_id " +
-                            "WHERE d.dept_name= :dept_name and C.category_name = :category_name " +
+                            "WHERE d.dept_name= :dept_name and C.category_name = :category_name and P.prod_total>0 " +
                             "GROUP BY P.prod_code, P.prod_expire " +
-                            "ORDER BY 2 asc) A " +
+                            "ORDER BY 2 desc) A " +
                             "WHERE ROWNUM <= :SelectedNumber";
 
 

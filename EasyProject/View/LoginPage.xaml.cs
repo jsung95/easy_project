@@ -103,7 +103,9 @@ namespace EasyProject
             }
             else
             {
-                MessageBox.Show("올바른 사번/비밀번호를 입력해주세요.");
+                temp.IsLoginOk = true;
+                temp.MessageQueue.Enqueue("올바른 사번/비밀번호를 입력해주세요.", "닫기", (x) => { temp.IsLoginOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
             }
 
 /*            var button = sender as Button;
