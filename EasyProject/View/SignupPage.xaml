@@ -66,7 +66,7 @@
                             <Label Content="이름" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
                             <TextBox x:Name="name_TxtBox" Grid.Column="1" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Text="{Binding Nurse.Nurse_name}" Cursor="IBeam"/>
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Text="{Binding Nurse.Nurse_name}" Cursor="IBeam" materialDesign:TextFieldAssist.CharacterCounterVisibility="Collapsed"/>
                             <Label Content="담당 부서" Grid.Column="2" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
 
                             <ComboBox x:Name="deptName_ComboBoxs" Grid.Column="3" HorizontalContentAlignment="Left" 

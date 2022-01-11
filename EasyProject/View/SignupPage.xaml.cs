@@ -31,8 +31,10 @@ namespace EasyProject
             InitializeComponent();
             backBtn.Click += backBtn_Click;
             //rewriteBtn.Click += rewriteBtn_Click;
-           
+
             // SignUpDialog=false;
+            name_TxtBox.MaxLength = 4;
+            id_TxtBox.MaxLength = 8;
         }
         private void backBtn_Click(object sender, RoutedEventArgs e)
         {
