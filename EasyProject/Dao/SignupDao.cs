@@ -122,7 +122,7 @@ namespace EasyProject.Dao
                         }
                         else
                         {
-                            MessageBox.Show("중복입니다! 다시입력하세요.");
+                            //MessageBox.Show("중복입니다! 다시입력하세요.");
                             nurse_dto.Nurse_no = null;
                         }
                     }//using(cmd)
