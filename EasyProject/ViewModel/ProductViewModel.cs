@@ -261,6 +261,12 @@ namespace EasyProject.ViewModel
                         Add_list.Insert(0, productDto);
                         //Add_list.Add(productDto);
                         Console.WriteLine(Add_list.Count + "개");
+
+                        var temp1 = Ioc.Default.GetService<ProductShowViewModel>();
+                        temp1.getListbyDept();  // 재고현황 리스트 갱신
+
+                        var temp2 = Ioc.Default.GetService<ProductInOutViewModel>();
+                        temp2.getInListByDept(); // 입고 목록 갱신
                     }//foreach
                 }//if
 
@@ -363,6 +369,12 @@ namespace EasyProject.ViewModel
                         Add_list.Insert(0, productDto);
                         //Add_list.Add(productDto);
                         Console.WriteLine(Add_list.Count + "개");
+
+                        var temp1 = Ioc.Default.GetService<ProductShowViewModel>();
+                        temp1.getListbyDept();  // 재고현황 리스트 갱신
+
+                        var temp2 = Ioc.Default.GetService<ProductInOutViewModel>();
+                        temp2.getInListByDept(); // 입고 목록 갱신
                     }
 
                     //var ob2list = Add_list.ToList();
