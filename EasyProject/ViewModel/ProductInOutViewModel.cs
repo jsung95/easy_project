@@ -463,7 +463,7 @@ namespace EasyProject.ViewModel
                 StackMode = StackMode.Values
             });
 
-            Formatter = value => value.ToString("N");   //문자열 10진수 변환
+            Formatter = value => value.ToString("N0");   //문자열 10진수 변환
         }//dashboardprint2 ---------------------------------------------------------------------------------------------------
 
         // 부서별 입고 유형별 빈도 그래프 (기간 선택 가능) (VIEW : 좌측하단 위치)---------------------
@@ -514,7 +514,7 @@ namespace EasyProject.ViewModel
                 StackMode = StackMode.Values
             });
 
-            Formatter = value => value.ToString("N");   //문자열 10진수 변환
+            Formatter = value => value.ToString("N0");   //문자열 10진수 변환
         }//dashboardprint3 ---------------------------------------------------------------------------------------------------
 
          // 부서별 입고 그래프 복제
@@ -565,7 +565,7 @@ namespace EasyProject.ViewModel
                 StackMode = StackMode.Values
             });
 
-            Formatter = value => value.ToString("N");   //문자열 10진수 변환
+            Formatter = value => value.ToString("N0");   //문자열 10진수 변환
         }//dashboardprint4 ---------------------------------------------------------------------------------------------------
 
         // 부서별 출고 그래프 복제
@@ -619,7 +619,7 @@ namespace EasyProject.ViewModel
                 StackMode = StackMode.Values
             });
 
-            Formatter = value => value.ToString("N");   //문자열 10진수 변환
+            Formatter = value => value.ToString("N0");   //문자열 10진수 변환
         }//dashboardprint5 ---------------------------------------------------------------------------------------------------
         #region 입고 pagination
         //검색 텍스트 - 입고

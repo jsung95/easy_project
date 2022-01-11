@@ -297,7 +297,7 @@ namespace EasyProject.ViewModel
                 BarLabels1.Add(item.Prod_code);
                 Console.WriteLine("Prod_code" + item.Prod_code);
             }
-            Formatter1 = value => value.ToString("N");   //문자열 10진수 변환
+            Formatter1 = value => value.ToString("N0");   //문자열 10진수 변환
 
 
         }//dashboardprint1
@@ -366,7 +366,7 @@ namespace EasyProject.ViewModel
             {
                 BarLabels2.Add(item.Category_name);
             }
-            Formatter = value => value.ToString("N");   //문자열 10진수 변환
+            Formatter = value => value.ToString("N0");   //문자열 10진수 변환
         }//dashboardprint2
         #endregion
 
