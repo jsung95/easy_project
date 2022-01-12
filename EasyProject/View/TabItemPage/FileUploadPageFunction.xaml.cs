@@ -52,13 +52,33 @@ namespace EasyProject.View.TabItemPage
         }
         private void SetFileNameTxtBlock()
         {
-            fileNameTxtbox.Text = GetFileName(this.openFileDialog);
-        }
+            log.Info("SetFileNameTxtBlock() invoked.");
+
+            try
+            {
+                fileNameTxtbox.Text = GetFileName(this.openFileDialog);
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }//catch
+
+        }//SetFileNameTxtBlock
 
         private void fileUploadBtn_Click(object sender, RoutedEventArgs e)
         {
-            //이전 페이지로 돌아가기 (PageFunction 객체 생성한 페이지)
-            OnReturn(new ReturnEventArgs<string>());
-        }
-    }
-}
+            log.Info("fileUploadBtn_Click(object, RoutedEventArgs) invoked.");
+
+            try
+            {
+                //이전 페이지로 돌아가기 (PageFunction 객체 생성한 페이지)
+                OnReturn(new ReturnEventArgs<string>());
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }//catch
+
+        }//fileUploadBtn_Click
+    }//class
+}//namespace
