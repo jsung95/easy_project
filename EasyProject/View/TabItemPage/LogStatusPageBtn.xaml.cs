@@ -30,7 +30,8 @@ namespace EasyProject.View.TabItemPage
             log.Info("Constructor LogStatusPageBtn() invoked.");
             InitializeComponent();
             EventLogBtn.Click += EventLog_Click;
-            LoginoutBtn.Click += Loginout_Click;
+            LoginBtn.Click += Login_Click;
+            LogoutBtn.Click += Logout_Click;
             InitializeComponent();
         }
         private void EventLog_Click(object sender, RoutedEventArgs e)
@@ -46,12 +47,26 @@ namespace EasyProject.View.TabItemPage
             }
 
         }
-        private void Loginout_Click(object sender, RoutedEventArgs e)
+        private void Login_Click(object sender, RoutedEventArgs e)
         {
             log.Info("Loginout_Click(object, RoutedEventArgs) invoked.");
             try
             {
                 ListFrame.Source = new Uri("LogStatusList2Page.xaml", UriKind.Relative);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+
+        }
+
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            log.Info("Loginout_Click(object, RoutedEventArgs) invoked.");
+            try
+            {
+                ListFrame.Source = new Uri("LogStatusList3Page.xaml", UriKind.Relative);
             }
             catch (Exception ex)
             {
