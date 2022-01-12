@@ -126,7 +126,8 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
-            </Grid>
+                    <TextBlock x:Name="dept_TextBox" Grid.Column="3" Visibility="Hidden" VerticalAlignment="Center"/>
+                </Grid>
                 <Grid x:Name="DataAndGraphGrid" Grid.Row="2" >
                     <Grid.ColumnDefinitions>
                     <ColumnDefinition x:Name="DataGridColumn" Width="1.8*"/>

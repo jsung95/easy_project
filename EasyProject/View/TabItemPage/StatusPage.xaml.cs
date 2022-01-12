@@ -234,7 +234,12 @@ namespace EasyProject.View.TabItemPage
                 var temp = Ioc.Default.GetService<ProductShowViewModel>();
                 var userDept = temp.Depts[(int)App.nurse_dto.Dept_id - 1];  // 현재 사용자 소속 부서 객체
                 var userDeptName = userDept.Dept_name;
-
+                if(temp.Nurse.Nurse_auth == "NORMAL")
+                {
+                    deptName_ComboBox1.Visibility = Visibility.Hidden;
+                    dept_TextBox.Visibility = Visibility.Visible;
+                    dept_TextBox.Text = temp.SelectedDept.Dept_name;
+                }
                 var dash = Ioc.Default.GetService<ProductShowViewModel>();
                 dash.DashboardPrint1(dash.SelectedDept, dash.SelectedCategory1, dash.SelectedNumber);
                 dash.DashboardPrint2(dash.SelectedDept);

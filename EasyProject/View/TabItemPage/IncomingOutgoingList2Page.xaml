@@ -137,7 +137,9 @@
                                         </i:Interaction.Triggers>
 
                                     </ComboBox>
+                                    
                                 </StackPanel>
+                                <TextBlock x:Name="dept_TextBox" Visibility="Hidden" Margin="131,0,10,0" VerticalAlignment="Center"/>
                             </Grid>
                         </Grid>
                     </Grid>

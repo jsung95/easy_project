@@ -44,6 +44,14 @@ namespace EasyProject.View.TabItemPage
             dash.DashboardPrint3(dash.SelectedStartDate_In, dash.SelectedEndDate_In);   //입고
             //temp.DashboardPrint4(temp.SelectedCategory1);
             dash.DashboardPrint_Pie();
+
+            var temp = Ioc.Default.GetService<ProductShowViewModel>();
+            if (temp.Nurse.Nurse_auth == "NORMAL")
+            {
+                deptName_ComboBox1.Visibility = Visibility.Hidden;
+                dept_TextBox.Visibility = Visibility.Visible;
+                dept_TextBox.Text = temp.SelectedDept.Dept_name;
+            }
         }      
        
         //private void OnDropDownOpened(object sender, EventArgs e)

@@ -44,6 +44,13 @@ namespace EasyProject.View.TabItemPage
             dash.DashboardPrint_Pie();
             dash.DashboardPrint2(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
             dash.DashboardPrint3(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
+            var temp = Ioc.Default.GetService<ProductShowViewModel>();
+            if (temp.Nurse.Nurse_auth == "NORMAL")
+            {
+                deptName_ComboBox1.Visibility = Visibility.Hidden;
+                dept_TextBox.Visibility = Visibility.Visible;
+                dept_TextBox.Text = temp.SelectedDept.Dept_name;
+            }
         }
         private void OnDropDownOpened(object sender, EventArgs e)
         {
