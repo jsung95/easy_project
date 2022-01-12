@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EasyProject.ViewModel;
+using EasyProject.Model;
 
 namespace EasyProject.View.TabItemPage.GraphPage.GraphlogPage
 {
@@ -23,6 +26,9 @@ namespace EasyProject.View.TabItemPage.GraphPage.GraphlogPage
         public LogoutGraph()
         {
             InitializeComponent();
+            var dash = Ioc.Default.GetService<LogViewModel>();
+            dash.TodayLoginPrint();
+            dash.TodayLogoutPrint();
         }
     }
 }

@@ -29,7 +29,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0"/>
                 <Grid Grid.Column="1">
-                    <Label Content="일별 접속횟수" FontSize="15" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,0,0"></Label>
+                    <Label Content="일별 로그인 횟수" FontSize="15" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,0,0"></Label>
                 </Grid>
                 <Grid Grid.Column="2">
                     <!--<Button x:Name="RightBtn"  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
