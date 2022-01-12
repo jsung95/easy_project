@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using EasyProject.Model;
 using EasyProject.ViewModel;
+using log4net;
 
 namespace EasyProject.View.TabItemPage.GraphPage.GraphlogPage
 {
@@ -23,8 +24,10 @@ namespace EasyProject.View.TabItemPage.GraphPage.GraphlogPage
     /// </summary>
     public partial class LogoutGraph_Copy : Page
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         public LogoutGraph_Copy()
         {
+            log.Info("Constructor LogoutGraph_Copy() invoked.");
             InitializeComponent();
             var dash = Ioc.Default.GetService<LogViewModel>();
             dash.TodayLoginPrint();
@@ -33,10 +36,19 @@ namespace EasyProject.View.TabItemPage.GraphPage.GraphlogPage
 
         private void RightBtn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate
+            log.Info("RightBtn_Click(object, RoutedEventArgs) invoked.");
+            try
+            {
+                NavigationService.Navigate
                                (
                                new Uri("/View/TabItemPage/GraphPage/GraphlogPage/LoginGraph_Copy.xaml", UriKind.Relative) //재고현황화면 --테스트
                                );
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+            
         }
     }
 }
