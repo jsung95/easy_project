@@ -29,7 +29,7 @@ namespace EasyProject.View.TabItemPage
         {
             log.Info("Constructor IncomingOutgoingPageBtn() invoked.");
             InitializeComponent();
-            IncomingBtn.Click += Incoming_Click;
+            OutcomingBtn.Click += Incoming_Click;
             OutgoingBtn.Click += Outgoing_Click;
         }
 
@@ -38,6 +38,9 @@ namespace EasyProject.View.TabItemPage
             log.Info("Incoming_Click(object, RoutedEventArgs) invoked.");
             try
             {
+                OutcomingBtn.Background= System.Windows.Media.Brushes.Blue;
+                OutgoingBtn.Background = System.Windows.Media.Brushes.LightGray;
+
                 ListFrame.Source = new Uri("IncomingOutgoingList1Page.xaml", UriKind.Relative);
             }
             catch(Exception ex)
@@ -51,6 +54,8 @@ namespace EasyProject.View.TabItemPage
             log.Info("Outgoing_Click(object, RoutedEventArgs) invoked.");
             try
             {
+                OutcomingBtn.Background = System.Windows.Media.Brushes.LightGray;
+                OutgoingBtn.Background = System.Windows.Media.Brushes.Blue;
                 ListFrame.Source = new Uri("IncomingOutgoingList2Page.xaml", UriKind.Relative);
             }
             catch(Exception ex)

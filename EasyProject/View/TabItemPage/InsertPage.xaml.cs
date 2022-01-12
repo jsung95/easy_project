@@ -36,6 +36,8 @@ namespace EasyProject.View
             log.Info("formBtn_Click(object, RoutedEventArgs) invoked.");
             try
             {
+                formBtn.Background= System.Windows.Media.Brushes.Blue;
+                excelBtn.Background = System.Windows.Media.Brushes.LightGray;
                 InsertPageFrame.Source = new Uri("InsertPage_Form.xaml", UriKind.Relative);
             }
             catch(Exception ex)
@@ -49,6 +51,8 @@ namespace EasyProject.View
             log.Info("excelBtn_Click(object, RoutedEventArgs) invoked.");
             try
             {
+                formBtn.Background = System.Windows.Media.Brushes.LightGray;
+                excelBtn.Background = System.Windows.Media.Brushes.Blue;
                 InsertPageFrame.Source = new Uri("InsertPage_Excel.xaml", UriKind.Relative);
             }
             catch(Exception ex)
