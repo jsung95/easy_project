@@ -729,6 +729,14 @@ namespace EasyProject.ViewModel
                                     newCategoryDao.Category_name = "추가(직접입력)";
                                     Categories.Add(newCategoryDao);
 
+                                    ObservableCollection<CategoryModel> newCategories = new ObservableCollection<CategoryModel>(categoryDao.GetCategoriesvalues());
+                                    temp1.Category1.Clear();
+                                    foreach (var item in list)
+                                    {
+                                        temp1.Category1.Add(item);
+                                    }
+                                    temp1.SelectedCategory1 = temp1.Category1[0];
+
                                     var temp2 = Ioc.Default.GetService<ProductInOutViewModel>();
                                     temp2.getInListByDept(); // 입고 목록 갱신
 

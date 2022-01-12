@@ -128,7 +128,7 @@ namespace EasyProject.ViewModel
 
             //11대시보드
             Category1 = new ObservableCollection<CategoryModel>(category_dao.GetCategoriesvalues());
-            SelectedCategory1 = Category1[1];
+            SelectedCategory1 = Category1[0];
             DecidedNumber = new[] { 10, 20, 30 };
             SelectedNumber = DecidedNumber[0];
             DashboardPrint1(SelectedDept, SelectedCategory1, SelectedNumber);
