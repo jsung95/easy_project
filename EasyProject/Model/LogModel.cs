@@ -40,6 +40,11 @@ namespace EasyProject.Model
         public string Logout_log_nation { get; set; }
         public DateTime? Logout_log_date { get; set; }
 
+        //대시보드
+
+        public int? Log_total { get; set; }
+        public string Today_Log_date { get; set; }
+
     }//class
 
 }//namespace

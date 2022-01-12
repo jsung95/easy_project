@@ -33,7 +33,7 @@
                 </Grid>
                 <Grid Grid.Column="2">
                     <Button x:Name="RightBtn"  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
-                        VerticalAlignment="Bottom"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Background="{x:Null}" Click="RightBtn_Click" >
+                        VerticalAlignment="Bottom"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Background="{x:Null}"  >
                         <materialDesign:PackIcon  Kind="ArrowRight" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="26" />
                     </Button>
                 </Grid>

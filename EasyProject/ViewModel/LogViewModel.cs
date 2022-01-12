@@ -9,6 +9,8 @@ using log4net;
 using System.Collections.ObjectModel;
 using Microsoft.Expression.Interactivity.Core;
 using System.Windows.Input;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace EasyProject.ViewModel
 {
@@ -451,7 +453,132 @@ namespace EasyProject.ViewModel
 
         #endregion
 
+        // 7일간 하루로그인 횟수 그래프
+        private SeriesCollection seriesCollection;
+        public SeriesCollection SeriesCollection               //그래프 큰 틀 만드는거
+        {
+            get { return seriesCollection; }
+            set
+            {
+                seriesCollection = value;
+                OnPropertyChanged("SeriesCollection");
+            }
+        }
+        // 로그인 유지 시간 그래프
+        private SeriesCollection seriesCollection1;
+        public SeriesCollection SeriesCollection1               //그래프 큰 틀 만드는거
+        {
+            get { return seriesCollection1; }
+            set
+            {
+                seriesCollection1 = value;
+                OnPropertyChanged("SeriesCollection1");
+            }
+        }
+        // 로그 레벨 그래프
+        private SeriesCollection seriesCollection2;
+        public SeriesCollection SeriesCollection2               //그래프 큰 틀 만드는거
+        {
+            get { return seriesCollection2; }
+            set
+            {
+                seriesCollection2 = value;
+                OnPropertyChanged("SeriesCollection2");
+            }
+        }
 
+        // 대시보드 프로퍼티
+        public ChartValues<int> Values { get; set; }
+        public List<string> BarLabels { get; set; }       //string[]
+        public ChartValues<int> Values1 { get; set; }
+        public List<string> BarLabels1 { get; set; }       //string[]
+        public ChartValues<int> Values2 { get; set; }
+        public List<string> BarLabels2 { get; set; }       //string[]
+        public Func<double, string> Formatter { get; set; }
+
+        //하루 로그인 횟수(7일 제한) 그래프
+        public void TodayLoginPrint(DeptModel selected)
+        {
+            ChartValues<int> mount = new ChartValues<int>();   //y축들어갈 임시 값
+            SeriesCollection = new SeriesCollection();   //대시보드 틀
+                                                         //Console.WriteLine(selected.Dept_id); 
+            List<LogModel> list_xy = log_dao.Logintotal();
+
+
+            foreach (var item in list_xy)
+            {
+                mount.Add((int)item.Log_total);
+            }
+            Values = new ChartValues<int> { };
+
+            SeriesCollection.Add(new LineSeries
+            {
+                Title = "총 수량",   //+ i
+                Values = mount,
+            });
+            BarLabels = new List<string>() { };                           //x축출력
+            foreach (var item in list_xy)
+            {
+                BarLabels1.Add(item.Today_Log_date);
+            }
+            Formatter = value => value.ToString("N0");   //문자열 10진수 변환
+        }
+
+        //하루 로그아웃 횟수(7일 제한) 그래프
+        public void KeepLoginTimePrint()
+        {
+            ChartValues<int> mount = new ChartValues<int>();   //y축들어갈 임시 값
+            SeriesCollection1 = new SeriesCollection();   //대시보드 틀
+                                                          //Console.WriteLine(selected.Dept_id); 
+            List<LogModel> list_xy = log_dao.Logintotal();
+
+
+            foreach (var item in list_xy)
+            {
+                mount.Add((int)item.Log_total);
+            }
+            Values1 = new ChartValues<int> { };
+
+            SeriesCollection.Add(new ColumnSeries
+            {
+                Title = "총 수량",   //+ i
+                Values = mount,
+            });
+            BarLabels1 = new List<string>() { };                           //x축출력
+            foreach (var item in list_xy)
+            {
+                BarLabels1.Add(item.Today_Log_date);
+            }
+            Formatter = value => value.ToString("N0");   //문자열 10진수 변환
+        }
+
+        // 로그 레벨 그래프
+        public void LogLevelPrint(DeptModel selected)
+        {
+            ChartValues<int> mount = new ChartValues<int>();   //y축들어갈 임시 값
+            SeriesCollection1 = new SeriesCollection();   //대시보드 틀
+                                                          //Console.WriteLine(selected.Dept_id); 
+            List<LogModel> list_xy = log_dao.Logintotal();
+
+
+            foreach (var item in list_xy)
+            {
+                mount.Add((int)item.Log_total);
+            }
+            Values1 = new ChartValues<int> { };
+
+            SeriesCollection.Add(new ColumnSeries
+            {
+                Title = "총 수량",   //+ i
+                Values = mount,
+            });
+            BarLabels1 = new List<string>() { };                           //x축출력
+            foreach (var item in list_xy)
+            {
+                BarLabels1.Add(item.Today_Log_date);
+            }
+            Formatter = value => value.ToString("N0");   //문자열 10진수 변환
+        }
     }//class
 
 }//namespace
