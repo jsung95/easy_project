@@ -35,7 +35,7 @@ namespace EasyProject.View.TabItemPage
 
         public StatusPage()
         {
-            log.Info("StatusPage initialized");
+            log.Info("Constructor StatusPage() invoked.");
             InitializeComponent();
             //dept_Label.Visibility = Visibility.Hidden;
             //Dept_comboBox.Visibility = Visibility.Hidden;
@@ -47,143 +47,75 @@ namespace EasyProject.View.TabItemPage
         public static T FindChild<T>(DependencyObject parent, string childName)
     where T : DependencyObject
         {
-            // Confirm parent and childName are valid. 
-            if (parent == null) return null;
-
+            log.Info("FindChild<T>(DependencyObject, string) invoked.");
             T foundChild = null;
-
-            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
-            for (int i = 0; i < childrenCount; i++)
+            try
             {
-                var child = VisualTreeHelper.GetChild(parent, i);
-                // If the child is not of the request child type child
-                T childType = child as T;
-                if (childType == null)
-                {
-                    // recursively drill down the tree
-                    foundChild = FindChild<T>(child, childName);
+                // Confirm parent and childName are valid. 
+                if (parent == null) return null;
 
-                    // If the child is found, break so we do not overwrite the found child. 
-                    if (foundChild != null) break;
-                }
-                else if (!string.IsNullOrEmpty(childName))
+                
+
+                int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+                for (int i = 0; i < childrenCount; i++)
                 {
-                    var frameworkElement = child as FrameworkElement;
-                    // If the child's name is set for search
-                    if (frameworkElement != null && frameworkElement.Name == childName)
+                    var child = VisualTreeHelper.GetChild(parent, i);
+                    // If the child is not of the request child type child
+                    T childType = child as T;
+                    if (childType == null)
                     {
-                        // if the child's name is of the request name
+                        // recursively drill down the tree
+                        foundChild = FindChild<T>(child, childName);
+
+                        // If the child is found, break so we do not overwrite the found child. 
+                        if (foundChild != null) break;
+                    }
+                    else if (!string.IsNullOrEmpty(childName))
+                    {
+                        var frameworkElement = child as FrameworkElement;
+                        // If the child's name is set for search
+                        if (frameworkElement != null && frameworkElement.Name == childName)
+                        {
+                            // if the child's name is of the request name
+                            foundChild = (T)child;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        // child element found.
                         foundChild = (T)child;
                         break;
                     }
                 }
-                else
-                {
-                    // child element found.
-                    foundChild = (T)child;
-                    break;
-                }
-            }
 
-            return foundChild;
-        }
+                return foundChild;
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return foundChild;
+            }//catch
+
+        }//FindChild
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
-            var deptNameText = deptModelObject.Dept_name; // 콤보박스에서 선택한 부서명
-            var temp = Ioc.Default.GetService<ProductShowViewModel>();
-            var userDept = temp.Depts[(int)App.nurse_dto.Dept_id - 1];  // 현재 사용자 소속 부서 객체
-            var userDeptName = userDept.Dept_name;
+            log.Info("MainWindow_Loaded(object, RoutedEventArgs) invoked.");
 
-            var dash = Ioc.Default.GetService<ProductShowViewModel>();
-            dash.DashboardPrint1(dash.SelectedDept, dash.SelectedCategory1,dash.SelectedNumber);
-            dash.DashboardPrint2(dash.SelectedDept);
-
-            if (App.nurse_dto.Nurse_auth.Equals("ADMIN"))
+            try
             {
-                
-                if (deptNameText.Equals(userDeptName) || userDeptName == null)
-                {
-                    Console.WriteLine(userDeptName + "같은 부서일때");
-                    buttonColumn.Visibility = Visibility.Visible;
-                    ModifyToggleButtonPanel.Visibility = Visibility.Visible;
-                    //ModifyToggleButtonPanel.Visibility = Visibility.Hidden;
-                }
-                else
-                {
-                    Console.WriteLine(userDeptName + "다른 부서일때");
-                    buttonColumn.Visibility = Visibility.Hidden;
-                    ModifyToggleButtonPanel.Visibility = Visibility.Hidden;
-                }
-            }
-        }
+                var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
+                var deptNameText = deptModelObject.Dept_name; // 콤보박스에서 선택한 부서명
+                var temp = Ioc.Default.GetService<ProductShowViewModel>();
+                var userDept = temp.Depts[(int)App.nurse_dto.Dept_id - 1];  // 현재 사용자 소속 부서 객체
+                var userDeptName = userDept.Dept_name;
 
-        private void SomeSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var comboBox = sender as ComboBox;
+                var dash = Ioc.Default.GetService<ProductShowViewModel>();
+                dash.DashboardPrint1(dash.SelectedDept, dash.SelectedCategory1, dash.SelectedNumber);
+                dash.DashboardPrint2(dash.SelectedDept);
 
-            if(comboBox.SelectedItem != null)
-            {
-                ((ProductShowViewModel)(this.DataContext)).ComboBoxCategoryName = (comboBox.SelectedItem as CategoryModel).Category_name;
-                Console.WriteLine(((ProductShowViewModel)(this.DataContext)).ComboBoxCategoryName);
-
-                if ((comboBox.SelectedItem as CategoryModel).Category_name !=
-                ((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name &&
-                (comboBox.SelectedItem as CategoryModel).Category_name != "직접입력")
-                {
-                    //Console.WriteLine("다르다");
-
-                    ((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name = (comboBox.SelectedItem as CategoryModel).Category_name;
-                    //Console.WriteLine(((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name);
-                }
-            }
-        }
-
-        private void DataGridKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-
-
-                //dataGrid.SelectedCells[0].Column.GetCellContent;
-                dataGrid.Focus();
-                
-
-                //ErrorNotificationMessage msg = new ErrorNotificationMessage();
-                //msg.Message = "재고수정을 하시겠습니까?";
-                //await DialogHost.Show(msg, "RootDialog");
-                //DialogHost.ShowDialog(DialogHost.DialogContent);
-
-                ((ProductShowViewModel)(this.DataContext)).EditProduct();
-                //DialogHost.CloseDialogCommand.Execute(null, null);
-            }
-        }
-        //private void KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    var cmb = sender as ComboBox;
-
-        //    if(e.Key == Key.Enter || e.Key == Key.Tab)
-        //    {
-        //        ((ProductShowViewModel)(this.DataContext)).AddNewCategory(cmb.Text);
-        //        ((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name = cmb.Text;
-        //        ((ProductShowViewModel)(this.DataContext)).EditProduct();
-        //    } 
-        //}
-
-        private void OnDropDownOpened(object sender, EventArgs e)
-        {
-            isComboBoxDropDownOpened = true;
-
-            var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
-            var deptNameText = deptModelObject.Dept_name; // 콤보박스에서 선택한 부서명
-            var temp = Ioc.Default.GetService<ProductShowViewModel>();
-            var userDept = temp.Depts[(int)App.nurse_dto.Dept_id - 1];  // 현재 사용자 소속 부서 객체
-            var userDeptName = userDept.Dept_name;
-
-            if (App.nurse_dto.Nurse_auth.Equals("ADMIN"))
-            {
-                if (isComboBoxDropDownOpened)
+                if (App.nurse_dto.Nurse_auth.Equals("ADMIN"))
                 {
 
                     if (deptNameText.Equals(userDeptName) || userDeptName == null)
@@ -200,119 +132,337 @@ namespace EasyProject.View.TabItemPage
                         ModifyToggleButtonPanel.Visibility = Visibility.Hidden;
                     }
                 }
-            }
-        }
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }//catch
+
+        }//MainWindow_Loaded
+
+        private void SomeSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            log.Info("SomeSelectionChanged(object, SelectionChangedEventArgs)");
+
+            try
+            {
+                var comboBox = sender as ComboBox;
+
+                if (comboBox.SelectedItem != null)
+                {
+                    ((ProductShowViewModel)(this.DataContext)).ComboBoxCategoryName = (comboBox.SelectedItem as CategoryModel).Category_name;
+                    Console.WriteLine(((ProductShowViewModel)(this.DataContext)).ComboBoxCategoryName);
+
+                    if ((comboBox.SelectedItem as CategoryModel).Category_name !=
+                    ((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name &&
+                    (comboBox.SelectedItem as CategoryModel).Category_name != "직접입력")
+                    {
+                        //Console.WriteLine("다르다");
+
+                        ((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name = (comboBox.SelectedItem as CategoryModel).Category_name;
+                        //Console.WriteLine(((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name);
+                    }
+                }
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }//catch
+
+        }//SomeSelectionChanged
+
+        private void DataGridKeyDown(object sender, KeyEventArgs e)
+        {
+            log.Info("DataGridKeyDown(object, KeyEventArgs) invoked.");
+
+            try
+            {
+                if (e.Key == Key.Enter)
+                {
+
+
+                    //dataGrid.SelectedCells[0].Column.GetCellContent;
+                    dataGrid.Focus();
+
+
+                    //ErrorNotificationMessage msg = new ErrorNotificationMessage();
+                    //msg.Message = "재고수정을 하시겠습니까?";
+                    //await DialogHost.Show(msg, "RootDialog");
+                    //DialogHost.ShowDialog(DialogHost.DialogContent);
+
+                    ((ProductShowViewModel)(this.DataContext)).EditProduct();
+                    //DialogHost.CloseDialogCommand.Execute(null, null);
+                }
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }//catch
+
+        }//DataGridKeyDown
+
+        //private void KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    var cmb = sender as ComboBox;
+
+        //    if(e.Key == Key.Enter || e.Key == Key.Tab)
+        //    {
+        //        ((ProductShowViewModel)(this.DataContext)).AddNewCategory(cmb.Text);
+        //        ((ProductShowViewModel)(this.DataContext)).SelectedProduct.Category_name = cmb.Text;
+        //        ((ProductShowViewModel)(this.DataContext)).EditProduct();
+        //    } 
+        //}
+
+        private void OnDropDownOpened(object sender, EventArgs e)
+        {
+            log.Info("OnDropDownOpened(object, EventArgs) invoked.");
+
+            try
+            {
+                isComboBoxDropDownOpened = true;
+
+                var deptModelObject = deptName_ComboBox1.SelectedValue as DeptModel;
+                var deptNameText = deptModelObject.Dept_name; // 콤보박스에서 선택한 부서명
+                var temp = Ioc.Default.GetService<ProductShowViewModel>();
+                var userDept = temp.Depts[(int)App.nurse_dto.Dept_id - 1];  // 현재 사용자 소속 부서 객체
+                var userDeptName = userDept.Dept_name;
+
+                if (App.nurse_dto.Nurse_auth.Equals("ADMIN"))
+                {
+                    if (isComboBoxDropDownOpened)
+                    {
+
+                        if (deptNameText.Equals(userDeptName) || userDeptName == null)
+                        {
+                            Console.WriteLine(userDeptName + "같은 부서일때");
+                            buttonColumn.Visibility = Visibility.Visible;
+                            ModifyToggleButtonPanel.Visibility = Visibility.Visible;
+                            //ModifyToggleButtonPanel.Visibility = Visibility.Hidden;
+                        }
+                        else
+                        {
+                            Console.WriteLine(userDeptName + "다른 부서일때");
+                            buttonColumn.Visibility = Visibility.Hidden;
+                            ModifyToggleButtonPanel.Visibility = Visibility.Hidden;
+                        }
+                    }
+                }
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }//catch
+
+        }//OnDropDownOpened
 
         private void DataGridCheckboxClick(object sender, RoutedEventArgs e)
         {
-            if (DataGridCheckbox.IsChecked == true)
+            log.Info("DataGridCheckboxClick(object, RoutedEventArgs) invoked.");
+
+            try
             {
-                //DataAndGraphGrid.ColumnDefinitions.Add(DataGridColumn);
-                DataGridColumn.Width = new GridLength(1.8, GridUnitType.Star);
-            }
-            else
+                if (DataGridCheckbox.IsChecked == true)
+                {
+                    //DataAndGraphGrid.ColumnDefinitions.Add(DataGridColumn);
+                    DataGridColumn.Width = new GridLength(1.8, GridUnitType.Star);
+                }
+                else
+                {
+                    DataGridColumn.Width = new GridLength(0);
+                }
+            }//try
+            catch (Exception ex)
             {
-                DataGridColumn.Width = new GridLength(0);
-            }
-        }
+                log.Error(ex.Message);
+            }//catch
+
+        }//DataGridCheckboxClick
 
         private void GraphCheckboxClick(object sender, RoutedEventArgs e)
         {
-            if (GraphCheckbox.IsChecked == true)
+            log.Info("GraphCheckboxClick(object, RoutedEventArgs) invoked.");
+
+            try
             {
-                GraphColumn.Width = new GridLength(1, GridUnitType.Star);
-            }
-            else
+                if (GraphCheckbox.IsChecked == true)
+                {
+                    GraphColumn.Width = new GridLength(1, GridUnitType.Star);
+                }
+                else
+                {
+                    GraphColumn.Width = new GridLength(0);
+                }
+            }//try
+            catch (Exception ex)
             {
-                GraphColumn.Width = new GridLength(0);
-            }
-        }
+                log.Error(ex.Message);
+            }//catch
+
+        }//GraphCheckboxClick
 
         private void GraphCheckboxUnChecked(object sender, RoutedEventArgs e)
         {
-            GraphCard.Visibility = Visibility.Visible;
-        }
+            log.Info("GraphCheckboxUnChecked(object, RoutedEventArgs) invoked.");
+
+            try
+            {
+                GraphCard.Visibility = Visibility.Visible;
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }//catch
+
+        }//GraphCheckboxUnChecked
 
 
 
     }//class
 
-    public class IsLesserThanConverter : IValueConverter
-    {//Red
+    public class IsLesserThanConverter : IValueConverter //Red
+    {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
+
         public static readonly IValueConverter Instance = new IsLesserThanConverter();
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            log.Info("Convert(object, Type, object, CultureInfo) invoked.");
             bool checkBool = false;
-
-            if (value != null && targetType != null)
+            try
             {
-                int intValue = (int)value;//남은 일수
-                int compareToValue = Int32.Parse(parameter.ToString());
+                
+                if (value != null && targetType != null)
+                {
+                    int intValue = (int)value;//남은 일수
+                    int compareToValue = Int32.Parse(parameter.ToString());
 
-                checkBool = intValue < compareToValue;
-            }
+                    checkBool = intValue < compareToValue;
+                }
 
-            return checkBool;
-        }
+                return checkBool;
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return checkBool;
+            }//catch
+
+        }//Convert
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
-        }
-    }
+            log.Info("ConvertBack(object, Type, object, CultureInfo) invoked.");
+
+            try
+            {
+                throw new NotImplementedException();
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                throw new NotImplementedException();
+            }//catch
+
+        }//ConvertBack
+    }//class
 
     public class IsEqualOrLessGreaterThanConverter : IValueConverter
     {//Yellow
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
+
         public static readonly IValueConverter Instance = new IsEqualOrLessGreaterThanConverter();
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
 
             bool checkBool = false;
+            log.Info("Convert(object, Type, object, CultureInfo) invoked.");
 
-            if (value != null && targetType != null)
+            try
             {
-                int intValue = (int)value;//남은 일수
-                int compareToValue = Int32.Parse(parameter.ToString());
+                if (value != null && targetType != null)
+                {
+                    int intValue = (int)value;//남은 일수
+                    int compareToValue = Int32.Parse(parameter.ToString());
 
-                checkBool = ((intValue > compareToValue) && (intValue - compareToValue < 3))
-                || (intValue == compareToValue);
-            }
+                    checkBool = ((intValue > compareToValue) && (intValue - compareToValue < 3))
+                    || (intValue == compareToValue);
+                }
 
-            return checkBool;
-        }
+                return checkBool;
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return checkBool;
+            }//catch
+
+        }//Convert
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
-        }
-    }
+            log.Info("ConvertBack(object, Type, object, CultureInfo) invoked.");
+
+            try
+            {
+                throw new NotImplementedException();
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                throw new NotImplementedException();
+            }//catch
+        }//ConvertBack
+    }//class
 
     public class IsGreaterThanConverter : IValueConverter
     {//Green
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
+
         public static readonly IValueConverter Instance = new IsGreaterThanConverter();
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             bool checkBool = false;
+            log.Info("Convert(object, Type, object, CultureInfo) invoked.");
 
-            if (value != null && targetType != null)
+            try
             {
-                int intValue = (int)value;//남은 일수
-                int compareToValue = Int32.Parse(parameter.ToString());
+                if (value != null && targetType != null)
+                {
+                    int intValue = (int)value;//남은 일수
+                    int compareToValue = Int32.Parse(parameter.ToString());
 
-                checkBool = (intValue > compareToValue) && (intValue - compareToValue > 3);
-            }
+                    checkBool = (intValue > compareToValue) && (intValue - compareToValue > 3);
+                }
 
-            return checkBool;
-        }
+                return checkBool;
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return checkBool;
+            }//catch
+
+        }//Convert
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            log.Info("ConvertBack(object, Type, object, CultureInfo) invoked.");
+
+            try
+            {
+
+                throw new NotImplementedException();
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                throw new NotImplementedException();
+            }//catch
         }
-    }
+    }//class
 
 
 
