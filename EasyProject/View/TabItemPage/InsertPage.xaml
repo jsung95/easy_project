@@ -51,10 +51,10 @@
 
                 <Grid Grid.Column="0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Button x:Name="formBtn" Content="폼 입력" Background="White" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
-                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="120"/>
-                        <Button x:Name="excelBtn" Content="파일 업로드" Background="White" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
-                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="120" Cursor="Hand"/>
+                        <Button x:Name="formBtn" Content="폼 입력" Background="blue" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
+                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="120"  Cursor="Hand"/>
+                        <Button x:Name="excelBtn" Content="파일 업로드" Background="LightGray" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
+                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="120"  Cursor="Hand"/>
                         <Button x:Name="CategoryBtn" Margin="10,0,0,0" Height="30" Width="30" Background="white">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="AddCircle" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="DarkGreen"/>
