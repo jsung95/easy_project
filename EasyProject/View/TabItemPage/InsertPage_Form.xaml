@@ -75,7 +75,7 @@
                             <Style TargetType="TextBox">
                                 <Setter Property="IsEnabled" Value="False"></Setter>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding SelectedCategory.Category_name}" Value="추가(입력)하기">
+                                    <DataTrigger Binding="{Binding SelectedCategory.Category_name}" Value="추가(직접입력)">
                                         <Setter Property="IsEnabled" Value="True"></Setter>
                                     </DataTrigger>
                                 </Style.Triggers>

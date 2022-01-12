@@ -273,7 +273,7 @@
 
                                 <DataGridComboBoxColumn ItemsSource="{Binding PSVM.Categories, Source={StaticResource Locator}}" 
                                                     TextBinding="{Binding Category_name}"
-                                                    DisplayMemberPath="Category_name" Header="품목/종류" Width="1.5*" CanUserSort="false" IsReadOnly="True">
+                                                    DisplayMemberPath="Category_name" Header="품목/종류" Width="1.5*" CanUserSort="false">
 
                                     <DataGridComboBoxColumn.CellStyle>
                                     <Style TargetType="DataGridCell">
@@ -292,7 +292,6 @@
                                 <DataGridComboBoxColumn.EditingElementStyle>
                                         <Style TargetType="{x:Type ComboBox}">
                                             <EventSetter Event="SelectionChanged" Handler="SomeSelectionChanged"/>
-
                                         </Style>
                                 </DataGridComboBoxColumn.EditingElementStyle>
 
