@@ -25,11 +25,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MaterialDesignThemes.Wpf;
+using log4net;
 
 namespace EasyProject.ViewModel
 {
     public class ProductShowViewModel : Notifier
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         DeptDao dept_dao = new DeptDao();
         ProductDao product_dao = new ProductDao();
         CategoryDao category_dao = new CategoryDao();
@@ -81,6 +83,7 @@ namespace EasyProject.ViewModel
 
         public ProductShowViewModel()
         {
+            log.Info("Constructor ProductShowViewModel() invoked.");
             messagequeue = new SnackbarMessageQueue();
 
             Products = new ObservableCollection<ProductShowModel>();
@@ -230,70 +233,76 @@ namespace EasyProject.ViewModel
 
         public void DashboardPrint1(DeptModel selected_dept, CategoryModel selected_category, int selected_number)                       //대시보드 출력(x축:제품code, y축:수량) 
         {
-
-            var Mapper = Mappers.Xy<int>()
-           .X((value, index) => value)
-           .Y((value, index) => index)
-
-           .Fill((value, index) => {
-               Console.WriteLine("dfassdfa");
-
-               if (value < 0)
-               {
-                   return Brushes.Red;
-               }
-               else if (((value > 0) && (value < 3))
-                || (value == 0))
-               {
-                   return Brushes.Yellow;
-               }
-               else
-               {
-                   return Brushes.Green;
-               }
-
-           });
-
-            //Console.WriteLine("dsdfsdffsdf");
-            //Console.WriteLine(value.Prod_remainexpire);
-
-            var seriesCollection = new SeriesCollection(Mapper);
-            Console.WriteLine(Mapper);
-
-            ChartValues<int> name = new ChartValues<int>();   //y축들어갈 임시 값
-
-            Console.WriteLine("DashboardPrint11");
-            SeriesCollection1 = seriesCollection;   //대시보드 틀
-            //Console.WriteLine(selected.Dept_id); 
-            List<ProductShowModel> list_xyz = product_dao.Get_Dept_Category_Number_RemainExpire(selected_dept, selected_category, selected_number);
-            Console.WriteLine(selected_dept.Dept_name);
-            Console.WriteLine(selected_category.Category_name);
-            foreach (var item in list_xyz)
+            log.Info("DashboardPrint1(DeptModel, CategoryModel, int) invoked.");
+            try
             {
-                name.Add((int)item.Prod_remainexpire);
-                Console.WriteLine("PROD_REMAINEXPIRE" + (int)item.Prod_remainexpire);
+                var Mapper = Mappers.Xy<int>()
+          .X((value, index) => value)
+          .Y((value, index) => index)
+
+          .Fill((value, index) => {
+              Console.WriteLine("dfassdfa");
+
+              if (value < 0)
+              {
+                  return Brushes.Red;
+              }
+              else if (((value > 0) && (value < 3))
+               || (value == 0))
+              {
+                  return Brushes.Yellow;
+              }
+              else
+              {
+                  return Brushes.Green;
+              }
+
+          });
+
+                //Console.WriteLine("dsdfsdffsdf");
+                //Console.WriteLine(value.Prod_remainexpire);
+
+                var seriesCollection = new SeriesCollection(Mapper);
+                Console.WriteLine(Mapper);
+
+                ChartValues<int> name = new ChartValues<int>();   //y축들어갈 임시 값
+
+                Console.WriteLine("DashboardPrint11");
+                SeriesCollection1 = seriesCollection;   //대시보드 틀
+                                                        //Console.WriteLine(selected.Dept_id); 
+                List<ProductShowModel> list_xyz = product_dao.Get_Dept_Category_Number_RemainExpire(selected_dept, selected_category, selected_number);
+                Console.WriteLine(selected_dept.Dept_name);
+                Console.WriteLine(selected_category.Category_name);
+                foreach (var item in list_xyz)
+                {
+                    name.Add((int)item.Prod_remainexpire);
+                    Console.WriteLine("PROD_REMAINEXPIRE" + (int)item.Prod_remainexpire);
+                }
+
+                Values = new ChartValues<int> { };
+
+                SeriesCollection1.Add(new RowSeries
+                {
+                    Title = "남은 유통기한",   //+ i
+                    Values = name,
+                    DataLabels = true,
+                    LabelPoint = point => point.X + "일 ",
+                    Configuration = Mapper,
+                });
+
+                BarLabels1 = new List<string>() { };                           //x축출력
+                foreach (var item in list_xyz)
+                {
+                    BarLabels1.Add(item.Prod_code);
+                    Console.WriteLine("Prod_code" + item.Prod_code);
+                }
+                Formatter1 = value => value.ToString("N0");   //문자열 10진수 변환
             }
-
-            Values = new ChartValues<int> { };
-
-            SeriesCollection1.Add(new RowSeries
+            catch(Exception ex)
             {
-                Title = "남은 유통기한",   //+ i
-                Values = name,
-                DataLabels = true,
-                LabelPoint = point => point.X + "일 ",
-                Configuration = Mapper,
-            });
-
-            BarLabels1 = new List<string>() { };                           //x축출력
-            foreach (var item in list_xyz)
-            {
-                BarLabels1.Add(item.Prod_code);
-                Console.WriteLine("Prod_code" + item.Prod_code);
+                log.Error(ex.Message);
             }
-            Formatter1 = value => value.ToString("N0");   //문자열 10진수 변환
-
-
+           
         }//dashboardprint1
 
 
@@ -314,53 +323,71 @@ namespace EasyProject.ViewModel
 
         public void DeptComboBoxChanged()
         {
-            getListbyDept();
-            DashboardPrint1(SelectedDept, SelectedCategory1, SelectedNumber);
-            DashboardPrint2(selectedDept);
+            log.Info("DeptComboBoxChanged() invoked.");
+            try
+            {
+                getListbyDept();
+                DashboardPrint1(SelectedDept, SelectedCategory1, SelectedNumber);
+                DashboardPrint2(selectedDept);
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+         
         }
 
         //부서별   카테고리//제품총수량 그래프
         public void DashboardPrint2(DeptModel selected)                       //대시보드 출력(x축:제품code, y축:수량) 
         {
-            ChartValues<int> mount = new ChartValues<int>();   //y축들어갈 임시 값
-            Console.WriteLine("DashboardPrint2");
-            SeriesCollection2 = new SeriesCollection();   //대시보드 틀
-            //Console.WriteLine(selected.Dept_id); 
-            List<ImpDeptModel> list_xy = product_dao.Dept_Category_Mount(selected);
-            Console.WriteLine(selected);
-            //부서id별 제품code와 수량리스트
-            //List<string> list_x = new List<string>();                                    //x축리스트
-            //ChartValues<int> list_y = new ChartValues<int>();                          //y축리스트
-            //foreach (var item in list_xy)
-            //{
-            //    list_x.Add((string)item.Prod_code);
-            //    list_y.Add((int)item.Prod_total);
-            //}
-            //name을 2개선언 리스트
+            log.Info("DashboardPrint2(DeptModel) invoked.");
+            try
+            {
+                ChartValues<int> mount = new ChartValues<int>();   //y축들어갈 임시 값
+                Console.WriteLine("DashboardPrint2");
+                SeriesCollection2 = new SeriesCollection();   //대시보드 틀
+                                                              //Console.WriteLine(selected.Dept_id); 
+                List<ImpDeptModel> list_xy = product_dao.Dept_Category_Mount(selected);
+                Console.WriteLine(selected);
+                //부서id별 제품code와 수량리스트
+                //List<string> list_x = new List<string>();                                    //x축리스트
+                //ChartValues<int> list_y = new ChartValues<int>();                          //y축리스트
+                //foreach (var item in list_xy)
+                //{
+                //    list_x.Add((string)item.Prod_code);
+                //    list_y.Add((int)item.Prod_total);
+                //}
+                //name을 2개선언 리스트
 
-            //List<ProductShowModel> list1 = list_y;      //y축출력
-            //List<ProductShowModel> list1 = product_dao.Prodtotal_Info();     
-            foreach (var item in list_xy)
-            {
-                mount.Add((int)item.Imp_dept_count);
-            }
-            //for (int i = 0; i < 8; i++)
-            //{
-            //    name.Add((int)list_xy[i].Prod_total);
-            //}
-            Values = new ChartValues<int> { };
+                //List<ProductShowModel> list1 = list_y;      //y축출력
+                //List<ProductShowModel> list1 = product_dao.Prodtotal_Info();     
+                foreach (var item in list_xy)
+                {
+                    mount.Add((int)item.Imp_dept_count);
+                }
+                //for (int i = 0; i < 8; i++)
+                //{
+                //    name.Add((int)list_xy[i].Prod_total);
+                //}
+                Values = new ChartValues<int> { };
 
-            SeriesCollection2.Add(new ColumnSeries
-            {
-                Title = "총 수량",   //+ i
-                Values = mount,
-            });
-            BarLabels2 = new List<string>() { };                           //x축출력
-            foreach (var item in list_xy)
-            {
-                BarLabels2.Add(item.Category_name);
+                SeriesCollection2.Add(new ColumnSeries
+                {
+                    Title = "총 수량",   //+ i
+                    Values = mount,
+                });
+                BarLabels2 = new List<string>() { };                           //x축출력
+                foreach (var item in list_xy)
+                {
+                    BarLabels2.Add(item.Category_name);
+                }
+                Formatter = value => value.ToString("N0");   //문자열 10진수 변환
             }
-            Formatter = value => value.ToString("N0");   //문자열 10진수 변환
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+            
         }//dashboardprint2
         #endregion
 
@@ -395,15 +422,24 @@ namespace EasyProject.ViewModel
 
         public void OrderFormReset()
         {
-            //SelectedUser.Nurse_name = null;
-            //SelectedUser.Dept_name = null;
-            //SelectedUser.Dept_phone = null;
-            //SelectedProduct.Prod_name = null;
-            SelectedProduct.Mount = null;
-            SelectedProduct.Volume = null;
-            SelectedProduct.Manufacturer = null;
-            SelectedProduct.OrderMemo = null;
-        }
+            log.Info("OrderFormReset() invoked.");
+            try
+            {
+                //SelectedUser.Nurse_name = null;
+                //SelectedUser.Dept_name = null;
+                //SelectedUser.Dept_phone = null;
+                //SelectedProduct.Prod_name = null;
+                SelectedProduct.Mount = null;
+                SelectedProduct.Volume = null;
+                SelectedProduct.Manufacturer = null;
+                SelectedProduct.OrderMemo = null;
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+            
+        }//OrderFormReset
 
 
         #endregion
@@ -420,173 +456,182 @@ namespace EasyProject.ViewModel
                 }
                 return outProductCommand;
             }//get
-        }
+        }//OutProductCommand
 
         public void OutProduct()
         {
-            Console.WriteLine("OutProduct() 실행!");
-            if (SelectedProduct.SelectedOutType == "사용")  // 출고타입이 사용일 때  *출고 타입을 선택하지 않은 경우는 확인 버튼이 비활성화되어 있음
+            log.Info("OutProduct() invoked.");
+            try
             {
-                if (SelectedProduct.InputOutCount == null) // null 입력할 경우
+                //Console.WriteLine("OutProduct() 실행!");
+                if (SelectedProduct.SelectedOutType == "사용")  // 출고타입이 사용일 때  *출고 타입을 선택하지 않은 경우는 확인 버튼이 비활성화되어 있음
                 {
-                    MessageQueue.Enqueue("제품 사용 수량을 올바르게 입력해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                    IsInOutEnabled = true;
-                }
-                else if (SelectedProduct.InputOutCount <= 0) //0 or 음수를 입력할 경우
+                    if (SelectedProduct.InputOutCount == null) // null 입력할 경우
+                    {
+                        MessageQueue.Enqueue("제품 사용 수량을 올바르게 입력해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        IsInOutEnabled = true;
+                    }
+                    else if (SelectedProduct.InputOutCount <= 0) //0 or 음수를 입력할 경우
+                    {
+                        MessageQueue.Enqueue("제품 사용 수량에는 0 보다 큰 수량을 입력해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        IsInOutEnabled = true;
+                    }
+                    else if (SelectedProduct.InputOutCount > SelectedProduct.Imp_dept_count) // 현재 재고 수량보다 많은 숫자를 입력할 경우
+                    {
+                        MessageQueue.Enqueue($"{SelectedProduct.Prod_name}의 현재 수량이 {SelectedProduct.InputOutCount}보다 적습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        IsInOutEnabled = true;
+                    }
+                    else if (SelectedProduct.InputOutCount == SelectedProduct.Imp_dept_count) // 현재 재고 수량을 모두 사용할 경우
+                    {
+                        product_dao.OutProduct(SelectedProduct, Nurse);
+                        product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
+                        product_dao.ChangeProductInfo_ForOut(SelectedProduct);
+                        MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) 모두 사용하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        IsInOutEnabled = true;
+
+                        LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
+                        updateSearchedProducts(false);
+                        UpdateRecordCount();
+                    }
+                    else
+                    {
+                        product_dao.OutProduct(SelectedProduct, Nurse);
+                        product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
+                        product_dao.ChangeProductInfo_ForOut(SelectedProduct);
+                        MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 사용하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        IsInOutEnabled = true;
+
+                        LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
+                        updateSearchedProducts(false);
+                        UpdateRecordCount();
+
+                        var temp = Ioc.Default.GetService<ProductInOutViewModel>();
+                        temp.getOutListByDept(); // 입출고현황 페이지 출고목록 갱신
+                        temp.getInListByDept(); // 입출고현황 페이지 출고목록 갱신
+                    }
+
+                }//else if
+                else if (SelectedProduct.SelectedOutType == "이관") // 출고타입이 이관일 때  *출고 타입을 선택하지 않은 경우는 확인 버튼이 비활성화되어 있음
                 {
-                    MessageQueue.Enqueue("제품 사용 수량에는 0 보다 큰 수량을 입력해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                    IsInOutEnabled = true;
-                }
-                else if (SelectedProduct.InputOutCount > SelectedProduct.Imp_dept_count) // 현재 재고 수량보다 많은 숫자를 입력할 경우
+                    if (SelectedProduct.InputOutCount == null) // null 입력할 경우
+                    {
+                        MessageQueue.Enqueue("제품 이관 수량을 올바르게 입력해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        IsInOutEnabled = true;
+                    }
+                    else if (SelectedProduct.SelectedOutDept == null) // 부서 선택하지 않을 경우
+                    {
+                        MessageQueue.Enqueue("제품을 이관할 부서를 선택해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        IsInOutEnabled = true;
+                    }
+                    else if (SelectedProduct.InputOutCount <= 0) //0 or 음수를 입력할 경우
+                    {
+                        MessageQueue.Enqueue("제품 이관 수량에는 0 보다 큰 수량을 입력해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        IsInOutEnabled = true;
+                    }
+                    else if (SelectedProduct.InputOutCount > SelectedProduct.Imp_dept_count) // 현재 재고 수량보다 많은 숫자를 입력할 경우
+                    {
+                        MessageQueue.Enqueue($"{SelectedProduct.Prod_name}의 현재 수량이 {SelectedProduct.InputOutCount}보다 적습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        IsInOutEnabled = true;
+                    }
+                    else if (SelectedProduct.InputOutCount == SelectedProduct.Imp_dept_count) // 현재 재고 수량을 모두 이관할 경우
+                    {
+                        product_dao.OutProduct(SelectedProduct, Nurse);
+                        product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
+                        product_dao.ChangeProductInfo_ForOut(SelectedProduct);
+                        MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) 모두 {SelectedProduct.SelectedOutDept.Dept_name} 부서로 이관하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        IsInOutEnabled = true;
+
+                        LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
+                        updateSearchedProducts(false);
+                        UpdateRecordCount();
+                    }
+                    else
+                    {
+                        product_dao.OutProduct(SelectedProduct, Nurse);
+                        product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
+                        product_dao.ChangeProductInfo_ForOut(SelectedProduct);
+                        MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 {SelectedProduct.SelectedOutDept.Dept_name} 부서로 이관하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        IsInOutEnabled = true;
+
+                        LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
+                        updateSearchedProducts(false);
+                        UpdateRecordCount();
+
+                        var temp = Ioc.Default.GetService<ProductInOutViewModel>();
+                        temp.getOutListByDept(); // 입출고현황 페이지 출고목록 갱신
+                        temp.getInListByDept(); // 입출고현황 페이지 출고목록 갱신
+                    }
+
+                }//else if
+                else if (SelectedProduct.SelectedOutType == "폐기")  // 출고타입이 폐기일 때  *출고 타입을 선택하지 않은 경우는 확인 버튼이 비활성화되어 있음
                 {
-                    MessageQueue.Enqueue($"{SelectedProduct.Prod_name}의 현재 수량이 {SelectedProduct.InputOutCount}보다 적습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                    IsInOutEnabled = true;
-                }
-                else if (SelectedProduct.InputOutCount == SelectedProduct.Imp_dept_count) // 현재 재고 수량을 모두 사용할 경우
+
+                    if (SelectedProduct.InputOutCount == null) // null 입력할 경우
+                    {
+                        MessageQueue.Enqueue("제품 폐기 수량을 올바르게 입력해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        IsInOutEnabled = true;
+                    }
+                    else if (SelectedProduct.InputOutCount <= 0) //0 or 음수를 입력할 경우
+                    {
+                        MessageQueue.Enqueue("제품 폐기 수량에는 0 보다 큰 수량을 입력해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        IsInOutEnabled = true;
+                    }
+                    else if (SelectedProduct.InputOutCount > SelectedProduct.Imp_dept_count) // 현재 재고 수량보다 많은 숫자를 입력할 경우
+                    {
+                        MessageQueue.Enqueue($"{SelectedProduct.Prod_name}의 현재 수량이 {SelectedProduct.InputOutCount}보다 적습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        IsInOutEnabled = true;
+                    }
+                    else if (SelectedProduct.InputOutCount == SelectedProduct.Imp_dept_count) // 현재 재고 수량을 모두 폐기할 경우
+                    {
+                        product_dao.OutProduct(SelectedProduct, Nurse);
+                        product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
+                        product_dao.ChangeProductInfo_ForOut(SelectedProduct);
+                        MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) 모두 폐기하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        IsInOutEnabled = true;
+
+                        LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
+                        updateSearchedProducts(false);
+                        UpdateRecordCount();
+                    }
+                    else
+                    {
+                        product_dao.OutProduct(SelectedProduct, Nurse);
+                        product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
+                        product_dao.ChangeProductInfo_ForOut(SelectedProduct);
+                        MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 폐기하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        IsInOutEnabled = true;
+
+                        LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
+                        updateSearchedProducts(false);
+                        UpdateRecordCount();
+
+                        var temp = Ioc.Default.GetService<ProductInOutViewModel>();
+                        temp.getOutListByDept(); // 입출고현황 페이지 출고목록 갱신
+                        temp.getInListByDept(); // 입출고현황 페이지 출고목록 갱신
+                    }
+
+                }//else if
+
+                if (SelectedProduct != null)
                 {
-                    product_dao.OutProduct(SelectedProduct, Nurse);
-                    product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
-                    product_dao.ChangeProductInfo_ForOut(SelectedProduct);
-                    MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) 모두 사용하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                    IsInOutEnabled = true;
-
-                    LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
-
-                    updateSearchedProducts(false);
-                    UpdateRecordCount();
-                }
-                else
-                {
-                    product_dao.OutProduct(SelectedProduct, Nurse);
-                    product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
-                    product_dao.ChangeProductInfo_ForOut(SelectedProduct);
-                    MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 사용하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                    IsInOutEnabled = true;
-
-                    LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
-
-                    updateSearchedProducts(false);
-                    UpdateRecordCount();
-
-                    var temp = Ioc.Default.GetService<ProductInOutViewModel>();
-                    temp.getOutListByDept(); // 입출고현황 페이지 출고목록 갱신
-                    temp.getInListByDept(); // 입출고현황 페이지 출고목록 갱신
+                    SelectedProduct.SelectedOutType = null;
+                    SelectedProduct.SelectedOutDept = null;
+                    SelectedProduct.InputOutCount = null;
                 }
 
-            }//else if
-            else if (SelectedProduct.SelectedOutType == "이관") // 출고타입이 이관일 때  *출고 타입을 선택하지 않은 경우는 확인 버튼이 비활성화되어 있음
-            {
-                if (SelectedProduct.InputOutCount == null) // null 입력할 경우
-                {
-                    MessageQueue.Enqueue("제품 이관 수량을 올바르게 입력해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                    IsInOutEnabled = true;
-                }
-                else if (SelectedProduct.SelectedOutDept == null) // 부서 선택하지 않을 경우
-                {
-                    MessageQueue.Enqueue("제품을 이관할 부서를 선택해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                    IsInOutEnabled = true;
-                }
-                else if (SelectedProduct.InputOutCount <= 0) //0 or 음수를 입력할 경우
-                {
-                    MessageQueue.Enqueue("제품 이관 수량에는 0 보다 큰 수량을 입력해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                    IsInOutEnabled = true;
-                }
-                else if (SelectedProduct.InputOutCount > SelectedProduct.Imp_dept_count) // 현재 재고 수량보다 많은 숫자를 입력할 경우
-                {
-                    MessageQueue.Enqueue($"{SelectedProduct.Prod_name}의 현재 수량이 {SelectedProduct.InputOutCount}보다 적습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                    IsInOutEnabled = true;
-                }
-                else if (SelectedProduct.InputOutCount == SelectedProduct.Imp_dept_count) // 현재 재고 수량을 모두 이관할 경우
-                {
-                    product_dao.OutProduct(SelectedProduct, Nurse);
-                    product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
-                    product_dao.ChangeProductInfo_ForOut(SelectedProduct);
-                    MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) 모두 {SelectedProduct.SelectedOutDept.Dept_name} 부서로 이관하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                    IsInOutEnabled = true;
-
-                    LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
-
-                    updateSearchedProducts(false);
-                    UpdateRecordCount();
-                }
-                else
-                {
-                    product_dao.OutProduct(SelectedProduct, Nurse);
-                    product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
-                    product_dao.ChangeProductInfo_ForOut(SelectedProduct);
-                    MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 {SelectedProduct.SelectedOutDept.Dept_name} 부서로 이관하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                    IsInOutEnabled = true;
-
-                    LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
-
-                    updateSearchedProducts(false);
-                    UpdateRecordCount();
-
-                    var temp = Ioc.Default.GetService<ProductInOutViewModel>();
-                    temp.getOutListByDept(); // 입출고현황 페이지 출고목록 갱신
-                    temp.getInListByDept(); // 입출고현황 페이지 출고목록 갱신
-                }
-
-            }//else if
-            else if (SelectedProduct.SelectedOutType == "폐기")  // 출고타입이 폐기일 때  *출고 타입을 선택하지 않은 경우는 확인 버튼이 비활성화되어 있음
-            {
-
-                if (SelectedProduct.InputOutCount == null) // null 입력할 경우
-                {
-                    MessageQueue.Enqueue("제품 폐기 수량을 올바르게 입력해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                    IsInOutEnabled = true;
-                }
-                else if (SelectedProduct.InputOutCount <= 0) //0 or 음수를 입력할 경우
-                {
-                    MessageQueue.Enqueue("제품 폐기 수량에는 0 보다 큰 수량을 입력해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                    IsInOutEnabled = true;
-                }
-                else if (SelectedProduct.InputOutCount > SelectedProduct.Imp_dept_count) // 현재 재고 수량보다 많은 숫자를 입력할 경우
-                {
-                    MessageQueue.Enqueue($"{SelectedProduct.Prod_name}의 현재 수량이 {SelectedProduct.InputOutCount}보다 적습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                    IsInOutEnabled = true;
-                }
-                else if (SelectedProduct.InputOutCount == SelectedProduct.Imp_dept_count) // 현재 재고 수량을 모두 폐기할 경우
-                {
-                    product_dao.OutProduct(SelectedProduct, Nurse);
-                    product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
-                    product_dao.ChangeProductInfo_ForOut(SelectedProduct);
-                    MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) 모두 폐기하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                    IsInOutEnabled = true;
-
-                    LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
-
-                    updateSearchedProducts(false);
-                    UpdateRecordCount();
-                }
-                else
-                {
-                    product_dao.OutProduct(SelectedProduct, Nurse);
-                    product_dao.ChangeProductInfo_IMP_DEPT_ForOut(SelectedProduct);
-                    product_dao.ChangeProductInfo_ForOut(SelectedProduct);
-                    MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputOutCount}개 폐기하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                    IsInOutEnabled = true;
-
-                    LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
-
-                    updateSearchedProducts(false);
-                    UpdateRecordCount();
-
-                    var temp = Ioc.Default.GetService<ProductInOutViewModel>();
-                    temp.getOutListByDept(); // 입출고현황 페이지 출고목록 갱신
-                    temp.getInListByDept(); // 입출고현황 페이지 출고목록 갱신
-                }
-
-            }//else if
-
-            if (SelectedProduct != null)
-            {
-                SelectedProduct.SelectedOutType = null;
-                SelectedProduct.SelectedOutDept = null;
-                SelectedProduct.InputOutCount = null;
+                DashboardPrint2(selectedDept);
             }
-
-            DashboardPrint2(selectedDept);
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+           
         }//OutProduct
 
         private ActionCommand outProductReset;
@@ -604,10 +649,19 @@ namespace EasyProject.ViewModel
 
         public void OutProductFormReset()
         {
-            SelectedProduct.SelectedOutType = null;
-            SelectedProduct.SelectedOutDept = null;
-            SelectedProduct.InputOutCount = null;
-        }
+            log.Info("OutProductFormReset() invoked.");
+            try
+            {
+                SelectedProduct.SelectedOutType = null;
+                SelectedProduct.SelectedOutDept = null;
+                SelectedProduct.InputOutCount = null;
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+            
+        }//OutProductFormReset
         #endregion
 
         #region 팝업 -입고
@@ -1539,6 +1593,7 @@ namespace EasyProject.ViewModel
         }
         #endregion
 
+
         public ObservableCollection<DeptModel> Depts_Pie { get; set; }
 
         //선택한 부서를 담을 프로퍼티
@@ -1585,30 +1640,36 @@ namespace EasyProject.ViewModel
         //도넛그래프 출력메소드
         public void DashboardPrint_Pie()
         {
-            List<ProductInOutModel> list = product_dao.GetDiscardTotalCount(SelectedDept_Pie, SelectedOutType_Pie);
-
-
-
-
-            SeriesCollection_Pie = new SeriesCollection();
-
-
-            foreach (var item in list)
+            log.Info("DashboardPrint_Pie() invoked.");
+            try
             {
-                //Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} ({1:C})", item.Prod_name, chartPoint.Participation);
-                Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0:#,0}개 ({1:#,0}￦)", item.Prod_out_count, item.Prod_price);
-                SeriesCollection_Pie.Add(new PieSeries
+                List<ProductInOutModel> list = product_dao.GetDiscardTotalCount(SelectedDept_Pie, SelectedOutType_Pie);
+
+
+
+
+                SeriesCollection_Pie = new SeriesCollection();
+
+
+                foreach (var item in list)
                 {
-                    Title = item.Prod_name,
-                    Values = new ChartValues<int> { (int)item.Prod_out_count },
-                    DataLabels = true,
-                    LabelPoint = labelPoint
-                });
+                    //Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} ({1:C})", item.Prod_name, chartPoint.Participation);
+                    Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0:#,0}개 ({1:#,0}￦)", item.Prod_out_count, item.Prod_price);
+                    SeriesCollection_Pie.Add(new PieSeries
+                    {
+                        Title = item.Prod_name,
+                        Values = new ChartValues<int> { (int)item.Prod_out_count },
+                        DataLabels = true,
+                        LabelPoint = labelPoint
+                    });
 
-            }//foreache
-
-
-
+                }//foreache
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+           
         }//DashboardPrint_Pie
 
 
@@ -1629,8 +1690,17 @@ namespace EasyProject.ViewModel
 
         public void dashboardPrint_Pie()
         {
-            DashboardPrint_Pie();
-        }
+            log.Info("dashboardPrint_Pie() invoked.");
+            try
+            {
+                DashboardPrint_Pie();
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+
+        }//dashboardPrint_Pie
 
         private ActionCommand dataGridRefreshCommand;
         public ICommand DataGridRefreshCommand
@@ -1648,20 +1718,25 @@ namespace EasyProject.ViewModel
 
         private void DataGridRefresh()
         {
-            TextForSearch = null;
-            SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1];
-            getListbyDept();
-        }
+            log.Info("DataGridRefresh() invoked.");
+            try
+            {
+                TextForSearch = null;
+                SelectedDept = Depts[(int)App.nurse_dto.Dept_id - 1];
+                getListbyDept();
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+
+        }//DataGridRefresh
 
 
         //오늘날짜 담을 프로퍼티
         public string testdate { get; set; }
+
     }//class
 
-    
-
-        
-
-
-
+   
 }//namespace
