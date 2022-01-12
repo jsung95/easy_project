@@ -49,7 +49,7 @@ namespace EasyProject.View.TabItemPage
         }
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            log.Info("Loginout_Click(object, RoutedEventArgs) invoked.");
+            log.Info("Login_Click(object, RoutedEventArgs) invoked.");
             try
             {
                 ListFrame.Source = new Uri("LogStatusList2Page.xaml", UriKind.Relative);
@@ -63,7 +63,7 @@ namespace EasyProject.View.TabItemPage
 
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
-            log.Info("Loginout_Click(object, RoutedEventArgs) invoked.");
+            log.Info("Logout_Click(object, RoutedEventArgs) invoked.");
             try
             {
                 ListFrame.Source = new Uri("LogStatusList3Page.xaml", UriKind.Relative);
