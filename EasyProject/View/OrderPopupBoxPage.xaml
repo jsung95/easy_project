@@ -6,7 +6,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:EasyProject.View"
       mc:Ignorable="d" 
-      d:DesignHeight="700" d:DesignWidth="600"
+      d:DesignHeight="400" d:DesignWidth="400"
       DataContext="{Binding PSVM, Source={StaticResource Locator}}"
       Title="OrderPopupBoxPage">
 
@@ -29,30 +29,30 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
 
-            <Grid Margin="45,59,42,23">
+            <Grid Margin="30,35,29,13">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="48*"/>
-                    <RowDefinition Height="34*"/>
-                    <RowDefinition Height="31*"/>
-                    <RowDefinition Height="34*"/>
-                    <RowDefinition Height="34*"/>
-                    <RowDefinition Height="32*"/>
-                    <RowDefinition Height="34*"/>
-                    <RowDefinition Height="33*"/>
-                    <RowDefinition Height="34*"/>
-                    <RowDefinition Height="32*"/>
-                    <RowDefinition Height="132*"/>
+                    <RowDefinition Height="26*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="19*"/>
+                    <RowDefinition Height="19*"/>
+                    <RowDefinition Height="19*"/>
+                    <RowDefinition Height="18*"/>
+                    <RowDefinition Height="19*"/>
+                    <RowDefinition Height="19*"/>
+                    <RowDefinition Height="19*"/>
+                    <RowDefinition Height="19*"/>
+                    <RowDefinition Height="74*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="409*"/>
                         <ColumnDefinition Width="104*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock x:Name="today_date" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="담당자" Grid.Column="1" 
-                      FontSize="10"  Margin="0,16,0,0" Height="30" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"           
-                             Text="{Binding PSVM.testdate, Source={StaticResource Locator}}"/>
+                    <TextBlock x:Name="today_date" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="날짜" Grid.Column="1" 
+                      FontSize="7" Height="14" Width="59" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"           
+                             Text="{Binding PSVM.testdate, Source={StaticResource Locator}}" />
                 </Grid>
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="1" Margin="0,1,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="78*"/>
                         <ColumnDefinition Width="77*"/>
@@ -63,18 +63,18 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock x:Name="id_TxtBox" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="담당자" Grid.Column="1" 
-                      FontSize="12"  Margin="10,5,10,0" Height="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"                           
-                             Text="{Binding PSVM.SelectedUser.Nurse_name, Source={StaticResource Locator}}"/>
+                      FontSize="7" Width="31" Height="19" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"                           
+                             Text="{Binding PSVM.SelectedUser.Nurse_name, Source={StaticResource Locator}}" />
                     <TextBlock x:Name="dept_TxtBox" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="부서" Grid.Column="3" 
-                    FontSize="12"  Margin="10,5,10,0" Height="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"   
+                    FontSize="7"   Width="31" Height="19" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"   
                              Text="{Binding PSVM.SelectedUser.Dept_name, Source={StaticResource Locator}}"/>
                     <TextBlock x:Name="phone_TxtBox" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="연락처" Grid.Column="5" 
-                        FontSize="12" VerticalAlignment="Center" Margin="10,5,10,0" Height="30" FontWeight="Bold" HorizontalAlignment="Center"
+                        FontSize="7" VerticalAlignment="Center"  Width="49" Height="19" FontWeight="Bold" HorizontalAlignment="Center"
                              Text="{Binding PSVM.SelectedUser.Dept_phone, Source={StaticResource Locator}}"/>
 
 
                 </Grid>
-                <Grid Grid.Row="3">
+                <Grid Grid.Row="3" Margin="0,1,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="103*"/>
                         <ColumnDefinition Width="103*"/>
@@ -82,29 +82,29 @@
                         <ColumnDefinition Width="103*"/>
                         <ColumnDefinition Width="103*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock x:Name="prodcode_TextBlock" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="제품코드" Grid.Column="0" 
-                    FontSize="12" VerticalAlignment="Center"  Height="30" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,0"
-                             Text="{Binding PSVM.SelectedProduct.Prod_code, Source={StaticResource Locator}}"/>
+                    <TextBlock x:Name="prodcode_TextBlock" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="제품코드" 
+                    FontSize="7" VerticalAlignment="Center" Width="31" Height="19" FontWeight="Bold" HorizontalAlignment="Center" Margin="15,0,0,0"
+                             Text="{Binding PSVM.SelectedProduct.Prod_code, Source={StaticResource Locator}}" />
                     <TextBlock x:Name="prodname_textblock" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="제품명" Grid.Column="1" 
-                      FontSize="12"   Height="30" FontWeight="Bold" HorizontalAlignment="Center"   Margin="0,5,0,0" VerticalAlignment="Center"
+                      FontSize="7" Width="31" Height="19" FontWeight="Bold" HorizontalAlignment="Center"   Margin="15,0,0,0" VerticalAlignment="Center"
                              Text="{Binding PSVM.SelectedProduct.Prod_name, Source={StaticResource Locator}}"/>
                     <TextBlock x:Name="category_TextBlock" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="품목종류" Grid.Column="2" 
-                        FontSize="12" VerticalAlignment="Center"  Height="30" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,0"
+                        FontSize="7" VerticalAlignment="Center"  Width="47" Height="19" FontWeight="Bold" HorizontalAlignment="Center" Margin="10,0,0,0"
                              Text="{Binding PSVM.SelectedProduct.Category_name, Source={StaticResource Locator}}"/>
                     <TextBlock x:Name="prodprice_TextBlock" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="제품가격" Grid.Column="3" 
-                        FontSize="12" VerticalAlignment="Center" Margin="0,5,0,0" Height="30" FontWeight="Bold" HorizontalAlignment="Center"
+                        FontSize="7" VerticalAlignment="Center" Width="31" Height="19" FontWeight="Bold" HorizontalAlignment="Center" Margin="15,0,0,0"
                              Text="{Binding PSVM.SelectedProduct.Prod_price, Source={StaticResource Locator}}"/>
                     <TextBox x:Name="prodprice_Textbox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="4" HorizontalAlignment="Center"
-                        FontSize="12" VerticalAlignment="Center" Height="30" FontWeight="Bold" Width="101" Margin="0,3,0,0"/>
+                        FontSize="7" VerticalAlignment="Center" Height="22" FontWeight="Bold" Width="60"/>
                 </Grid>
 
-                <Grid Grid.Row="10" RenderTransformOrigin="0.416,0.568">
+                <Grid Grid.Row="10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="103*"/>
                         <ColumnDefinition Width="410*"/>
                     </Grid.ColumnDefinitions>
                     <TextBox x:Name="memo_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="내용을 입력해주세요"  HorizontalContentAlignment="Center" Grid.Column="1"
-                                                                    VerticalContentAlignment="Center" FontSize="9" VerticalAlignment="top" Width="400"  Height="125" />
+                                                                    VerticalContentAlignment="Center" FontSize="9" VerticalAlignment="top" Width="250"  Height="60" />
                 </Grid>
             </Grid>
 
