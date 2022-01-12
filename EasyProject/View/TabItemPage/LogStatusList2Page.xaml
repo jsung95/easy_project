@@ -211,9 +211,9 @@
                     </Grid>
                 </materialDesign:Card>
             </Grid>
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="1" Margin="10,0,0,0">
                 <materialDesign:Card x:Name="GraphCard" Margin="0 0" UniformCornerRadius="20" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Frame x:Name="Status_GraphFrame" NavigationUIVisibility="Hidden" Source="/View/TabItemPage/GraphPage/GraphlogPage/LoginGraph.xaml"  Height="430" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <Frame x:Name="Status_GraphFrame" NavigationUIVisibility="Hidden" Source="/View/TabItemPage/GraphPage/GraphlogPage/LoginGraph.xaml"  Height="450" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </materialDesign:Card>
 
             </Grid>
