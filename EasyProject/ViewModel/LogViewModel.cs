@@ -525,12 +525,12 @@ namespace EasyProject.ViewModel
         }
 
         //하루 로그아웃 횟수(7일 제한) 그래프
-        public void KeepLoginTimePrint()
+        public void TodayLogoutPrint()
         {
             ChartValues<int> mount = new ChartValues<int>();   //y축들어갈 임시 값
             SeriesCollection1 = new SeriesCollection();   //대시보드 틀
                                                           //Console.WriteLine(selected.Dept_id); 
-            List<LogModel> list_xy = log_dao.Logintotal();
+            List<LogModel> list_xy = log_dao.Logouttotal();
 
 
             foreach (var item in list_xy)

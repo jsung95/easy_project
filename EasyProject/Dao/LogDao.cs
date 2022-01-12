@@ -831,6 +831,62 @@ namespace EasyProject.Dao
 
         }//GetAllLogs()
 
+        public List<LogModel> Logouttotal()
+        {
+            log.Info("GetAllLogs() invoked.");
+
+            List<LogModel> list = new List<LogModel>();
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT * " +
+                                          "FROM " +
+                                          "(SELECT TO_CHAR(logout_log_date, 'YYYYMMDD'), count(nurse_no) " +
+                                          "FROM LOGOUT_LOG " +
+                                          "GROUP BY TO_CHAR(logout_log_date, 'YYYYMMDD') " +
+                                          "ORDER BY 1 desc)A " +
+                                          "WHERE ROWNUM <= 7";
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string Today_Log_date = reader.GetString(0);
+                            int Log_total = reader.GetInt32(1);
+                            LogModel dto = new LogModel()
+                            {
+                                Today_Log_date = Today_Log_date,
+                                Log_total = Log_total
+                            };
+
+                            list.Add(dto);
+
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }//catch
+
+            return list;
+
+        }//GetAllLogs()
+
 
 
     }//class
