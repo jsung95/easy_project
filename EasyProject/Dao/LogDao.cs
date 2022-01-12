@@ -808,11 +808,12 @@ namespace EasyProject.Dao
                         cmd.Connection = conn;
                         cmd.CommandText = "SELECT * " +
                                           "FROM " +
-                                          "(SELECT TO_CHAR(login_log_date, 'YYYYMMDD'), count(nurse_no) " +
+                                          "(SELECT TO_CHAR(login_log_date, 'YYYYMMDD') as rnum, count(nurse_no) " +
                                           "FROM LOGIN_LOG " +
                                           "GROUP BY TO_CHAR(login_log_date, 'YYYYMMDD') " +
                                           "ORDER BY 1 desc)A " +
-                                          "WHERE ROWNUM <= 7";
+                                          "WHERE ROWNUM <= 7 " +
+                                          "ORDER BY A.rnum";
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
@@ -864,11 +865,12 @@ namespace EasyProject.Dao
                         cmd.Connection = conn;
                         cmd.CommandText = "SELECT * " +
                                           "FROM " +
-                                          "(SELECT TO_CHAR(logout_log_date, 'YYYYMMDD'), count(nurse_no) " +
+                                          "(SELECT TO_CHAR(logout_log_date, 'YYYYMMDD') as rnum, count(nurse_no) " +
                                           "FROM LOGOUT_LOG " +
                                           "GROUP BY TO_CHAR(logout_log_date, 'YYYYMMDD') " +
                                           "ORDER BY 1 desc)A " +
-                                          "WHERE ROWNUM <= 7";
+                                          "WHERE ROWNUM <= 7 " +
+                                          "ORDER BY A.rnum";
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
