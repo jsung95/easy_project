@@ -194,18 +194,131 @@
                         <Grid Grid.Row="1">
                             <DataGrid x:Name="dataGrid1" Grid.Row="1" HorizontalAlignment="Left" Margin="10 0"
                             AllowDrop="False" VerticalAlignment="Top" AutoGenerateColumns="False"
-                            IsReadOnly="True" ItemsSource="{Binding Event_Logs}">
+                            IsReadOnly="True" ItemsSource="{Binding Event_Logs}" Cursor="Hand">
 
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding Log_date, StringFormat='yyyy-MM-dd HH:mm:ss'}" Header="날짜/시간" Width="0.9*" IsReadOnly="True"/>
-                                    <DataGridTextColumn Binding="{Binding User_ip}" Header="IP주소" Width="*" IsReadOnly="True"/>
-                                    <DataGridTextColumn Binding="{Binding User_nation}" Header="접속국가" Width="*" IsReadOnly="True"/>
-                                    <DataGridTextColumn Binding="{Binding User_name}" Header="사용자명" Width="0.9*" IsReadOnly="True"/>
-                                    <DataGridTextColumn Binding="{Binding User_no}" Header="사번" Width="0.9*" IsReadOnly="True"/>
-                                    <DataGridTextColumn Binding="{Binding Log_level}" Header="레벨" Width="0.9*" IsReadOnly="True"/>
-                                    <DataGridTextColumn Binding="{Binding Log_class}" Header="클래스" Width="0.9*" IsReadOnly="True"/>
-                                    <DataGridTextColumn Binding="{Binding Log_method}" Header="메소드" Width="0.9*" IsReadOnly="True"/>
-                                    <DataGridTextColumn Binding="{Binding Message}" Header="내용" Width="0.9*" IsReadOnly="True"/>
+                                    
+                                    <DataGridTextColumn Binding="{Binding Log_date, StringFormat='yyyy-MM-dd HH:mm:ss'}" Header="날짜/시간" Width="*" IsReadOnly="True">
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip" Value="{Binding Log_date, StringFormat='yyyy-MM-dd HH:mm:ss'}" />
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    
+                                    <DataGridTextColumn Binding="{Binding User_ip}" Header="IP주소" Width="*" IsReadOnly="True">
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip" Value="{Binding User_ip}" />
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    
+                                    <DataGridTextColumn Binding="{Binding User_nation}" Header="접속국가" Width="0.6*" IsReadOnly="True">
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip" Value="{Binding User_nation}" />
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+
+                                    <DataGridTextColumn Binding="{Binding User_name}" Header="사용자명" Width="0.6*" IsReadOnly="True">
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip" Value="{Binding User_name}" />
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+
+                                    <DataGridTextColumn Binding="{Binding User_no}" Header="사번" Width="0.8*" IsReadOnly="True">
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip" Value="{Binding User_no}" />
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+
+                                    <DataGridTextColumn Binding="{Binding Log_level}" Header="레벨" Width="0.6*" IsReadOnly="True">
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip" Value="{Binding Log_level}" />
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+
+                                    <DataGridTextColumn Binding="{Binding Log_class}" Header="클래스" Width="*" IsReadOnly="True">
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip" Value="{Binding Log_class}" />
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+
+                                    <DataGridTextColumn Binding="{Binding Log_method}" Header="메소드" Width="*" IsReadOnly="True">
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip" Value="{Binding Log_method}" />
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+
+                                    <DataGridTextColumn Binding="{Binding Message}" Header="내용" Width="*" IsReadOnly="True">
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip" Value="{Binding Message}" />
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
 
                                 </DataGrid.Columns>
                             </DataGrid>
