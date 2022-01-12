@@ -87,8 +87,8 @@
                                     <ColumnDefinition Width="120*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="0" >
-                                    <ComboBox x:Name="searchText_ComboBox" Height="30" Grid.Column="0" Margin="10" HorizontalContentAlignment="Left" ItemsSource="{Binding Path=SearchTypeList}"
-                                            SelectedItem="{Binding SelectedSearchType_Out}">
+                                    <ComboBox x:Name="searchText_ComboBox" Height="30" Grid.Column="0" Margin="10" HorizontalContentAlignment="Left" ItemsSource="{Binding Path=SearchTypeList_LogIn_LOG}"
+                                            SelectedItem="{Binding SelectedSearchType_LogIn_Log}">
                                         <ComboBox.Resources>
                                             <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
                                         </ComboBox.Resources>
@@ -104,16 +104,12 @@
 
                                     <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요"
                                         VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30"  
-                                        Text="{Binding SearchKeyword_In, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand" Grid.Column="0">
+                                        Text="{Binding SearchKeyword_LogIn_Log, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand" Grid.Column="0">
 
-                                        <!--<TextBox.InputBindings>
-                                            <KeyBinding Command="{Binding InSearchCommand}" Key="Enter" />
-                                        </TextBox.InputBindings>-->
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="KeyUp">
-                                                <i:InvokeCommandAction Command="{Binding InSearchKeywordCommand}" />
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Command="{Binding SearchLoginLogsCommand}" Key="Enter" />
+                                        </TextBox.InputBindings>
+                                        
                                     </TextBox>
 
                                     <!--<Button Style="{StaticResource MaterialDesignIconForegroundButton}" Height="20" Width="20" Command="{Binding DataGridSearchCommand}" HorizontalAlignment="Center" Grid.Column="1" BorderBrush="Black">
@@ -122,7 +118,7 @@
 
                                     <Button Name="MyFlatImageButton" Grid.Column="1" Width="55" Height="30"
                                              Background="{x:Null}"
-                                                
+                                                Command="{Binding SearchLoginLogsCommand}"
                                                 BorderThickness="0.5" 
                                                 Padding="-4">
                                         <materialDesign:PackIcon Kind="Search" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gray"/>
@@ -140,7 +136,7 @@
                                         </Grid.ColumnDefinitions>
                                         <DatePicker x:Name="expirationDate_DatePicker" HorizontalContentAlignment="Left" 
                                          VerticalAlignment="Center" Focusable="False"
-                                        SelectedDate="{Binding SelectedStartDate_In}" DisplayDateEnd="{Binding SelectedEndDate_In}">
+                                        SelectedDate="{Binding SelectedStartDate_LogIn_Log}" DisplayDateEnd="{Binding SelectedEndDate_LogIn_Log}">
 
                                             <DatePicker.Resources>
                                                 <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
@@ -167,7 +163,7 @@
 
                                         <TextBlock HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center" Text="~" FontWeight="Bold" />
                                         <DatePicker x:Name="expirationDate_DatePicker2" Grid.Column="2" VerticalAlignment="Center" Focusable="False"
-                                        SelectedDate="{Binding SelectedEndDate_In}" DisplayDateStart="{Binding SelectedStartDate_In}">
+                                        SelectedDate="{Binding SelectedEndDate_LogIn_Log}" DisplayDateStart="{Binding SelectedStartDate_LogIn_Log}">
                                             <DatePicker.Resources>
                                                 <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
                                                     <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />
@@ -198,55 +194,16 @@
                         <Grid Grid.Row="1">
                             <DataGrid x:Name="dataGrid2" Grid.Row="1" HorizontalAlignment="Left" Margin="10 0"
                             AllowDrop="False" VerticalAlignment="Top" AutoGenerateColumns="False"
-                            IsReadOnly="True" ItemsSource="{Binding Product_out}">
+                            IsReadOnly="True" ItemsSource="{Binding LogIn_Logs}">
 
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="*" IsReadOnly="True" />
-                                    <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="*"  IsReadOnly="True"/>
-                                    <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="0.9*"  IsReadOnly="True"/>
-                                    <DataGridTextColumn Binding="{Binding Prod_expire, StringFormat='yyyy-MM-dd'}" Header="유통기한" Width="0.8*" IsReadOnly="True"/>
-                                    <DataGridTextColumn Binding="{Binding Prod_out_count, StringFormat='{}{0:#,0} 개'}"  Header="수량" Width="0.5*"  IsReadOnly="True">
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="HorizontalAlignment" Value="Right" />
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn Binding="{Binding Prod_out_date}"  Header="출고일" Width="0.8*"  IsReadOnly="True"/>
-                                    <DataGridTextColumn Binding="{Binding Prod_out_type}"  Header="출고유형" Width="0.4*"   IsReadOnly="True">
-                                        <DataGridTextColumn.CellStyle>
-                                            <Style TargetType="DataGridCell">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Prod_out_type}" Value=" 폐기">
-                                                        <Setter Property="Foreground" Value="Red"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Prod_out_type}" Value="사용">
-                                                        <Setter Property="Foreground" Value="Green"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Prod_out_type}" Value="이관">
-                                                        <Setter Property="Foreground" Value="Blue"/>
-                                                        <Setter Property="ToolTip" Value="{Binding Prod_out_to}" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </DataGridTextColumn.CellStyle>
-
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="VerticalAlignment" Value="Center" />
-                                                <Setter Property="HorizontalAlignment" Value="Center" />
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn >
-                                    <!--<DataGridTextColumn Binding="{Binding Prod_out_to}"  Header="출고대상" Width="*"  IsReadOnly="True"/>-->
-                                    <DataGridTextColumn  Header="관리자명" Width="*"  IsReadOnly="True">
-                                        <DataGridTextColumn.Binding>
-                                            <MultiBinding Converter="{StaticResource MultipleTextFormatConverterKey2}"  ConverterParameter="{}{0} ({1})">
-                                                <Binding Path="Nurse_name" />
-                                                <Binding Path="Dept_name" />
-                                            </MultiBinding>
-                                        </DataGridTextColumn.Binding>
-                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Binding="{Binding Login_log_date, StringFormat='yyyy-MM-dd HH:mm:ss'}" Header="날짜/시간" Width="0.9*" IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding Login_log_ip}" Header="IP주소" Width="*" IsReadOnly="True" />
+                                    <DataGridTextColumn Binding="{Binding Login_log_nation}" Header="접속국가" Width="*"  IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding Nurse_name}" Header="사용자명" Width="0.9*"  IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding Nurse_no}" Header="사번" Width="0.9*"  IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding Dept_name}" Header="소속부서" Width="0.9*"  IsReadOnly="True"/>
+                                    
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
@@ -256,7 +213,7 @@
             </Grid>
             <Grid Grid.Column="1">
                 <materialDesign:Card x:Name="GraphCard" Margin="0 0" UniformCornerRadius="20" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <!--<Frame x:Name="Status_GraphFrame" NavigationUIVisibility="Hidden" Source="/View/TabItemPage/GraphPage/Outgoing_GraphPage.xaml"  Height="430" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
+                    <Frame x:Name="Status_GraphFrame" NavigationUIVisibility="Hidden" Source="/View/TabItemPage/GraphPage/GraphlogPage/LoginGraph.xaml"  Height="430" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </materialDesign:Card>
 
             </Grid>

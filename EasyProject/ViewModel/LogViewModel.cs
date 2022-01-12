@@ -9,6 +9,8 @@ using log4net;
 using System.Collections.ObjectModel;
 using Microsoft.Expression.Interactivity.Core;
 using System.Windows.Input;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace EasyProject.ViewModel
 {
@@ -29,16 +31,36 @@ namespace EasyProject.ViewModel
 
             //로그 데이터 초기화
             Event_Logs = new ObservableCollection<LogModel>();
+            LogIn_Logs = new ObservableCollection<LogModel>();
+            LogOut_Logs = new ObservableCollection<LogModel>();
 
             //EVENT 검색 유형 콤보박스 목록
             SearchTypeList_Event_LOG = new[] { "사번", "사용자명", "클래스", "메소드", "내용" };
             SelectedSearchType_Event_Log = SearchTypeList_Event_LOG[0]; // index 0번 item으로 초기화
 
-            //LOGINOUT
+            //LOGIN
             SearchTypeList_LogIn_LOG = new[] { "사용자명", "부서명", "IP주소" };
             SelectedSearchType_LogIn_Log = SearchTypeList_LogIn_LOG[0];
 
+            //LOGOUT
+            SearchTypeList_LogOut_LOG = new[] { "사용자명", "부서명", "IP주소" };
+            SelectedSearchType_LogOut_Log = SearchTypeList_LogOut_LOG[0];
 
+
+            //날짜
+            //EVENT
+            SelectedStartDate_Event_Log = Convert.ToDateTime(log_dao.GetEventLogs_Min_Date());
+            SelectedEndDate_Event_Log = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 23, 59, 59);
+            //LOGIN
+            SelectedStartDate_LogIn_Log = Convert.ToDateTime(log_dao.GetLoginLogs_Min_Date());
+            SelectedEndDate_LogIn_Log = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 23, 59, 59);
+            //LOGOUT
+            SelectedStartDate_LogOut_Log = Convert.ToDateTime(log_dao.GetLoginLogs_Min_Date());
+            SelectedEndDate_LogIn_Log = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 23, 59, 59);
+
+            //대시보드
+            TodayLoginPrint();
+            TodayLogoutPrint();
 
         }//LogViewModel()
 
@@ -74,7 +96,7 @@ namespace EasyProject.ViewModel
             { 
                 selectedStartDate_Event_Log = value;
                 SearchKeyword_Event_Log = null;
-                GetEventLogs();
+                //GetEventLogs();
 
                 OnPropertyChanged("SelectedStartDate_Event_Log"); 
             }
@@ -89,7 +111,7 @@ namespace EasyProject.ViewModel
             {
                 selectedEndDate_Event_Log = value;
                 SearchKeyword_Event_Log = null;
-                GetEventLogs();
+                //GetEventLogs();
 
                 OnPropertyChanged("SelectedEndDate_Event_Log"); 
             }
@@ -166,6 +188,8 @@ namespace EasyProject.ViewModel
         ///////////////////////////////////////////////////////////////////////////
 
         #region LOGIN
+
+
 
         //검색 타입
         public string SelectedSearchType_LogIn_Log { get; set; }
@@ -312,7 +336,7 @@ namespace EasyProject.ViewModel
             {
                 selectedStartDate_LogOut_Log = value;
                 SearchKeyword_LogOut_Log = null;
-
+                GetLogOutLogs();
 
                 OnPropertyChanged("SelectedStartDate_LogOut_Log");
             }
@@ -327,7 +351,7 @@ namespace EasyProject.ViewModel
             {
                 selectedEndDate_LogOut_Log = value;
                 SearchKeyword_LogOut_Log = null;
-
+                GetLogOutLogs();
 
                 OnPropertyChanged("SelectedEndDate_LogOut_Log");
             }
@@ -431,7 +455,106 @@ namespace EasyProject.ViewModel
 
         #endregion
 
+        // 7일간 하루로그인 횟수 그래프
+        private SeriesCollection seriesCollection;
+        public SeriesCollection SeriesCollection               //그래프 큰 틀 만드는거
+        {
+            get { return seriesCollection; }
+            set
+            {
+                seriesCollection = value;
+                OnPropertyChanged("SeriesCollection");
+            }
+        }
+        // 로그인 유지 시간 그래프
+        private SeriesCollection seriesCollection1;
+        public SeriesCollection SeriesCollection1               //그래프 큰 틀 만드는거
+        {
+            get { return seriesCollection1; }
+            set
+            {
+                seriesCollection1 = value;
+                OnPropertyChanged("SeriesCollection1");
+            }
+        }
+        // 로그 레벨 그래프
+        private SeriesCollection seriesCollection2;
+        public SeriesCollection SeriesCollection2               //그래프 큰 틀 만드는거
+        {
+            get { return seriesCollection2; }
+            set
+            {
+                seriesCollection2 = value;
+                OnPropertyChanged("SeriesCollection2");
+            }
+        }
 
+        // 대시보드 프로퍼티
+        public ChartValues<int> Values { get; set; }
+        public List<string> BarLabels { get; set; }       //string[]
+        public ChartValues<int> Values1 { get; set; }
+        public List<string> BarLabels1 { get; set; }       //string[]
+        public ChartValues<int> Values2 { get; set; }
+        public List<string> BarLabels2 { get; set; }       //string[]
+        public Func<double, string> Formatter { get; set; }
+
+        //하루 로그인 횟수(7일 제한) 그래프
+        public void TodayLoginPrint()
+        {
+            ChartValues<int> mount = new ChartValues<int>();   //y축들어갈 임시 값
+            SeriesCollection = new SeriesCollection();   //대시보드 틀
+                                                         //Console.WriteLine(selected.Dept_id); 
+            List<LogModel> list_xy = log_dao.Logintotal();
+
+
+            foreach (var item in list_xy)
+            {
+                mount.Add((int)item.Log_total);
+            }
+            Values = new ChartValues<int> { };
+
+            SeriesCollection.Add(new LineSeries
+            {
+                Title = "로그인 횟수",   //+ i
+                Values = mount,
+            });
+            BarLabels = new List<string>() { };                           //x축출력
+            foreach (var item in list_xy)
+            {
+                BarLabels.Add(item.Today_Log_date);
+            }
+            Formatter = value => value.ToString("N0");   //문자열 10진수 변환
+        }
+
+        //하루 로그아웃 횟수(7일 제한) 그래프
+        public void TodayLogoutPrint()
+        {
+            ChartValues<int> mount = new ChartValues<int>();   //y축들어갈 임시 값
+            SeriesCollection1 = new SeriesCollection();   //대시보드 틀
+                                                          //Console.WriteLine(selected.Dept_id); 
+            List<LogModel> list_xy = log_dao.Logouttotal();
+
+
+            foreach (var item in list_xy)
+            {
+                mount.Add((int)item.Log_total);
+            }
+            Values1 = new ChartValues<int> { };
+
+            SeriesCollection1.Add(new LineSeries
+            {
+                Title = "로그아웃 횟수",   //+ i
+                Values = mount,
+            });
+            BarLabels1 = new List<string>() { };                           //x축출력
+            foreach (var item in list_xy)
+            {
+                BarLabels1.Add(item.Today_Log_date);
+            }
+            Formatter = value => value.ToString("N0");   //문자열 10진수 변환
+        }
+
+        
     }//class
 
 }//namespace

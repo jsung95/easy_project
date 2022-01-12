@@ -30,7 +30,10 @@
             <Button x:Name="EventLogBtn" Content="이벤트로그" Grid.Column="1" Background="#4472C4" FontSize="13" FontWeight="Bold" 
                     Foreground="White"   
                     VerticalAlignment="Center" HorizontalAlignment="Left"  BorderThickness="0" Height="30" Width="130" Cursor="Hand"/>
-            <Button x:Name="LoginoutBtn" Content="로그인/로그아웃" Grid.Column="2" Background="#4472C4" FontSize="13" FontWeight="Bold"
+            <Button x:Name="LoginBtn" Content="로그인" Grid.Column="2" Background="#4472C4" FontSize="13" FontWeight="Bold"
+                    Foreground="White"   
+                    VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="130" Cursor="Hand"/>
+            <Button x:Name="LogoutBtn" Content="로그아웃" Grid.Column="3" Background="#4472C4" FontSize="13" FontWeight="Bold"
                     Foreground="White"   
                     VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="130" Cursor="Hand"/>
             <Grid Grid.Column="4" Margin="40,0,0,0">

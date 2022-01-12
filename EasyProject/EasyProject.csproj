@@ -255,6 +255,12 @@
     <Compile Include="View\TabItemPage\GraphPage\Disposal_GraphPage.xaml.cs">
       <DependentUpon>Disposal_GraphPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TabItemPage\GraphPage\GraphlogPage\LoginGraph.xaml.cs">
+      <DependentUpon>LoginGraph.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TabItemPage\GraphPage\GraphlogPage\LogoutGraph.xaml.cs">
+      <DependentUpon>LogoutGraph.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TabItemPage\GraphPage\Incoming_GraphPage.xaml.cs">
       <DependentUpon>Incoming_GraphPage.xaml</DependentUpon>
     </Compile>
@@ -299,6 +305,9 @@
     </Compile>
     <Compile Include="View\TabItemPage\LogStatusList2Page.xaml.cs">
       <DependentUpon>LogStatusList2Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TabItemPage\LogStatusList3Page.xaml.cs">
+      <DependentUpon>LogStatusList3Page.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TabItemPage\LogStatusPageBtn.xaml.cs">
       <DependentUpon>LogStatusPageBtn.xaml</DependentUpon>
@@ -356,6 +365,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TabItemPage\GraphPage\Disposal_GraphPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabItemPage\GraphPage\GraphlogPage\LoginGraph.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabItemPage\GraphPage\GraphlogPage\LogoutGraph.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -428,6 +445,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TabItemPage\LogStatusList2Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabItemPage\LogStatusList3Page.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
