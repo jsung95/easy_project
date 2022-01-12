@@ -29,14 +29,32 @@ namespace EasyProject.ViewModel
 
             //로그 데이터 초기화
             Event_Logs = new ObservableCollection<LogModel>();
+            LogIn_Logs = new ObservableCollection<LogModel>();
+            LogOut_Logs = new ObservableCollection<LogModel>();
 
             //EVENT 검색 유형 콤보박스 목록
             SearchTypeList_Event_LOG = new[] { "사번", "사용자명", "클래스", "메소드", "내용" };
             SelectedSearchType_Event_Log = SearchTypeList_Event_LOG[0]; // index 0번 item으로 초기화
 
-            //LOGINOUT
+            //LOGIN
             SearchTypeList_LogIn_LOG = new[] { "사용자명", "부서명", "IP주소" };
             SelectedSearchType_LogIn_Log = SearchTypeList_LogIn_LOG[0];
+
+            //LOGOUT
+            SearchTypeList_LogOut_LOG = new[] { "사용자명", "부서명", "IP주소" };
+            SelectedSearchType_LogOut_Log = SearchTypeList_LogOut_LOG[0];
+
+
+            //날짜
+            //EVENT
+            SelectedStartDate_Event_Log = Convert.ToDateTime(log_dao.GetEventLogs_Min_Date());
+            SelectedEndDate_Event_Log = DateTime.Today;
+            //LOGIN
+            SelectedStartDate_LogIn_Log = Convert.ToDateTime(log_dao.GetLoginLogs_Min_Date());
+            SelectedEndDate_LogIn_Log = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 23, 59, 59);
+            //LOGOUT
+            SelectedStartDate_LogOut_Log = Convert.ToDateTime(log_dao.GetLoginLogs_Min_Date());
+            SelectedEndDate_LogIn_Log = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 23, 59, 59);
 
 
 
@@ -166,6 +184,8 @@ namespace EasyProject.ViewModel
         ///////////////////////////////////////////////////////////////////////////
 
         #region LOGIN
+
+
 
         //검색 타입
         public string SelectedSearchType_LogIn_Log { get; set; }
@@ -312,7 +332,7 @@ namespace EasyProject.ViewModel
             {
                 selectedStartDate_LogOut_Log = value;
                 SearchKeyword_LogOut_Log = null;
-
+                GetLogOutLogs();
 
                 OnPropertyChanged("SelectedStartDate_LogOut_Log");
             }
@@ -327,7 +347,7 @@ namespace EasyProject.ViewModel
             {
                 selectedEndDate_LogOut_Log = value;
                 SearchKeyword_LogOut_Log = null;
-
+                GetLogOutLogs();
 
                 OnPropertyChanged("SelectedEndDate_LogOut_Log");
             }
