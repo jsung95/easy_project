@@ -115,7 +115,11 @@
                                         </i:Interaction.Triggers>
                                     </TextBox>
 
-                                    <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Height="20" Width="20" Command="{Binding DataGridSearchCommand}" HorizontalAlignment="Center" Grid.Column="1">
+                                    <Button Name="MyFlatImageButton" Grid.Column="1" Width="55" Height="30"
+                                             Background="{x:Null}"
+                                                
+                                                BorderThickness="0.5" 
+                                                Padding="-4">
                                         <materialDesign:PackIcon Kind="Search" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gray"/>
                                     </Button>
                                 </Grid>
