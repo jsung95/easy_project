@@ -285,6 +285,9 @@
     <Compile Include="View\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TabItemPage\InsertPage_Category.xaml.cs">
+      <DependentUpon>InsertPage_Category.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TabItemPage\InsertPage_Excel.xaml.cs">
       <DependentUpon>InsertPage_Excel.xaml</DependentUpon>
     </Compile>
@@ -408,6 +411,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\TabItemPage\InsertPage_Category.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\TabItemPage\InsertPage_Excel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

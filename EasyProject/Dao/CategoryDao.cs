@@ -227,6 +227,43 @@ namespace EasyProject.Dao
             }//catch
         }//AddCategory
 
+        public void ChangeCategoryName(CategoryModel category_dto)
+        {
+            log.Info("ChangeCategoryName(CategoryModel category_dto) invoked.");
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                string category_name = category_dto.Category_name;
+                int? category_id = category_dto.Category_id;
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "UPDATE CATEGORY " +
+                                          "SET " +
+                                          "category_name = :category_name " +
+                                          "WHERE category_id = :category_id";
+
+                        cmd.Parameters.Add(new OracleParameter("category_name", category_name));
+                        cmd.Parameters.Add(new OracleParameter("category_id", category_id));
+                        cmd.ExecuteNonQuery();
+
+                    }//using(cmd)
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }//catch
+        }//ChangeCategoryName
+
 
     }//class
 

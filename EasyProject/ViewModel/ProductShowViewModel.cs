@@ -40,7 +40,16 @@ namespace EasyProject.ViewModel
         //로그인한 간호자(사용자) 정보를 담을 프로퍼티
         public NurseModel Nurse { get; set; }
 
-        
+        private CategoryModel selectedModifyCategory;
+        public CategoryModel SelectedModifyCategory
+        {
+            get { return selectedModifyCategory; }
+            set
+            {
+                selectedModifyCategory = value;
+                OnPropertyChanged("SelectedModifyCategory");
+            }
+        }
 
         private int selectedProductIndex;
         public int SelectedProductIndex
@@ -1860,6 +1869,59 @@ namespace EasyProject.ViewModel
 
         //오늘날짜 담을 프로퍼티
         public string testdate { get; set; }
+
+        private ActionCommand categoryModifyCommand; //카테고리 수정 커맨드
+        public ICommand CategoryModifyCommand
+        {
+            get
+            {
+                if (categoryModifyCommand == null)
+                {
+                    categoryModifyCommand = new ActionCommand(EditCategory);
+                }
+                return categoryModifyCommand;
+            }//get
+        }//OutProductCommand
+
+        private void EditCategory()
+        {
+            log.Info("EditCategory() invoked.");
+            try
+            {
+                Console.WriteLine(SelectedModifyCategory.Category_name+"바꾸려는 카테명 ");
+                category_dao.ChangeCategoryName(SelectedModifyCategory);
+
+                //product_dao.ChangeProductInfo(SelectedModifyCategory);
+                //product_dao.ChangeProductInfo_IMP_DEPT(SelectedProduct);
+
+                //ObservableCollection<CategoryModel> list = new ObservableCollection<CategoryModel>(category_dao.GetCategories());
+                //Categories.Clear();
+                //foreach (var item in list)
+                //{
+                //    Categories.Add(item);
+                //}
+
+                //CategoryModel newCategoryDao = new CategoryModel();
+                //var cateGoryId = category_dao.GetCategoryID(SelectedProduct.Category_name);
+                //newCategoryDao.Category_id = cateGoryId;
+                //newCategoryDao.Category_name = SelectedProduct.Category_name;
+                //Categories.Insert(0,newCategoryDao);
+
+                //첫페이지 말고 다음 페이지에서 재고수정할때 성공은 되는데 첫페이지로 돌아감 해결하기
+                //LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
+                //updateSearchedProducts(false);
+                //UpdateRecordCount();
+
+                //DashboardPrint2(selectedDept);
+
+                //DialogHost.ShowDialog(null);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+        }
 
     }//class
 
