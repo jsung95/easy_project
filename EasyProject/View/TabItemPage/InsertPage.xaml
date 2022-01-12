@@ -45,27 +45,87 @@
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
 
-                <Grid Grid.Column="0">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Button x:Name="formBtn" Content="폼 입력" Background="blue" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
-                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="120"  Cursor="Hand"/>
-                        <Button x:Name="excelBtn" Content="파일 업로드" Background="LightGray" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
-                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="120"  Cursor="Hand"/>
-                        <Button x:Name="CategoryBtn" Margin="10,0,0,0" Height="30" Width="30" Background="white">
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="AddCircle" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="DarkGreen"/>
-                            </StackPanel>
-                        </Button>
-                    </StackPanel>
+            <Button x:Name="formBtn" Content="폼 입력" Grid.Column="0" Background="White" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
+                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="150"/>
+            <Button x:Name="excelBtn" Content="파일 업로드" Grid.Column="1" Background="White" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
+                       VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="150" Cursor="Hand"/>
+             <TextBlock Text="내가 추가한 목록" Grid.Column="2" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13"></TextBlock>
+
+             <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="4*"/>
+                    </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="2" Margin="10 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="0.3*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <DatePicker x:Name="expirationDate_DatePicker" HorizontalContentAlignment="Left" 
+                                         VerticalAlignment="Center" Focusable="False" Width="100"
+                                        SelectedDate="{Binding SelectedStartDate_In}" DisplayDateEnd="{Binding SelectedEndDate_In}">
+
+                            <DatePicker.Resources>
+                                <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
+                                    <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />
+                                    <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="white" />
+                                </Style>
+                                <Style x:Key="CustomCalendarButton" TargetType="CalendarButton" BasedOn="{StaticResource MaterialDesignCalendarButton}">
+                                    <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />
+                                    <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="White" />
+                                </Style>
+                                <Style x:Key="CustomCalendar" TargetType="{x:Type Calendar}" BasedOn="{StaticResource MaterialDesignDatePickerCalendarPortrait}">
+                                    <Setter Property="Background" Value="White" />
+                                    <Setter Property="Foreground" Value="lightGray" />
+                                    <Setter Property="materialDesign:CalendarAssist.HeaderBackground" Value="DarkGray" />
+                                    <Setter Property="materialDesign:CalendarAssist.HeaderForeground" Value="White" />
+                                    <Setter Property="CalendarDayButtonStyle" Value="{StaticResource CustomCalendarDayButton}" />
+                                    <Setter Property="CalendarButtonStyle" Value="{StaticResource CustomCalendarButton}" />
+                                </Style>
+                                <Style TargetType="DatePicker" BasedOn="{StaticResource MaterialDesignFloatingHintDatePicker}">
+                                    <Setter Property="CalendarStyle" Value="{StaticResource CustomCalendar}" />
+                                </Style>
+                            </DatePicker.Resources>
+                        </DatePicker>
+
+                        <TextBlock HorizontalAlignment="Center" Grid.Column="1" VerticalAlignment="Center" Text="~" FontWeight="UltraBold" FontSize="20"/>
+                        <DatePicker x:Name="expirationDate_DatePicker2" Grid.Column="2" VerticalAlignment="Center" Focusable="False" Width="100"
+                                        SelectedDate="{Binding SelectedEndDate_In}" DisplayDateStart="{Binding SelectedStartDate_In}">
+                            <DatePicker.Resources>
+                                <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
+                                    <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />
+                                    <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="white" />
+                                </Style>
+                                <Style x:Key="CustomCalendarButton" TargetType="CalendarButton" BasedOn="{StaticResource MaterialDesignCalendarButton}">
+                                    <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="#ff2196f3" />
+                                    <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="White" />
+                                </Style>
+                                <Style x:Key="CustomCalendar" TargetType="{x:Type Calendar}" BasedOn="{StaticResource MaterialDesignDatePickerCalendarPortrait}">
+                                    <Setter Property="Background" Value="White" />
+                                    <Setter Property="Foreground" Value="lightGray" />
+                                    <Setter Property="materialDesign:CalendarAssist.HeaderBackground" Value="DarkGray" />
+                                    <Setter Property="materialDesign:CalendarAssist.HeaderForeground" Value="White" />
+                                    <Setter Property="CalendarDayButtonStyle" Value="{StaticResource CustomCalendarDayButton}" />
+                                    <Setter Property="CalendarButtonStyle" Value="{StaticResource CustomCalendarButton}" />
+                                </Style>
+                                <Style TargetType="DatePicker" BasedOn="{StaticResource MaterialDesignFloatingHintDatePicker}">
+                                    <Setter Property="CalendarStyle" Value="{StaticResource CustomCalendar}" />
+                                </Style>
+                            </DatePicker.Resources>
+                        </DatePicker>
+                    </Grid>
                     
                 </Grid>
-
             
-                <TextBlock Text="내가 추가한 목록" Grid.Column="2" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13"></TextBlock>
         </Grid>
 
         
@@ -81,8 +141,35 @@
         </Grid>
 
         <Grid Grid.Row="1">
-                <materialDesign:Snackbar x:Name="Snackbar" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
-                    <materialDesign:Snackbar.Style>
+            <materialDesign:Snackbar x:Name="Snackbar" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+
+                <!-- 닫기버튼이 안생겨서 일단 주석처리함 -->
+                <!--materialDesign:SnackbarMessage ActionContent="닫기" ActionCommand="{Binding SnackBarCommand}">
+                    <materialDesign:SnackbarMessage.Style>
+                        <Style TargetType="materialDesign:SnackbarMessage">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsDuplicatedProduct}" Value="True">
+                                    메세지큐 사용으로 이것도 필요없음<Setter Property="Content" Value="{Binding DuplicatedProductString}"></Setter>
+                                </DataTrigger>
+                                
+                            </Style.Triggers>
+                        </Style>
+                    </materialDesign:SnackbarMessage.Style>
+                </materialDesign:SnackbarMessage-->
+
+                <!-- 이건 이제 필요가 없음 -->
+                <!--materialDesign:Snackbar.Style>
+                    <Style TargetType="materialDesign:Snackbar">
+                        <Setter Property="IsActive" Value="False"></Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsDuplicatedProduct}" Value="True">
+                                <Setter Property="IsActive" Value="True"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </materialDesign:Snackbar.Style-->
+
+                <materialDesign:Snackbar.Style>
                     <Style TargetType="materialDesign:Snackbar">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsDuplicatedProduct}" Value="True">

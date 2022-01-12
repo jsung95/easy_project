@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using EasyProject.ViewModel;
+using log4net;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,6 @@ namespace EasyProject.View
             InitializeComponent();
             formBtn.Click += formBtn_Click;
             excelBtn.Click += excelBtn_Click;
-            CategoryBtn.Click += categoryBtn_Click;
         }
         private void formBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -60,20 +60,6 @@ namespace EasyProject.View
                 log.Error(ex.Message);
             }
             
-        }
-
-        private void categoryBtn_Click(object sender, RoutedEventArgs e)
-        {
-            log.Info("categoryBtn_Click(object, RoutedEventArgs) invoked.");
-            try
-            {
-                InsertPageFrame.Source = new Uri("InsertPage_Category.xaml", UriKind.Relative);
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message);
-            }
-
         }
     }
 }

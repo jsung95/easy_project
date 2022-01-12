@@ -33,14 +33,7 @@ namespace EasyProject.View.TabItemPage
         private void CategoryAddBtnClick(object sender, RoutedEventArgs e)
         {
             log.Info("CategoryAddBtnClick(object, RoutedEventArgs) invoked.");
-            try
-            {
-                dataGrid.Items.Add(new CategoryModel());
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message);
-            }
+            
 
         }
     }

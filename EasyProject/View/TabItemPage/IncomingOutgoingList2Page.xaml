@@ -275,20 +275,16 @@
                                 <wookoa:Int32>25</wookoa:Int32>
                             </ComboBox>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Visibility="Visible" Margin="527,0,0,0">
-                            <TextBlock Text="  전체 다운 " FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                            <Button x:Name="export_btn2" Style="{StaticResource MaterialDesignIconForegroundButton}" Height="20" Width="20">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="Visible" Margin="10 0">
+                            <TextBlock Text="  전체 " FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <Button x:Name="export_btn2" Style="{StaticResource MaterialDesignIconForegroundButton}" Height="20" Width="20" ToolTip="전체 페이지를 CSV파일로 내려받을 수 있습니다." Cursor="Hand">
+                                <materialDesign:PackIcon Kind="MicrosoftExcel" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="DarkGreen"/>
+                            </Button>
+                            <TextBlock Text="  현재 " FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <Button x:Name="export_btn" Style="{StaticResource MaterialDesignIconForegroundButton}" Height="20" Width="20" ToolTip="현재 페이지를 CSV파일로 내려받을 수 있습니다.">
                                 <materialDesign:PackIcon Kind="MicrosoftExcel" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="DarkGreen"/>
                             </Button>
                         </StackPanel>
-                        <Button x:Name="export_btn" Height="26" HorizontalAlignment="Right" Foreground="White" Background="#4472C4"
-                                VerticalAlignment="Center" Width="150"  FontSize="13" Margin="10 5"
-                                  Opacity="0.75" Cursor="Hand">
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="MicrosoftExcel"  HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" />
-                                <TextBlock Text="엑셀 다운로드" Margin="3,0,0,0" Foreground="White" FontWeight="Bold"></TextBlock>
-                            </StackPanel>
-                        </Button>
                     </Grid>
                 </Grid>
             </Grid>

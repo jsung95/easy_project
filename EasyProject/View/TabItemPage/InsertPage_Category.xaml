@@ -45,8 +45,8 @@
                         </Button>
 
                         <DataGrid x:Name="dataGrid" Grid.Row="1" HorizontalAlignment="Left" Margin="10 10" Height="330"
-                            AllowDrop="False" VerticalAlignment="Top" AutoGenerateColumns="False" SelectionMode="Extended"
-                            ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedModifyCategory}" SelectionUnit="FullRow">
+                            AllowDrop="False" VerticalAlignment="Top" AutoGenerateColumns="False"
+                            ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedModifyCategory}" Cursor="Hand">
 
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="품목/종류명" Width="2*" CanUserSort="false" IsReadOnly="False">

@@ -68,6 +68,10 @@ namespace EasyProject.ViewModel
             };
             List<CategoryModel> list = dao.GetCategoryModels();
             Categories = new ObservableCollection<CategoryModel>(list); // List타입 객체 list를 OC 타입 Products에 넣음                                                           
+            CategoryModel categoryDao = new CategoryModel();
+            categoryDao.Category_id = null;
+            categoryDao.Category_name = "추가(직접입력)";
+            Categories.Add(categoryDao);
 
             //App.xaml.cs 에 로그인할 때 바인딩 된 로그인 정보 객체
             Nurse = App.nurse_dto;
@@ -663,7 +667,7 @@ namespace EasyProject.ViewModel
                     Product.Prod_price = Int32.Parse(Input_Prod_price);
                     Product.Prod_total = Int32.Parse(Input_Prod_total);
 
-                    if (SelectedCategory.Category_name.Equals("추가(입력)하기")) //만약 카테고리 선택을 직접입력으로 선택했다면
+                    if (SelectedCategory.Category_name.Equals("추가(직접입력)")) //만약 카테고리 선택을 직접입력으로 선택했다면
                     {
                         if (AddCategoryName == null || AddCategoryName.Equals("")) //만약 직접입력란이 비어있다면
                         {
@@ -711,6 +715,19 @@ namespace EasyProject.ViewModel
 
                                     var temp1 = Ioc.Default.GetService<ProductShowViewModel>();
                                     temp1.getListbyDept();  // 재고현황 리스트 갱신
+                                    temp1.Categories = new ObservableCollection<CategoryModel>(categoryDao.GetCategories());
+
+                                    ObservableCollection<CategoryModel> list = new ObservableCollection<CategoryModel>(categoryDao.GetCategories());
+                                    Categories.Clear();
+                                    foreach (var item in list)
+                                    {
+                                        Categories.Add(item);
+                                    }
+
+                                    CategoryModel newCategoryDao = new CategoryModel();
+                                    newCategoryDao.Category_id = null;
+                                    newCategoryDao.Category_name = "추가(직접입력)";
+                                    Categories.Add(newCategoryDao);
 
                                     var temp2 = Ioc.Default.GetService<ProductInOutViewModel>();
                                     temp2.getInListByDept(); // 입고 목록 갱신

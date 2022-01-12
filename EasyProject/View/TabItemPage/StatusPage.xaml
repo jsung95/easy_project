@@ -273,7 +273,7 @@
 
                                 <DataGridComboBoxColumn ItemsSource="{Binding PSVM.Categories, Source={StaticResource Locator}}" 
                                                     TextBinding="{Binding Category_name}"
-                                                    DisplayMemberPath="Category_name" Header="품목/종류" Width="1.5*" CanUserSort="false" IsReadOnly="True">
+                                                    DisplayMemberPath="Category_name" Header="품목/종류" Width="1.5*" CanUserSort="false">
 
                                     <DataGridComboBoxColumn.CellStyle>
                                     <Style TargetType="DataGridCell">
@@ -292,7 +292,6 @@
                                 <DataGridComboBoxColumn.EditingElementStyle>
                                         <Style TargetType="{x:Type ComboBox}">
                                             <EventSetter Event="SelectionChanged" Handler="SomeSelectionChanged"/>
-
                                         </Style>
                                 </DataGridComboBoxColumn.EditingElementStyle>
 
@@ -606,12 +605,25 @@
                         
                     <Grid Grid.Row="2">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 5">
-                            <materialDesign:PackIcon Kind="Circle" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"></materialDesign:PackIcon>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Visibility="Visible">
+                                    <TextBlock Text="  전체 " FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                    <Button x:Name="export_btn2" Style="{StaticResource MaterialDesignIconForegroundButton}" Height="20" Width="20" ToolTip="전체 페이지를 CSV파일로 내려받을 수 있습니다.">
+                                        <materialDesign:PackIcon Kind="MicrosoftExcel" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="DarkGreen"/>
+                                    </Button>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="Visible" Margin="10 0">
+                                    <TextBlock Text="  현재 " FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                    <Button x:Name="export_btn" Style="{StaticResource MaterialDesignIconForegroundButton}" Height="20" Width="20" ToolTip="현재 페이지를 CSV파일로 내려받을 수 있습니다.">
+                                        <materialDesign:PackIcon Kind="MicrosoftExcel" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="DarkGreen"/>
+                                    </Button>
+                                </StackPanel>
+                                <materialDesign:PackIcon Kind="Circle" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"></materialDesign:PackIcon>
                             <Label Content="유통기한 지남" FontSize="8" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                             <materialDesign:PackIcon Kind="Circle" Foreground="Yellow" HorizontalAlignment="Center" VerticalAlignment="Center"></materialDesign:PackIcon>
-                            <Label Content="유통기한 3일 미만 남음" FontSize="8" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <Label Content="3일 미만" FontSize="8" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                             <materialDesign:PackIcon Kind="Circle" Foreground="Green" HorizontalAlignment="Center" VerticalAlignment="Center"></materialDesign:PackIcon>
-                            <Label Content="유통기한 3일 이상 남음" FontSize="8" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <Label Content="3일 이상" FontSize="8" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="5 0 0 0">
                             <Button Height="23" HorizontalAlignment="Right"  Command="{Binding FirstCommand}"
