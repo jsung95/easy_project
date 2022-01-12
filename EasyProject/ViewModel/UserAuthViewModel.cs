@@ -9,11 +9,13 @@ using System.Linq;
 using System.Windows;
 using System.Text;
 using MaterialDesignThemes.Wpf;
+using log4net;
 
 namespace EasyProject.ViewModel
 {
     public class UserAuthViewModel : Notifier
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         UsersDao user_dao = new UsersDao();
         DeptDao dept_dao = new DeptDao();
 
@@ -91,6 +93,7 @@ namespace EasyProject.ViewModel
 
         public UserAuthViewModel()
         {
+            log.Info("Constructor UserAuthViewModel() invoked.");
             //스넥바 Duration 3초로 설정 TimeSpan.FromMilliseconds(3000)
             messagequeue = new SnackbarMessageQueue();
 
@@ -158,60 +161,69 @@ namespace EasyProject.ViewModel
 
         public void MoveRight()
         {
-            Console.WriteLine("MoveRight");
-            ObservableCollection<UserModel> tempObject = new ObservableCollection<UserModel>();
-            List<UserModel> updateList = new List<UserModel>(); // 업데이트 할 객체들을 담을 임시리스트
-
-            foreach (var item in Normals_searched)
+            log.Info("MoveRight() invoked.");
+            try
             {
-                if (item.IsChecked)// item.IsChecked = true -> 권한 변경할 객체들 
+                Console.WriteLine("MoveRight");
+                ObservableCollection<UserModel> tempObject = new ObservableCollection<UserModel>();
+                List<UserModel> updateList = new List<UserModel>(); // 업데이트 할 객체들을 담을 임시리스트
+
+                foreach (var item in Normals_searched)
                 {
-                    item.IsChecked = false;
-                    Admins_searched.Add(item); // 화면에 보이는 Admin_searched 목록에 있는 리스트                   
-                    Admin_users.Add(item);
-                    Normal_users.Remove(item);
-                    item.Nurse_auth = "ADMIN";
-                    updateList.Add(item);                    
+                    if (item.IsChecked)// item.IsChecked = true -> 권한 변경할 객체들 
+                    {
+                        item.IsChecked = false;
+                        Admins_searched.Add(item); // 화면에 보이는 Admin_searched 목록에 있는 리스트                   
+                        Admin_users.Add(item);
+                        Normal_users.Remove(item);
+                        item.Nurse_auth = "ADMIN";
+                        updateList.Add(item);
+                    }
+                    else tempObject.Add(item); // 체크 박스 선택되지 않은 리스트
                 }
-                else tempObject.Add(item); // 체크 박스 선택되지 않은 리스트
-            }
 
-            if(updateList.Count > 0) // 체크박스를 하나 이상 체크 했을 경우
-            {
-                user_dao.UserAuthChange("ADMIN", updateList); // 업데이트 실행
-                
-                if(updateList.Count == 1)
+                if (updateList.Count > 0) // 체크박스를 하나 이상 체크 했을 경우
                 {
-                    MessageQueue.Enqueue($"{updateList[0].Nurse_name}의 권한을 ADMIN으로 변경하였습니다.", "닫기", (x) => { IsAuthChangeEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                    IsAuthChangeEnabled = true;
+                    user_dao.UserAuthChange("ADMIN", updateList); // 업데이트 실행
+
+                    if (updateList.Count == 1)
+                    {
+                        MessageQueue.Enqueue($"{updateList[0].Nurse_name}의 권한을 ADMIN으로 변경하였습니다.", "닫기", (x) => { IsAuthChangeEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        IsAuthChangeEnabled = true;
+                        updateList.Clear();
+
+                    }
+                    else
+                    {
+                        MessageQueue.Enqueue($"{updateList[0].Nurse_name} 외 {updateList.Count - 1}명의 권한을 ADMIN으로 변경하였습니다.", "닫기", (x) => { IsAuthChangeEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        IsAuthChangeEnabled = true;
+                        updateList.Clear();
+
+                    }
+                }
+                else // 체크박스 선택을 안했을 경우
+                {
                     updateList.Clear();
-
-                }
-                else
-                {
-                    MessageQueue.Enqueue($"{updateList[0].Nurse_name} 외 {updateList.Count - 1}명의 권한을 ADMIN으로 변경하였습니다.", "닫기", (x) => { IsAuthChangeEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                    MessageQueue.Enqueue("권한을 변경할 사용자를 선택해주세요.", "닫기", (x) => { IsAuthChangeEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsAuthChangeEnabled = true;
-                    updateList.Clear();
-
                 }
+
+
+                Normals_searched.Clear(); // 기존의 검색 목록을 비움.
+
+                foreach (var item in tempObject)
+                {
+                    Normals_searched.Add(item); // 선택되지 않은 리스트만 검색 목록에 다시 넣어줌
+                }
+                Normal_users = user_dao.GetUserInfo("NORMAL"); // 사용자들을 검색할 리스트 갱신
+                Admin_users = user_dao.GetUserInfo("ADMIN");   // 사용자들을 검색할 리스트 갱신
+                                                               //AuthSearchDept = SearchDeptList[0]; // ADMIN 부서 카테고리 "전체"로 변경
             }
-            else // 체크박스 선택을 안했을 경우
+            catch (Exception ex)
             {
-                updateList.Clear();
-                MessageQueue.Enqueue("권한을 변경할 사용자를 선택해주세요.", "닫기", (x) => { IsAuthChangeEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                IsAuthChangeEnabled = true;
+                log.Error(ex.Message);
             }
             
-
-            Normals_searched.Clear(); // 기존의 검색 목록을 비움.
-
-            foreach (var item in tempObject)
-            {
-                Normals_searched.Add(item); // 선택되지 않은 리스트만 검색 목록에 다시 넣어줌
-            }
-            Normal_users = user_dao.GetUserInfo("NORMAL"); // 사용자들을 검색할 리스트 갱신
-            Admin_users = user_dao.GetUserInfo("ADMIN");   // 사용자들을 검색할 리스트 갱신
-            //AuthSearchDept = SearchDeptList[0]; // ADMIN 부서 카테고리 "전체"로 변경
 
         }//MoveRight
 
@@ -230,58 +242,67 @@ namespace EasyProject.ViewModel
         }//Command
         public void MoveLeft()
         {
-            Console.WriteLine("MoveLeft");          
-            ObservableCollection<UserModel> tempObject =new  ObservableCollection<UserModel>();
-            List<UserModel> updateList = new List<UserModel>(); // 업데이트 할 객체들을 담을 임시리스트
-
-            foreach (var item in Admins_searched)
+            log.Info("MoveLeft() invoked.");
+            try
             {
-                if (item.IsChecked)
+                Console.WriteLine("MoveLeft");
+                ObservableCollection<UserModel> tempObject = new ObservableCollection<UserModel>();
+                List<UserModel> updateList = new List<UserModel>(); // 업데이트 할 객체들을 담을 임시리스트
+
+                foreach (var item in Admins_searched)
                 {
-                    item.IsChecked = false;
-                    Normals_searched.Add(item);
-                    Normal_users.Add(item);
-                    Admin_users.Remove(item);
-                    item.Nurse_auth = "NORMAL";
-                    updateList.Add(item);
+                    if (item.IsChecked)
+                    {
+                        item.IsChecked = false;
+                        Normals_searched.Add(item);
+                        Normal_users.Add(item);
+                        Admin_users.Remove(item);
+                        item.Nurse_auth = "NORMAL";
+                        updateList.Add(item);
+                    }
+                    else tempObject.Add(item);
                 }
-                else tempObject.Add(item);
-            }
 
-            if(updateList.Count > 0) // 체크 박스 선택 1개 이상 했을 때
-            {
-                user_dao.UserAuthChange("NORMAL", updateList);
-                if (updateList.Count == 1)
+                if (updateList.Count > 0) // 체크 박스 선택 1개 이상 했을 때
                 {
-                    MessageQueue.Enqueue($"{updateList[0].Nurse_name}의 권한을 NORMAL로 변경하였습니다.", "닫기", (x) => { IsAuthChangeEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                    IsAuthChangeEnabled = true;
+                    user_dao.UserAuthChange("NORMAL", updateList);
+                    if (updateList.Count == 1)
+                    {
+                        MessageQueue.Enqueue($"{updateList[0].Nurse_name}의 권한을 NORMAL로 변경하였습니다.", "닫기", (x) => { IsAuthChangeEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        IsAuthChangeEnabled = true;
+                        updateList.Clear();
+
+                    }
+                    else
+                    {
+                        MessageQueue.Enqueue($"{updateList[0].Nurse_name} 외 {updateList.Count - 1} 명의 권한을 NORMAL로 변경하였습니다.", "닫기", (x) => { IsAuthChangeEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        IsAuthChangeEnabled = true;
+                        updateList.Clear();
+
+                    }
+                }
+                else // 안했을 때 
+                {
                     updateList.Clear();
-
-                }
-                else
-                {
-                    MessageQueue.Enqueue($"{updateList[0].Nurse_name} 외 {updateList.Count - 1} 명의 권한을 NORMAL로 변경하였습니다.", "닫기", (x) => { IsAuthChangeEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                    MessageQueue.Enqueue("권한을 변경할 사용자를 선택해주세요.", "닫기", (x) => { IsAuthChangeEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsAuthChangeEnabled = true;
-                    updateList.Clear();
-
                 }
+
+                Admins_searched.Clear();
+
+                foreach (var item in tempObject)
+                {
+                    Admins_searched.Add(item);
+                }
+                Normal_users = user_dao.GetUserInfo("NORMAL"); // 사용자들을 검색할 리스트 갱신
+                Admin_users = user_dao.GetUserInfo("ADMIN");   // 사용자들을 검색할 리스트 갱신
+                                                               //AuthSearchDept = SearchDeptList[0]; // Normal 부서 카테고리 "전체"로 변경
             }
-            else // 안했을 때 
+            catch (Exception ex)
             {
-                updateList.Clear();
-                MessageQueue.Enqueue("권한을 변경할 사용자를 선택해주세요.", "닫기", (x) => { IsAuthChangeEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                IsAuthChangeEnabled = true;
+                log.Error(ex.Message);
             }
             
-            Admins_searched.Clear();
-
-            foreach (var item in tempObject)
-            {
-                Admins_searched.Add(item);
-            }
-            Normal_users = user_dao.GetUserInfo("NORMAL"); // 사용자들을 검색할 리스트 갱신
-            Admin_users = user_dao.GetUserInfo("ADMIN");   // 사용자들을 검색할 리스트 갱신
-            //AuthSearchDept = SearchDeptList[0]; // Normal 부서 카테고리 "전체"로 변경
         }//MoveLeft
 
         private ActionCommand normalKeywordCommand;
@@ -299,55 +320,64 @@ namespace EasyProject.ViewModel
         }//NormalKeywordCommand
         public void OnNormalKeywordChanged()
         {
-            Console.WriteLine("OnNormalKeywordChanged() : " + Normal_Keyword);
-            IEnumerable <UserModel> temp = new List<UserModel>();
-            if(Normal_Keyword != null) // 키워드 있을 때
+            log.Info("OnNormalKeywordChanged() invoked.");
+            try
             {
-                if (AuthSearchDept.Dept_name == "전체")
+                Console.WriteLine("OnNormalKeywordChanged() : " + Normal_Keyword);
+                IEnumerable<UserModel> temp = new List<UserModel>();
+                if (Normal_Keyword != null) // 키워드 있을 때
                 {
-                    switch (NormalSearchType)
+                    if (AuthSearchDept.Dept_name == "전체")
                     {
-                        case "이름":
-                            temp = Normal_users.Where(user => user.Nurse_name.Contains(Normal_Keyword));
-                            break;
-                        case "아이디":
-                            temp = Normal_users.Where(user => user.Nurse_no.ToString().Contains(Normal_Keyword));
-                            break;
+                        switch (NormalSearchType)
+                        {
+                            case "이름":
+                                temp = Normal_users.Where(user => user.Nurse_name.Contains(Normal_Keyword));
+                                break;
+                            case "아이디":
+                                temp = Normal_users.Where(user => user.Nurse_no.ToString().Contains(Normal_Keyword));
+                                break;
+                        }
                     }
-                }
-                else
-                {
-                    switch (NormalSearchType)
+                    else
                     {
-                        case "이름":
-                            temp = Normal_users.Where(user => user.Nurse_name.Contains(Normal_Keyword) && user.Dept_name.Equals(AuthSearchDept.Dept_name));
-                            break;
-                        case "아이디":
-                            temp = Normal_users.Where(user => user.Nurse_no.ToString().Contains(Normal_Keyword) && user.Dept_name.Equals(AuthSearchDept.Dept_name));
-                            break;
+                        switch (NormalSearchType)
+                        {
+                            case "이름":
+                                temp = Normal_users.Where(user => user.Nurse_name.Contains(Normal_Keyword) && user.Dept_name.Equals(AuthSearchDept.Dept_name));
+                                break;
+                            case "아이디":
+                                temp = Normal_users.Where(user => user.Nurse_no.ToString().Contains(Normal_Keyword) && user.Dept_name.Equals(AuthSearchDept.Dept_name));
+                                break;
+                        }
                     }
-                }
 
-                Normals_searched.Clear();
-            }//if
-            else // 키워드 없을 때
-            {
-                if (AuthSearchDept.Dept_name == "전체")
+                    Normals_searched.Clear();
+                }//if
+                else // 키워드 없을 때
                 {
-                    temp = Normal_users;
-                }
-                else
-                {
-                    temp = Normal_users.Where(user => user.Dept_name.Equals(AuthSearchDept.Dept_name));
-                }
+                    if (AuthSearchDept.Dept_name == "전체")
+                    {
+                        temp = Normal_users;
+                    }
+                    else
+                    {
+                        temp = Normal_users.Where(user => user.Dept_name.Equals(AuthSearchDept.Dept_name));
+                    }
 
-                Normals_searched.Clear();
-            }//else
-                               
-            foreach (var item in temp)
-            {
-                Normals_searched.Add(item);
+                    Normals_searched.Clear();
+                }//else
+
+                foreach (var item in temp)
+                {
+                    Normals_searched.Add(item);
+                }
             }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+            
 
         }//OnNormalKeywordChanged
 
@@ -366,54 +396,63 @@ namespace EasyProject.ViewModel
         }//AdminKeywordCommand
         public void OnAdminKeywordChanged()
         {
-            Console.WriteLine("OnAdminKeywordChanged()");
-            IEnumerable<UserModel> temp = new List<UserModel>();
-            if (Admin_Keyword != null) // 키워드 있을 때
+            log.Info("OnAdminKeywordChanged() invoked.");
+            try
             {
-                if (AuthSearchDept.Dept_name == "전체")
+                Console.WriteLine("OnAdminKeywordChanged()");
+                IEnumerable<UserModel> temp = new List<UserModel>();
+                if (Admin_Keyword != null) // 키워드 있을 때
                 {
-                    switch (AdminSearchType)
+                    if (AuthSearchDept.Dept_name == "전체")
                     {
-                        case "이름":
-                            temp = Admin_users.Where(user => user.Nurse_name.Contains(Admin_Keyword));
-                            break;
-                        case "아이디":
-                            temp = Admin_users.Where(user => user.Nurse_no.ToString().Contains(Admin_Keyword));
-                            break;
+                        switch (AdminSearchType)
+                        {
+                            case "이름":
+                                temp = Admin_users.Where(user => user.Nurse_name.Contains(Admin_Keyword));
+                                break;
+                            case "아이디":
+                                temp = Admin_users.Where(user => user.Nurse_no.ToString().Contains(Admin_Keyword));
+                                break;
+                        }
                     }
-                }
-                else
-                {
-                    switch (AdminSearchType)
+                    else
                     {
-                        case "이름":
-                            temp = Admin_users.Where(user => user.Nurse_name.Contains(Admin_Keyword) && user.Dept_name.Equals(AuthSearchDept.Dept_name));
-                            break;
-                        case "아이디":
-                            temp = Admin_users.Where(user => user.Nurse_no.ToString().Contains(Admin_Keyword) && user.Dept_name.Equals(AuthSearchDept.Dept_name));
-                            break;
+                        switch (AdminSearchType)
+                        {
+                            case "이름":
+                                temp = Admin_users.Where(user => user.Nurse_name.Contains(Admin_Keyword) && user.Dept_name.Equals(AuthSearchDept.Dept_name));
+                                break;
+                            case "아이디":
+                                temp = Admin_users.Where(user => user.Nurse_no.ToString().Contains(Admin_Keyword) && user.Dept_name.Equals(AuthSearchDept.Dept_name));
+                                break;
+                        }
                     }
-                }
-                Admins_searched.Clear();
-            }// if
-            else // 키워드 없을 때
-            {
-                if (AuthSearchDept.Dept_name == "전체")
+                    Admins_searched.Clear();
+                }// if
+                else // 키워드 없을 때
                 {
-                    temp = Admin_users;
-                }
-                else
+                    if (AuthSearchDept.Dept_name == "전체")
+                    {
+                        temp = Admin_users;
+                    }
+                    else
+                    {
+                        temp = Admin_users.Where(user => user.Dept_name.Equals(AuthSearchDept.Dept_name));
+                    }
+
+                    Admins_searched.Clear();
+                }//else
+
+                foreach (var item in temp)
                 {
-                    temp = Admin_users.Where(user => user.Dept_name.Equals(AuthSearchDept.Dept_name));
+                    Admins_searched.Add(item);
                 }
-
-                Admins_searched.Clear();
-            }//else
-
-            foreach (var item in temp)
-            {
-                Admins_searched.Add(item);
             }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+            
         }//OnAdminKeywordChanged
 
         private ActionCommand deptChangedCommand;
@@ -432,8 +471,17 @@ namespace EasyProject.ViewModel
 
         private void SelectedDeptChanged()
         {
-            OnAdminKeywordChanged();
-            OnNormalKeywordChanged();
+            log.Info("SelectedDeptChanged() invoked.");
+            try
+            {
+                OnAdminKeywordChanged();
+                OnNormalKeywordChanged();
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+            
         }
     }//class
 
