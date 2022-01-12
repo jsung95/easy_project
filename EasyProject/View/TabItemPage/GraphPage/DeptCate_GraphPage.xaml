@@ -78,7 +78,7 @@
                             <!-- LabelFormatter="{Binding Formatter}" 바인딩-->
                         </lvc:CartesianChart.AxisY>
                         <lvc:CartesianChart.AxisX>
-                            <lvc:Axis Labels="{Binding BarLabels2}" Title="카테고리별" >
+                            <lvc:Axis Labels="{Binding BarLabels2}" Title="품목/종류별" >
                             </lvc:Axis>
                             <!--Labels="{Binding BarLabels}" 바인딩-->
                         </lvc:CartesianChart.AxisX>
