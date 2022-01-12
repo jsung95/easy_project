@@ -44,6 +44,7 @@ namespace EasyProject
 
         void MainWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)       //드래그 무브
         {
+            log.Info("MainWindow_MouseLeftButtonDown(object, SizeChangedEventArgs) invoked.");
             try
             {
                 this.DragMove();
@@ -51,11 +52,12 @@ namespace EasyProject
             catch (Exception ex)
             {
                 log.Error(ex.Message);
-            }     
-        }
+            }
+        }//MainWindow_MouseLeftButtonDown
 
         void Window1_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+            log.Info("Window1_SizeChanged(object, SizeChangedEventArgs) invoked.");
             try
             {
                 ChangeSize(e.NewSize.Width, e.NewSize.Height);
@@ -65,7 +67,7 @@ namespace EasyProject
                 log.Error(ex.Message);
             }
             
-        }
+        }//Window1_SizeChanged
 
         void Window1_Loaded(object sender, RoutedEventArgs e)
         {
