@@ -39,6 +39,12 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
             <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="IsReadOnly" Value="True"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding PSVM.IsToolTipChecked, Source={StaticResource Locator}}" Value="False">
+                    <Setter Property="IsReadOnly" Value="False"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
 
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -207,18 +213,12 @@
                             HorizontalAlignment="Left" Margin="10 0"
                             AllowDrop="False" PreviewKeyDown="DataGridKeyDown"
                             VerticalAlignment="Top" AutoGenerateColumns="False"
-                            IsReadOnly="True" ColumnWidth="*" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" SelectionUnit="FullRow" Cursor="Hand">
+                            ColumnWidth="*" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" SelectionUnit="FullRow">
 
-                        <DataGrid.RowStyle>
-                            <Style TargetType="DataGridRow">
-                                <Setter Property="Background" Value="white" />
-                                <Setter Property="Foreground" Value="Black" />
-                            </Style>
-                        </DataGrid.RowStyle>
                         
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="제품코드" Width="1.5*" CanUserSort="false" IsReadOnly="True">
-                                <DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn Header="제품코드" Width="1.5*" CanUserSort="false">
+                                    <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                             <TextBlock Text="{Binding Prod_code}" VerticalAlignment="Center" Margin="10 0"></TextBlock>
                                     </DataTemplate>
@@ -238,13 +238,13 @@
                                                 <Condition Binding="{Binding PSVM.IsToolTipChecked, Source={StaticResource Locator}}" Value="False"></Condition>
                                                     <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
                                                 </MultiDataTrigger.Conditions>
-                                                <Setter Property="IsEditing" Value="True"/>
-                                            </MultiDataTrigger>
+                                                    <Setter Property="IsEditing" Value="True"/>
+                                                </MultiDataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </DataGridTemplateColumn.CellStyle>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="제품명" Width="1.5*" CanUserSort="false" IsReadOnly="True">
+                            <DataGridTemplateColumn Header="제품명" Width="1.5*" CanUserSort="false">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Prod_name}" VerticalAlignment="Center" Margin="10 0"></TextBlock>
@@ -304,7 +304,7 @@
                                     </DataGridComboBoxColumn.ElementStyle>
                             </DataGridComboBoxColumn>
 
-                            <DataGridTemplateColumn CanUserSort="true" Header="제품가격" Width="1.8*"  IsReadOnly="True">
+                            <DataGridTemplateColumn CanUserSort="true" Header="제품가격" Width="1.8*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                             <TextBlock Text="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"></TextBlock>
@@ -330,7 +330,7 @@
                                     </Style>
                                 </DataGridTemplateColumn.CellStyle>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn CanUserSort="true" Header="수량" Width="1.5*" IsReadOnly="True">
+                            <DataGridTemplateColumn CanUserSort="true" Header="수량" Width="1.5*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                             <TextBlock Text="{Binding Imp_dept_count, StringFormat='{}{0:#,0} 개'}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"></TextBlock>

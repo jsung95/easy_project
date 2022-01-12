@@ -10,6 +10,27 @@
       DataContext="{Binding PSVM, Source={StaticResource Locator}}"
       Title="InsertPage_Category">
 
+    <Page.Resources>
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="VerticalGridLinesBrush" Value="#4472C4"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#4472C4"/>
+            <Setter Property="RowHeight" Value="32"/>
+            <Setter Property="RowHeaderWidth" Value="0"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="IsReadOnly" Value="false"></Setter>
+            <!--<Style.Triggers>
+                <DataTrigger Binding="{Binding PSVM.IsToolTipChecked, Source={StaticResource Locator}}" Value="False">
+                    <Setter Property="IsReadOnly" Value="False"></Setter>
+                </DataTrigger>
+            </Style.Triggers>-->
+        </Style>
+    </Page.Resources>
+
     <Grid Height="450">
         <materialDesign:Card Grid.Column="0" Margin ="10,10,10,10" UniformCornerRadius="20" Background="White">
             <Grid>
@@ -23,18 +44,42 @@
                             <materialDesign:PackIcon Kind="plus" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black"/>
                         </Button>
 
-                        <DataGrid x:Name="dataGrid1" Grid.Row="1" HorizontalAlignment="Left" Margin="10 10" Height="330"
+                        <DataGrid x:Name="dataGrid" Grid.Row="1" HorizontalAlignment="Left" Margin="10 10" Height="330"
                             AllowDrop="False" VerticalAlignment="Top" AutoGenerateColumns="False" SelectionMode="Extended"
-                            IsReadOnly="False" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedModifyCategory}" SelectionUnit="FullRow">
+                            ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedModifyCategory}" SelectionUnit="FullRow">
 
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="품목/종류명" Width="2*" Binding="{Binding Category_name}" CanUserSort="false" IsReadOnly="False">
+                                <DataGridTemplateColumn Header="품목/종류명" Width="2*" CanUserSort="false" IsReadOnly="False">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Category_name}" VerticalAlignment="Center" Margin="10 0"></TextBlock>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding PSVM.SelectedModifyCategory.Category_name, Source={StaticResource Locator}}"></TextBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
 
-                                </DataGridTextColumn>
+                                    <DataGridTemplateColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <!--<EventSetter Event="KeyDown" Handler="ProductTextKeyDown"/>-->
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="IsEditing" Value="True"/>
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGridTemplateColumn.CellStyle>
+                                </DataGridTemplateColumn>
+
                                 <DataGridTemplateColumn x:Name="buttonColumn" Width="*" IsReadOnly="True">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button x:Name="CategoryNameModifyBtn" Style="{StaticResource MaterialDesignIconForegroundButton}" Height="20" Width="20" Command="{Binding CategoryModifyCommand}">
+                                            <Button x:Name="CategoryNameModifyBtn" Style="{StaticResource MaterialDesignIconForegroundButton}" Height="20" Width="20" Command="{Binding PSVM.CategoryModifyCommand, Source={StaticResource Locator}}">
                                                 <materialDesign:PackIcon Kind="pencil" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="DarkGray"/>
                                             </Button>
                                         </DataTemplate>

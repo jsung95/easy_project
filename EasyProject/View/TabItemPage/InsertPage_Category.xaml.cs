@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EasyProject.Model;
+using log4net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,26 @@ namespace EasyProject.View.TabItemPage
     /// </summary>
     public partial class InsertPage_Category : Page
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
+
         public InsertPage_Category()
         {
             InitializeComponent();
+            CategoryAddBtn.Click += CategoryAddBtnClick;
+        }
+
+        private void CategoryAddBtnClick(object sender, RoutedEventArgs e)
+        {
+            log.Info("CategoryAddBtnClick(object, RoutedEventArgs) invoked.");
+            try
+            {
+                dataGrid.Items.Add(new CategoryModel());
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+
         }
     }
 }
