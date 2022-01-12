@@ -41,7 +41,7 @@
 
             </Grid>
             <Grid Grid.Row="2">
-                <lvc:CartesianChart x:Name="chart" BorderThickness="2" Series="{Binding SeriesCollection}" 
+                <lvc:CartesianChart x:Name="chart" BorderThickness="2" Series="{Binding SeriesCollection1}" 
                              LegendLocation="Top" Height="300" Width="400"  VerticalAlignment="Center" >
                     <!--Series="{Binding SeriesCollection}"-->
                     <lvc:CartesianChart.AxisY>
@@ -53,7 +53,7 @@
                         <!-- LabelFormatter="{Binding Formatter}" 바인딩-->
                     </lvc:CartesianChart.AxisY>
                     <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Labels="{Binding BarLabels}" Title="날짜" >
+                        <lvc:Axis Labels="{Binding BarLabels1}" Title="날짜" >
                         </lvc:Axis>
                         <!--Labels="{Binding BarLabels}" 바인딩-->
                     </lvc:CartesianChart.AxisX>

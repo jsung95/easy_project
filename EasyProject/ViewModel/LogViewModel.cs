@@ -58,7 +58,9 @@ namespace EasyProject.ViewModel
             SelectedStartDate_LogOut_Log = Convert.ToDateTime(log_dao.GetLoginLogs_Min_Date());
             SelectedEndDate_LogIn_Log = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 23, 59, 59);
 
-
+            //대시보드
+            TodayLoginPrint();
+            TodayLogoutPrint();
 
         }//LogViewModel()
 
@@ -497,7 +499,7 @@ namespace EasyProject.ViewModel
         public Func<double, string> Formatter { get; set; }
 
         //하루 로그인 횟수(7일 제한) 그래프
-        public void TodayLoginPrint(DeptModel selected)
+        public void TodayLoginPrint()
         {
             ChartValues<int> mount = new ChartValues<int>();   //y축들어갈 임시 값
             SeriesCollection = new SeriesCollection();   //대시보드 틀
@@ -519,7 +521,7 @@ namespace EasyProject.ViewModel
             BarLabels = new List<string>() { };                           //x축출력
             foreach (var item in list_xy)
             {
-                BarLabels1.Add(item.Today_Log_date);
+                BarLabels.Add(item.Today_Log_date);
             }
             Formatter = value => value.ToString("N0");   //문자열 10진수 변환
         }
@@ -539,7 +541,7 @@ namespace EasyProject.ViewModel
             }
             Values1 = new ChartValues<int> { };
 
-            SeriesCollection.Add(new ColumnSeries
+            SeriesCollection1.Add(new LineSeries
             {
                 Title = "총 수량",   //+ i
                 Values = mount,
