@@ -212,6 +212,7 @@
     <Compile Include="Util\PasswordHelper.cs" />
     <Compile Include="Util\SHA256Hash.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\LogViewModel.cs" />
     <Compile Include="ViewModel\NewProjectViewModel.cs" />
     <Compile Include="ViewModel\OrderViewModel.cs" />
     <Compile Include="ViewModel\PasswordChangeViewModel.cs" />
