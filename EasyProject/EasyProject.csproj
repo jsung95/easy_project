@@ -291,6 +291,15 @@
     <Compile Include="View\TabItemPage\InsertPage_Form.xaml.cs">
       <DependentUpon>InsertPage_Form.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TabItemPage\LogStatusList1Page.xaml.cs">
+      <DependentUpon>LogStatusList1Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TabItemPage\LogStatusList2Page.xaml.cs">
+      <DependentUpon>LogStatusList2Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TabItemPage\LogStatusPageBtn.xaml.cs">
+      <DependentUpon>LogStatusPageBtn.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TabItemPage\OrderPage.xaml.cs">
       <DependentUpon>OrderPage.xaml</DependentUpon>
     </Compile>
@@ -404,6 +413,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TabItemPage\InsertPage_Form.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabItemPage\LogStatusList1Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabItemPage\LogStatusList2Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabItemPage\LogStatusPageBtn.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
