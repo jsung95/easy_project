@@ -19,7 +19,7 @@
 
                 <Grid Margin="20,20,20,20" Background="#FFE5E5E5" AllowDrop="True">
                     <StackPanel Orientation="Vertical">
-                        <Button x:Name="CategoryNameModifyBtn2" HorizontalAlignment="Right" Margin="10 5" Style="{StaticResource MaterialDesignIconForegroundButton}" Height="20" Width="20" Command="{Binding CategoryModifyCommand}">
+                        <Button x:Name="CategoryAddBtn" HorizontalAlignment="Right" Margin="10 5" Style="{StaticResource MaterialDesignIconForegroundButton}" Height="20" Width="20" >
                             <materialDesign:PackIcon Kind="plus" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black"/>
                         </Button>
 

@@ -1888,6 +1888,9 @@ namespace EasyProject.ViewModel
             log.Info("EditCategory() invoked.");
             try
             {
+                Console.WriteLine(SelectedModifyCategory.Category_name+"바꾸려는 카테명 ");
+                category_dao.ChangeCategoryName(SelectedModifyCategory);
+
                 //product_dao.ChangeProductInfo(SelectedModifyCategory);
                 //product_dao.ChangeProductInfo_IMP_DEPT(SelectedProduct);
 
