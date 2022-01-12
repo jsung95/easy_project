@@ -91,9 +91,9 @@ namespace EasyProject.Dao
         }//GetProduct()
 
 
-        public bool IsProductDuplicateCheck(ProductModel product_dto)
+        public bool IsProductDuplicateCheck(ProductModel product_dto, int userDeptId)
         {
-            log.Info("IsProductDuplicateCheck(ProductModel) invoked.");
+            log.Info("IsProductDuplicateCheck(ProductModel product_dto, int userDeptId) invoked.");
 
             bool isDuplicated = false;
             try
@@ -108,13 +108,18 @@ namespace EasyProject.Dao
                     {
                         cmd.Connection = conn;
                         cmd.CommandText = "SELECT prod_code " +
-                                          "FROM PRODUCT " +
-                                          "WHERE prod_code = :prod_code " +
-                                          "AND prod_name = :prod_name " +
-                                          "AND category_id = :category_id " +
-                                          "AND prod_price = :prod_price " +
-                                          "AND prod_expire = TO_DATE(:expire, 'YYYYMMDD') ";
+                                          "FROM PRODUCT P " +
+                                          "INNER JOIN IMP_DEPT I " +
+                                          "ON P.prod_id = I.prod_id " +
+                                          "WHERE P.prod_code = :prod_code " +
+                                          "AND I.dept_id = :dept_id " +
+                                          "AND P.prod_name = :prod_name " +
+                                          "AND P.category_id = :category_id " +
+                                          "AND P.prod_price = :prod_price " +
+                                          "AND P.prod_expire = TO_DATE(:expire, 'YYYYMMDD') ";
+                        
                         cmd.Parameters.Add(new OracleParameter("prod_code", product_dto.Prod_code));
+                        cmd.Parameters.Add(new OracleParameter("dept_id", (Int32)userDeptId));
                         cmd.Parameters.Add(new OracleParameter("prod_name", product_dto.Prod_name));
                         cmd.Parameters.Add(new OracleParameter("category_id", product_dto.Category_id));
                         cmd.Parameters.Add(new OracleParameter("prod_price", product_dto.Prod_price));
@@ -139,9 +144,9 @@ namespace EasyProject.Dao
 
 
                         Console.WriteLine(product_dto.Prod_expire);
-                        Console.WriteLine(product_dto.Category_id + "카페고리id");
+                        Console.WriteLine(product_dto.Category_id + "카페고리idglglglglglglglglglglglg");
                         OracleDataReader reader = cmd.ExecuteReader();
-
+                        Console.WriteLine("readersize: " + reader.RowSize);
                         if (reader.Read() == false)
                         {
                             //없는 제품을 추가하려고 하는 경우(access)

@@ -184,7 +184,7 @@ namespace EasyProject.ViewModel
             }
             else
             {
-                ExcelReader();
+                //ExcelReader();
             }
         }
 
@@ -203,35 +203,41 @@ namespace EasyProject.ViewModel
                     string[] temp = s.Split(',');
 
                     var product = new ProductShowModel();
+                    var productModel = new ProductModel();
 
                     for (int cCnt = 0; cCnt <= 5; cCnt++)
                     {
-                        product = SetProductObjectForCsv(ref product, cCnt, temp[cCnt]);
-
-                        ProductModel productModel = new ProductModel();
-                        productModel.Prod_code = product.Prod_code;
-                        productModel.Prod_name = product.Prod_name;
-                        productModel.Category_id = categoryDao.GetCategoryID(product.Category_name);
-                        productModel.Prod_expire = product.Prod_expire;
-                        productModel.Prod_price = product.Prod_price;
-
-                        Console.WriteLine(product.Category_name + "////카테고리명////");
-
-
-                        if (!dao.IsProductDuplicateCheck(productModel))
+                        if(temp[cCnt] != null)
                         {
+                            product = SetProductObjectForCsv(ref product, cCnt, temp[cCnt]);
 
-                            Console.WriteLine("중복이 아니다. ");
 
-                        }//if
-                        else
-                        {
-                            IsDuplicatedProduct = true;
-                            Console.WriteLine("중복이다.");
-                            
-                            excelProductList = new List<ProductShowModel>();
-                        }//else
+                            Console.WriteLine(product.Category_name + "////카테고리명////");
+                        }
+                        
                     }//for
+
+
+                    productModel.Prod_code = product.Prod_code;
+                    productModel.Prod_name = product.Prod_name;
+                    productModel.Category_id = categoryDao.GetCategoryID(product.Category_name);
+                    productModel.Prod_expire = product.Prod_expire;
+                    productModel.Prod_price = product.Prod_price;
+
+
+                    if (!dao.IsProductDuplicateCheck(productModel, (int)App.nurse_dto.Dept_id))
+                    {
+
+                        Console.WriteLine("중복이 아니다. ");
+
+                    }//if
+                    else
+                    {
+                        IsDuplicatedProduct = true;
+                        Console.WriteLine("중복이다.");
+
+                        excelProductList = new List<ProductShowModel>();//reset
+                    }//else
 
                     if (!IsDuplicatedProduct)
                     {
@@ -251,7 +257,6 @@ namespace EasyProject.ViewModel
                     foreach (ProductShowModel elem in excelProductList)
                     {
                         IsDuplicatedProduct = false;
-                        MessageQueue.Enqueue("신규 재고가 추가되었습니다.", "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
 
                         //MessageBox.Show(product.Prod_code+".."+product.Prod_name+
                         //   ".." + product.Category_name+".."+product.Prod_expire
@@ -285,6 +290,9 @@ namespace EasyProject.ViewModel
                         var temp2 = Ioc.Default.GetService<ProductInOutViewModel>();
                         temp2.getInListByDept(); // 입고 목록 갱신
                     }//foreach
+
+                    IsInsertDialogHostOpen = false;
+                    MessageQueue.Enqueue("신규 재고가 추가되었습니다.", "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                 }//if
 
             }//try
@@ -334,7 +342,7 @@ namespace EasyProject.ViewModel
                         productModel.Prod_expire = product.Prod_expire;
                         productModel.Prod_price = product.Prod_price;
 
-                        if (!dao.IsProductDuplicateCheck(productModel))
+                        if (!dao.IsProductDuplicateCheck(productModel, (int)App.nurse_dto.Dept_id))
                         {
                             
                             Console.WriteLine("중복이 아니다. ");

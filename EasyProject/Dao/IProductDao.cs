@@ -78,7 +78,7 @@ namespace EasyProject.Dao
         void ChangeProductInfo_ForIn(ProductShowModel prod_dto);
 
         //제품 중복검사
-        bool IsProductDuplicateCheck(ProductModel product_dto);
+        bool IsProductDuplicateCheck(ProductModel product_dto, int userDeptId);
         bool IsProductDuplicateCheck(ProductModel product_dto, CategoryModel category_dto); //오버로딩
         bool IsProductDuplicateCheck(ProductModel product_dto, string category_name); //오버로딩
 
