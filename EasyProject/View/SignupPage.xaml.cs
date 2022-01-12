@@ -120,9 +120,9 @@ namespace EasyProject
             {
                 log.Error(ex.Message);
             }
-           
 
-        }
+
+        }//signUpBtn_Click
 
         private void id_TxtBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -136,10 +136,11 @@ namespace EasyProject
             {
                 log.Error(ex.Message);
             }
-           
-        }
+
+        }//id_TxtBox_PreviewTextInput
         private void SignUpDialog_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
         {
             throw new NotImplementedException();
-        }    }
+        }
+    }//SignUpDialog_DialogClosing
 }

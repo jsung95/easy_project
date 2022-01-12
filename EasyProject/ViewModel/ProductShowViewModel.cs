@@ -680,41 +680,50 @@ namespace EasyProject.ViewModel
 
         public void InProduct() // 팝업박스 - 추가입고
         {
-            Console.WriteLine("InProduct() 실행!");
-            if (SelectedProduct.InputInCount == null)
+            log.Info("InProduct() invoked.");
+            try
             {
-                MessageQueue.Enqueue("제품 추가 입고 수량을 제대로 입력해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                IsInOutEnabled = true;
+                //Console.WriteLine("InProduct() 실행!");
+                if (SelectedProduct.InputInCount == null)
+                {
+                    MessageQueue.Enqueue("제품 추가 입고 수량을 제대로 입력해주세요.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                    IsInOutEnabled = true;
+                }
+                else if (SelectedProduct.InputInCount <= 0)
+                {
+                    MessageQueue.Enqueue("제품 추가 입고 수량은 0보다 커야합니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                    IsInOutEnabled = true;
+                }
+                else // 수량 추가 성공
+                {
+                    product_dao.InProduct(SelectedProduct, Nurse);
+                    product_dao.ChangeProductInfo_IMP_DEPT_ForIn(SelectedProduct);
+                    product_dao.ChangeProductInfo_ForIn(SelectedProduct);
+                    MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputInCount}개 추가 입고하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
+                    IsInOutEnabled = true;
+
+                    LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+
+                    updateSearchedProducts(false);
+                    UpdateRecordCount();
+                    var temp = Ioc.Default.GetService<ProductInOutViewModel>();
+                    temp.getOutListByDept(); // 입출고현황 페이지 출고목록 갱신
+                    temp.getInListByDept(); // 입출고현황 페이지 출고목록 갱신
+                }
+
+                if (SelectedProduct != null)
+                {
+                    SelectedProduct.InputInCount = null;
+                }
+
+                DashboardPrint2(selectedDept);          //입고변경에 따른 그래프적용(다시 그려줌);
             }
-            else if (SelectedProduct.InputInCount <= 0)
+            catch(Exception ex)
             {
-                MessageQueue.Enqueue("제품 추가 입고 수량은 0보다 커야합니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                IsInOutEnabled = true;
+                log.Error(ex.Message);
             }
-            else // 수량 추가 성공
-            {
-                product_dao.InProduct(SelectedProduct, Nurse);
-                product_dao.ChangeProductInfo_IMP_DEPT_ForIn(SelectedProduct);
-                product_dao.ChangeProductInfo_ForIn(SelectedProduct);
-                MessageQueue.Enqueue($"{SelectedProduct.Prod_name}을(를) {SelectedProduct.InputInCount}개 추가 입고하였습니다.", "닫기", (x) => { IsEmptyProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-
-                IsInOutEnabled = true;
-
-                LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
-
-                updateSearchedProducts(false);
-                UpdateRecordCount();
-                var temp = Ioc.Default.GetService<ProductInOutViewModel>();
-                temp.getOutListByDept(); // 입출고현황 페이지 출고목록 갱신
-                temp.getInListByDept(); // 입출고현황 페이지 출고목록 갱신
-            }
-
-            if (SelectedProduct != null)
-            {
-                SelectedProduct.InputInCount = null;
-            }
-
-            DashboardPrint2(selectedDept);
+            
         }//InProduct
 
         private ActionCommand inProductReset;
@@ -732,8 +741,18 @@ namespace EasyProject.ViewModel
 
         public void InProductFormReset()
         {
-            SelectedProduct.InputInCount = null;
-        }
+            log.Info("InProductFormReset() invoked.");
+            try
+            {
+                SelectedProduct.InputInCount = null;
+            }
+
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+
+        }//InProductFormReset
         #endregion
 
         #region 제품수정
@@ -752,31 +771,40 @@ namespace EasyProject.ViewModel
 
         public void EditProduct()
         {
-            product_dao.ChangeProductInfo(SelectedProduct);
-            product_dao.ChangeProductInfo_IMP_DEPT(SelectedProduct);
-            //ObservableCollection<CategoryModel> list = new ObservableCollection<CategoryModel>(category_dao.GetCategories());
-            //Categories.Clear();
-            //foreach (var item in list)
-            //{
-            //    Categories.Add(item);
-            //}
+            log.Info("EditProduct() invoked.");
+            try
+            {
+                product_dao.ChangeProductInfo(SelectedProduct);
+                product_dao.ChangeProductInfo_IMP_DEPT(SelectedProduct);
+                //ObservableCollection<CategoryModel> list = new ObservableCollection<CategoryModel>(category_dao.GetCategories());
+                //Categories.Clear();
+                //foreach (var item in list)
+                //{
+                //    Categories.Add(item);
+                //}
 
-            //CategoryModel newCategoryDao = new CategoryModel();
-            //var cateGoryId = category_dao.GetCategoryID(SelectedProduct.Category_name);
-            //newCategoryDao.Category_id = cateGoryId;
-            //newCategoryDao.Category_name = SelectedProduct.Category_name;
-            //Categories.Insert(0,newCategoryDao);
+                //CategoryModel newCategoryDao = new CategoryModel();
+                //var cateGoryId = category_dao.GetCategoryID(SelectedProduct.Category_name);
+                //newCategoryDao.Category_id = cateGoryId;
+                //newCategoryDao.Category_name = SelectedProduct.Category_name;
+                //Categories.Insert(0,newCategoryDao);
 
-            //첫페이지 말고 다음 페이지에서 재고수정할때 성공은 되는데 첫페이지로 돌아감 해결하기
-            LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+                //첫페이지 말고 다음 페이지에서 재고수정할때 성공은 되는데 첫페이지로 돌아감 해결하기
+                LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
 
-            updateSearchedProducts(false);
-            UpdateRecordCount();
+                updateSearchedProducts(false);
+                UpdateRecordCount();
 
-            DashboardPrint2(selectedDept);
+                DashboardPrint2(selectedDept);
 
-            //DialogHost.ShowDialog(null);
-        }
+                //DialogHost.ShowDialog(null);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+
+        }//EditProduct
         #endregion
 
         #region  Snackbar
@@ -843,9 +871,18 @@ namespace EasyProject.ViewModel
 
         private void CloseSnackBar()
         {
-            //IsEmptyProduct = false;
-            IsInOutEnabled = false;
-        }
+            log.Info("CloseSnackBar() invoked.");
+            try
+            {
+                //IsEmptyProduct = false;
+                IsInOutEnabled = false;
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+
+        }//CloseSnackBar
 
         //============================================================
         //============================================================
@@ -971,57 +1008,74 @@ namespace EasyProject.ViewModel
         }
         public void searchKeywordChanged()
         {
-            updateSearchedProducts(true);
-        }
+            log.Info("searchKeywordChanged() invoked.");
+            try
+            {
+                updateSearchedProducts(true);
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+
+        }//searchKeywordChanged
         public void updateSearchedProducts(bool isNotUpdated)
        {
-            
-            //LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.SearchProducts(SelectedDept, SelectedSearchType, TextForSearch));
-            //UpdateCollection(LstOfRecords.Take(SelectedRecord));
-            //UpdateRecordCount();
-
-            Console.WriteLine("updateSearchedProducts() 검색어 : " + TextForSearch);
-            if(isNotUpdated)
+            log.Info("updateSearchedProducts(bool) invoked.");
+            try
             {
-                CurrentPage = 1; // 재고 수정/입고/출고등이 일어나지 않은 단순 검색어 변경일 경우 검색할 때마다 1페이지로 이동
+                //LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.SearchProducts(SelectedDept, SelectedSearchType, TextForSearch));
+                //UpdateCollection(LstOfRecords.Take(SelectedRecord));
+                //UpdateRecordCount();
+
+                Console.WriteLine("updateSearchedProducts() 검색어 : " + TextForSearch);
+                if (isNotUpdated)
+                {
+                    CurrentPage = 1; // 재고 수정/입고/출고등이 일어나지 않은 단순 검색어 변경일 경우 검색할 때마다 1페이지로 이동
+                }
+
+                if (TextForSearch != null) // 키워드 있을 때
+                {
+                    if (SelectedSearchType == "제품명")
+                    {
+                        searchedProducts = LstOfRecords.Where(model => model.Prod_name.Contains(TextForSearch) || model.Prod_name.Contains(TextForSearch.ToUpper()) || model.Prod_name.Contains(TextForSearch.ToLower()));
+                        Console.WriteLine("제품명 : " + searchedProducts.Count() + TextForSearch.ToUpper());
+
+                        UpdateRecordCount();
+
+                    }
+                    else if (SelectedSearchType == "제품코드")
+                    {
+                        searchedProducts = LstOfRecords.Where(model => model.Prod_code.Contains(TextForSearch) || model.Prod_code.Contains(TextForSearch.ToUpper()) || model.Prod_code.Contains(TextForSearch.ToLower()));
+                        Console.WriteLine("제품코드 : " + searchedProducts.Count());
+
+                        UpdateRecordCount();
+                    }
+                    else // 품목/종류
+                    {
+                        searchedProducts = LstOfRecords.Where(model => model.Category_name.Contains(TextForSearch) || model.Category_name.Contains(TextForSearch.ToUpper()) || model.Category_name.Contains(TextForSearch.ToLower()));
+                        Console.WriteLine("품목/종류 : " + searchedProducts.Count());
+
+                        UpdateRecordCount();
+                    }
+
+                }//if
+                else // 키워드 없을 때
+                {
+                    searchedProducts = LstOfRecords;
+                    Console.WriteLine("검색어없음: " + searchedProducts.Count());
+
+                    UpdateRecordCount();
+
+                }//else
             }
-            
-            if (TextForSearch != null) // 키워드 있을 때
+            catch(Exception ex)
             {
-                if (SelectedSearchType == "제품명")
-                {
-                    searchedProducts = LstOfRecords.Where(model => model.Prod_name.Contains(TextForSearch) || model.Prod_name.Contains(TextForSearch.ToUpper()) || model.Prod_name.Contains(TextForSearch.ToLower()));
-                    Console.WriteLine("제품명 : " + searchedProducts.Count() + TextForSearch.ToUpper());
+                log.Error(ex.Message);
+            }
 
-                    UpdateRecordCount();
 
-                }
-                else if (SelectedSearchType == "제품코드")
-                {
-                    searchedProducts = LstOfRecords.Where(model => model.Prod_code.Contains(TextForSearch) || model.Prod_code.Contains(TextForSearch.ToUpper()) || model.Prod_code.Contains(TextForSearch.ToLower()));
-                    Console.WriteLine("제품코드 : " + searchedProducts.Count());
-
-                    UpdateRecordCount();
-                }
-                else // 품목/종류
-                {
-                    searchedProducts = LstOfRecords.Where(model => model.Category_name.Contains(TextForSearch) || model.Category_name.Contains(TextForSearch.ToUpper()) || model.Category_name.Contains(TextForSearch.ToLower()));
-                    Console.WriteLine("품목/종류 : " +  searchedProducts.Count());
-
-                    UpdateRecordCount();
-                }
-
-            }//if
-            else // 키워드 없을 때
-            {
-                searchedProducts = LstOfRecords;
-                Console.WriteLine("검색어없음: " + searchedProducts.Count());
-
-                UpdateRecordCount();
-
-            }//else
-
-        }
+        }//updateSearchedProducts
 
 
         #endregion
@@ -1087,73 +1141,130 @@ namespace EasyProject.ViewModel
         public ObservableCollection<ProductShowModel> LstOfRecords { get; set; }
         public void getListbyDept()
         {
-            //LoadEmployee();
-            //LstOfRecords.Add(empDetails);
+            log.Info("getListbyDept() invoked.");
+            try
+            {
+                //LoadEmployee();
+                //LstOfRecords.Add(empDetails);
 
-            LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
-            updateSearchedProducts(true);
-            UpdateRecordCount();
-            //searchKeywordChanged();
-            //RecordStartFrom = (CurrentPage - 1) * SelectedRecord;
-            //var recordsToShow = LstOfRecords.Skip(RecordStartFrom).Take(SelectedRecord);
+                LstOfRecords = new ObservableCollection<ProductShowModel>(product_dao.GetProductsByDept(SelectedDept));
+                updateSearchedProducts(true);
+                UpdateRecordCount();
+                //searchKeywordChanged();
+                //RecordStartFrom = (CurrentPage - 1) * SelectedRecord;
+                //var recordsToShow = LstOfRecords.Skip(RecordStartFrom).Take(SelectedRecord);
 
-            //UpdateCollection(recordsToShow); // SelectedRecord만큼 잘라서 UpdateCollection에 넣음
-            //UpdateRecordCount();
-        }
+                //UpdateCollection(recordsToShow); // SelectedRecord만큼 잘라서 UpdateCollection에 넣음
+                //UpdateRecordCount();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+
+        }//getListbyDept
 
         int RecordStartFrom = 0;
         private void PreviousPage(object obj)
         {
-            CurrentPage--;
-            //RecordStartFrom = searchedProducts.Count() - SelectedRecord * (NumberOfPages - (CurrentPage - 1));
-            RecordStartFrom = (CurrentPage - 1) * SelectedRecord;
-            var recorsToShow = searchedProducts.Skip(RecordStartFrom).Take(SelectedRecord);
-            UpdateCollection(recorsToShow);
-            UpdateEnableState();
+            log.Info("PreviousPage(object) invoked.");
+            try
+            {
+                CurrentPage--;
+                //RecordStartFrom = searchedProducts.Count() - SelectedRecord * (NumberOfPages - (CurrentPage - 1));
+                RecordStartFrom = (CurrentPage - 1) * SelectedRecord;
+                var recorsToShow = searchedProducts.Skip(RecordStartFrom).Take(SelectedRecord);
+                UpdateCollection(recorsToShow);
+                UpdateEnableState();
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
 
-        }
+        }//PreviousPage
+
         private void LastPage(object obj)
         {
-            //30 1->20, 2->10
-            //last page - 21 -30
-            //11-30=>30-20=10 -> 11-30
+            log.Info("LastPage(object) invoked.");
+            try
+            {
+                //30 1->20, 2->10
+                //last page - 21 -30
+                //11-30=>30-20=10 -> 11-30
 
-            //fix
-            //20*(2-1)=20
-            //skip = 20
-            var recordsToskip = SelectedRecord * (NumberOfPages - 1);
-            UpdateCollection(searchedProducts.Skip(recordsToskip));
-            CurrentPage = NumberOfPages;
-            //MessageBox.Show(CurrentPage + "페이지");
-            UpdateEnableState();
-        }
+                //fix
+                //20*(2-1)=20
+                //skip = 20
+                var recordsToskip = SelectedRecord * (NumberOfPages - 1);
+                UpdateCollection(searchedProducts.Skip(recordsToskip));
+                CurrentPage = NumberOfPages;
+                //MessageBox.Show(CurrentPage + "페이지");
+                UpdateEnableState();
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+
+        }//LastPage
+
         private void FirstPage(object obj)
         {
-            UpdateCollection(searchedProducts.Take(SelectedRecord));
-            CurrentPage = 1;
-            UpdateEnableState();
-        }
+            log.Info("FirstPage(object) invoked.");
+            try
+            {
+                UpdateCollection(searchedProducts.Take(SelectedRecord));
+                CurrentPage = 1;
+                UpdateEnableState();
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+
+        }//FirstPage
+
         private void NextPage(object obj)
         {
-            RecordStartFrom = CurrentPage * SelectedRecord;
-            var recordsToShow = searchedProducts.Skip(RecordStartFrom).Take(SelectedRecord);
-            UpdateCollection(recordsToShow);
-            CurrentPage++;
-            UpdateEnableState();
-        }
+            log.Info("NextPage(object) invoked.");
+            try
+            {
+                RecordStartFrom = CurrentPage * SelectedRecord;
+                var recordsToShow = searchedProducts.Skip(RecordStartFrom).Take(SelectedRecord);
+                UpdateCollection(recordsToShow);
+                CurrentPage++;
+                UpdateEnableState();
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+           
+        }//NextPage
 
         private void UpdateCollection(IEnumerable<ProductShowModel> enumerable)
         {
-            if (Products != null)
+            log.Info("UpdateCollection(IEnumerable<ProductShowModel>) invoked.");
+            try
             {
-                Products.Clear();
+                if (Products != null)
+                {
+                    Products.Clear();
+                }
+
+                foreach (var item in enumerable)
+                {
+                    Products.Add(item);
+                }
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
             }
 
-            foreach (var item in enumerable)
-            {
-                Products.Add(item);
-            }
-        }
+        }//UpdateCollection
+
         private int _currentPage = 1;
 
         public int CurrentPage
@@ -1168,11 +1279,20 @@ namespace EasyProject.ViewModel
         }
         private void UpdateEnableState()
         {
-            IsFirstEnabled = CurrentPage > 1;
-            IsPreviousEnabled = CurrentPage > 1;
-            IsNextEnabled = CurrentPage < NumberOfPages;
-            IsLastEnabled = CurrentPage < NumberOfPages;
-        }
+            log.Info("UpdateEnableState() invoked.");
+            try
+            {
+                IsFirstEnabled = CurrentPage > 1;
+                IsPreviousEnabled = CurrentPage > 1;
+                IsNextEnabled = CurrentPage < NumberOfPages;
+                IsLastEnabled = CurrentPage < NumberOfPages;
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+
+        }//UpdateEnableState
 
         private int _numberOfPages = 10;
 
@@ -1247,15 +1367,24 @@ namespace EasyProject.ViewModel
         }
         private void UpdateRecordCount()
         {
-            NumberOfPages = (int)Math.Ceiling((double)searchedProducts.Count() / SelectedRecord);
-            NumberOfPages = NumberOfPages == 0 ? 1 : NumberOfPages;
+            log.Info("UpdateRecordCount() invoked.");
+            try
+            {
+                NumberOfPages = (int)Math.Ceiling((double)searchedProducts.Count() / SelectedRecord);
+                NumberOfPages = NumberOfPages == 0 ? 1 : NumberOfPages;
 
-            RecordStartFrom = (CurrentPage - 1) * SelectedRecord;
-            var recordsToShow = searchedProducts.Skip(RecordStartFrom).Take(SelectedRecord);
+                RecordStartFrom = (CurrentPage - 1) * SelectedRecord;
+                var recordsToShow = searchedProducts.Skip(RecordStartFrom).Take(SelectedRecord);
 
-            UpdateCollection(recordsToShow);
-            //CurrentPage = 1;
-        }
+                UpdateCollection(recordsToShow);
+                //CurrentPage = 1;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+
+        }//UpdateRecordCount
         #endregion
 
         #region Pagination (현재미사용)
@@ -1645,11 +1774,7 @@ namespace EasyProject.ViewModel
             {
                 List<ProductInOutModel> list = product_dao.GetDiscardTotalCount(SelectedDept_Pie, SelectedOutType_Pie);
 
-
-
-
                 SeriesCollection_Pie = new SeriesCollection();
-
 
                 foreach (var item in list)
                 {
