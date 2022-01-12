@@ -1,10 +1,15 @@
-﻿using System.Windows;
+﻿using log4net;
+using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace EasyProject.Util
 {
     public static class PasswordHelper
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
+
+
         public static readonly DependencyProperty PasswordProperty = DependencyProperty.RegisterAttached("Password", typeof(string), typeof(PasswordHelper), new FrameworkPropertyMetadata(string.Empty, OnPasswordPropertyChanged));
 
         public static readonly DependencyProperty AttachProperty = DependencyProperty.RegisterAttached("Attach", typeof(bool), typeof(PasswordHelper), new PropertyMetadata(false, Attach));
@@ -28,55 +33,114 @@ namespace EasyProject.Util
 
         public static void SetPassword(DependencyObject dp, string value)
         {
-            dp.SetValue(PasswordProperty, value);
-        }
+            log.Info("SetPassword(DependencyObject, string) invoked.");
+
+            try
+            {
+                dp.SetValue(PasswordProperty, value);
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }//catch
+        }//SetPassword
 
         private static bool GetIsUpdating(DependencyObject dp)
         {
-            return (bool)dp.GetValue(IsUpdatingProperty);
-        }
+            log.Info("GetIsUpdating(DependencyObject) invoked.");
+
+            try
+            {
+                return (bool)dp.GetValue(IsUpdatingProperty);
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return (bool)dp.GetValue(IsUpdatingProperty);
+            }//catch
+        }//GetIsUpdating
 
         private static void SetIsUpdating(DependencyObject dp, bool value)
         {
-            dp.SetValue(IsUpdatingProperty, value);
-        }
+            log.Info("SetIsUpdating(DependencyObject, bool) invoked.");
+
+            try
+            {
+                dp.SetValue(IsUpdatingProperty, value);
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }//catch
+
+        }//SetIsUpdating
 
         private static void OnPasswordPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            PasswordBox passwordBox = sender as PasswordBox;
-            passwordBox.PasswordChanged -= PasswordChanged;
+            log.Info("OnPasswordPropertyChanged(DependencyObject, DependencyPropertyChangedEventArgs) invoked.");
 
-            if (!(bool)GetIsUpdating(passwordBox))
+            try
             {
-                passwordBox.Password = (string)e.NewValue;
-            }
-            passwordBox.PasswordChanged += PasswordChanged;
-        }
+                PasswordBox passwordBox = sender as PasswordBox;
+                passwordBox.PasswordChanged -= PasswordChanged;
+
+                if (!(bool)GetIsUpdating(passwordBox))
+                {
+                    passwordBox.Password = (string)e.NewValue;
+                }
+                passwordBox.PasswordChanged += PasswordChanged;
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }//catch
+
+        }//OnPasswordPropertyChanged
 
         private static void Attach(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            PasswordBox passwordBox = sender as PasswordBox;
+            log.Info("Attach(DependencyObject, DependencyPropertyChangedEventArgs) invoked.");
 
-            if (passwordBox == null)
-                return;
-
-            if ((bool)e.OldValue)
+            try
             {
-                passwordBox.PasswordChanged -= PasswordChanged;
-            }
+                PasswordBox passwordBox = sender as PasswordBox;
 
-            if ((bool)e.NewValue)
+                if (passwordBox == null)
+                    return;
+
+                if ((bool)e.OldValue)
+                {
+                    passwordBox.PasswordChanged -= PasswordChanged;
+                }
+
+                if ((bool)e.NewValue)
+                {
+                    passwordBox.PasswordChanged += PasswordChanged;
+                }
+            }//try
+            catch (Exception ex)
             {
-                passwordBox.PasswordChanged += PasswordChanged;
-            }
-        }
+                log.Error(ex.Message);
+            }//catch
+
+        }//Attach
 
         private static void PasswordChanged(object sender, RoutedEventArgs e)
         {
-            PasswordBox passwordBox = sender as PasswordBox;
-            SetIsUpdating(passwordBox, true);
-            SetPassword(passwordBox, passwordBox.Password);
-            SetIsUpdating(passwordBox, false);
-        }
-    }
-}
+            log.Info("PasswordChanged(object, RoutedEventArgs) invoked.");
+
+            try
+            {
+                PasswordBox passwordBox = sender as PasswordBox;
+                SetIsUpdating(passwordBox, true);
+                SetPassword(passwordBox, passwordBox.Password);
+                SetIsUpdating(passwordBox, false);
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }//catch
+
+        }//PasswordChanged
+    }//class
+}//namespace
