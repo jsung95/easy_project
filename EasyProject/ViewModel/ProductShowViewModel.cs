@@ -1881,7 +1881,7 @@ namespace EasyProject.ViewModel
                 }
                 return categoryModifyCommand;
             }//get
-        }//OutProductCommand
+        }//CategoryModifyCommand
 
         private void EditCategory()
         {

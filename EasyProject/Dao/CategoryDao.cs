@@ -32,7 +32,7 @@ namespace EasyProject.Dao
                     using (cmd)
                     {
                         cmd.Connection = conn;
-                        cmd.CommandText = "SELECT category_name FROM CATEGORY ORDER BY category_id";
+                        cmd.CommandText = "SELECT category_name, category_id FROM CATEGORY ORDER BY category_id";
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
@@ -40,7 +40,8 @@ namespace EasyProject.Dao
                         {
                             CategoryModel dto = new CategoryModel()
                             {
-                                Category_name = reader.GetString(0)
+                                Category_name = reader.GetString(0),
+                                Category_id = reader.GetInt32(1)
                             };
 
                             list.Add(dto);
