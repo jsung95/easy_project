@@ -29,11 +29,11 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0"/>
                 <Grid Grid.Column="1">
-                    <Label Content="일별 로그아웃 횟수" FontSize="15" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,0,0"></Label>
+                    <Label Content="주간 로그아웃 횟수" FontSize="15" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,0,0"></Label>
                 </Grid>
                 <Grid Grid.Column="2">
                     <Button x:Name="RightBtn"  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
-                        VerticalAlignment="Bottom"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Background="{x:Null}"  >
+                        VerticalAlignment="Bottom"  BorderThickness="0" Height="23" Width="51" Cursor="Hand" Background="{x:Null}" Click="RightBtn_Click"  >
                         <materialDesign:PackIcon  Kind="ArrowLeft" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="26" />
                     </Button>
                 </Grid>

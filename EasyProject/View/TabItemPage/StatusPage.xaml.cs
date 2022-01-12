@@ -18,6 +18,10 @@ using System.Globalization;
 using log4net;
 using System.Windows.Input;
 using MaterialDesignThemes.Wpf;
+using System.Text;
+using System.IO;
+using Excel = Microsoft.Office.Interop.Excel;
+
 
 namespace EasyProject.View.TabItemPage
 {
@@ -32,6 +36,7 @@ namespace EasyProject.View.TabItemPage
         public bool isComboBoxDropDownOpened = false;
 
         public string categoryComboBoxFirstSelected = null;
+        public String userDept00 = null;
 
         public StatusPage()
         {
@@ -39,9 +44,128 @@ namespace EasyProject.View.TabItemPage
             InitializeComponent();
             //dept_Label.Visibility = Visibility.Hidden;
             //Dept_comboBox.Visibility = Visibility.Hidden;
-
+            
+            export_btn.Click += Export_btn_Click;
+            export_btn2.Click += Export_btn2_Click;
             this.Loaded += MainWindow_Loaded;
 
+        }
+
+        private void Export_btn_Click(object sender, RoutedEventArgs e)
+        {
+            log.Info("Export_btn_Click(object, RoutedEventArgs) invoked.");
+            try
+            {
+                var temp = Ioc.Default.GetService<ProductShowViewModel>();
+                userDept00 = temp.SelectedDept.Dept_name;
+
+                var datas = temp.Products;
+                userDept00 = temp.SelectedDept.Dept_name;
+                string result = "제품코드, 제품명, 품목/종류, 제품가격, 수량, 유통기한\n";
+                foreach (var data in datas)
+                {
+                    result = result + data.Prod_code + ", " + data.Prod_name + ", " + data.Category_name + ", " + data.Prod_price + ", " + data.Imp_dept_count + ", " + data.Prod_expire + "\n"; // data.Prod_expire.ToString("yyyy-MM-dd")
+
+                }
+                //Clipboard.Clear();
+
+                // DateTime now = DateTime.Now;
+                string today = String.Format(DateTime.Now.ToString("yyyy/MM/dd_HHmmss"));
+
+                //Console.WriteLine(result);
+                string f_path = @"c:\temp\[" + userDept00 + "]" + "재고현황_" + today + ".csv";
+                File.AppendAllText(f_path, result, UnicodeEncoding.UTF8);
+
+                // Get the Excel application object.
+                Excel.Application excel_app = new Excel.Application();
+
+                // Make Excel visible (optional).
+                excel_app.Visible = true;
+
+                // Open the file.
+                excel_app.Workbooks.Open(
+                    f_path,               // Filename
+                    Type.Missing,
+                    Type.Missing,
+
+                       Excel.XlFileFormat.xlCSV,   // Format
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+
+                       ",",          // Delimiter
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing
+                );
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                //로그 Level : error
+            }
+        }
+
+        private void Export_btn2_Click(object sender, RoutedEventArgs e)
+        {
+            log.Info(" Export_btn2_Click(object, RoutedEventArgs) invoked.");
+            try
+            {
+
+                var temp = Ioc.Default.GetService<ProductShowViewModel>();
+                var datas = temp.LstOfRecords;
+                userDept00 = temp.SelectedDept.Dept_name;
+                string result = "제품코드, 제품명, 품목/종류, 제품가격, 수량, 유통기한\n";
+                foreach (var data in datas) 
+                {
+                    result = result + data.Prod_code + ", " + data.Prod_name + ", " + data.Category_name + ", " + data.Prod_price + ", " + data.Imp_dept_count + ", " + data.Prod_expire + "\n"; // data.Prod_expire.ToString("yyyy-MM-dd")
+
+                }
+                //Clipboard.Clear();
+
+                // DateTime now = DateTime.Now;
+                string today = String.Format(DateTime.Now.ToString("yyyy/MM/dd_HHmmss"));
+
+                //Console.WriteLine(result);
+                string f_path = @"c:\temp\[" + userDept00 + "]" + "재고현황_" + today + ".csv";
+                File.AppendAllText(f_path, result, UnicodeEncoding.UTF8);
+
+                // Get the Excel application object.
+                Excel.Application excel_app = new Excel.Application();
+
+                // Make Excel visible (optional).
+                excel_app.Visible = true;
+
+                // Open the file.
+                excel_app.Workbooks.Open(
+                    f_path,               // Filename
+                    Type.Missing,
+                    Type.Missing,
+
+                       Excel.XlFileFormat.xlCSV,   // Format
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+
+                       ",",          // Delimiter
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing
+                );
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                //로그 Level : error
+            }
         }
 
         public static T FindChild<T>(DependencyObject parent, string childName)

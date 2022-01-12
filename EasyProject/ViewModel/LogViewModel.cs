@@ -477,17 +477,7 @@ namespace EasyProject.ViewModel
                 OnPropertyChanged("SeriesCollection1");
             }
         }
-        // 로그 레벨 그래프
-        private SeriesCollection seriesCollection2;
-        public SeriesCollection SeriesCollection2               //그래프 큰 틀 만드는거
-        {
-            get { return seriesCollection2; }
-            set
-            {
-                seriesCollection2 = value;
-                OnPropertyChanged("SeriesCollection2");
-            }
-        }
+        
 
         // 대시보드 프로퍼티
         public ChartValues<int> Values { get; set; }
@@ -501,57 +491,75 @@ namespace EasyProject.ViewModel
         //하루 로그인 횟수(7일 제한) 그래프
         public void TodayLoginPrint()
         {
-            ChartValues<int> mount = new ChartValues<int>();   //y축들어갈 임시 값
-            SeriesCollection = new SeriesCollection();   //대시보드 틀
-                                                         //Console.WriteLine(selected.Dept_id); 
-            List<LogModel> list_xy = log_dao.Logintotal();
-
-
-            foreach (var item in list_xy)
+            log.Info("TodayLoginPrint() invoked.");
+            try
             {
-                mount.Add((int)item.Log_total);
+                ChartValues<int> mount = new ChartValues<int>();   //y축들어갈 임시 값
+                SeriesCollection = new SeriesCollection();   //대시보드 틀
+                                                             //Console.WriteLine(selected.Dept_id); 
+                List<LogModel> list_xy = log_dao.Logintotal();
+
+
+                foreach (var item in list_xy)
+                {
+                    mount.Add((int)item.Log_total);
+                }
+                Values = new ChartValues<int> { };
+
+                SeriesCollection.Add(new LineSeries
+                {
+                    Title = "로그인 횟수",   //+ i
+                    Values = mount,
+                });
+                BarLabels = new List<string>() { };                           //x축출력
+                foreach (var item in list_xy)
+                {
+                    BarLabels.Add(item.Today_Log_date);
+                }
+                Formatter = value => value.ToString("N0");   //문자열 10진수 변환
             }
-            Values = new ChartValues<int> { };
-
-            SeriesCollection.Add(new LineSeries
+            catch(Exception ex)
             {
-                Title = "로그인 횟수",   //+ i
-                Values = mount,
-            });
-            BarLabels = new List<string>() { };                           //x축출력
-            foreach (var item in list_xy)
-            {
-                BarLabels.Add(item.Today_Log_date);
+                log.Error(ex.Message);
             }
-            Formatter = value => value.ToString("N0");   //문자열 10진수 변환
+            
         }
 
         //하루 로그아웃 횟수(7일 제한) 그래프
         public void TodayLogoutPrint()
         {
-            ChartValues<int> mount = new ChartValues<int>();   //y축들어갈 임시 값
-            SeriesCollection1 = new SeriesCollection();   //대시보드 틀
-                                                          //Console.WriteLine(selected.Dept_id); 
-            List<LogModel> list_xy = log_dao.Logouttotal();
-
-
-            foreach (var item in list_xy)
+            log.Info("TodayLogoutPrint() invoked.");
+            try
             {
-                mount.Add((int)item.Log_total);
+                ChartValues<int> mount = new ChartValues<int>();   //y축들어갈 임시 값
+                SeriesCollection1 = new SeriesCollection();   //대시보드 틀
+                                                              //Console.WriteLine(selected.Dept_id); 
+                List<LogModel> list_xy = log_dao.Logouttotal();
+
+
+                foreach (var item in list_xy)
+                {
+                    mount.Add((int)item.Log_total);
+                }
+                Values1 = new ChartValues<int> { };
+
+                SeriesCollection1.Add(new LineSeries
+                {
+                    Title = "로그아웃 횟수",   //+ i
+                    Values = mount,
+                });
+                BarLabels1 = new List<string>() { };                           //x축출력
+                foreach (var item in list_xy)
+                {
+                    BarLabels1.Add(item.Today_Log_date);
+                }
+                Formatter = value => value.ToString("N0");   //문자열 10진수 변환
             }
-            Values1 = new ChartValues<int> { };
-
-            SeriesCollection1.Add(new LineSeries
+            catch(Exception ex)
             {
-                Title = "로그아웃 횟수",   //+ i
-                Values = mount,
-            });
-            BarLabels1 = new List<string>() { };                           //x축출력
-            foreach (var item in list_xy)
-            {
-                BarLabels1.Add(item.Today_Log_date);
+                log.Error(ex.Message);
             }
-            Formatter = value => value.ToString("N0");   //문자열 10진수 변환
+            
         }
 
         

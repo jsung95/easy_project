@@ -45,7 +45,7 @@
                              LegendLocation="Top" Height="300" Width="400"  VerticalAlignment="Center" >
                     <!--Series="{Binding SeriesCollection}"-->
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis LabelFormatter="{Binding Formatter}" Title="일별 로그아웃 횟수" MinValue="0" >
+                        <lvc:Axis LabelFormatter="{Binding Formatter}" Title="주간 로그아웃 횟수" MinValue="0" >
                             <!--<lvc:Axis.Separator>
                                     <lvc:Separator Step="30" Stroke="{x:Null}"/>
                                 </lvc:Axis.Separator>-->

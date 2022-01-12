@@ -78,6 +78,9 @@ namespace EasyProject.View.TabItemPage
             log.Info(" Export_btn_Click(object, RoutedEventArgs) invoked.");
             try
             {
+                var temp = Ioc.Default.GetService<ProductShowViewModel>();
+                userDept00 = temp.SelectedDept.Dept_name;
+
                 dataGrid1.SelectAllCells();
                 dataGrid1.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
                 ApplicationCommands.Copy.Execute(null, dataGrid1);
@@ -138,17 +141,17 @@ namespace EasyProject.View.TabItemPage
                 var temp = Ioc.Default.GetService<ProductInOutViewModel>();
                 var datas = temp.InLstOfRecords;
                 userDept00 = temp.SelectedDept.Dept_name;
-                string result = "제품코드, 제품명, 품목/종류, 유통기한, 입고일, 입고유형, 관리자, 소속부서 \n";
+                string result = "제품코드, 제품명, 품목/종류, 유통기한, 입고일, 입고유형, 관리자\n";
                 foreach(var data in datas)
                 {
-                    result = result + data.Prod_code + ", " + data.Prod_name + ", " + data.Category_name + ", " + data.Prod_expire + ", " + data.Prod_in_date + ", " + data.Prod_in_type + ", " + data.Nurse_name + ", ";
+                    result = result + data.Prod_code + ", " + data.Prod_name + ", " + data.Category_name + ", " + data.Prod_expire + ", " + data.Prod_in_date + ", " + data.Prod_in_type + ", " + data.Nurse_name;
                     if (data.Prod_in_type == "신규" || data.Prod_in_type == "추가")
                     {
-                        result += data.Prod_in_to + "\n";
+                        result += "(" + data.Prod_in_to + ")\n";
                     }
                     else // 이관
                     {
-                        result += data.Prod_in_from + "\n";
+                        result += "(" + data.Prod_in_from + ")\n";
                     }                                            
                 }
                 //Clipboard.Clear();

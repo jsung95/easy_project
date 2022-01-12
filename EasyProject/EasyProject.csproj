@@ -258,8 +258,14 @@
     <Compile Include="View\TabItemPage\GraphPage\GraphlogPage\LoginGraph.xaml.cs">
       <DependentUpon>LoginGraph.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TabItemPage\GraphPage\GraphlogPage\LoginGraph_Copy.xaml.cs">
+      <DependentUpon>LoginGraph_Copy.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TabItemPage\GraphPage\GraphlogPage\LogoutGraph.xaml.cs">
       <DependentUpon>LogoutGraph.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TabItemPage\GraphPage\GraphlogPage\LogoutGraph_Copy.xaml.cs">
+      <DependentUpon>LogoutGraph_Copy.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TabItemPage\GraphPage\Incoming_GraphPage.xaml.cs">
       <DependentUpon>Incoming_GraphPage.xaml</DependentUpon>
@@ -372,7 +378,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\TabItemPage\GraphPage\GraphlogPage\LoginGraph_Copy.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\TabItemPage\GraphPage\GraphlogPage\LogoutGraph.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabItemPage\GraphPage\GraphlogPage\LogoutGraph_Copy.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
