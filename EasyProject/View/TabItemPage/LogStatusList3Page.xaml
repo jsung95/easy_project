@@ -196,12 +196,12 @@
                             IsReadOnly="True" ItemsSource="{Binding LogOut_Logs}">
 
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding Logout_log_date, StringFormat='yyyy-MM-dd HH:mm:ss'}" Header="날짜/시간" Width="0.9*" IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding Logout_log_date, StringFormat='yyyy-MM-dd HH:mm:ss'}" Header="날짜/시간" Width="1.3*" IsReadOnly="True"/>
                                     <DataGridTextColumn Binding="{Binding Logout_log_ip}" Header="IP주소" Width="*" IsReadOnly="True" />
-                                    <DataGridTextColumn Binding="{Binding Logout_log_nation}" Header="접속국가" Width="*"  IsReadOnly="True"/>
-                                    <DataGridTextColumn Binding="{Binding Nurse_name}" Header="사용자명" Width="0.9*"  IsReadOnly="True"/>
-                                    <DataGridTextColumn Binding="{Binding Nurse_no}" Header="사번" Width="0.9*"  IsReadOnly="True"/>
-                                    <DataGridTextColumn Binding="{Binding Dept_name}" Header="소속부서" Width="0.9*"  IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding Logout_log_nation}" Header="접속국가" Width="0.6*"  IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding Nurse_name}" Header="사용자명" Width="0.7*"  IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding Nurse_no}" Header="사번" Width="0.8*"  IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding Dept_name}" Header="소속부서" Width="0.8*"  IsReadOnly="True"/>
 
                                 </DataGrid.Columns>
                             </DataGrid>

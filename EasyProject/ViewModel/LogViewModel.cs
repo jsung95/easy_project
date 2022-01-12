@@ -56,7 +56,7 @@ namespace EasyProject.ViewModel
             SelectedEndDate_LogIn_Log = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 23, 59, 59);
             //LOGOUT
             SelectedStartDate_LogOut_Log = Convert.ToDateTime(log_dao.GetLoginLogs_Min_Date());
-            SelectedEndDate_LogIn_Log = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 23, 59, 59);
+            SelectedEndDate_LogOut_Log = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 23, 59, 59);
 
             //대시보드
             TodayLoginPrint();
@@ -455,6 +455,8 @@ namespace EasyProject.ViewModel
 
         #endregion
 
+
+        #region 그래프
         // 7일간 하루로그인 횟수 그래프
         private SeriesCollection seriesCollection;
         public SeriesCollection SeriesCollection               //그래프 큰 틀 만드는거
@@ -561,8 +563,8 @@ namespace EasyProject.ViewModel
             }
             
         }
+        #endregion
 
-        
     }//class
 
 }//namespace
