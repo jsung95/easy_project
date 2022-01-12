@@ -59,13 +59,11 @@ namespace EasyProject
                     AuthorityPageTabButton.Width = 0;
                     GraphPageTabButton.Width = 0;
                     OrderPageTabButton.Width = 0;
-                    LogPageTabButton.Width= 0;
                 }
                 else if (App.nurse_dto.Nurse_auth.Equals("ADMIN"))
                 {
                     AuthorityPageTabButton.Width = 0;
                     GraphPageTabButton.Width = 0;
-                    LogPageTabButton.Width = 0;
                 }
                 else if (App.nurse_dto.Nurse_auth.Equals("SUPER"))
                 {
@@ -138,9 +136,6 @@ namespace EasyProject
                         break;
                     case "AuthorityPageTabButton":
                         TabFrame.Source = new Uri("TabItemPage/AuthorityPage.xaml", UriKind.Relative);
-                        break;
-                    case "LogPageTabButton":
-                        TabFrame.Source = new Uri("TabItemPage/LogStatusPageBtn.xaml", UriKind.Relative);
                         break;
 
                 }
