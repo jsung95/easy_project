@@ -38,8 +38,10 @@ namespace EasyProject.View.TabItemPage
             log.Info("Incoming_Click(object, RoutedEventArgs) invoked.");
             try
             {
-                OutcomingBtn.Background= System.Windows.Media.Brushes.Blue;
+                OutcomingBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4472C4"));
                 OutgoingBtn.Background = System.Windows.Media.Brushes.LightGray;
+                OutcomingBtn.Foreground = System.Windows.Media.Brushes.White;
+                OutgoingBtn.Foreground = System.Windows.Media.Brushes.Black;
 
                 ListFrame.Source = new Uri("IncomingOutgoingList1Page.xaml", UriKind.Relative);
             }
@@ -55,7 +57,9 @@ namespace EasyProject.View.TabItemPage
             try
             {
                 OutcomingBtn.Background = System.Windows.Media.Brushes.LightGray;
-                OutgoingBtn.Background = System.Windows.Media.Brushes.Blue;
+                OutgoingBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4472C4"));
+                OutcomingBtn.Foreground = System.Windows.Media.Brushes.Black;
+                OutgoingBtn.Foreground = System.Windows.Media.Brushes.White;
                 ListFrame.Source = new Uri("IncomingOutgoingList2Page.xaml", UriKind.Relative);
             }
             catch(Exception ex)

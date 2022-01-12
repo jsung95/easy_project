@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using EasyProject.ViewModel;
 using EasyProject.Model;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using log4net;
 
 namespace EasyProject.View.TabItemPage.GraphPage.GraphlogPage
 {
@@ -23,8 +24,10 @@ namespace EasyProject.View.TabItemPage.GraphPage.GraphlogPage
     /// </summary>
     public partial class LoginGraph : Page
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(App));
         public LoginGraph()
         {
+            log.Info("Constructor LoginGraph() invoked.");
             InitializeComponent();
             var dash = Ioc.Default.GetService<LogViewModel>();
             dash.TodayLoginPrint();

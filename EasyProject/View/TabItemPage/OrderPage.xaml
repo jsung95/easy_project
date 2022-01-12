@@ -165,6 +165,21 @@
                 <LineGeometry StartPoint="50,260" EndPoint="750,260" />
             </Path.Data>
         </Path>
+        <materialDesign:Snackbar x:Name="Snackbar" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Margin="8,0,8,0" >
+            <materialDesign:Snackbar.Style>
+                <Style TargetType="materialDesign:Snackbar">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsInOutEnabled}" Value="True">
+                            <Setter Property="MessageQueue" Value="{Binding MessageQueue}"></Setter>
+                            <Setter Property="Background" Value="#Ea4a2d"></Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsInOutEnabled}" Value="False">
+                            <Setter Property="MessageQueue" Value="{Binding MessageQueue}"></Setter>
+                            <Setter Property="Background" Value="Green"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </materialDesign:Snackbar.Style>
+        </materialDesign:Snackbar>
     </Grid>
-
 </Page>

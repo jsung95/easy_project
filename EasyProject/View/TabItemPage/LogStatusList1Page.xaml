@@ -216,7 +216,7 @@
             </Grid>
             <Grid Grid.Column="1">
                 <materialDesign:Card x:Name="GraphCard" Margin="0 0" UniformCornerRadius="20" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <!--<Frame x:Name="Status_GraphFrame" NavigationUIVisibility="Hidden" Source="/View/TabItemPage/GraphPage/Incoming_GraphPage.xaml"  Height="430" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
+                    <Frame x:Name="Status_GraphFrame" NavigationUIVisibility="Hidden" Source="/View/TabItemPage/GraphPage/GraphlogPage/LoginGraph_Copy.xaml"  Height="430" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </materialDesign:Card>
             </Grid>
         </Grid>
