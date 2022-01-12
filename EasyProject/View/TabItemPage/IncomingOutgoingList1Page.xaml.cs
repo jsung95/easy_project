@@ -36,6 +36,7 @@ namespace EasyProject.View.TabItemPage
             InitializeComponent();
            
             export_btn.Click += Export_btn_Click;
+            export_btn2.Click += Export_btn2_Click;
             //userDept00 = (deptName_ComboBox1.SelectedValue as DeptModel).Dept_name;
             var dash = Ioc.Default.GetService<ProductInOutViewModel>();
             //temp.DashboardPrint();
@@ -89,7 +90,7 @@ namespace EasyProject.View.TabItemPage
                 // DateTime now = DateTime.Now;
                 string today = String.Format(DateTime.Now.ToString("yyyy/MM/dd_HHmmss"));
 
-                //Console.WriteLine(result);
+                Console.WriteLine(result);
                 string f_path = @"c:\temp\[" + userDept00 + "]" + "입고현황_" + today + ".csv";
                 File.AppendAllText(f_path, result, UnicodeEncoding.UTF8);
 
@@ -126,6 +127,72 @@ namespace EasyProject.View.TabItemPage
                 //로그 Level : error
             }
             
+        }
+
+        private void Export_btn2_Click(object sender, RoutedEventArgs e)
+        {
+            log.Info(" Export_btn2_Click(object, RoutedEventArgs) invoked.");
+            try
+            {
+  
+                var temp = Ioc.Default.GetService<ProductInOutViewModel>();
+                var datas = temp.InLstOfRecords;
+                userDept00 = temp.SelectedDept.Dept_name;
+                string result = "제품코드, 제품명, 품목/종류, 유통기한, 입고일, 입고유형, 관리자, 소속부서 \n";
+                foreach(var data in datas)
+                {
+                    result = result + data.Prod_code + ", " + data.Prod_name + ", " + data.Category_name + ", " + data.Prod_expire + ", " + data.Prod_in_date + ", " + data.Prod_in_type + ", " + data.Nurse_name + ", ";
+                    if (data.Prod_in_type == "신규" || data.Prod_in_type == "추가")
+                    {
+                        result += data.Prod_in_to + "\n";
+                    }
+                    else // 이관
+                    {
+                        result += data.Prod_in_from + "\n";
+                    }                                            
+                }
+                //Clipboard.Clear();
+
+                // DateTime now = DateTime.Now;
+                string today = String.Format(DateTime.Now.ToString("yyyy/MM/dd_HHmmss"));
+
+                //Console.WriteLine(result);
+                string f_path = @"c:\temp\[" + userDept00 + "]" + "입고현황_" + today + ".csv";
+                File.AppendAllText(f_path, result, UnicodeEncoding.UTF8);
+
+                // Get the Excel application object.
+                Excel.Application excel_app = new Excel.Application();
+
+                // Make Excel visible (optional).
+                excel_app.Visible = true;
+
+                // Open the file.
+                excel_app.Workbooks.Open(
+                    f_path,               // Filename
+                    Type.Missing,
+                    Type.Missing,
+
+                       Excel.XlFileFormat.xlCSV,   // Format
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+
+                       ",",          // Delimiter
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing,
+                       Type.Missing
+                );
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                //로그 Level : error
+            }
+
         }
 
     }//class

@@ -163,7 +163,8 @@ namespace EasyProject.ViewModel
             ProductInout_Pie = new ObservableCollection<ProductInOutModel>(product_dao.GetProdOutType());
             SelectedOutType_Pie = ProductInout_Pie[0];
             DashboardPrint_Pie();
-            DashboardPrint_Pie1();
+            
+
 
             //UpdateCalendarBlackoutDates();
         }//Constructor
@@ -330,71 +331,7 @@ namespace EasyProject.ViewModel
 
 
 
-        //도넛그래프 출력메소드
-        public void DashboardPrint_Pie1()
-        {
-            log.Info("DashboardPrint_Pie1() invoked.");
-
-            try
-            {
-                List<ProductInOutModel> list = product_dao.GetDiscardTotalCount(SelectedDept_Pie, SelectedOutType_Pie);
-
-
-
-
-                SeriesCollection_Pie1 = new SeriesCollection();
-
-
-                foreach (var item in list)
-                {
-                    //Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} ({1:C})", item.Prod_name, chartPoint.Participation);
-                    Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0:#,0}개 ({1:#,0}￦)", item.Prod_out_count, item.Prod_price);
-                    SeriesCollection_Pie1.Add(new PieSeries
-                    {
-                        Title = item.Prod_name,
-                        Values = new ChartValues<int> { (int)item.Prod_out_count },
-                        DataLabels = true,
-                        LabelPoint = labelPoint
-                    });
-
-                }//foreache
-            }//try
-            catch(Exception ex)
-            {
-                log.Error(ex.Message);
-            }//catch
-            
-
-        }//DashboardPrint_Pie
-
-        //dashboardPrint_Pie command
-        private ActionCommand command46;
-        public ICommand Command46
-        {
-            get
-            {
-                if (command46 == null)
-                {
-                    command46 = new ActionCommand(dashboardPrint_Pie1);
-                }
-                return command46;
-            }//get
-
-        }//Command
-
-        public void dashboardPrint_Pie1()
-        {
-            log.Info("dashboardPrint_Pie1() invoked.");
-            try
-            {
-                DashboardPrint_Pie1();
-            }//try
-            catch(Exception ex)
-            {
-                log.Error(ex.Message);
-            }//catch
-
-        }//dashboardPrint_Pie1
+        
 
         //도넛그래프 출력메소드
         public void DashboardPrint_Pie()
@@ -419,8 +356,7 @@ namespace EasyProject.ViewModel
                     {
                         Title = item.Prod_name,
                         Values = new ChartValues<int> { (int)item.Prod_out_count },
-                        DataLabels = true,
-                        LabelPoint = labelPoint
+                       
                     });
 
                 }//foreache
@@ -876,22 +812,41 @@ namespace EasyProject.ViewModel
 
         public void getInListByDept()
         {
-            InLstOfRecords = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept));
-            updateInSearchedProducts();
-            //UpdateInRecordCount();
+            log.Info("getInListByDept() invoked.");
+
+            try
+            {
+                InLstOfRecords = new ObservableCollection<ProductInOutModel>(product_dao.GetProductIn(SelectedDept));
+                updateInSearchedProducts();
+                //UpdateInRecordCount();
+            }//try
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }//catch
 
         }//getInListByDept
 
         int InRecordStartFrom = 0;
         private void InPreviousPage(object obj)
         {
-            InCurrentPage--;
-            InRecordStartFrom = (InCurrentPage - 1) * InSelectedRecord;
-            var recorsToShow = searchedInProducts.Skip(InRecordStartFrom).Take(InSelectedRecord);
-            UpdateInCollection(recorsToShow);
-            UpdateInEnableState();
+            log.Info("InPreviousPage(object) invoked.");
 
-        }
+            try
+            {
+                InCurrentPage--;
+                InRecordStartFrom = (InCurrentPage - 1) * InSelectedRecord;
+                var recorsToShow = searchedInProducts.Skip(InRecordStartFrom).Take(InSelectedRecord);
+                UpdateInCollection(recorsToShow);
+                UpdateInEnableState();
+            }//try
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }//catch
+
+
+        }//InPreviousPage
 
         private ActionCommand inNextCommand;
         public ICommand InNextCommand
@@ -948,50 +903,93 @@ namespace EasyProject.ViewModel
         }
         private void InLastPage(object obj)
         {
-            //30 1->20, 2->10
-            //last page - 21 -30
-            //11-30=>30-20=10 -> 11-30
+            log.Info("InLastPage(object) invoked.");
 
-            //fix
-            //20*(2-1)=20
-            //skip = 20
-            var recordsToskip = InSelectedRecord * (InNumberOfPages - 1);
-            UpdateInCollection(searchedInProducts.Skip(recordsToskip));
-            InCurrentPage = InNumberOfPages;
-            //MessageBox.Show(CurrentPage + "페이지");
-            UpdateInEnableState();
-        }
+            try
+            {
+                //30 1->20, 2->10
+                //last page - 21 -30
+                //11-30=>30-20=10 -> 11-30
+
+                //fix
+                //20*(2-1)=20
+                //skip = 20
+                var recordsToskip = InSelectedRecord * (InNumberOfPages - 1);
+                UpdateInCollection(searchedInProducts.Skip(recordsToskip));
+                InCurrentPage = InNumberOfPages;
+                //MessageBox.Show(CurrentPage + "페이지");
+                UpdateInEnableState();
+            }//try
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }//catch
+
+        }//InLastPage
+
+
         private void InFirstPage(object obj)
         {
-            UpdateInCollection(searchedInProducts.Take(InSelectedRecord));
-            InCurrentPage = 1;
-            UpdateInEnableState();
+            log.Info("InFirstPage(object) invoked.");
+
+            try
+            {
+                UpdateInCollection(searchedInProducts.Take(InSelectedRecord));
+                InCurrentPage = 1;
+                UpdateInEnableState();
+            }//try
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }//catch
+
         }
         private void InNextPage(object obj)
         {
-            InRecordStartFrom = InCurrentPage * InSelectedRecord;
-            var recordsToShow = searchedInProducts.Skip(InRecordStartFrom).Take(InSelectedRecord);
-            UpdateInCollection(recordsToShow);
-            InCurrentPage++;
-            UpdateInEnableState();
-        }
+            log.Info("InNextPage(object) invoked.");
+
+            try
+            {
+                InRecordStartFrom = InCurrentPage * InSelectedRecord;
+                var recordsToShow = searchedInProducts.Skip(InRecordStartFrom).Take(InSelectedRecord);
+                UpdateInCollection(recordsToShow);
+                InCurrentPage++;
+                UpdateInEnableState();
+            }//try
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }//catch
+
+        }//InNextPage
 
         private void UpdateInCollection(IEnumerable<ProductInOutModel> enumerable)
         {
-            if (Product_in != null)
-            {
-                Product_in.Clear();
-            }
-            else
-            {
-                Product_in = new ObservableCollection<ProductInOutModel>();
-            }
+            log.Info("UpdateInCollection(IEnumerable<ProductInOutModel>) invoked.");
 
-            foreach (var item in enumerable)
+            try
             {
-                Product_in.Add(item);
-            }
-        }
+                if (Product_in != null)
+                {
+                    Product_in.Clear();
+                }
+                else
+                {
+                    Product_in = new ObservableCollection<ProductInOutModel>();
+                }
+
+                foreach (var item in enumerable)
+                {
+                    Product_in.Add(item);
+                }
+            }//try
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }//catch
+
+        }//UpdateInCollection
+
         private int inCurrentPage = 1;
 
         public int InCurrentPage
@@ -1006,11 +1004,21 @@ namespace EasyProject.ViewModel
         }
         private void UpdateInEnableState()
         {
-            IsInFirstEnabled = InCurrentPage > 1;
-            IsInPreviousEnabled = InCurrentPage > 1;
-            IsInNextEnabled = InCurrentPage < InNumberOfPages;
-            IsInLastEnabled = InCurrentPage < InNumberOfPages;
-        }
+            log.Info("UpdateInEnableState() invoked.");
+
+            try
+            {
+                IsInFirstEnabled = InCurrentPage > 1;
+                IsInPreviousEnabled = InCurrentPage > 1;
+                IsInNextEnabled = InCurrentPage < InNumberOfPages;
+                IsInLastEnabled = InCurrentPage < InNumberOfPages;
+            }//try
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }//catch
+
+        }//UpdateInEnableState
 
         private int inNumberOfPages = 10;
 
@@ -1085,14 +1093,24 @@ namespace EasyProject.ViewModel
         }
         private void UpdateInRecordCount()
         {
-            InNumberOfPages = (int)Math.Ceiling((double)searchedInProducts.Count() / InSelectedRecord);
-            InNumberOfPages = InNumberOfPages == 0 ? 1 : InNumberOfPages;
+            log.Info("UpdateInRecordCount() invoked.");
 
-            InRecordStartFrom = (InCurrentPage - 1) * InSelectedRecord;
-            var recordsToShow = searchedInProducts.Skip(InRecordStartFrom).Take(InSelectedRecord);
+            try
+            {
+                InNumberOfPages = (int)Math.Ceiling((double)searchedInProducts.Count() / InSelectedRecord);
+                InNumberOfPages = InNumberOfPages == 0 ? 1 : InNumberOfPages;
 
-            UpdateInCollection(recordsToShow);
-        }
+                InRecordStartFrom = (InCurrentPage - 1) * InSelectedRecord;
+                var recordsToShow = searchedInProducts.Skip(InRecordStartFrom).Take(InSelectedRecord);
+
+                UpdateInCollection(recordsToShow);
+            }//try
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }//catch
+
+        }//UpdateInRecordCount
         #endregion
 
         #region 출고 pagination
@@ -1177,46 +1195,55 @@ namespace EasyProject.ViewModel
 
         public void updateOutSearchedProducts()
         {
+            log.Info("updateOutSearchedProducts() invoked.");
 
-            Console.WriteLine("updateOutSearchedProducts() 검색어 : " + SearchKeyword_Out);
-
-            OutCurrentPage = 1; // 검색어 바뀔 때마다 1페이지로 이동
-
-
-            if (SearchKeyword_Out != null) // 키워드 있을 때
+            try
             {
-                if (SelectedSearchType_Out == "제품명")
+                Console.WriteLine("updateOutSearchedProducts() 검색어 : " + SearchKeyword_Out);
+
+                OutCurrentPage = 1; // 검색어 바뀔 때마다 1페이지로 이동
+
+
+                if (SearchKeyword_Out != null) // 키워드 있을 때
                 {
-                    searchedOutProducts = OutLstOfRecords.Where(model => model.Prod_name.Contains(SearchKeyword_Out) || model.Prod_name.Contains(SearchKeyword_Out.ToUpper()) || model.Prod_name.Contains(SearchKeyword_Out.ToLower()));
-                    Console.WriteLine("제품명 : " + searchedOutProducts.Count() + SearchKeyword_Out.ToUpper());
+                    if (SelectedSearchType_Out == "제품명")
+                    {
+                        searchedOutProducts = OutLstOfRecords.Where(model => model.Prod_name.Contains(SearchKeyword_Out) || model.Prod_name.Contains(SearchKeyword_Out.ToUpper()) || model.Prod_name.Contains(SearchKeyword_Out.ToLower()));
+                        Console.WriteLine("제품명 : " + searchedOutProducts.Count() + SearchKeyword_Out.ToUpper());
+
+                        UpdateOutRecordCount();
+
+                    }
+                    else if (SelectedSearchType_Out == "제품코드")
+                    {
+                        searchedOutProducts = OutLstOfRecords.Where(model => model.Prod_code.Contains(SearchKeyword_Out) || model.Prod_code.Contains(SearchKeyword_Out.ToUpper()) || model.Prod_code.Contains(SearchKeyword_Out.ToLower()));
+                        Console.WriteLine("제품코드 : " + searchedOutProducts.Count());
+
+                        UpdateOutRecordCount();
+                    }
+                    else // 품목/종류
+                    {
+                        searchedOutProducts = OutLstOfRecords.Where(model => model.Category_name.Contains(SearchKeyword_Out) || model.Category_name.Contains(SearchKeyword_Out.ToUpper()) || model.Category_name.Contains(SearchKeyword_Out.ToLower()));
+                        Console.WriteLine("품목/종류 : " + searchedInProducts.Count());
+
+                        UpdateOutRecordCount();
+                    }
+
+                }//if
+                else // 키워드 없을 때
+                {
+                    searchedOutProducts = OutLstOfRecords;
+                    Console.WriteLine("검색어없음: " + searchedOutProducts.Count());
 
                     UpdateOutRecordCount();
 
-                }
-                else if (SelectedSearchType_Out == "제품코드")
-                {
-                    searchedOutProducts = OutLstOfRecords.Where(model => model.Prod_code.Contains(SearchKeyword_Out) || model.Prod_code.Contains(SearchKeyword_Out.ToUpper()) || model.Prod_code.Contains(SearchKeyword_Out.ToLower()));
-                    Console.WriteLine("제품코드 : " + searchedOutProducts.Count());
-
-                    UpdateOutRecordCount();
-                }
-                else // 품목/종류
-                {
-                    searchedOutProducts = OutLstOfRecords.Where(model => model.Category_name.Contains(SearchKeyword_Out) || model.Category_name.Contains(SearchKeyword_Out.ToUpper()) || model.Category_name.Contains(SearchKeyword_Out.ToLower()));
-                    Console.WriteLine("품목/종류 : " + searchedInProducts.Count());
-
-                    UpdateOutRecordCount();
-                }
-
-            }//if
-            else // 키워드 없을 때
+                }//else
+            }//try
+            catch (Exception e)
             {
-                searchedOutProducts = OutLstOfRecords;
-                Console.WriteLine("검색어없음: " + searchedOutProducts.Count());
+                log.Error(e.Message);
+            }//catch
 
-                UpdateOutRecordCount();
-
-            }//else
 
         }//updateInSearchedProducts
 
@@ -1224,32 +1251,61 @@ namespace EasyProject.ViewModel
 
         public void getProductOut_By_Date()
         {
-            if (SelectedStartDate_Out != null && SelectedEndDate_Out != null)
+            log.Info("getProductOut_By_Date() invoked.");
+
+            try
             {
-                OutLstOfRecords = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept, SelectedStartDate_In, SelectedEndDate_In));
-                updateOutSearchedProducts();
-                UpdateOutRecordCount();
-            }
+                if (SelectedStartDate_Out != null && SelectedEndDate_Out != null)
+                {
+                    OutLstOfRecords = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept, SelectedStartDate_In, SelectedEndDate_In));
+                    updateOutSearchedProducts();
+                    UpdateOutRecordCount();
+                }
+            }//try
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }//catch
+
         }//getProductOut_By_Date
 
         public void getOutListByDept()
         {
-            OutLstOfRecords = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept));
-            updateOutSearchedProducts();
-            UpdateOutRecordCount();
+            log.Info("getOutListByDept() invoked.");
+
+            try
+            {
+                OutLstOfRecords = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept));
+                updateOutSearchedProducts();
+                UpdateOutRecordCount();
+            }//try
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }//catch
+
 
         }//getOutListByDept
 
         int OutRecordStartFrom = 0;
         private void OutPreviousPage(object obj)
         {
-            OutCurrentPage--;
-            OutRecordStartFrom = (OutCurrentPage - 1) * OutSelectedRecord;
-            var recorsToShow = searchedOutProducts.Skip(OutRecordStartFrom).Take(OutSelectedRecord);
-            UpdateOutCollection(recorsToShow);
-            UpdateOutEnableState();
+            log.Info("OutPreviousPage(object) invoked.");
 
-        }
+            try
+            {
+                OutCurrentPage--;
+                OutRecordStartFrom = (OutCurrentPage - 1) * OutSelectedRecord;
+                var recorsToShow = searchedOutProducts.Skip(OutRecordStartFrom).Take(OutSelectedRecord);
+                UpdateOutCollection(recorsToShow);
+                UpdateOutEnableState();
+            }//try
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }//catch
+
+        }//OutPreviousPage
 
         private ActionCommand outNextCommand;
         public ICommand OutNextCommand
@@ -1306,44 +1362,88 @@ namespace EasyProject.ViewModel
         }
         private void OutLastPage(object obj)
         {
+            log.Info("OutLastPage(object) invoked.");
 
-            var recordsToskip = OutSelectedRecord * (OutNumberOfPages - 1);
-            UpdateInCollection(searchedOutProducts.Skip(recordsToskip));
-            OutCurrentPage = OutNumberOfPages;
-            //MessageBox.Show(CurrentPage + "페이지");
-            UpdateOutEnableState();
-        }
+            try
+            {
+                var recordsToskip = OutSelectedRecord * (OutNumberOfPages - 1);
+                UpdateInCollection(searchedOutProducts.Skip(recordsToskip));
+                OutCurrentPage = OutNumberOfPages;
+                //MessageBox.Show(CurrentPage + "페이지");
+                UpdateOutEnableState();
+            }//try
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }//catch
+
+        }//OutLastPage
+
+
         private void OutFirstPage(object obj)
         {
-            UpdateOutCollection(searchedOutProducts.Take(OutSelectedRecord));
-            OutCurrentPage = 1;
-            UpdateOutEnableState();
-        }
+            log.Info("OutFirstPage(object) invoked.");
+
+            try
+            {
+                UpdateOutCollection(searchedOutProducts.Take(OutSelectedRecord));
+                OutCurrentPage = 1;
+                UpdateOutEnableState();
+            }//try
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }//catch
+
+        }//OutFirstPage
+
         private void OutNextPage(object obj)
         {
-            OutRecordStartFrom = OutCurrentPage * OutSelectedRecord;
-            var recordsToShow = searchedOutProducts.Skip(OutRecordStartFrom).Take(OutSelectedRecord);
-            UpdateOutCollection(recordsToShow);
-            OutCurrentPage++;
-            UpdateOutEnableState();
-        }
+            log.Info("OutNextPage(object) invoked.");
+
+            try
+            {
+                OutRecordStartFrom = OutCurrentPage * OutSelectedRecord;
+                var recordsToShow = searchedOutProducts.Skip(OutRecordStartFrom).Take(OutSelectedRecord);
+                UpdateOutCollection(recordsToShow);
+                OutCurrentPage++;
+                UpdateOutEnableState();
+            }//try
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }//catch
+
+        }//OutNextPage
 
         private void UpdateOutCollection(IEnumerable<ProductInOutModel> enumerable)
         {
-            if (Product_out != null)
-            {
-                Product_out.Clear();
-            }
-            else
-            {
-                Product_out = new ObservableCollection<ProductInOutModel>();
-            }
+            log.Info("UpdateOutCollection(IEnumerable<ProductInOutModel>) invoked.");
 
-            foreach (var item in enumerable)
+            try
             {
-                Product_out.Add(item);
-            }
-        }
+                if (Product_out != null)
+                {
+                    Product_out.Clear();
+                }
+                else
+                {
+                    Product_out = new ObservableCollection<ProductInOutModel>();
+                }
+
+                foreach (var item in enumerable)
+                {
+                    Product_out.Add(item);
+                }
+            }//try
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }//catch
+
+        }//UpdateOutCollection
+
+
         private int outCurrentPage = 1;
 
         public int OutCurrentPage
@@ -1358,11 +1458,21 @@ namespace EasyProject.ViewModel
         }
         private void UpdateOutEnableState()
         {
-            IsOutFirstEnabled = OutCurrentPage > 1;
-            IsOutPreviousEnabled = OutCurrentPage > 1;
-            IsOutNextEnabled = OutCurrentPage < OutNumberOfPages;
-            IsOutLastEnabled = OutCurrentPage < OutNumberOfPages;
-        }
+            log.Info("UpdateOutEnableState() invoked.");
+
+            try
+            {
+                IsOutFirstEnabled = OutCurrentPage > 1;
+                IsOutPreviousEnabled = OutCurrentPage > 1;
+                IsOutNextEnabled = OutCurrentPage < OutNumberOfPages;
+                IsOutLastEnabled = OutCurrentPage < OutNumberOfPages;
+            }//try
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }//catch
+
+        }//UpdateOutEnableState
 
         private int outNumberOfPages = 10;
 
@@ -1437,14 +1547,24 @@ namespace EasyProject.ViewModel
         }
         private void UpdateOutRecordCount()
         {
-            OutNumberOfPages = (int)Math.Ceiling((double)searchedOutProducts.Count() / OutSelectedRecord);
-            OutNumberOfPages = OutNumberOfPages == 0 ? 1 : OutNumberOfPages;
+            log.Info("UpdateOutRecordCount() invoked.");
 
-            OutRecordStartFrom = (OutCurrentPage - 1) * OutSelectedRecord;
-            var recordsToShow = searchedOutProducts.Skip(OutRecordStartFrom).Take(OutSelectedRecord);
+            try
+            {
+                OutNumberOfPages = (int)Math.Ceiling((double)searchedOutProducts.Count() / OutSelectedRecord);
+                OutNumberOfPages = OutNumberOfPages == 0 ? 1 : OutNumberOfPages;
 
-            UpdateOutCollection(recordsToShow);
-        }
+                OutRecordStartFrom = (OutCurrentPage - 1) * OutSelectedRecord;
+                var recordsToShow = searchedOutProducts.Skip(OutRecordStartFrom).Take(OutSelectedRecord);
+
+                UpdateOutCollection(recordsToShow);
+            }//try
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }//catch
+
+        }//UpdateOutRecordCount
         #endregion
 
 

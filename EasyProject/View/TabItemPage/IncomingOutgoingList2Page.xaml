@@ -275,6 +275,12 @@
                                 <wookoa:Int32>25</wookoa:Int32>
                             </ComboBox>
                         </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Visibility="Visible" Margin="527,0,0,0">
+                            <TextBlock Text="  전체 다운 " FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <Button x:Name="export_btn2" Style="{StaticResource MaterialDesignIconForegroundButton}" Height="20" Width="20">
+                                <materialDesign:PackIcon Kind="MicrosoftExcel" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="DarkGreen"/>
+                            </Button>
+                        </StackPanel>
                         <Button x:Name="export_btn" Height="26" HorizontalAlignment="Right" Foreground="White" Background="#4472C4"
                                 VerticalAlignment="Center" Width="150"  FontSize="13" Margin="10 5"
                                   Opacity="0.75" Cursor="Hand">

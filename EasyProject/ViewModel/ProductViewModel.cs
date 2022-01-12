@@ -57,7 +57,7 @@ namespace EasyProject.ViewModel
 
         public ProductViewModel()
         {
-            log.Info("ProductViewModel invoked");
+            log.Info("Constructor ProductViewModel() invoked.");
 
             //스넥바 Duration 3초로 설정 TimeSpan.FromMilliseconds(3000)
             messagequeue = new SnackbarMessageQueue();
@@ -139,7 +139,16 @@ namespace EasyProject.ViewModel
 
         private void CloseSnackBar()
         {
-            IsDuplicatedProduct = false;
+            log.Info("CloseSnackBar() invoked.");
+            try
+            {
+                IsDuplicatedProduct = false;
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+            
         }
         #endregion
 
@@ -176,16 +185,25 @@ namespace EasyProject.ViewModel
 
         private void FileReader()
         {
-            string fileExtension = Path.GetExtension(openFileDialog);
-            
-            if (fileExtension == ".csv")
+            log.Info("FileReader() invoked.");
+            try
             {
-                CsvReader();
+                string fileExtension = Path.GetExtension(openFileDialog);
+
+                if (fileExtension == ".csv")
+                {
+                    CsvReader();
+                }
+                else
+                {
+                    ExcelReader();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                //ExcelReader();
+                log.Error(ex.Message);
             }
+
         }
 
         //csv로 입력받은 여러개의 제품들에 대한 처리 
@@ -312,217 +330,264 @@ namespace EasyProject.ViewModel
         //excel로 입력받은 여러개의 제품들에 대한 처리 
         private void ExcelReader()
         {
-            Excel.Application xlApp;
-            Excel.Workbook xlWorkBook;
-            Excel.Worksheet xlWorkSheet;
-            Excel.Range range;
-
+            log.Info("ExcelReader() invoked.");
             try
             {
-                int rCnt = 0; // 열 갯수
-                int cCnt = 0; // 행 갯수
+                Excel.Application xlApp;
+                Excel.Workbook xlWorkBook;
+                Excel.Worksheet xlWorkSheet;
+                Excel.Range range;
 
-                xlApp = new Excel.Application();
-                xlWorkBook = xlApp.Workbooks.Open(openFileDialog);
-                xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1); // 첫번째 시트를 가져 옴.
-
-                range = xlWorkSheet.UsedRange; // 가져 온 시트의 데이터 범위 값
-
-                for (rCnt = 2; rCnt <= range.Rows.Count; rCnt++)
+                try
                 {
-                    var product = new ProductShowModel();
-                    for (cCnt = 1; cCnt <= range.Columns.Count; cCnt++)
+                    int rCnt = 0; // 열 갯수
+                    int cCnt = 0; // 행 갯수
+
+                    xlApp = new Excel.Application();
+                    xlWorkBook = xlApp.Workbooks.Open(openFileDialog);
+                    xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1); // 첫번째 시트를 가져 옴.
+
+                    range = xlWorkSheet.UsedRange; // 가져 온 시트의 데이터 범위 값
+
+                    for (rCnt = 2; rCnt <= range.Rows.Count; rCnt++)
                     {
-                        product = SetProductObject(ref product, ref range, rCnt, cCnt);
-
-                        ProductModel productModel = new ProductModel();
-                        productModel.Prod_code = product.Prod_code;
-                        productModel.Prod_name = product.Prod_name;
-                        productModel.Category_id = categoryDao.GetCategoryID(product.Category_name);
-                        productModel.Prod_expire = product.Prod_expire;
-                        productModel.Prod_price = product.Prod_price;
-
-                        if (!dao.IsProductDuplicateCheck(productModel, (int)App.nurse_dto.Dept_id))
+                        var product = new ProductShowModel();
+                        for (cCnt = 1; cCnt <= range.Columns.Count; cCnt++)
                         {
-                            
-                            Console.WriteLine("중복이 아니다. ");
+                            product = SetProductObject(ref product, ref range, rCnt, cCnt);
 
+                            ProductModel productModel = new ProductModel();
+                            productModel.Prod_code = product.Prod_code;
+                            productModel.Prod_name = product.Prod_name;
+                            productModel.Category_id = categoryDao.GetCategoryID(product.Category_name);
+                            productModel.Prod_expire = product.Prod_expire;
+                            productModel.Prod_price = product.Prod_price;
+
+                            if (!dao.IsProductDuplicateCheck(productModel, (int)App.nurse_dto.Dept_id))
+                            {
+
+                                Console.WriteLine("중복이 아니다. ");
+
+                            }
+                            else
+                            {
+                                IsDuplicatedProduct = true;
+                                Console.WriteLine("중복이다.");
+
+                                excelProductList.Clear();
+                            }
                         }
-                        else
+                        if (!IsDuplicatedProduct)
                         {
-                            IsDuplicatedProduct = true;
-                            Console.WriteLine("중복이다.");
-                            
-                            excelProductList.Clear();
+                            excelProductList.Add(product);
                         }
                     }
-                    if (!IsDuplicatedProduct)
-                    {
-                        excelProductList.Add(product);
-                    }
-                }
 
-                if (isDuplicatedProduct)
-                {
-                    IsInsertDialogHostOpen = false;
-                    MessageQueue.Enqueue("이미 존재하는 재고 입력은 불가합니다.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                }
-
-                if (excelProductList.Count > 0)
-                {
-                    foreach (ProductShowModel elem in excelProductList)
+                    if (isDuplicatedProduct)
                     {
-                        IsDuplicatedProduct = false;
                         IsInsertDialogHostOpen = false;
-                        MessageQueue.Enqueue("신규 재고가 추가되었습니다.", "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-
-                        //MessageBox.Show(product.Prod_code+".."+product.Prod_name+
-                        //   ".." + product.Category_name+".."+product.Prod_expire
-                        //   + ".." + product.Prod_price + ".." + product.Prod_total);
-
-                        dao.AddProductForExcel(elem, elem.Category_name);
-                        dao.StoredProductForExcel(elem, Nurse);
-                        dao.AddImpDeptForExcel(elem, Nurse);
-
-                        // 현재 사용자가 추가 입고 내역을 담을 임시 객체
-                        ProductInOutModel productDto = new ProductInOutModel();
-
-                        // 새로 입고 시 Add_list(사용자의 입고 내역 목록) 업데이트
-                        productDto.Prod_in_date = DateTime.Now;
-                        productDto.Prod_code = elem.Prod_code;
-                        productDto.Prod_name = elem.Prod_name;
-                        productDto.Category_name = elem.Category_name;
-                        productDto.Prod_expire = elem.Prod_expire;
-                        productDto.Prod_price = elem.Prod_price;
-                        productDto.Prod_in_count = elem.Prod_total;
-                        productDto.Nurse_name = Nurse.Nurse_name;
-
-                        //productDtoList.Insert(0, productDto);
-                        Add_list.Insert(0, productDto);
-                        //Add_list.Add(productDto);
-                        Console.WriteLine(Add_list.Count + "개");
-
-                        var temp1 = Ioc.Default.GetService<ProductShowViewModel>();
-                        temp1.getListbyDept();  // 재고현황 리스트 갱신
-
-                        var temp2 = Ioc.Default.GetService<ProductInOutViewModel>();
-                        temp2.getInListByDept(); // 입고 목록 갱신
+                        MessageQueue.Enqueue("이미 존재하는 재고 입력은 불가합니다.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     }
 
-                    //var ob2list = Add_list.ToList();
-                    //ob2list.AddRange(productDtoList);
-                    //Add_list = new ObservableCollection<ProductInOutModel>(ob2list);
+                    if (excelProductList.Count > 0)
+                    {
+                        foreach (ProductShowModel elem in excelProductList)
+                        {
+                            IsDuplicatedProduct = false;
+                            IsInsertDialogHostOpen = false;
+                            MessageQueue.Enqueue("신규 재고가 추가되었습니다.", "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
 
-                    xlWorkBook.Close(true, null, null);
-                    xlApp.Quit();
+                            //MessageBox.Show(product.Prod_code+".."+product.Prod_name+
+                            //   ".." + product.Category_name+".."+product.Prod_expire
+                            //   + ".." + product.Prod_price + ".." + product.Prod_total);
 
-                    releaseObject(xlWorkSheet);
-                    releaseObject(xlWorkBook);
-                    releaseObject(xlApp);
+                            dao.AddProductForExcel(elem, elem.Category_name);
+                            dao.StoredProductForExcel(elem, Nurse);
+                            dao.AddImpDeptForExcel(elem, Nurse);
+
+                            // 현재 사용자가 추가 입고 내역을 담을 임시 객체
+                            ProductInOutModel productDto = new ProductInOutModel();
+
+                            // 새로 입고 시 Add_list(사용자의 입고 내역 목록) 업데이트
+                            productDto.Prod_in_date = DateTime.Now;
+                            productDto.Prod_code = elem.Prod_code;
+                            productDto.Prod_name = elem.Prod_name;
+                            productDto.Category_name = elem.Category_name;
+                            productDto.Prod_expire = elem.Prod_expire;
+                            productDto.Prod_price = elem.Prod_price;
+                            productDto.Prod_in_count = elem.Prod_total;
+                            productDto.Nurse_name = Nurse.Nurse_name;
+
+                            //productDtoList.Insert(0, productDto);
+                            Add_list.Insert(0, productDto);
+                            //Add_list.Add(productDto);
+                            Console.WriteLine(Add_list.Count + "개");
+
+                            var temp1 = Ioc.Default.GetService<ProductShowViewModel>();
+                            temp1.getListbyDept();  // 재고현황 리스트 갱신
+
+                            var temp2 = Ioc.Default.GetService<ProductInOutViewModel>();
+                            temp2.getInListByDept(); // 입고 목록 갱신
+                        }
+
+                        //var ob2list = Add_list.ToList();
+                        //ob2list.AddRange(productDtoList);
+                        //Add_list = new ObservableCollection<ProductInOutModel>(ob2list);
+
+                        xlWorkBook.Close(true, null, null);
+                        xlApp.Quit();
+
+                        releaseObject(xlWorkSheet);
+                        releaseObject(xlWorkBook);
+                        releaseObject(xlApp);
 
 
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex.Message);
+                    IsDuplicatedProduct = true;
+                    IsInsertDialogHostOpen = false;
+                    MessageQueue.Enqueue("업로드 할 파일을 닫고 다시 시도하십시오.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex1)
             {
-                log.Error(ex.Message);
-                IsDuplicatedProduct = true;
-                IsInsertDialogHostOpen = false;
-                MessageQueue.Enqueue("업로드 할 파일을 닫고 다시 시도하십시오.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                log.Error(ex1.Message);
             }
+            
 
 
         }
         private ProductShowModel SetProductObjectForCsv(ref ProductShowModel Product, int columnNum, string columnText)
         {
-
-            switch (columnNum)
+            log.Info("SetProductObjectForCsv(ref ProductShowModel, int, string) invoked.");
+            try
             {
-                case 0:
-                    Product.Prod_code = (string)(columnText);
-                    break;
+                switch (columnNum)
+                {
+                    case 0:
+                        Product.Prod_code = (string)(columnText);
+                        break;
 
-                case 1:
-                    Product.Prod_name = (string)(columnText);
-                    break;
+                    case 1:
+                        Product.Prod_name = (string)(columnText);
+                        break;
 
-                case 2:
-                    Product.Category_name = (string)(columnText);
-                    break;
+                    case 2:
+                        Product.Category_name = (string)(columnText);
+                        break;
 
-                case 3:
-                    Product.Prod_expire = Convert.ToDateTime(columnText.Substring(0,10));
-                    break;
+                    case 3:
+                        Product.Prod_expire = Convert.ToDateTime(columnText.Substring(0, 10));
+                        break;
 
-                case 4:
-                    Product.Prod_price = Int32.Parse(columnText);
-                    break;
+                    case 4:
+                        Product.Prod_price = Int32.Parse(columnText);
+                        break;
 
-                case 5:
-                    Product.Prod_total = Int32.Parse(columnText);
-                    break;
+                    case 5:
+                        Product.Prod_total = Int32.Parse(columnText);
+                        break;
+
+                }
+                return Product;
 
             }
-            return Product;
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+            
         }
 
         private ProductShowModel SetProductObject(ref ProductShowModel Product, ref Excel.Range range, int rCnt, int cCnt)
         {
-
-            string headerText = range.Cells[1, cCnt].Text.ToString();
-
-            switch (headerText)
+            log.Info("SetProductObject(ref ProductShowModel, ref Excel.Range, int, int) invoked.");
+            try
             {
-                case "제품코드":
-                    Product.Prod_code = (string)GetCellText(range, rCnt, 1);
-                    break;
+                string headerText = range.Cells[1, cCnt].Text.ToString();
 
-                case "제품명":
-                    Product.Prod_name = (string)GetCellText(range, rCnt, 2);
-                    break;
+                switch (headerText)
+                {
+                    case "제품코드":
+                        Product.Prod_code = (string)GetCellText(range, rCnt, 1);
+                        break;
 
-                case "품목/종류":
-                    Product.Category_name = (string)GetCellText(range, rCnt, 3);
-                    break;
+                    case "제품명":
+                        Product.Prod_name = (string)GetCellText(range, rCnt, 2);
+                        break;
 
-                case "유통기한":
-                    Product.Prod_expire = Convert.ToDateTime(GetCellText(range, rCnt, 4).Substring(0,10));
-                    break;
+                    case "품목/종류":
+                        Product.Category_name = (string)GetCellText(range, rCnt, 3);
+                        break;
 
-                case "가격":
-                    Product.Prod_price = Int32.Parse(GetCellText(range, rCnt, 5));
-                    break;
+                    case "유통기한":
+                        Product.Prod_expire = Convert.ToDateTime(GetCellText(range, rCnt, 4).Substring(0, 10));
+                        break;
 
-                case "수량":
-                    Product.Prod_total = Int32.Parse(GetCellText(range, rCnt, 6));
-                    break;
+                    case "가격":
+                        Product.Prod_price = Int32.Parse(GetCellText(range, rCnt, 5));
+                        break;
 
+                    case "수량":
+                        Product.Prod_total = Int32.Parse(GetCellText(range, rCnt, 6));
+                        break;
+
+                }
+                return Product;
             }
-            return Product;
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+            
         }
         private string GetCellText(Excel.Range range, int rCnt, int cCnt)
         {
-            string cellText = range.Cells[rCnt, cCnt].Text.ToString();
-            Console.WriteLine(cellText+"엑셀에서 읽어온 데이터");
-            return cellText;
+            log.Info("GetCellText(Excel.Range, int, int) invoked.");
+            try
+            {
+                string cellText = range.Cells[rCnt, cCnt].Text.ToString();
+                Console.WriteLine(cellText + "엑셀에서 읽어온 데이터");
+                return cellText;
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+                return null;
+            }
+            
         }
 
         private void releaseObject(object obj)
         {
+            log.Info("releaseObject(object) invoked.");
             try
             {
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
-                obj = null;
+                try
+                {
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                    obj = null;
+                }
+                catch (Exception ex)
+                {
+                    obj = null;
+                    Console.WriteLine("releaseObject : " + ex);
+                }
+                finally
+                {
+                    GC.Collect();
+                }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                obj = null;
-                Console.WriteLine("releaseObject : " + ex);
+                log.Error(ex.Message);
             }
-            finally
-            {
-                GC.Collect();
-            }
+            
         }
         #endregion
 
@@ -583,146 +648,154 @@ namespace EasyProject.ViewModel
 
         public void ProductInsert()
         {
-
-            // 만약 제품입력이 하나라도 안되었다면
-            if (Product.Prod_code == null || Product.Prod_code.Equals("") || Product.Prod_name == null || Product.Prod_name.Equals("") || SelectedCategory == null || Product.Prod_expire == null || Product.Prod_expire.Equals("") || Input_Prod_price == null || Input_Prod_price.Equals("") || Input_Prod_total == null || Input_Prod_total.Equals(""))
+            log.Info("ProductInsert() invoked.");
+            try
             {
-                //스넥바 메세지 출력
-                IsDuplicatedProduct = true;
-                MessageQueue.Enqueue("입력할 제품의 정보를 모두 기입해주세요.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-            }//if
-            else //제품입력이 모두 되었지만
-            {
-                Product.Prod_price = Int32.Parse(Input_Prod_price);
-                Product.Prod_total = Int32.Parse(Input_Prod_total);
-
-                if (SelectedCategory.Category_name.Equals("추가(입력)하기")) //만약 카테고리 선택을 직접입력으로 선택했다면
+                // 만약 제품입력이 하나라도 안되었다면
+                if (Product.Prod_code == null || Product.Prod_code.Equals("") || Product.Prod_name == null || Product.Prod_name.Equals("") || SelectedCategory == null || Product.Prod_expire == null || Product.Prod_expire.Equals("") || Input_Prod_price == null || Input_Prod_price.Equals("") || Input_Prod_total == null || Input_Prod_total.Equals(""))
                 {
-                    if (AddCategoryName == null || AddCategoryName.Equals("")) //만약 직접입력란이 비어있다면
+                    //스넥바 메세지 출력
+                    IsDuplicatedProduct = true;
+                    MessageQueue.Enqueue("입력할 제품의 정보를 모두 기입해주세요.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                }//if
+                else //제품입력이 모두 되었지만
+                {
+                    Product.Prod_price = Int32.Parse(Input_Prod_price);
+                    Product.Prod_total = Int32.Parse(Input_Prod_total);
+
+                    if (SelectedCategory.Category_name.Equals("추가(입력)하기")) //만약 카테고리 선택을 직접입력으로 선택했다면
                     {
-                        IsDuplicatedProduct = true;
-                        MessageQueue.Enqueue("추가할 카테고리명을 입력해주세요.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                    }//if
-                    else //만약 직접입력라인 비어있지 않고 입력했다면
-                    {
-                        if (categoryDao.IsExistsCategory(AddCategoryName)) //만약 기존 카테고리에 이미 존재한다면
+                        if (AddCategoryName == null || AddCategoryName.Equals("")) //만약 직접입력란이 비어있다면
                         {
                             IsDuplicatedProduct = true;
-                            MessageQueue.Enqueue("이미 존재하는 카테고리명 입니다.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                            MessageQueue.Enqueue("추가할 카테고리명을 입력해주세요.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                         }//if
-                        else // 만약 기존 카테고리에 존재하지 않아서 추가할수 있다면
+                        else //만약 직접입력라인 비어있지 않고 입력했다면
                         {
-                            if (!dao.IsProductDuplicateCheck(Product, AddCategoryName)) //만약 입력하려는 정보가 기존 제품과 중복되지 않는다면
-                            {
-                                categoryDao.AddCategory(AddCategoryName);
-                                IsDuplicatedProduct = false;
-                                MessageQueue.Enqueue("신규 재고가 추가되었습니다. (카테고리가 추가되었습니다.)", "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-
-                                //재고입력
-                                dao.AddProduct(Product, AddCategoryName);
-
-                                //입고테이블에 추가
-                                dao.StoredProduct(Product, Nurse);
-
-                                //IMP_DEPT 테이블에 추가
-                                dao.AddImpDept(Product, Nurse);
-
-                                // 현재 사용자가 추가 입고 내역을 담을 임시 객체
-                                ProductInOutModel dto = new ProductInOutModel();
-
-                                // 새로 입고 시 Add_list(사용자의 입고 내역 목록) 업데이트
-                                dto.Prod_in_date = DateTime.Now;
-                                dto.Prod_code = Product.Prod_code;
-                                dto.Prod_name = Product.Prod_name;
-                                dto.Category_name = AddCategoryName;
-                                dto.Prod_expire = Product.Prod_expire;
-                                dto.Prod_price = Product.Prod_price;
-                                dto.Prod_in_count = Product.Prod_total;
-                                dto.Nurse_name = Nurse.Nurse_name;
-
-                                Add_list.Insert(0, dto);
-
-                                var temp1 = Ioc.Default.GetService<ProductShowViewModel>();
-                                temp1.getListbyDept();  // 재고현황 리스트 갱신
-
-                                var temp2 = Ioc.Default.GetService<ProductInOutViewModel>();
-                                temp2.getInListByDept(); // 입고 목록 갱신
-
-                                ResetForm();
-                            }//if
-                            else //만약 입력하려는 정보가 기존 제품과 중복된다면
+                            if (categoryDao.IsExistsCategory(AddCategoryName)) //만약 기존 카테고리에 이미 존재한다면
                             {
                                 IsDuplicatedProduct = true;
-                                string message = Product.Prod_code + "(" + Product.Prod_name + ") / " +
-                                    AddCategoryName + "/" + Product.Prod_expire + "/" + Product.Prod_price + "는 이미 존재하여 재고 입력이 불가합니다.";
-                                MessageQueue.Enqueue(message, "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                                Console.WriteLine(message);
-                                
+                                MessageQueue.Enqueue("이미 존재하는 카테고리명 입니다.", "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                            }//if
+                            else // 만약 기존 카테고리에 존재하지 않아서 추가할수 있다면
+                            {
+                                if (!dao.IsProductDuplicateCheck(Product, AddCategoryName)) //만약 입력하려는 정보가 기존 제품과 중복되지 않는다면
+                                {
+                                    categoryDao.AddCategory(AddCategoryName);
+                                    IsDuplicatedProduct = false;
+                                    MessageQueue.Enqueue("신규 재고가 추가되었습니다. (카테고리가 추가되었습니다.)", "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
+                                    //재고입력
+                                    dao.AddProduct(Product, AddCategoryName);
+
+                                    //입고테이블에 추가
+                                    dao.StoredProduct(Product, Nurse);
+
+                                    //IMP_DEPT 테이블에 추가
+                                    dao.AddImpDept(Product, Nurse);
+
+                                    // 현재 사용자가 추가 입고 내역을 담을 임시 객체
+                                    ProductInOutModel dto = new ProductInOutModel();
+
+                                    // 새로 입고 시 Add_list(사용자의 입고 내역 목록) 업데이트
+                                    dto.Prod_in_date = DateTime.Now;
+                                    dto.Prod_code = Product.Prod_code;
+                                    dto.Prod_name = Product.Prod_name;
+                                    dto.Category_name = AddCategoryName;
+                                    dto.Prod_expire = Product.Prod_expire;
+                                    dto.Prod_price = Product.Prod_price;
+                                    dto.Prod_in_count = Product.Prod_total;
+                                    dto.Nurse_name = Nurse.Nurse_name;
+
+                                    Add_list.Insert(0, dto);
+
+                                    var temp1 = Ioc.Default.GetService<ProductShowViewModel>();
+                                    temp1.getListbyDept();  // 재고현황 리스트 갱신
+
+                                    var temp2 = Ioc.Default.GetService<ProductInOutViewModel>();
+                                    temp2.getInListByDept(); // 입고 목록 갱신
+
+                                    ResetForm();
+                                }//if
+                                else //만약 입력하려는 정보가 기존 제품과 중복된다면
+                                {
+                                    IsDuplicatedProduct = true;
+                                    string message = Product.Prod_code + "(" + Product.Prod_name + ") / " +
+                                        AddCategoryName + "/" + Product.Prod_expire + "/" + Product.Prod_price + "는 이미 존재하여 재고 입력이 불가합니다.";
+                                    MessageQueue.Enqueue(message, "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                                    Console.WriteLine(message);
+
+                                }//else
                             }//else
                         }//else
-                    }//else
-                }//if
-                else //콤보박스에서 기존에 있는 카테고리를 선택했을 때
-                {
-                    //Product.Category_id = categoryDao.GetCategoryID(SelectedCategory.Category_name);
-
-                    if (!dao.IsProductDuplicateCheck(Product, SelectedCategory))
+                    }//if
+                    else //콤보박스에서 기존에 있는 카테고리를 선택했을 때
                     {
-                        IsDuplicatedProduct = false;
-                        MessageQueue.Enqueue("신규 재고가 추가되었습니다.", "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                        //Product.Category_id = categoryDao.GetCategoryID(SelectedCategory.Category_name);
 
-                        //재고입력
-                        dao.AddProduct(Product, SelectedCategory);
-
-                        //입고테이블에 추가
-                        dao.StoredProduct(Product, Nurse);
-
-                        //IMP_DEPT 테이블에 추가
-                        dao.AddImpDept(Product, Nurse);
-
-                        // 현재 사용자가 추가 입고 내역을 담을 임시 객체
-                        ProductInOutModel dto = new ProductInOutModel();
-
-                        // 새로 입고 시 Add_list(사용자의 입고 내역 목록) 업데이트
-                        dto.Prod_in_date = DateTime.Now;
-                        dto.Prod_code = Product.Prod_code;
-                        dto.Prod_name = Product.Prod_name;
-                        if (AddCategoryName == null || AddCategoryName.Equals(""))
+                        if (!dao.IsProductDuplicateCheck(Product, SelectedCategory))
                         {
-                            dto.Category_name = SelectedCategory.Category_name;
-                        }
+                            IsDuplicatedProduct = false;
+                            MessageQueue.Enqueue("신규 재고가 추가되었습니다.", "닫기", (x) => { IsDuplicatedProduct = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+
+                            //재고입력
+                            dao.AddProduct(Product, SelectedCategory);
+
+                            //입고테이블에 추가
+                            dao.StoredProduct(Product, Nurse);
+
+                            //IMP_DEPT 테이블에 추가
+                            dao.AddImpDept(Product, Nurse);
+
+                            // 현재 사용자가 추가 입고 내역을 담을 임시 객체
+                            ProductInOutModel dto = new ProductInOutModel();
+
+                            // 새로 입고 시 Add_list(사용자의 입고 내역 목록) 업데이트
+                            dto.Prod_in_date = DateTime.Now;
+                            dto.Prod_code = Product.Prod_code;
+                            dto.Prod_name = Product.Prod_name;
+                            if (AddCategoryName == null || AddCategoryName.Equals(""))
+                            {
+                                dto.Category_name = SelectedCategory.Category_name;
+                            }
+                            else
+                            {
+                                dto.Category_name = AddCategoryName;
+                            }
+                            dto.Prod_expire = Product.Prod_expire;
+                            dto.Prod_price = Product.Prod_price;
+                            dto.Prod_in_count = Product.Prod_total;
+                            dto.Nurse_name = Nurse.Nurse_name;
+
+                            Add_list.Insert(0, dto);
+
+                            var temp1 = Ioc.Default.GetService<ProductShowViewModel>();
+                            temp1.getListbyDept();  // 재고현황 리스트 갱신
+
+                            var temp2 = Ioc.Default.GetService<ProductInOutViewModel>();
+                            temp2.getInListByDept(); // 입고 목록 갱신
+
+                            ResetForm();
+                        }//if
                         else
                         {
-                            dto.Category_name = AddCategoryName;
-                        }
-                        dto.Prod_expire = Product.Prod_expire;
-                        dto.Prod_price = Product.Prod_price;
-                        dto.Prod_in_count = Product.Prod_total;
-                        dto.Nurse_name = Nurse.Nurse_name;
+                            IsDuplicatedProduct = true;
+                            string message = Product.Prod_code + "(" + Product.Prod_name + ") / " +
+                                SelectedCategory.Category_name + "/" + Product.Prod_expire + "/" + Product.Prod_price + "는 이미 존재하여 재고 입력이 불가합니다.";
+                            MessageQueue.Enqueue(message, "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                            Console.WriteLine(message);
 
-                        Add_list.Insert(0, dto);
-
-                        var temp1 = Ioc.Default.GetService<ProductShowViewModel>();
-                        temp1.getListbyDept();  // 재고현황 리스트 갱신
-
-                        var temp2 = Ioc.Default.GetService<ProductInOutViewModel>();
-                        temp2.getInListByDept(); // 입고 목록 갱신
-
-                        ResetForm();
-                    }//if
-                    else
-                    {
-                        IsDuplicatedProduct = true;
-                        string message = Product.Prod_code + "(" + Product.Prod_name + ") / " +
-                            SelectedCategory.Category_name + "/" + Product.Prod_expire + "/" + Product.Prod_price + "는 이미 존재하여 재고 입력이 불가합니다.";
-                        MessageQueue.Enqueue(message, "닫기", (x) => { IsDuplicatedProduct = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                        Console.WriteLine(message);
-                        
+                        }//else
                     }//else
+
+
                 }//else
-
-
-            }//else
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+           
         }// ProductInsert
         #endregion
 
@@ -742,15 +815,24 @@ namespace EasyProject.ViewModel
         }//ResetCommand
         public void ResetForm()
         {
-            Product.Prod_expire = DateTime.Now;
-            Product.Prod_name = null;
-            Product.Prod_price = null;
-            Input_Prod_price = null;
-            Product.Prod_total = null;
-            Input_Prod_total = null;
-            Product.Prod_code = null;
-            SelectedCategory = null;
-            AddCategoryName = null;
+            log.Info("ResetForm() invoked.");
+            try
+            {
+                Product.Prod_expire = DateTime.Now;
+                Product.Prod_name = null;
+                Product.Prod_price = null;
+                Input_Prod_price = null;
+                Product.Prod_total = null;
+                Input_Prod_total = null;
+                Product.Prod_code = null;
+                SelectedCategory = null;
+                AddCategoryName = null;
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+            
         }
         #endregion
 

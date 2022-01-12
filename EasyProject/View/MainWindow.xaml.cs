@@ -44,6 +44,7 @@ namespace EasyProject
 
         void MainWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)       //드래그 무브
         {
+            log.Info("MainWindow_MouseLeftButtonDown(object, SizeChangedEventArgs) invoked.");
             try
             {
                 this.DragMove();
@@ -51,11 +52,12 @@ namespace EasyProject
             catch (Exception ex)
             {
                 log.Error(ex.Message);
-            }     
-        }
+            }
+        }//MainWindow_MouseLeftButtonDown
 
         void Window1_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+            log.Info("Window1_SizeChanged(object, SizeChangedEventArgs) invoked.");
             try
             {
                 ChangeSize(e.NewSize.Width, e.NewSize.Height);
@@ -65,7 +67,7 @@ namespace EasyProject
                 log.Error(ex.Message);
             }
             
-        }
+        }//Window1_SizeChanged
 
         void Window1_Loaded(object sender, RoutedEventArgs e)
         {
@@ -115,13 +117,13 @@ namespace EasyProject
 
                 if (temp.idCheckResult) //만약 로그인에 성공했던 상태라면
                 {
-                    log.Info("Terminated Program");
+                    log.Info("==== Terminated Program ====");
                     temp.Logout_For_QuitProgram(); //로그아웃 로깅 데이터를 추가하고
                     Window.GetWindow(this).Close(); //프로그램 종료
                 }
                 else
                 {
-                    log.Info("Terminated Program");
+                    log.Info("==== Terminated Program ====");
                     Window.GetWindow(this).Close();
                 }
             }
@@ -203,11 +205,13 @@ namespace EasyProject
 
                 if (temp.idCheckResult) //만약 로그인에 성공했던 상태라면
                 {
+                    log.Info("==== Terminated Program ====");
                     temp.Logout_For_QuitProgram(); //로그아웃 로깅 데이터를 추가하고
                     Window.GetWindow(this).Close(); //프로그램 종료
                 }
                 else
                 {
+                    log.Info("==== Terminated Program ====");
                     Window.GetWindow(this).Close();
                 }
             }
