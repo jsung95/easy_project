@@ -185,10 +185,12 @@
     <Compile Include="Dao\IDashBoardDao.cs" />
     <Compile Include="Dao\IDeptDao.cs" />
     <Compile Include="Dao\ILoginDao.cs" />
+    <Compile Include="Dao\ILogDao.cs" />
     <Compile Include="Dao\IOrderDao.cs" />
     <Compile Include="Dao\IProductDao.cs" />
     <Compile Include="Dao\ISignupDao.cs" />
     <Compile Include="Dao\IUsersDao.cs" />
+    <Compile Include="Dao\LogDao.cs" />
     <Compile Include="Dao\LoginDao.cs" />
     <Compile Include="Dao\OrderDao.cs" />
     <Compile Include="Dao\ProductDao.cs" />
@@ -199,6 +201,7 @@
     <Compile Include="Model\DeptModel.cs" />
     <Compile Include="Model\ErrorNotificationMessage.cs" />
     <Compile Include="Model\ImpDeptModel.cs" />
+    <Compile Include="Model\LogModel.cs" />
     <Compile Include="Model\NotificationMessage.cs" />
     <Compile Include="Model\NurseModel.cs" />
     <Compile Include="Model\Notifier.cs" />

@@ -19,5 +19,7 @@ namespace EasyProject
        
         public UserAuthViewModel UAVM => Ioc.Default.GetService<UserAuthViewModel>();
 
+        public LogViewModel LGVM => Ioc.Default.GetService<LogViewModel>();
+
     }
 }
