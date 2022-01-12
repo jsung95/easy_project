@@ -3212,7 +3212,9 @@ namespace EasyProject.Dao
                                           "INNER JOIN dept D " +
                                           "ON O.dept_id = D.dept_id " +
                                           "WHERE O.prod_out_type = :prod_out_type " +
-                                          "AND D.dept_name = :dept_name";
+                                          "AND D.dept_name = :dept_name " +
+                                          "AND ROWNUM<=10 " +
+                                          "ORDER BY O.prod_out_count * P.prod_price DESC";
 
 
                         cmd.Parameters.Add(new OracleParameter("prod_out_type", outtype_dto.Prod_out_type));

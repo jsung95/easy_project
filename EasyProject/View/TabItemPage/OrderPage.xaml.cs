@@ -1,4 +1,6 @@
-﻿using log4net;
+﻿using EasyProject.ViewModel;
+using log4net;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using System;
@@ -148,7 +150,12 @@ namespace EasyProject.View
                     // Save the document...
                     string filename = @"C:\Users\user\Desktop\" + $"신규발주신청서{index}.pdf";
                     document.Save(filename);
-                    MessageBox.Show($"신규발주신청서{index}.pdf 생성");
+
+
+                    var temp = Ioc.Default.GetService<ProductShowViewModel>();
+                    temp.IsInOutEnabled = false;
+                    temp.MessageQueue.Enqueue($"신규발주신청서{index}.pdf 생성", "닫기", (x) => { temp.IsInOutEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                    
                     index++;
                     Process.Start(filename);
 

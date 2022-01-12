@@ -396,7 +396,93 @@
                                                 </materialDesign:PackIcon>
                                             </Button>-->
                                             <StackPanel Orientation="Horizontal">
-                                                <!--출고 -->
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <!--입고-->
+                                                        <materialDesign:PopupBox Name="InPopupBox" StaysOpen="True">
+                                                            <materialDesign:PopupBox.ToggleContent>
+                                                                <materialDesign:PackIcon  Kind="CallReceived" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="50">
+
+                                                                </materialDesign:PackIcon>
+
+
+                                                            </materialDesign:PopupBox.ToggleContent>
+                                                            <Grid Width="250" Height="270" Margin="8,8,8,8">
+                                                                <Grid.Resources>
+                                                                    <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
+                                                                        <Setter Property="Margin" Value="8,8,10,8" />
+                                                                    </Style>
+                                                                    <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+                                                                        <Setter Property="materialDesign:HintAssist.IsFloating" Value="True" />
+                                                                        <Setter Property="Margin" Value="8,8,8,8" />
+                                                                    </Style>
+                                                                </Grid.Resources>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="0.6*" />
+                                                                    <RowDefinition Height="*" />
+                                                                    <RowDefinition Height="*" />
+                                                                    <RowDefinition Height="0.8*" />
+                                                                </Grid.RowDefinitions>
+                                                                <TextBlock  Grid.Row="0" Style="{StaticResource MaterialDesignHeadline6TextBlock}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                                        FontWeight="SemiBold" FontSize="20" Text="입고"></TextBlock>
+                                                                <Grid Grid.Row="1">
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11"  Text="입고유형"></TextBlock>
+                                                                    <TextBox x:Name="SelectedInType_txtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="입고 유형" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Left"
+                                                                    VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Width="80" IsReadOnly="True"
+                                                                    Text="{Binding PSVM.SelectedProduct.SelectedInType, Source={StaticResource Locator}}"/>
+                                                                </Grid>
+
+                                                                <Grid Grid.Row="2">
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <TextBlock  Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" Text="수량" />
+                                                                    <TextBox x:Name="in_popupBox_mount_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Left"
+                                                                    VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Width="80"
+                                                                    Text="{Binding PSVM.SelectedProduct.InputInCount, Source={StaticResource Locator}}"/>
+                                                                </Grid>
+                                                                <Grid Grid.Row="4">
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <Button x:Name="in_popupBox_reset_Btn" Grid.Column="0"  Content="초기화"  FontSize="8"  HorizontalAlignment="Center" Command="{Binding PSVM.InProductReset, Source={StaticResource Locator}}"
+                                                                   VerticalAlignment="Center"  BorderThickness="0" Height="30" Width="55"  Foreground="White" Cursor="Hand">
+                                                                        <Button.Style>
+                                                                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                                                                <Setter  Property="Background" Value="Red" />
+                                                                            </Style>
+                                                                        </Button.Style>
+                                                                    </Button>
+                                                                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                                                        <Button x:Name="in_popupBox_cancel_Btn" Content="취소" Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}" 
+                                                                            FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"  
+                                                                            VerticalAlignment="Center"  BorderThickness="0" Height="28" Width="55" Cursor="Hand"  Foreground="White" >
+                                                                            <Button.Style>
+                                                                                <Style TargetType="Button"  BasedOn="{StaticResource {x:Type Button}}">
+                                                                                    <Setter  Property="Background" Value="Gray" />
+                                                                                </Style>
+                                                                            </Button.Style>
+                                                                        </Button>
+
+                                                                        <Button x:Name="productAdd_Btn" Margin="5,0,0,0" Content="확인"  FontSize="10"  HorizontalAlignment="Center"  
+                                                                    VerticalAlignment="Center"  BorderThickness="0" Height="28" Width="55" Cursor="Hand"  Command="{Binding PSVM.InProductCommand, Source={StaticResource Locator}}" Foreground="white" >
+                                                                            <Button.Style>
+                                                                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                                                                    <Setter  Property="Background" Value="#4472C4" />
+                                                                                </Style>
+                                                                            </Button.Style>
+                                                                        </Button>
+                                                                    </StackPanel>
+                                                                </Grid>
+                                                            </Grid>
+                                                        </materialDesign:PopupBox>
+                                                    </StackPanel>
+                                                    <!--출고 -->
                                                 <materialDesign:PopupBox Name="releasePopupBox" StaysOpen="True">
                                                     <materialDesign:PopupBox.ToggleContent>
                                                         <materialDesign:PackIcon  Kind="CallMade" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20"/>
@@ -502,98 +588,14 @@
                                                     <materialDesign:PopupBox.ToggleContent>
                                                         <materialDesign:PackIcon  Kind="Input" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="50"/>
                                                     </materialDesign:PopupBox.ToggleContent>
-                                                    <Grid Width="600" Height="700" Margin="8,8,8,8">
+                                                    <Grid Width="400" Height="400" Margin="8,8,8,8">
                                                         <Frame Source="/View/OrderPopupBoxPage.xaml"/>
                                                     </Grid>
 
                                                 </materialDesign:PopupBox>
                                             </StackPanel>
 
-                                            <StackPanel Orientation="Horizontal"><!--입고-->
-                                                <materialDesign:PopupBox Name="InPopupBox" StaysOpen="True">
-                                                    <materialDesign:PopupBox.ToggleContent>
-                                                        <materialDesign:PackIcon  Kind="CallReceived" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Width="20">
-                                                            
-                                                        </materialDesign:PackIcon>
-                                                        
-                                                            
-                                                    </materialDesign:PopupBox.ToggleContent>
-                                                    <Grid Width="250" Height="270" Margin="8,8,8,8">
-                                                        <Grid.Resources>
-                                                            <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
-                                                                <Setter Property="Margin" Value="8,8,10,8" />
-                                                            </Style>
-                                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
-                                                                <Setter Property="materialDesign:HintAssist.IsFloating" Value="True" />
-                                                                <Setter Property="Margin" Value="8,8,8,8" />
-                                                            </Style>
-                                                        </Grid.Resources>
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition Height="0.6*" />
-                                                            <RowDefinition Height="*" />
-                                                            <RowDefinition Height="*" />
-                                                            <RowDefinition Height="0.8*" />
-                                                        </Grid.RowDefinitions>
-                                                        <TextBlock  Grid.Row="0" Style="{StaticResource MaterialDesignHeadline6TextBlock}" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                                                        FontWeight="SemiBold" FontSize="20" Text="입고"></TextBlock>
-                                                        <Grid Grid.Row="1">
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="*"/>
-                                                            </Grid.ColumnDefinitions>
-                                                            <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11"  Text="입고유형"></TextBlock>
-                                                            <TextBox x:Name="SelectedInType_txtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="입고 유형" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Left"
-                                                                    VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Width="80" IsReadOnly="True"
-                                                                    Text="{Binding PSVM.SelectedProduct.SelectedInType, Source={StaticResource Locator}}"/>
-                                                        </Grid>
-                                                        
-                                                        <Grid Grid.Row="2">
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="*"/>
-                                                            </Grid.ColumnDefinitions>
-                                                            <TextBlock  Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" Text="수량" />
-                                                            <TextBox x:Name="in_popupBox_mount_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Left"
-                                                                    VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30" Width="80"
-                                                                    Text="{Binding PSVM.SelectedProduct.InputInCount, Source={StaticResource Locator}}"/>
-                                                        </Grid>
-                                                        <Grid Grid.Row="4">
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="*"/>
-                                                            </Grid.ColumnDefinitions>
-                                                            <Button x:Name="in_popupBox_reset_Btn" Grid.Column="0"  Content="초기화"  FontSize="8"  HorizontalAlignment="Center" Command="{Binding PSVM.InProductReset, Source={StaticResource Locator}}"
-                                                                   VerticalAlignment="Center"  BorderThickness="0" Height="30" Width="55"  Foreground="White" Cursor="Hand">
-                                                                <Button.Style>
-                                                                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                                                                        <Setter  Property="Background" Value="Red" />
-                                                                    </Style>
-                                                                </Button.Style>
-                                                            </Button>
-                                                            <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                                                <Button x:Name="in_popupBox_cancel_Btn" Content="취소" Command="{x:Static materialDesign:PopupBox.ClosePopupCommand}" 
-                                                                            FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"  
-                                                                            VerticalAlignment="Center"  BorderThickness="0" Height="28" Width="55" Cursor="Hand"  Foreground="White" >
-                                                                    <Button.Style>
-                                                                        <Style TargetType="Button"  BasedOn="{StaticResource {x:Type Button}}">
-                                                                            <Setter  Property="Background" Value="Gray" />
-                                                                        </Style>
-                                                                    </Button.Style>
-                                                                </Button>
-
-                                                                <Button x:Name="productAdd_Btn" Margin="5,0,0,0" Content="확인"  FontSize="10"  HorizontalAlignment="Center"  
-                                                                    VerticalAlignment="Center"  BorderThickness="0" Height="28" Width="55" Cursor="Hand"  Command="{Binding PSVM.InProductCommand, Source={StaticResource Locator}}" Foreground="white" >
-                                                                    <Button.Style>
-                                                                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                                                                            <Setter  Property="Background" Value="#4472C4" />
-                                                                        </Style>
-                                                                    </Button.Style>
-                                                                </Button>
-                                                            </StackPanel>
-                                                        </Grid>
-                                                    </Grid>
-                                                </materialDesign:PopupBox>
-                                            </StackPanel>
+                                            
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>

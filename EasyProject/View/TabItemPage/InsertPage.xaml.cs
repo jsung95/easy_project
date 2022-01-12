@@ -36,8 +36,10 @@ namespace EasyProject.View
             log.Info("formBtn_Click(object, RoutedEventArgs) invoked.");
             try
             {
-                formBtn.Background= System.Windows.Media.Brushes.Blue;
+                formBtn.Background= new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4472C4"));
+                formBtn.Foreground = System.Windows.Media.Brushes.White;
                 excelBtn.Background = System.Windows.Media.Brushes.LightGray;
+                excelBtn.Foreground = System.Windows.Media.Brushes.Black;
                 InsertPageFrame.Source = new Uri("InsertPage_Form.xaml", UriKind.Relative);
             }
             catch(Exception ex)
@@ -52,7 +54,9 @@ namespace EasyProject.View
             try
             {
                 formBtn.Background = System.Windows.Media.Brushes.LightGray;
-                excelBtn.Background = System.Windows.Media.Brushes.Blue;
+                formBtn.Foreground = System.Windows.Media.Brushes.Black;
+                excelBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4472C4"));
+                excelBtn.Foreground = System.Windows.Media.Brushes.White;
                 InsertPageFrame.Source = new Uri("InsertPage_Excel.xaml", UriKind.Relative);
             }
             catch(Exception ex)
