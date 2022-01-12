@@ -142,6 +142,8 @@ namespace EasyProject.ViewModel
             //오늘날짜 생성
             testdate = DateTime.Now.Year.ToString() + "년 " + DateTime.Now.Month.ToString() + "월 " + DateTime.Now.Day.ToString() + "일";
 
+            
+
         }//Constructor
 
         #region 대시보드

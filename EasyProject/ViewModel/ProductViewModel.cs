@@ -52,7 +52,57 @@ namespace EasyProject.ViewModel
 
         private List<ProductShowModel> excelProductList;
 
-        
+        private DateTime? startDate;
+        public DateTime? StartDate
+        {
+            get { return startDate; }
+            set
+            {
+                startDate = value;
+                if (StartDate > EndDate)
+                {
+                    StartDate = EndDate.Value.AddDays(-1);
+                }
+                dateChanged();
+                OnPropertyChanged("StartDate");
+            }
+        }
+
+        private DateTime? endDate;
+        public DateTime? EndDate
+        {
+            get { return endDate; }
+            set
+            {
+                endDate = value;
+                if (StartDate > EndDate)
+                {
+                    StartDate = EndDate.Value.AddDays(-1);
+                }
+                dateChanged();
+                OnPropertyChanged("EndDate");
+            }
+        }
+        public void dateChanged()
+        {
+            log.Info("dateChanged() invoked.");
+            try
+            {
+                if (Add_list != null)
+                {
+                    Add_list.Clear();
+                    var temp = dao.GetProductInByNurse(Nurse, StartDate, EndDate);
+                    foreach (var item in temp)
+                    {
+                        Add_list.Add(item);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }                      
+        }
 
 
         public ProductViewModel()
@@ -75,12 +125,15 @@ namespace EasyProject.ViewModel
 
             //App.xaml.cs 에 로그인할 때 바인딩 된 로그인 정보 객체
             Nurse = App.nurse_dto;
-
+            //재고등록페이지 날짜
+            //날짜 컨트롤 부서별 해당 최소 날짜 및 최대 날짜로 초기화
+            StartDate = Convert.ToDateTime(dao.GetProductIn_MinDate(Nurse));
+            EndDate = DateTime.Today;
             //현재 로그인 사용자의 입고 목록을 가져옴
-            Add_list = dao.GetProductInByNurse(Nurse);
+            Add_list = dao.GetProductInByNurse(Nurse, StartDate, EndDate);
             
             excelProductList = new List<ProductShowModel>();
-
+           
         }
         
         //재고추가 다이얼로그

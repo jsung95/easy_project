@@ -33,7 +33,8 @@ namespace EasyProject.Dao
         // 입고테이블 최대, 최소 날짜 조회
         string GetProductIn_MaxDate(DeptModel dept_dto);
         string GetProductIn_MinDate(DeptModel dept_dto);
-
+        string GetProductIn_MaxDate(NurseModel nurse_dto);
+        string GetProductIn_MinDate(NurseModel nurse_dto);
 
         // 출고테이블 조회
         List<ProductInOutModel> GetProductOut();
@@ -46,12 +47,12 @@ namespace EasyProject.Dao
         string GetProductOut_MaxDate(DeptModel dept_dto);
         string GetProductOut_MinDate(DeptModel dept_dto);
 
-
         // IMP_DEPT 테이블 추가
         void AddImpDept(ProductModel prod_dto, NurseModel nurse_dto);
 
         // 현재 사용자의 입고 목록을 가져옴(InsertListPage)
         ObservableCollection<ProductInOutModel> GetProductInByNurse(NurseModel nurse_dto);
+        ObservableCollection<ProductInOutModel> GetProductInByNurse(NurseModel nurse_dto, DateTime? start, DateTime? end);
         // 재고 검색
         List<ProductShowModel> SearchProducts(DeptModel dept_dto, string search_type, string search_text);
         // 재고 수정

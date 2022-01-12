@@ -449,7 +449,7 @@ namespace EasyProject.Dao
         {
             log.Info("AddProduct(ProductModel, CategoryModel) invoked.");
 
-            CategoryDao category_dao = new CategoryDao();
+            //CategoryDao category_dao = new CategoryDao();
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -577,7 +577,7 @@ namespace EasyProject.Dao
         {
             log.Info("AddProduct(ProductModel, string) invoked.");
 
-            CategoryDao category_dao = new CategoryDao();
+            //CategoryDao category_dao = new CategoryDao();
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -1227,6 +1227,61 @@ namespace EasyProject.Dao
             return result;
         }//GetProductIn_MaxDate
 
+        public string GetProductIn_MaxDate(NurseModel nurse_dto) //오버로딩
+        {
+
+            log.Info("GetProductIn_MaxDate(NurseModel) invoked.");
+            string result = null;
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT MAX(I.prod_in_date) " +
+                                          "FROM PRODUCT_IN I " +
+                                          "INNER JOIN PRODUCT P " +
+                                          "ON I.prod_id = P.prod_id " +
+                                          "INNER JOIN CATEGORY C " +
+                                          "ON P.category_id = C.category_id " +
+                                          "LEFT OUTER JOIN NURSE N " +
+                                          "ON I.nurse_no = N.nurse_no " +
+                                          "INNER JOIN DEPT D " +
+                                          "ON N.dept_id = D.dept_id " +
+                                          "WHERE I.nurse_no = :no " +
+                                          "AND I.PROD_IN_TYPE = '신규' " +
+                                          "ORDER BY I.prod_in_date desc, P.prod_name ";
+
+
+                        cmd.Parameters.Add(new OracleParameter("name", nurse_dto.Nurse_no));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            result = reader.GetString(0);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }//catch
+
+            return result;
+        }//GetProductIn_MaxDate
+
         public string GetProductIn_MinDate(DeptModel dept_dto)
         {
             log.Info("GetProductIn_MinDate(DeptModel) invoked.");
@@ -1280,6 +1335,58 @@ namespace EasyProject.Dao
             return result;
         }//GetProductIn_MinDate
 
+        public string GetProductIn_MinDate(NurseModel nurse_dto) // 오버로딩
+        {
+            log.Info("GetProductIn_MinDate(DeptModel) invoked.");
+            string result = null;
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT MIN(I.prod_in_date) " +
+                                          "FROM PRODUCT_IN I " +
+                                          "INNER JOIN PRODUCT P " +
+                                          "ON I.prod_id = P.prod_id " +
+                                          "INNER JOIN CATEGORY C " +
+                                          "ON P.category_id = C.category_id " +
+                                          "LEFT OUTER JOIN NURSE N " +
+                                          "ON I.nurse_no = N.nurse_no " +
+                                          "INNER JOIN DEPT D " +
+                                          "ON N.dept_id = D.dept_id " +
+                                          "WHERE I.nurse_no = :no " +
+                                          "AND I.PROD_IN_TYPE = '신규' " +
+                                          "ORDER BY I.prod_in_date desc, P.prod_name ";
+
+
+                        cmd.Parameters.Add(new OracleParameter("no", nurse_dto.Nurse_no));
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            result = reader.GetString(0);
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }//catch
+
+            return result;
+        }//GetProductIn_MinDate
 
         public List<ProductInOutModel> GetProductOut()
         {
@@ -1998,6 +2105,87 @@ namespace EasyProject.Dao
             return list;
         }//GetProductInByNurse
 
+        public ObservableCollection<ProductInOutModel> GetProductInByNurse(NurseModel nurse_dto, DateTime? start, DateTime? end)
+        {
+            log.Info("GetProductInByNurse(NurseModel) invoked.");
+            ObservableCollection<ProductInOutModel> list = new ObservableCollection<ProductInOutModel>();
+            Console.WriteLine("GetProductInByNurse 실행");
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+
+                        cmd.CommandText = "SELECT P.prod_code, P.prod_name, C.category_name, P.prod_expire, P.prod_price, I.prod_in_count, N.nurse_name, I.prod_in_date, I.prod_in_from, I.prod_in_to, I.prod_in_type " +
+                                          "FROM PRODUCT_IN I " +
+                                          "INNER JOIN PRODUCT P " +
+                                          "ON I.prod_id = P.prod_id " +
+                                          "INNER JOIN CATEGORY C " +
+                                          "ON P.category_id = C.category_id " +
+                                          "LEFT OUTER JOIN NURSE N " +
+                                          "ON I.nurse_no = N.nurse_no " +
+                                          "WHERE I.nurse_no = :no " +
+                                          "AND I.PROD_IN_TYPE = '신규' " +
+                                          "AND I.prod_in_date BETWEEN :start_date AND :end_date + 1 " +
+                                          "ORDER BY I.prod_in_date DESC";
+
+                        cmd.Parameters.Add(new OracleParameter(":no", nurse_dto.Nurse_no));
+                        cmd.Parameters.Add(new OracleParameter("start_date", start));
+                        cmd.Parameters.Add(new OracleParameter("end_date", end));
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string prod_code = reader.GetString(0);
+                            string prod_name = reader.GetString(1);
+                            string category_name = reader.GetString(2);
+                            DateTime prod_expire = reader.GetDateTime(3);
+                            int? prod_price = reader.GetInt32(4);
+                            int? prod_in_count = reader.GetInt32(5);
+                            string nurse_name = reader.GetString(6);
+                            DateTime prod_in_date = reader.GetDateTime(7);
+                            string prod_in_from = reader.GetString(8);
+                            string prod_in_to = reader.GetString(9);
+                            string prod_in_type = reader.GetString(10);
+
+                            ProductInOutModel dto = new ProductInOutModel()
+                            {
+                                Prod_code = prod_code,
+                                Prod_name = prod_name,
+                                Category_name = category_name,
+                                Prod_expire = prod_expire,
+                                Prod_price = prod_price,
+                                Prod_in_count = prod_in_count,
+                                Nurse_name = nurse_name,
+                                Prod_in_date = prod_in_date,
+                                Prod_in_from = prod_in_from,
+                                Prod_in_to = prod_in_to,
+                                Prod_in_type = prod_in_type
+                            };
+
+                            list.Add(dto);
+
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }//catch
+
+            return list;
+        }//GetProductInByNurse
 
         public List<ProductShowModel> SearchProducts(DeptModel dept_dto, string search_type, string search_text)
         {
