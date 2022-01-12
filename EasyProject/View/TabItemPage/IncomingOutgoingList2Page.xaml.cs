@@ -66,6 +66,9 @@ namespace EasyProject.View.TabItemPage
             log.Info("Export_btn_Click(object, RoutedEventArgs) invoked.");
             try
             {
+                var temp = Ioc.Default.GetService<ProductShowViewModel>();
+                userDept00 = temp.SelectedDept.Dept_name;
+
                 dataGrid2.SelectAllCells();
                 dataGrid2.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
                 ApplicationCommands.Copy.Execute(null, dataGrid2);
@@ -121,10 +124,10 @@ namespace EasyProject.View.TabItemPage
                 var temp = Ioc.Default.GetService<ProductInOutViewModel>();
                 var datas = temp.OutLstOfRecords;
                 userDept00 = temp.SelectedDept.Dept_name;
-                string result = "제품코드, 제품명, 품목/종류, 유통기한, 출고일, 출고유형, 관리자, 소속부서 \n";
+                string result = "제품코드, 제품명, 품목/종류, 유통기한, 출고일, 출고유형, 관리자\n";
                 foreach (var data in datas)
                 {
-                    result = result + data.Prod_code + ", " + data.Prod_name + ", " + data.Category_name + ", " + data.Prod_expire + ", " + data.Prod_out_date + ", " + data.Prod_out_type + ", " + data.Nurse_name + ", " + data.Prod_out_from + "\n";
+                    result = result + data.Prod_code + ", " + data.Prod_name + ", " + data.Category_name + ", " + data.Prod_expire + ", " + data.Prod_out_date + ", " + data.Prod_out_type + ", " + data.Nurse_name + "(" + data.Prod_out_from + ")\n";
 
                 }
                 //Clipboard.Clear();
