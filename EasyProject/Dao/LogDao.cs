@@ -93,11 +93,13 @@ namespace EasyProject.Dao
                         cmd.Connection = conn;
                         cmd.CommandText = "SELECT /*+ INDEX(EVENT_LOG_INDEX)*/ * " +
                                           "FROM EVENT_LOG " +
-                                          "WHERE log_date BETWEEN :start_date AND :end_date " +
+                                          "WHERE log_date BETWEEN :start_date AND :end_date +1 " +
                                           "ORDER BY log_no";
 
-                        cmd.Parameters.Add(new OracleParameter("start_date", start_date));
-                        cmd.Parameters.Add(new OracleParameter("end_date", end_date));
+                        DateTime? start = new DateTime(start_date.Value.Year, start_date.Value.Month, start_date.Value.Day, 00, 00, 01);
+                        DateTime? end = new DateTime(end_date.Value.Year, end_date.Value.Month, end_date.Value.Day, 23, 59, 59);
+                        cmd.Parameters.Add(new OracleParameter("start_date", start));
+                        cmd.Parameters.Add(new OracleParameter("end_date", end));
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
@@ -231,23 +233,25 @@ namespace EasyProject.Dao
                         cmd.CommandText = "SELECT * " +
                                           "FROM EVENT_LOG " +
                                           "WHERE " +
-                                          "((:search_type = '사번' AND log_date BETWEEN :start_date AND :end_date +1) AND (user_no LIKE '%'||:search_text||'%')) " +
+                                          "((:search_type = '사번' AND log_date BETWEEN :start_date AND :end_date) AND (user_no LIKE '%'||:search_text||'%')) " +
                                           "OR " +
-                                          "((:search_type = '사용자명' AND log_date BETWEEN :start_date AND :end_date +1) AND (user_name LIKE '%'||:search_text||'%')) " +
+                                          "((:search_type = '사용자명' AND log_date BETWEEN :start_date AND :end_date) AND (user_name LIKE '%'||:search_text||'%')) " +
                                           "OR " +
-                                          "((:search_type = '클래스' AND log_date BETWEEN :start_date AND :end_date +1) AND (log_class LIKE '%'||:search_text||'%')) " +
+                                          "((:search_type = '클래스' AND log_date BETWEEN :start_date AND :end_date) AND (log_class LIKE '%'||:search_text||'%')) " +
                                           "OR " +
-                                          "((:search_type = '메소드' AND log_date BETWEEN :start_date AND :end_date +1) AND (log_method LIKE '%'||:search_text||'%')) " +
+                                          "((:search_type = '메소드' AND log_date BETWEEN :start_date AND :end_date) AND (log_method LIKE '%'||:search_text||'%')) " +
                                           "OR " +
-                                          "((:search_type = '내용' AND log_date BETWEEN :start_date AND :end_date +1) AND (message LIKE '%'||:search_text||'%')) " +
+                                          "((:search_type = '내용' AND log_date BETWEEN :start_date AND :end_date) AND (message LIKE '%'||:search_text||'%')) " +
                                           "ORDER BY log_no";
 
                         cmd.BindByName = true;
 
                         cmd.Parameters.Add(new OracleParameter("search_type", search_type));
                         cmd.Parameters.Add(new OracleParameter("search_text", search_keyword));
-                        cmd.Parameters.Add(new OracleParameter("start_date", start_date));
-                        cmd.Parameters.Add(new OracleParameter("end_date", end_date));
+                        DateTime? start = new DateTime(start_date.Value.Year, start_date.Value.Month, start_date.Value.Day, 00, 00, 01);
+                        DateTime? end = new DateTime(end_date.Value.Year, end_date.Value.Month, end_date.Value.Day, 23, 59, 59);
+                        cmd.Parameters.Add(new OracleParameter("start_date", start));
+                        cmd.Parameters.Add(new OracleParameter("end_date", end));
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
@@ -420,11 +424,13 @@ namespace EasyProject.Dao
                         cmd.Connection = conn;
                         cmd.CommandText = "SELECT * " +
                             "FROM LOGIN_LOG " +
-                            "WHERE login_log_date BETWEEN :start_date AND :end_date " +
+                            "WHERE login_log_date BETWEEN :start_date AND :end_date +1 " +
                             "ORDER BY login_log_no ";
 
-                        cmd.Parameters.Add(new OracleParameter("start_date", start_date));
-                        cmd.Parameters.Add(new OracleParameter("end_date", end_date));
+                        DateTime? start = new DateTime(start_date.Value.Year, start_date.Value.Month, start_date.Value.Day, 00, 00, 01);
+                        DateTime? end = new DateTime(end_date.Value.Year, end_date.Value.Month, end_date.Value.Day, 23, 59, 59);
+                        cmd.Parameters.Add(new OracleParameter("start_date", start));
+                        cmd.Parameters.Add(new OracleParameter("end_date", end));
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
@@ -479,19 +485,22 @@ namespace EasyProject.Dao
                         cmd.CommandText = "SELECT * " +
                             "FROM LOGIN_LOG " +
                             "WHERE " +
-                            "((:search_type = '사용자명' AND login_log_date BETWEEN :start_date AND :end_date +1) AND (nurse_name LIKE '%'||:search_text||'%')) " +
+                            "((:search_type = '사용자명' AND login_log_date BETWEEN :start_date AND :end_date) AND (nurse_name LIKE '%'||:search_text||'%')) " +
                             "OR " +
-                            "((:search_type = '부서명' AND login_log_date BETWEEN :start_date AND :end_date +1) AND (dept_name LIKE '%'||:search_text||'%')) " +
+                            "((:search_type = '부서명' AND login_log_date BETWEEN :start_date AND :end_date) AND (dept_name LIKE '%'||:search_text||'%')) " +
                             "OR " +
-                            "((:search_type = 'IP주소' AND login_log_date BETWEEN :start_date AND :end_date +1) AND (login_log_ip LIKE '%'||:search_text||'%')) " +
+                            "((:search_type = 'IP주소' AND login_log_date BETWEEN :start_date AND :end_date) AND (login_log_ip LIKE '%'||:search_text||'%')) " +
                             "ORDER BY login_log_no ";
 
                         cmd.BindByName = true;
 
                         cmd.Parameters.Add(new OracleParameter("search_type", search_type));
                         cmd.Parameters.Add(new OracleParameter("search_text", search_keyword));
-                        cmd.Parameters.Add(new OracleParameter("start_date", start_date));
-                        cmd.Parameters.Add(new OracleParameter("end_date", end_date));
+
+                        DateTime? start = new DateTime(start_date.Value.Year, start_date.Value.Month, start_date.Value.Day, 00, 00, 01);
+                        DateTime? end = new DateTime(end_date.Value.Year, end_date.Value.Month, end_date.Value.Day, 23, 59, 59);
+                        cmd.Parameters.Add(new OracleParameter("start_date", start));
+                        cmd.Parameters.Add(new OracleParameter("end_date", end));
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
@@ -546,19 +555,21 @@ namespace EasyProject.Dao
                         cmd.CommandText = "SELECT * " +
                             "FROM LOGOUT_LOG " +
                             "WHERE " +
-                            "((:search_type = '사용자명' AND logout_log_date BETWEEN :start_date AND :end_date +1) AND (nurse_name LIKE '%'||:search_text||'%')) " +
+                            "((:search_type = '사용자명' AND logout_log_date BETWEEN :start_date AND :end_date) AND (nurse_name LIKE '%'||:search_text||'%')) " +
                             "OR " +
-                            "((:search_type = '부서명' AND logout_log_date BETWEEN :start_date AND :end_date +1) AND (dept_name LIKE '%'||:search_text||'%')) " +
+                            "((:search_type = '부서명' AND logout_log_date BETWEEN :start_date AND :end_date) AND (dept_name LIKE '%'||:search_text||'%')) " +
                             "OR " +
-                            "((:search_type = 'IP주소' AND logout_log_date BETWEEN :start_date AND :end_date +1) AND (logout_log_ip LIKE '%'||:search_text||'%')) " +
+                            "((:search_type = 'IP주소' AND logout_log_date BETWEEN :start_date AND :end_date) AND (logout_log_ip LIKE '%'||:search_text||'%')) " +
                             "ORDER BY logout_log_no ";
 
                         cmd.BindByName = true;
 
                         cmd.Parameters.Add(new OracleParameter("search_type", search_type));
                         cmd.Parameters.Add(new OracleParameter("search_text", search_keyword));
-                        cmd.Parameters.Add(new OracleParameter("start_date", start_date));
-                        cmd.Parameters.Add(new OracleParameter("end_date", end_date));
+                        DateTime? start = new DateTime(start_date.Value.Year, start_date.Value.Month, start_date.Value.Day, 00, 00, 01);
+                        DateTime? end = new DateTime(end_date.Value.Year, end_date.Value.Month, end_date.Value.Day, 23, 59, 59);
+                        cmd.Parameters.Add(new OracleParameter("start_date", start));
+                        cmd.Parameters.Add(new OracleParameter("end_date", end));
 
                         OracleDataReader reader = cmd.ExecuteReader();
 
@@ -614,7 +625,7 @@ namespace EasyProject.Dao
                         cmd.Connection = conn;
                         cmd.CommandText = "SELECT * " +
                             "FROM LOGOUT_LOG " +
-                            "WHERE logout_log_date BETWEEN :start_date AND :end_date " +
+                            "WHERE logout_log_date BETWEEN :start_date AND :end_date +1 " +
                             "ORDER BY logout_log_no ";
 
                         cmd.Parameters.Add(new OracleParameter("start_date", start_date));
@@ -775,6 +786,8 @@ namespace EasyProject.Dao
 
             return result;
         }//GetLogOutLogs_MinDate
+
+
         public List<LogModel> Logintotal()
         {
             log.Info("GetAllLogs() invoked.");
@@ -829,7 +842,7 @@ namespace EasyProject.Dao
 
             return list;
 
-        }//GetAllLogs()
+        }//Logintotal()
 
         public List<LogModel> Logouttotal()
         {
@@ -885,8 +898,7 @@ namespace EasyProject.Dao
 
             return list;
 
-        }//GetAllLogs()
-
+        }//Logouttotal()
 
 
     }//class

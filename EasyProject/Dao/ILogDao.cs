@@ -30,7 +30,9 @@ namespace EasyProject.Dao
         List<LogModel> GetLogOutLogs(string search_type, string search_keyword, DateTime? start_date, DateTime? end_date);
         string GetLogOutLogs_MinDate();
 
-
+        //그래프
+        List<LogModel> Logintotal();
+        List<LogModel> Logouttotal();
     }//interface
 
 }//namespace

@@ -50,7 +50,7 @@ namespace EasyProject.ViewModel
             //날짜
             //EVENT
             SelectedStartDate_Event_Log = Convert.ToDateTime(log_dao.GetEventLogs_Min_Date());
-            SelectedEndDate_Event_Log = DateTime.Today;
+            SelectedEndDate_Event_Log = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 23, 59, 59);
             //LOGIN
             SelectedStartDate_LogIn_Log = Convert.ToDateTime(log_dao.GetLoginLogs_Min_Date());
             SelectedEndDate_LogIn_Log = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 23, 59, 59);
@@ -96,7 +96,7 @@ namespace EasyProject.ViewModel
             { 
                 selectedStartDate_Event_Log = value;
                 SearchKeyword_Event_Log = null;
-                GetEventLogs();
+                //GetEventLogs();
 
                 OnPropertyChanged("SelectedStartDate_Event_Log"); 
             }
@@ -111,7 +111,7 @@ namespace EasyProject.ViewModel
             {
                 selectedEndDate_Event_Log = value;
                 SearchKeyword_Event_Log = null;
-                GetEventLogs();
+                //GetEventLogs();
 
                 OnPropertyChanged("SelectedEndDate_Event_Log"); 
             }
