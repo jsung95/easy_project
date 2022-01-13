@@ -890,7 +890,7 @@ namespace EasyProject.Dao
         {
             log.Info("GetProductIn(DeptModel, DateTime?, DateTime?) invoked.");
             List<ProductInOutModel> list = new List<ProductInOutModel>();
-
+            
             try
             {
                 OracleConnection conn = new OracleConnection(connectionString);
@@ -919,8 +919,15 @@ namespace EasyProject.Dao
                                           "ORDER BY I.prod_in_date desc, P.prod_name ";
 
                         cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
-                        cmd.Parameters.Add(new OracleParameter("start_date", start_date));
-                        cmd.Parameters.Add(new OracleParameter("end_date", end_date));
+
+                        DateTime? start = new DateTime(start_date.Value.Year, start_date.Value.Month, start_date.Value.Day, 00, 00, 01);
+                        DateTime? end = new DateTime(end_date.Value.Year, end_date.Value.Month, end_date.Value.Day, 23, 59, 59);
+
+
+                        
+
+                        cmd.Parameters.Add(new OracleParameter("start_date", start));
+                        cmd.Parameters.Add(new OracleParameter("end_date", end));
 
                         Console.WriteLine("ProductDao - GetProductIn() 부서명 파라미터: " + dept_dto.Dept_name);
                         OracleDataReader reader = cmd.ExecuteReader();
@@ -1111,13 +1118,21 @@ namespace EasyProject.Dao
 
                         cmd.BindByName = true;
 
+
+
                         cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
                         cmd.Parameters.Add(new OracleParameter("search_combo", search_type));
                         cmd.Parameters.Add(new OracleParameter("search_text", search_text));
 
-                        cmd.Parameters.Add(new OracleParameter("start_date", start_date));
-                        cmd.Parameters.Add(new OracleParameter("end_date", end_date));
+                        DateTime? start = new DateTime(start_date.Value.Year, start_date.Value.Month, start_date.Value.Day, 00, 00, 01);
+                        DateTime? end = new DateTime(end_date.Value.Year, end_date.Value.Month, end_date.Value.Day, 23, 59, 59);
 
+                        cmd.Parameters.Add(new OracleParameter("start_date", start));
+                        cmd.Parameters.Add(new OracleParameter("end_date", end));
+
+
+                        Console.WriteLine("start : " + start);
+                        Console.WriteLine("end : " + end);
                         Console.WriteLine("dept_name : " + dept_dto.Dept_name);
                         Console.WriteLine("search_combo : " + search_type);
                         Console.WriteLine("search_text : " + search_text);
@@ -1586,11 +1601,18 @@ namespace EasyProject.Dao
                                           "AND O.prod_out_date BETWEEN :start_date AND :end_date + 1 " +
                                           "ORDER BY O.prod_out_date desc, P.prod_name";
 
-                        cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
-                        cmd.Parameters.Add(new OracleParameter("start_date", start_date));
-                        cmd.Parameters.Add(new OracleParameter("end_date", end_date));
-                        Console.WriteLine("ProductDao - GetProductOut() 부서명 파라미터: " + dept_dto.Dept_name);
 
+                        DateTime? start = new DateTime(start_date.Value.Year, start_date.Value.Month, start_date.Value.Day, 00, 00, 01);
+                        DateTime? end = new DateTime(end_date.Value.Year, end_date.Value.Month, end_date.Value.Day, 23, 59, 59);
+
+                        cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
+                        cmd.Parameters.Add(new OracleParameter("start_date", start));
+                        cmd.Parameters.Add(new OracleParameter("end_date", end));
+
+                        Console.WriteLine("@@@@@@");
+                        Console.WriteLine("ProductDao - GetProductOut() 부서명 파라미터: " + dept_dto.Dept_name);
+                        Console.WriteLine(start);
+                        Console.WriteLine(end);
                         OracleDataReader reader = cmd.ExecuteReader();
 
                         while (reader.Read())
@@ -1780,9 +1802,10 @@ namespace EasyProject.Dao
                         cmd.Parameters.Add(new OracleParameter("dept_name", dept_dto.Dept_name));
                         cmd.Parameters.Add(new OracleParameter("search_combo", search_type));
                         cmd.Parameters.Add(new OracleParameter("search_text", search_text));
-
-                        cmd.Parameters.Add(new OracleParameter("start_date", start_date));
-                        cmd.Parameters.Add(new OracleParameter("end_date", end_date));
+                        DateTime? start = new DateTime(start_date.Value.Year, start_date.Value.Month, start_date.Value.Day, 00, 00, 01);
+                        DateTime? end = new DateTime(end_date.Value.Year, end_date.Value.Month, end_date.Value.Day, 23, 59, 59);
+                        cmd.Parameters.Add(new OracleParameter("start_date", start));
+                        cmd.Parameters.Add(new OracleParameter("end_date", end));
 
                         Console.WriteLine("dept_name : " + dept_dto.Dept_name);
                         Console.WriteLine("search_combo : " + search_type);

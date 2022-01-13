@@ -136,14 +136,14 @@ namespace EasyProject.ViewModel
             //날짜 컨트롤 부서별 해당 최소 날짜 및 최대 날짜로 초기화
             //입고
             SelectedStartDate_In = Convert.ToDateTime(product_dao.GetProductIn_MinDate(SelectedDept));
-            if(SelectedStartDate_In.Value.Year == 1)
-            {
-                SelectedStartDate_In = DateTime.Today.AddDays(-1); // MinDate가 0001 01 01 인 경우 전날로 설정
-            }
+            //if(SelectedStartDate_In.Value.Year == 1)
+            //{
+            //    SelectedStartDate_In = DateTime.Today.AddDays(-1); // MinDate가 0001 01 01 인 경우 전날로 설정
+            //}
             //SelectedEndDate_In = Convert.ToDateTime(product_dao.GetProductIn_MaxDate(SelectedDept));
-            SelectedEndDate_In = DateTime.Today;
+            SelectedEndDate_In = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 23, 59, 59);
 
-            //출고 : 날짜 컨트롤 위의 하나로 입고/출고 두 페이지 모두 사용중
+            //출고 
             //SelectedStartDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MinDate(SelectedDept));
             //SelectedEndDate_Out = Convert.ToDateTime(product_dao.GetProductOut_MaxDate(SelectedDept));
             //SelectedEndDate_Out = DateTime.Today;
@@ -1129,7 +1129,7 @@ namespace EasyProject.ViewModel
 
         public string SelectedSearchType_Out { get; set; }
 
-        //입고 시작일을 담을 프로퍼티
+/*        //입고 시작일을 담을 프로퍼티
         private DateTime? selectedStartDate_Out;
         public DateTime? SelectedStartDate_Out
         {
@@ -1149,8 +1149,8 @@ namespace EasyProject.ViewModel
                 DashboardPrint5(selectedStartDate_Out, selectedEndDate_Out);
                 OnPropertyChanged("SelectedStartDate_Out");
             }
-        }
-        //종료일을 담을 프로퍼티
+        }*/
+/*        //종료일을 담을 프로퍼티
         private DateTime? selectedEndDate_Out;
         public DateTime? SelectedEndDate_Out
         {
@@ -1170,7 +1170,7 @@ namespace EasyProject.ViewModel
                 DashboardPrint5(selectedStartDate_Out, selectedEndDate_Out);
                 OnPropertyChanged("SelectedEndDate_Out");
             }
-        }
+        }*/
         //화면에 보여줄 리스트 입고 내역 담을 프로퍼티
         private ObservableCollection<ProductInOutModel> product_out;
         public ObservableCollection<ProductInOutModel> Product_out
@@ -1259,7 +1259,7 @@ namespace EasyProject.ViewModel
 
             try
             {
-                if (SelectedStartDate_Out != null && SelectedEndDate_Out != null)
+                if (SelectedStartDate_In != null && SelectedEndDate_In != null)
                 {
                     OutLstOfRecords = new ObservableCollection<ProductInOutModel>(product_dao.GetProductOut(SelectedDept, SelectedStartDate_In, SelectedEndDate_In));
                     updateOutSearchedProducts();

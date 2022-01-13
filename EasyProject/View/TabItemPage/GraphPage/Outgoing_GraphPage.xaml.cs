@@ -46,7 +46,7 @@ namespace EasyProject.View.TabItemPage.GraphPage
                 new Uri("/View/TabItemPage/GraphPage/DiscardProdPrice_GraphPage.xaml", UriKind.Relative) //재고현황화면 --테스트
                 );
                 var dash = Ioc.Default.GetService<ProductInOutViewModel>();
-                dash.DashboardPrint2(dash.SelectedStartDate_Out, dash.SelectedEndDate_Out);
+                dash.DashboardPrint2(dash.SelectedStartDate_In, dash.SelectedEndDate_In);
                 dash.DashboardPrint_Pie();
                 
             }
