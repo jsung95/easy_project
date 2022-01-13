@@ -160,9 +160,10 @@ namespace EasyProject.Dao
                         cmd.Connection = conn;
                         cmd.CommandText = "UPDATE NURSE " +
                                           "SET nurse_auth = :auth " +
-                                          $"WHERE nurse_no IN ({user_nos})";
+                                          "WHERE nurse_no IN (:user_nos) ";
 
-                        cmd.Parameters.Add(new OracleParameter("auth", auth));                      
+                        cmd.Parameters.Add(new OracleParameter("auth", auth));
+                        cmd.Parameters.Add(new OracleParameter(":user_nos", user_nos));
                         cmd.ExecuteNonQuery();
 
                         //MessageBox.Show($"선택한 사용자들의 권한을 {auth}으로 변경하였습니다.");
