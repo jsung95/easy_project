@@ -52,7 +52,7 @@
                     </ComboBox>
                 </Grid>-->
                 <Grid Grid.Column="1">
-                    <Label Content="품목/종류의 총 수량" FontSize="15" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,0,0"></Label>
+                    <Label Content="품목의 총 수량" FontSize="15" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,0,0"></Label>
                 </Grid>
                 <Grid Grid.Column="2">
                     <Button x:Name="rightBtn"  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
@@ -78,7 +78,7 @@
                             <!-- LabelFormatter="{Binding Formatter}" 바인딩-->
                         </lvc:CartesianChart.AxisY>
                         <lvc:CartesianChart.AxisX>
-                            <lvc:Axis Labels="{Binding BarLabels2}" Title="품목/종류별" >
+                            <lvc:Axis Labels="{Binding BarLabels2}" Title="품목별" >
                             </lvc:Axis>
                             <!--Labels="{Binding BarLabels}" 바인딩-->
                         </lvc:CartesianChart.AxisX>
