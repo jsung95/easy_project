@@ -80,7 +80,7 @@ namespace EasyProject.ViewModel
             set
             {
                 isToolTipChecked = value;
-                OnPropertyChanged("IsToolTipChecked");
+                OnPropertyChanged("IsToolTipChecked");               
             }
         }
 
