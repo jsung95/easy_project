@@ -17,6 +17,7 @@ using Microsoft.Win32;
 using EasyProject.ViewModel;
 using Excel = Microsoft.Office.Interop.Excel;
 using log4net;
+using System.Diagnostics;
 
 namespace EasyProject.View.TabItemPage
 {
@@ -40,7 +41,9 @@ namespace EasyProject.View.TabItemPage
             log.Info("fileDownLoadBtn_Click(object, RoutedEventArgs) invoked.");
             try
             {    
-                string f_path = @"C:\Users\user\Documents\GitHub\easy_project\EasyProject\ExcelFile\재고입력폼.xlsx";
+                //string f_path = @"C:\Users\user\Documents\GitHub\easy_project\EasyProject\ExcelFile\재고입력폼.xlsx";
+                var f=System.IO.Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+                string f_path = f + "\\재고입력폼.xlsx";
 
                 Excel.Application excel_app = new Excel.Application();
 
