@@ -504,6 +504,10 @@ namespace EasyProject.ViewModel
 
                         updateSearchedProducts(false);
                         UpdateRecordCount();
+
+                        var temp = Ioc.Default.GetService<ProductInOutViewModel>();
+                        temp.getOutListByDept(); // 입출고현황 페이지 출고목록 갱신
+                        temp.getInListByDept(); // 입출고현황 페이지 출고목록 갱신
                     }
                     else
                     {
@@ -558,6 +562,10 @@ namespace EasyProject.ViewModel
 
                         updateSearchedProducts(false);
                         UpdateRecordCount();
+
+                        var temp = Ioc.Default.GetService<ProductInOutViewModel>();
+                        temp.getOutListByDept(); // 입출고현황 페이지 출고목록 갱신
+                        temp.getInListByDept(); // 입출고현황 페이지 출고목록 갱신
                     }
                     else
                     {
@@ -608,6 +616,10 @@ namespace EasyProject.ViewModel
 
                         updateSearchedProducts(false);
                         UpdateRecordCount();
+
+                        var temp = Ioc.Default.GetService<ProductInOutViewModel>();
+                        temp.getOutListByDept(); // 입출고현황 페이지 출고목록 갱신
+                        temp.getInListByDept(); // 입출고현황 페이지 출고목록 갱신
                     }
                     else
                     {
