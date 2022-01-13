@@ -34,7 +34,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBox x:Name="id_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="아이디" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                <TextBox x:Name="id_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="사번" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
                          FontSize="20" VerticalAlignment="Bottom" Margin="75,0,75,21" Height="40" Width="300" Background="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" 
                          SelectionBrush="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" 
                          Text="{Binding Nurse.Nurse_no}"/>

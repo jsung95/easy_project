@@ -104,6 +104,19 @@ namespace EasyProject.ViewModel
         }
 
 
+        //회원가입 정규식 메시지
+        private string signUpMessage;
+        public string SignUpMessage
+        {
+            get { return signUpMessage; }
+            set 
+            {
+                signUpMessage = value;
+                OnPropertyChanged("SignUpMessage");
+            }
+        }
+
+
         // 회원가입 성공 유무를 체크하기 위한 프로퍼티
         //public bool isSignup { get; set; }
 
