@@ -38,15 +38,30 @@ namespace EasyProject
             user_auth.Text = App.nurse_dto.Nurse_auth;
             user_dept.Text = dept_dao.GetDeptName_Return_String((int)App.nurse_dto.Dept_id);
             this.Loaded += PageLoaded;
+            TabFrame.NavigationService.Navigated += new NavigatedEventHandler(NavigationService_Navigated);
         }
-        /*private void StatusBtn_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate
-                 (
-                 new Uri("/View/TabItemPage/StatusPage.xaml", UriKind.Relative) //재고현황화면 --테스트
-                 );
 
-        }*/
+        private void NavigationService_Navigated(object sender, NavigationEventArgs e)
+        {
+            log.Info("NavigationService_Navigated(object, NavigationEventArgs) invoked.");
+            try
+            {
+                TabFrame.NavigationService.RemoveBackEntry();
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }//catch
+        }//NavigationService_Navigated
+
+        /*private void StatusBtn_Click(object sender, RoutedEventArgs e)
+{
+   NavigationService.Navigate
+        (
+        new Uri("/View/TabItemPage/StatusPage.xaml", UriKind.Relative) //재고현황화면 --테스트
+        );
+
+}*/
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
             log.Info("PageLoaded(object, RoutedEventArgs) invoked.");
