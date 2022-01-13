@@ -515,7 +515,7 @@ namespace EasyProject.View.TabItemPage
                     int intValue = (int)value;//남은 일수
                     int compareToValue = Int32.Parse(parameter.ToString());
 
-                    checkBool = ((intValue > compareToValue) && (intValue - compareToValue < 3))
+                    checkBool = ((intValue > compareToValue) && (intValue - compareToValue <= 3))
                     || (intValue == compareToValue);
                 }
 

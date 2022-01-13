@@ -213,7 +213,7 @@
                         <DataGrid x:Name="dataGrid" Grid.Row="1" FocusVisualStyle="{x:Null}"
                             HorizontalAlignment="Left" Margin="10 0"
                             AllowDrop="False" PreviewKeyDown="DataGridKeyDown"
-                            VerticalAlignment="Top" AutoGenerateColumns="False"
+                            VerticalAlignment="Top" AutoGenerateColumns="False" CanUserAddRows="False"
                             ColumnWidth="*" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" SelectionUnit="FullRow" Cursor="Hand">
 
                         
@@ -624,9 +624,9 @@
                                 <materialDesign:PackIcon Kind="Circle" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"></materialDesign:PackIcon>
                             <Label Content="유통기한 지남" FontSize="8" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                             <materialDesign:PackIcon Kind="Circle" Foreground="Yellow" HorizontalAlignment="Center" VerticalAlignment="Center"></materialDesign:PackIcon>
-                            <Label Content="3일 미만" FontSize="8" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <Label Content="3일 이하" FontSize="8" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                             <materialDesign:PackIcon Kind="Circle" Foreground="Green" HorizontalAlignment="Center" VerticalAlignment="Center"></materialDesign:PackIcon>
-                            <Label Content="3일 이상" FontSize="8" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <Label Content="3일 초과" FontSize="8" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="5 0 0 0">
                             <Button Height="23" HorizontalAlignment="Right"  Command="{Binding FirstCommand}"
