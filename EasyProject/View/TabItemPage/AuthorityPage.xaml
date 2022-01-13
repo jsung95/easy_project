@@ -283,6 +283,22 @@
 
         </Grid>
         <Grid Grid.Row="2">
+            <materialDesign:Snackbar x:Name="Snackbar" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+                <materialDesign:Snackbar.Style>
+                    <Style TargetType="materialDesign:Snackbar">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsAuthChangeEnabled}" Value="True">
+                                <Setter Property="MessageQueue" Value="{Binding MessageQueue}"></Setter>
+                                <Setter Property="Background" Value="#Ea4a2d"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsAuthChangeEnabled}" Value="False">
+                                <Setter Property="MessageQueue" Value="{Binding MessageQueue}"></Setter>
+                                <Setter Property="Background" Value="Green"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </materialDesign:Snackbar.Style>
+            </materialDesign:Snackbar>
             <!--<Button Content="확인" Background="#4472C4"  FontSize="11" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="15"></Button>-->
         </Grid>
     </Grid>
