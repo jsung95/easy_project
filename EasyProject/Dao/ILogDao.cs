@@ -33,6 +33,14 @@ namespace EasyProject.Dao
         //그래프
         List<LogModel> Logintotal();
         List<LogModel> Logouttotal();
+
+        // INFO, ERROR LEVEL COUNT
+        int GetLogLevel_INFO( DateTime? start_date, DateTime? end_date);
+        int GetLogLevel_INFO(string search_type, string search_keyword, DateTime? start_date, DateTime? end_date);
+        int GetLogLevel_ERROR(DateTime? start_date, DateTime? end_date);
+        int GetLogLevel_ERROR(string search_type, string search_keyword, DateTime? start_date, DateTime? end_date);
+
+
     }//interface
 
 }//namespace

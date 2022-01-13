@@ -62,6 +62,11 @@ namespace EasyProject.ViewModel
             TodayLoginPrint();
             TodayLogoutPrint();
 
+
+            //coount
+            CountLevel_INFO = log_dao.GetLogLevel_INFO(SelectedStartDate_Event_Log, SelectedEndDate_Event_Log);
+            CountLevel_ERROR = log_dao.GetLogLevel_ERROR(SelectedStartDate_Event_Log, SelectedEndDate_Event_Log);
+
         }//LogViewModel()
 
 
@@ -69,6 +74,30 @@ namespace EasyProject.ViewModel
 
 
         #region EVENT_LOG
+
+        //INFO, ERROR 갯수 프로퍼티 
+        private int countLevel_INFO;
+        public int CountLevel_INFO
+        {
+            get { return countLevel_INFO; }
+            set 
+            {
+                countLevel_INFO = value; 
+                OnPropertyChanged("CountLevel_INFO"); 
+            }
+        }
+        private int countLevel_ERROR;
+        public int CountLevel_ERROR
+        {
+            get { return countLevel_ERROR; }
+            set 
+            {
+                countLevel_ERROR = value; 
+                OnPropertyChanged("CountLevel_ERROR"); 
+            }
+        }
+
+
 
         //검색 타입
         public string SelectedSearchType_Event_Log { get; set; }

@@ -902,6 +902,226 @@ namespace EasyProject.Dao
 
         }//Logouttotal()
 
+        public int GetLogLevel_INFO(DateTime? start_date, DateTime? end_date)
+        {
+            log.Info("GetLogLevel_INFO(DateTime?, DateTime?) invoked.");
+
+            int result = 0;
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT COUNT(log_level) " +
+                                          "FROM event_log " +
+                                          "WHERE log_level = 'INFO' " +
+                                          "AND log_date BETWEEN :start_date AND :end_date ";
+
+                        DateTime? start = new DateTime(start_date.Value.Year, start_date.Value.Month, start_date.Value.Day, 00, 00, 01);
+                        DateTime? end = new DateTime(end_date.Value.Year, end_date.Value.Month, end_date.Value.Day, 23, 59, 59);
+                        cmd.Parameters.Add(new OracleParameter("start_date", start));
+                        cmd.Parameters.Add(new OracleParameter("end_date", end));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            result = reader.GetInt32(0);
+
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }//catch
+
+            return result;
+        }//GetLogLevel_INFO
+
+        public int GetLogLevel_INFO(string search_type, string search_keyword, DateTime? start_date, DateTime? end_date)
+        {
+            log.Info("GetLogLevel_INFO(string, string, DateTime?, DateTime?) invoked.");
+
+            int result = 0;
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT COUNT(log_level) " +
+                                          "FROM EVENT_LOG " +
+                                          "WHERE " +
+                                          "((:search_type = '사번' AND log_date BETWEEN :start_date AND :end_date AND log_level = 'INFO') AND (user_no LIKE '%'||:search_text||'%')) " +
+                                          "OR " +
+                                          "((:search_type = '사용자명' AND log_date BETWEEN :start_date AND :end_date AND log_level = 'INFO') AND (user_name LIKE '%'||:search_text||'%')) " +
+                                          "OR " +
+                                          "((:search_type = '클래스' AND log_date BETWEEN :start_date AND :end_date AND log_level = 'INFO') AND (log_class LIKE '%'||:search_text||'%')) " +
+                                          "OR " +
+                                          "((:search_type = '메소드' AND log_date BETWEEN :start_date AND :end_date AND log_level = 'INFO') AND (log_method LIKE '%'||:search_text||'%')) " +
+                                          "OR " +
+                                          "((:search_type = '내용' AND log_date BETWEEN :start_date AND :end_date AND log_level = 'INFO') AND (message LIKE '%'||:search_text||'%')) ";
+
+                        cmd.BindByName = true;
+
+                        cmd.Parameters.Add(new OracleParameter("search_type", search_type));
+                        cmd.Parameters.Add(new OracleParameter("search_text", search_keyword));
+                        DateTime? start = new DateTime(start_date.Value.Year, start_date.Value.Month, start_date.Value.Day, 00, 00, 01);
+                        DateTime? end = new DateTime(end_date.Value.Year, end_date.Value.Month, end_date.Value.Day, 23, 59, 59);
+                        cmd.Parameters.Add(new OracleParameter("start_date", start));
+                        cmd.Parameters.Add(new OracleParameter("end_date", end));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            result = reader.GetInt32(0);
+
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }//catch
+
+            return result;
+        }//GetLogLevel_INFO
+
+        public int GetLogLevel_ERROR(DateTime? start_date, DateTime? end_date)
+        {
+            log.Info("GetLogLevel_ERROR(DateTime?, DateTime?) invoked.");
+
+            int result = 0;
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT COUNT(log_level) " +
+                                          "FROM event_log " +
+                                          "WHERE log_level = 'ERROR' " +
+                                          "AND log_date BETWEEN :start_date AND :end_date ";
+
+                        DateTime? start = new DateTime(start_date.Value.Year, start_date.Value.Month, start_date.Value.Day, 00, 00, 01);
+                        DateTime? end = new DateTime(end_date.Value.Year, end_date.Value.Month, end_date.Value.Day, 23, 59, 59);
+                        cmd.Parameters.Add(new OracleParameter("start_date", start));
+                        cmd.Parameters.Add(new OracleParameter("end_date", end));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            result = reader.GetInt32(0);
+
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }//catch
+
+            return result;
+        }//GetLogLevel_ERROR
+
+        public int GetLogLevel_ERROR(string search_type, string search_keyword, DateTime? start_date, DateTime? end_date)
+        {
+            log.Info("GetLogLevel_ERROR(string, string, DateTime?, DateTime?) invoked.");
+
+            int result = 0;
+
+            try
+            {
+                OracleConnection conn = new OracleConnection(connectionString);
+                OracleCommand cmd = new OracleCommand();
+
+                using (conn)
+                {
+                    conn.Open();
+
+                    using (cmd)
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT COUNT(log_level) " +
+                                          "FROM EVENT_LOG " +
+                                          "WHERE " +
+                                          "((:search_type = '사번' AND log_date BETWEEN :start_date AND :end_date AND log_level = 'ERROR') AND (user_no LIKE '%'||:search_text||'%')) " +
+                                          "OR " +
+                                          "((:search_type = '사용자명' AND log_date BETWEEN :start_date AND :end_date AND log_level = 'ERROR') AND (user_name LIKE '%'||:search_text||'%')) " +
+                                          "OR " +
+                                          "((:search_type = '클래스' AND log_date BETWEEN :start_date AND :end_date AND log_level = 'ERROR') AND (log_class LIKE '%'||:search_text||'%')) " +
+                                          "OR " +
+                                          "((:search_type = '메소드' AND log_date BETWEEN :start_date AND :end_date AND log_level = 'ERROR') AND (log_method LIKE '%'||:search_text||'%')) " +
+                                          "OR " +
+                                          "((:search_type = '내용' AND log_date BETWEEN :start_date AND :end_date AND log_level = 'ERROR') AND (message LIKE '%'||:search_text||'%')) ";
+
+                        cmd.BindByName = true;
+
+                        cmd.Parameters.Add(new OracleParameter("search_type", search_type));
+                        cmd.Parameters.Add(new OracleParameter("search_text", search_keyword));
+                        DateTime? start = new DateTime(start_date.Value.Year, start_date.Value.Month, start_date.Value.Day, 00, 00, 01);
+                        DateTime? end = new DateTime(end_date.Value.Year, end_date.Value.Month, end_date.Value.Day, 23, 59, 59);
+                        cmd.Parameters.Add(new OracleParameter("start_date", start));
+                        cmd.Parameters.Add(new OracleParameter("end_date", end));
+
+                        OracleDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            result = reader.GetInt32(0);
+
+                        }//while
+
+                    }//using(cmd)
+
+                }//using(conn)
+
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }//catch
+
+            return result;
+        }//GetLogLevel_ERROR
+
 
     }//class
 
