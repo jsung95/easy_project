@@ -44,8 +44,52 @@ namespace EasyProject.ViewModel
         // 회원가입 시에 사용자가 입력한 데이터를 담을 프로퍼티       
         public NurseModel Nurse { get; set; }
 
+        // 회원가입 시에 비밀번호 입력 값을 담을 프로퍼티
+        private string nurse_Pw;
+        public string Nurse_Pw
+        {
+            get { return nurse_Pw; }
+            set
+            {
+                nurse_Pw = value;
+                InsertPasswordCheck();
+                OnPropertyChanged("Nurse_Pw");
+            }
+        }
+
         // 회원가입 시에 비밀번호 재입력 값을 담을 프로퍼티
-        public string Nurse_RePw { get; set; }
+        private string nurse_RePw;
+        public string Nurse_RePw 
+        {
+            get { return nurse_RePw; }
+            set
+            {
+                nurse_RePw = value;
+                InsertPasswordCheck();
+                OnPropertyChanged("Nurse_RePw");
+            }
+        }
+
+        private void InsertPasswordCheck()
+        {
+            log.Info("InsertPasswordCheck() invoked.");
+            try
+            {
+                if (Nurse_Pw.Equals(Nurse_RePw))
+                {
+                    SignUpMessage_PwRe = null;
+                }
+                else
+                {
+                    SignUpMessage_PwRe = "비밀번호가 일치하지 않습니다.";
+                }
+            }//try
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }//catch
+
+        }//InsertPasswordCheck
 
         public SignupViewModel()
         {
@@ -105,16 +149,28 @@ namespace EasyProject.ViewModel
 
 
         //회원가입 정규식 메시지
-        private string signUpMessage;
-        public string SignUpMessage
+        private string signUpMessage_Dept;
+        public string SignUpMessage_Dept
         {
-            get { return signUpMessage; }
+            get { return signUpMessage_Dept; }
             set 
             {
-                signUpMessage = value;
-                OnPropertyChanged("SignUpMessage");
+                signUpMessage_Dept = value;
+                OnPropertyChanged("SignUpMessage_Dept");
             }
         }
+
+        private string signUpMessage_PwRe;
+        public string SignUpMessage_PwRe
+        {
+            get { return signUpMessage_PwRe; }
+            set
+            {
+                signUpMessage_PwRe = value;
+                OnPropertyChanged("SignUpMessage_PwRe");
+            }
+        }
+
 
 
         // 회원가입 성공 유무를 체크하기 위한 프로퍼티
@@ -127,8 +183,12 @@ namespace EasyProject.ViewModel
             {
                 bool SignupResult;
 
-                if (Nurse.Nurse_name == null || Nurse.Nurse_no == null || Nurse.Nurse_pw == null || Nurse_RePw == null || SelectedDept == null)
+                if (Nurse.Nurse_name == null || Nurse.Nurse_no == null || Nurse_Pw == null || Nurse_RePw == null || SelectedDept == null)
                 {
+                    if(SelectedDept == null)
+                    {
+                        SignUpMessage_Dept = "담당 부서를 선택해주세요.";
+                    }
                     IsSignUpOk = true;
                     MessageQueue.Enqueue("정보를 모두 입력해주세요.", "닫기", (x) => { IsSignUpOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
 
@@ -137,19 +197,25 @@ namespace EasyProject.ViewModel
                 }
                 else
                 {
+                    SignUpMessage_Dept = null;
                     Regex regex = new Regex(@"^[0-9]{8}$"); //아이디는 숫자 8자리
                     if (regex.IsMatch(Convert.ToString(Nurse.Nurse_no)))
                     {
                         Nurse = dao.IdCheck(Nurse); //중복검사
                         Console.WriteLine("id reg ok");
                         regex = new Regex(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"); //비밀번호는 숫자,문자 조합
-                        if (regex.IsMatch(Nurse.Nurse_pw))
+                        if (regex.IsMatch(Nurse_Pw))
                         {
 
                             if (Nurse.Nurse_no != null) // 중복없을시 가입 진행
                             {
-                                if (Nurse.Nurse_pw.Equals(Nurse_RePw)) // 비밀번호, 비밀번호 재확인 값이 같다면 
+                                if (Nurse_Pw.Equals(Nurse_RePw)) // 비밀번호, 비밀번호 재확인 값이 같다면 
                                 {
+
+                                    SignUpMessage_PwRe = null;
+
+                                    Nurse.Nurse_pw = Nurse_Pw;
+
                                     dao.SignUp(Nurse, SelectedDept); //회원가입
                                                                      //MessageBox.Show("회원가입 완료!");
                                     IsSignUp = true;
@@ -164,6 +230,8 @@ namespace EasyProject.ViewModel
                                 }//if
                                 else // 입력한 두 비밀번호가 다르다면 
                                 {
+                                    SignUpMessage_PwRe = "비밀번호가 일치하지 않습니다.";
+
                                     IsSignUpOk = true;
                                     MessageQueue.Enqueue("입력한 두 비밀번호가 일치하지 않습니다.", "닫기", (x) => { IsSignUpOk = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
 
@@ -219,7 +287,7 @@ namespace EasyProject.ViewModel
                 Nurse.Nurse_name = null;
                 SelectedDept = null;
                 Nurse.Nurse_no = null;
-                Nurse.Nurse_pw = null;
+                Nurse_Pw = null;
                 Nurse.Nurse_re_pw = null;
             }
             catch(Exception ex)

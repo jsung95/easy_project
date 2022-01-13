@@ -72,7 +72,9 @@
                                 <RowDefinition Height="0.3*"/>
                             </Grid.RowDefinitions>
                             <TextBox x:Name="name_TxtBox" Grid.Row="1" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Text="{Binding Nurse.Nurse_name}" Cursor="IBeam" materialDesign:TextFieldAssist.CharacterCounterVisibility="Collapsed"/>
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Text="{Binding Nurse.Nurse_name}" Cursor="IBeam" materialDesign:TextFieldAssist.CharacterCounterVisibility="Collapsed"
+                                     InputMethod.PreferredImeState="On"
+                                     InputMethod.PreferredImeConversionMode="Native"/>
                             <TextBlock HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,3,0,0"><Run FontSize="10" Text="최대 4자리, 문자 입력 가능" Foreground="Gray"/></TextBlock>
                         </Grid>
 
@@ -98,7 +100,7 @@
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
-                            <TextBlock TextWrapping="Wrap" Text="담당 부서를 선택해주세요." FontSize="10" Foreground="Red" VerticalAlignment="Top" Grid.Row="2" HorizontalAlignment="Center" Margin="0,2,0,0"/>
+                            <TextBlock TextWrapping="Wrap" Text="{Binding SignUpMessage_Dept}" FontSize="10" Foreground="Red" VerticalAlignment="Top" Grid.Row="2" HorizontalAlignment="Center" Margin="0,2,0,0"/>
                         </Grid>
 
                     </Grid>
@@ -146,7 +148,7 @@
                             </Grid.RowDefinitions>
                             <PasswordBox x:Name="password_PwBox" Grid.Row="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Cursor="IBeam"
-                             w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding Nurse.Nurse_pw, Mode=TwoWay}" Grid.ColumnSpan="2"/>
+                             w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding Nurse_Pw, Mode=TwoWay}" Grid.ColumnSpan="2"/>
                             <TextBlock Grid.Row="2" HorizontalAlignment="Left" Margin="15,0,0,0"  TextWrapping="Wrap" Text="문자 + 숫자 조합 6자리 이상" VerticalAlignment="Center" FontSize="10" Foreground="Gray" Grid.ColumnSpan="2"/>
                         </Grid>
 
@@ -164,7 +166,7 @@
                         <PasswordBox x:Name="rePassword_PwBox" Grid.Column="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Grid.ColumnSpan="2" 
                                  w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding Nurse_RePw, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="11,53,0,0" TextWrapping="Wrap" Text="비밀번호가 일치하지 않습니다." Foreground="Red" VerticalAlignment="Top" FontSize="10" Width="151" Grid.ColumnSpan="2"/>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="11,53,0,0" TextWrapping="Wrap" Text="{Binding SignUpMessage_PwRe}" Foreground="Red" VerticalAlignment="Top" FontSize="10" Width="151" Grid.ColumnSpan="2"/>
                     </Grid>
                     <Grid Grid.Row="5" >
                         <Grid.ColumnDefinitions>
