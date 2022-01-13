@@ -128,6 +128,10 @@ namespace EasyProject.ViewModel
             //재고등록페이지 날짜
             //날짜 컨트롤 부서별 해당 최소 날짜 및 최대 날짜로 초기화
             StartDate = Convert.ToDateTime(dao.GetProductIn_MinDate(Nurse));
+            if (StartDate.Value.Year == 1)
+            {
+                StartDate = DateTime.Today.AddDays(-1); // MinDate가 0001 01 01 인 경우 전날로 설정
+            }
             EndDate = DateTime.Today;
             //현재 로그인 사용자의 입고 목록을 가져옴
             Add_list = dao.GetProductInByNurse(Nurse, StartDate, EndDate);
