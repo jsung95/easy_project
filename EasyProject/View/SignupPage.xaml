@@ -12,7 +12,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SignupPage">
-    
+
     <materialDesign:DialogHost x:Name="SignUpDialogHost">
         <materialDesign:DialogHost.DialogContent>
             <StackPanel Margin="20">
@@ -42,109 +42,111 @@
             </StackPanel>
         </materialDesign:DialogHost.DialogContent>
 
-            <Grid  Background="White"  >
-                <materialDesign:Card Height="400" Width="450" Margin ="10" UniformCornerRadius="20" Background="White">
-                    <Grid Height="400" Width="450"  HorizontalAlignment="Center" >
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="0.8*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="0.8*"/>
-                        </Grid.RowDefinitions>
+        <Grid  Background="White"  >
+            <materialDesign:Card Height="400" Width="450" Margin ="10" UniformCornerRadius="20" Background="White">
+                <Grid Height="400" Width="450"  HorizontalAlignment="Center" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.8*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.8*"/>
+                    </Grid.RowDefinitions>
 
-                        <Label Content="회원가입" FontSize="25" FontWeight="Black" Grid.Row="0" 
+                    <Label Content="회원가입" FontSize="25" FontWeight="Black" Grid.Row="0" 
                    HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <Grid Grid.Row="1" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="7*"/>
-                                <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="7*"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Content="이름" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
+                    <Grid Grid.Row="1" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="7*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="7*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="이름" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
-                            <TextBox x:Name="name_TxtBox" Grid.Column="1" HorizontalContentAlignment="Left" 
+                        <TextBox x:Name="name_TxtBox" Grid.Column="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Text="{Binding Nurse.Nurse_name}" Cursor="IBeam" materialDesign:TextFieldAssist.CharacterCounterVisibility="Collapsed"/>
-                            <Label Content="담당 부서" Grid.Column="2" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <Label Content="담당 부서" Grid.Column="2" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
 
-                            <ComboBox x:Name="deptName_ComboBoxs" Grid.Column="3" HorizontalContentAlignment="Left" 
+                        <ComboBox x:Name="deptName_ComboBoxs" Grid.Column="3" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Grid.ColumnSpan="2" 
                        ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept}">
-                                <ComboBox.Resources>
-                                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
-                                </ComboBox.Resources>
+                            <ComboBox.Resources>
+                                <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+                            </ComboBox.Resources>
 
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Dept_name}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                        </Grid>
-                        <Grid Grid.Row="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="6*"/>
-                                <ColumnDefinition Width="14*"/>
-                            </Grid.ColumnDefinitions>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Dept_name}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6*"/>
+                            <ColumnDefinition Width="14*"/>
+                        </Grid.ColumnDefinitions>
 
-                            <Label Content="아이디" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
+                        <Label Content="사번" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
-                            <TextBox x:Name="id_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="아이디" Grid.Column="1" HorizontalContentAlignment="Left" 
+                        <TextBox x:Name="id_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="사번" Grid.Column="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Text="{Binding Nurse.Nurse_no}"
                                      PreviewTextInput="id_TxtBox_PreviewTextInput"/>
-                        </Grid>
-                        <Grid Grid.Row="3" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="6*"/>
-                                <ColumnDefinition Width="14*"/>
-                            </Grid.ColumnDefinitions>
+                    </Grid>
+                    <Grid Grid.Row="3" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6*"/>
+                            <ColumnDefinition Width="14*"/>
+                        </Grid.ColumnDefinitions>
 
-                            <Label Content="비밀번호" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
+                        <Label Content="비밀번호" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
-                            <PasswordBox x:Name="password_PwBox" Grid.Column="1" HorizontalContentAlignment="Left" 
+                        <PasswordBox x:Name="password_PwBox" Grid.Column="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Cursor="IBeam"
                              w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding Nurse.Nurse_pw, Mode=TwoWay}"/>
-                        </Grid>
-                        <Grid Grid.Row="4">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="135*"/>
-                                <ColumnDefinition Width="89*"/>
-                                <ColumnDefinition Width="226*"/>
-                            </Grid.ColumnDefinitions>
+                    </Grid>
+                    <Grid Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="135*"/>
+                            <ColumnDefinition Width="89*"/>
+                            <ColumnDefinition Width="226*"/>
+                        </Grid.ColumnDefinitions>
 
-                            <Label Content="비밀번호 재입력" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
+                        <Label Content="비밀번호 재입력" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
-                            <PasswordBox x:Name="rePassword_PwBox" Grid.Column="1" HorizontalContentAlignment="Left" 
+                        <PasswordBox x:Name="rePassword_PwBox" Grid.Column="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Grid.ColumnSpan="2" 
                                  w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding Nurse_RePw, Mode=TwoWay}"/>
-                        </Grid>
-                        <Grid Grid.Row="5" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="11,53,0,0" TextWrapping="Wrap" Text="비밀번호가 일치하지 않습니다." Foreground="Red" VerticalAlignment="Top" FontSize="10" Width="151" Grid.ColumnSpan="2"/>
+                    </Grid>
+                    <Grid Grid.Row="5" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
                         <Button x:Name="signUpBtn" Content="회원가입" Grid.Column="3" Background="Red" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" Cursor="Hand" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
                         </Button>
-                            <Button x:Name="backBtn" Content="돌아가기" Grid.Column="0" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
+                        <Button x:Name="backBtn" Content="돌아가기" Grid.Column="0" Background="#4472C4" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" Cursor="Hand" />
-                            <Button x:Name="rewriteBtn" Content="다시 작성하기" Grid.Column="2" Background="LightGray" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
+                        <Button x:Name="rewriteBtn" Content="다시 작성하기" Grid.Column="2" Background="LightGray" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" Cursor="Hand" Command="{Binding ResetCommand}"/>
-                        </Grid>
                     </Grid>
-                </materialDesign:Card>
+                    <TextBlock HorizontalAlignment="Left" Margin="79,54,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top"><Run FontSize="10" Text="최대 4자리, 문자 입력"/><Run FontSize="10" Language="ko-kr" Text=" 가능"/></TextBlock>
+                </Grid>
+            </materialDesign:Card>
 
             <Grid>
                 <materialDesign:Snackbar x:Name="Snackbar" Background="#Ea4a2d" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
 
-                    
+
 
                     <materialDesign:Snackbar.Style>
                         <Style TargetType="materialDesign:Snackbar">
@@ -163,9 +165,12 @@
 
                 </materialDesign:Snackbar>
             </Grid>
+            <TextBlock HorizontalAlignment="Left" Margin="322,207,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="10"><Run Language="ko-kr" Text="8자리, 숫자만 입력 가능 "/></TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="322,278,0,0" TextWrapping="Wrap" Text="문자 + 숫자 조합 6자리 이상" VerticalAlignment="Top" FontSize="10"/>
+            <TextBlock HorizontalAlignment="Left" Margin="479,135,0,0" TextWrapping="Wrap" Text="담당 부서를 선택해주세요." FontSize="10" Foreground="Red" VerticalAlignment="Top"/>
 
 
         </Grid>
-        
-     </materialDesign:DialogHost >
+
+    </materialDesign:DialogHost >
 </Page>
