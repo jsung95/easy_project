@@ -197,7 +197,7 @@
                             IsReadOnly="True" ItemsSource="{Binding Event_Logs}" Cursor="Hand">
 
                                 <DataGrid.Columns>
-                                    
+
                                     <DataGridTextColumn Binding="{Binding Log_date, StringFormat='yyyy-MM-dd HH:mm:ss'}" Header="날짜/시간" Width="*" IsReadOnly="True">
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
@@ -210,7 +210,7 @@
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-                                    
+
                                     <DataGridTextColumn Binding="{Binding User_ip}" Header="IP주소" Width="*" IsReadOnly="True">
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
@@ -224,7 +224,7 @@
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-                                    
+
                                     <DataGridTextColumn Binding="{Binding User_nation}" Header="접속국가" Width="0.6*" IsReadOnly="True">
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
@@ -322,6 +322,16 @@
 
                                 </DataGrid.Columns>
                             </DataGrid>
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="221" Margin="565,0,0,0">
+                                <Label Content="INFO : " FontSize="12" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                                <TextBlock Text="{Binding infologdata}" FontSize="12" FontWeight="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20">></TextBlock>
+                                <Label Content="개 " FontSize="12" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                                <Label Content="ERROR : " FontSize="12" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                                <TextBlock Text="{Binding errorlogdata}" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20">></TextBlock>
+                                <Label Content="개 " FontSize="12" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            </StackPanel>
                         </Grid>
 
                     </Grid>
