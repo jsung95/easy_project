@@ -7,12 +7,12 @@ using System.Windows;
 // 어셈블리에 대한 일반 정보는 다음 특성 집합을 통해 
 // 제어됩니다. 어셈블리와 관련된 정보를 수정하려면
 // 이러한 특성 값을 변경하세요.
-[assembly: AssemblyTitle("EasyProject")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("ezIMP")]
+[assembly: AssemblyDescription("간호사를 위한 재고관리 프로그램")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("EasyProject")]
-[assembly: AssemblyCopyright("Copyright ©  2021")]
+[assembly: AssemblyCompany("ezCaretech")]
+[assembly: AssemblyProduct("ezIMP")]
+[assembly: AssemblyCopyright("Copyright ezCaretech 인턴 14기 신뢰조 ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

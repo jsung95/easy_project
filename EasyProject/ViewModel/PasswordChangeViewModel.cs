@@ -89,6 +89,9 @@ namespace EasyProject.ViewModel
             log.Info("Constructor PasswordChangeViewModel() invoked.");
             messagequeue = new SnackbarMessageQueue();
             Nurse = new NurseModel();
+            NewPassword = "";
+
+
         }
 
         //public ActionCommand command;
@@ -236,5 +239,26 @@ namespace EasyProject.ViewModel
             }//catch
             
         }//OnPasswordChange
+        private ActionCommand formResetCommand;
+        public ICommand FormResetCommand
+        {
+            get
+            {
+                if (formResetCommand == null)
+                {
+                    formResetCommand = new ActionCommand(FormReset);
+                }
+                return formResetCommand;
+            }//get
+        }
+
+        private void FormReset()
+        {
+            
+            Nurse.Nurse_pw = "";
+            NewPassword = "";
+            Re_NewPassword = "";
+            
+        }
     }//class
 }//namespace
