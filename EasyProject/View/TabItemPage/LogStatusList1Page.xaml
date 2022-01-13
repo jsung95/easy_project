@@ -324,11 +324,11 @@
                             </DataGrid>
                         </Grid>
                         <Grid Grid.Row="2">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="370" Margin="416,0,0,0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="265" Margin="521,0,0,0">
                                 <Label Content="INFO : " FontSize="12" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                                 <TextBlock Text="{Binding CountLevel_INFO,StringFormat='{}{0:#,0} 개'}" FontSize="12" FontWeight="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Width="80"></TextBlock>
                                 <Label Content="ERROR : " FontSize="12" FontWeight="Bold" VerticalAlignment="Center"/>
-                                <TextBlock Text="{Binding CountLevel_ERROR}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Width="80"></TextBlock>
+                                <TextBlock Text="{Binding CountLevel_ERROR,StringFormat='{}{0:#,0} 개'}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Width="80"></TextBlock>
                             </StackPanel>
                         </Grid>
 
