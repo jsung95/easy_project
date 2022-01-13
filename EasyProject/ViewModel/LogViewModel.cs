@@ -127,6 +127,10 @@ namespace EasyProject.ViewModel
                 SearchKeyword_Event_Log = null;
                 //GetEventLogs();
 
+                //coount
+                CountLevel_INFO = log_dao.GetLogLevel_INFO(SelectedStartDate_Event_Log, SelectedEndDate_Event_Log);
+                CountLevel_ERROR = log_dao.GetLogLevel_ERROR(SelectedStartDate_Event_Log, SelectedEndDate_Event_Log);
+
                 OnPropertyChanged("SelectedStartDate_Event_Log"); 
             }
         }
@@ -141,6 +145,10 @@ namespace EasyProject.ViewModel
                 selectedEndDate_Event_Log = value;
                 SearchKeyword_Event_Log = null;
                 //GetEventLogs();
+
+                //coount
+                CountLevel_INFO = log_dao.GetLogLevel_INFO(SelectedStartDate_Event_Log, SelectedEndDate_Event_Log);
+                CountLevel_ERROR = log_dao.GetLogLevel_ERROR(SelectedStartDate_Event_Log, SelectedEndDate_Event_Log);
 
                 OnPropertyChanged("SelectedEndDate_Event_Log"); 
             }
@@ -202,6 +210,9 @@ namespace EasyProject.ViewModel
                 if (SelectedStartDate_Event_Log != null && SelectedEndDate_Event_Log != null)
                 {
                     Event_Logs = new ObservableCollection<LogModel>(log_dao.Search_GetLogs(SelectedSearchType_Event_Log, SearchKeyword_Event_Log, SelectedStartDate_Event_Log, SelectedEndDate_Event_Log));
+                    //coount
+                    CountLevel_INFO = log_dao.GetLogLevel_INFO(SelectedSearchType_Event_Log, SearchKeyword_Event_Log, SelectedStartDate_Event_Log, SelectedEndDate_Event_Log);
+                    CountLevel_ERROR = log_dao.GetLogLevel_ERROR(SelectedSearchType_Event_Log, SearchKeyword_Event_Log, SelectedStartDate_Event_Log, SelectedEndDate_Event_Log);
                 }
             }//try
             catch (Exception ex)
