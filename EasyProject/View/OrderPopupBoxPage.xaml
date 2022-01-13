@@ -104,7 +104,7 @@
                         <ColumnDefinition Width="410*"/>
                     </Grid.ColumnDefinitions>
                     <TextBox x:Name="memo_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="내용을 입력해주세요"  HorizontalContentAlignment="Center" Grid.Column="1"
-                                                                    FontSize="9" VerticalAlignment="top" Width="250"  Height="60" TextAlignment="Left"/>
+                                                                    FontSize="9" VerticalAlignment="top" Width="250"  Height="60" TextAlignment="Left" TextWrapping="Wrap"/>
                 </Grid>
             </Grid>
 
