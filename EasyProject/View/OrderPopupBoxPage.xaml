@@ -86,7 +86,7 @@
                     FontSize="7" VerticalAlignment="Center" Width="31" Height="19" FontWeight="Bold" HorizontalAlignment="Center" Margin="15,0,0,0"
                              Text="{Binding PSVM.SelectedProduct.Prod_code, Source={StaticResource Locator}}" />
                     <TextBlock x:Name="prodname_textblock" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="제품명" Grid.Column="1" 
-                      FontSize="7" Width="31" Height="19" FontWeight="Bold" HorizontalAlignment="Center"   Margin="15,0,0,0" VerticalAlignment="Center"
+                      FontSize="7" Width="53" Height="19" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"
                              Text="{Binding PSVM.SelectedProduct.Prod_name, Source={StaticResource Locator}}"/>
                     <TextBlock x:Name="category_TextBlock" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="품목종류" Grid.Column="2" 
                         FontSize="7" VerticalAlignment="Center"  Width="47" Height="19" FontWeight="Bold" HorizontalAlignment="Center" Margin="10,0,0,0"
