@@ -65,25 +65,42 @@
                         </Grid.ColumnDefinitions>
                         <Label Content="이름" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
-                        <TextBox x:Name="name_TxtBox" Grid.Column="1" HorizontalContentAlignment="Left" 
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.3*"/>
+                                <RowDefinition Height="0.4*"/>
+                                <RowDefinition Height="0.3*"/>
+                            </Grid.RowDefinitions>
+                        <TextBox x:Name="name_TxtBox" Grid.Row="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Text="{Binding Nurse.Nurse_name}" Cursor="IBeam" materialDesign:TextFieldAssist.CharacterCounterVisibility="Collapsed"/>
-                        <Label Content="담당 부서" Grid.Column="2" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <TextBlock HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top"><Run FontSize="10" Text="최대 4자리, 문자 입력"/><Run FontSize="10" Language="ko-kr" Text=" 가능"/></TextBlock>
+                        </Grid>
 
-                        <ComboBox x:Name="deptName_ComboBoxs" Grid.Column="3" HorizontalContentAlignment="Left" 
+                        <Label Content="담당 부서" Grid.Column="2" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <Grid Grid.Column="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.3*"/>
+                                <RowDefinition Height="0.4*"/>
+                                <RowDefinition Height="0.3*"/>
+                            </Grid.RowDefinitions>
+                            <ComboBox x:Name="deptName_ComboBoxs" Grid.Row="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Grid.ColumnSpan="2" 
                        ItemsSource="{Binding Path=Depts}" SelectedItem="{Binding SelectedDept}">
-                            <ComboBox.Resources>
-                                <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
-                            </ComboBox.Resources>
+                                <ComboBox.Resources>
+                                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+                                </ComboBox.Resources>
 
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Dept_name}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Dept_name}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <TextBlock TextWrapping="Wrap" Text="담당 부서를 선택해주세요." FontSize="10" Foreground="Red" VerticalAlignment="Top" Grid.Row="2" HorizontalAlignment="Center"/>
+                        </Grid>
+                        
                     </Grid>
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
@@ -93,9 +110,20 @@
 
                         <Label Content="사번" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
-                        <TextBox x:Name="id_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="사번" Grid.Column="1" HorizontalContentAlignment="Left" 
-                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Text="{Binding Nurse.Nurse_no}"
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.2*"/>
+                                <RowDefinition Height="0.35*"/>
+                                <RowDefinition Height="0.2*"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBox x:Name="id_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="사번" Grid.Column="1" HorizontalContentAlignment="Left" 
+                       VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Text="{Binding Nurse.Nurse_no}" Grid.Row="1"
                                      PreviewTextInput="id_TxtBox_PreviewTextInput"/>
+                            
+                            <TextBlock Grid.Row="2" HorizontalAlignment="Left" Margin="15,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="10"><Run Language="ko-kr" Text="8자리, 숫자만 입력 가능 "/></TextBlock>
+                        </Grid>
+                        
                     </Grid>
                     <Grid Grid.Row="3" >
                         <Grid.ColumnDefinitions>
@@ -105,9 +133,19 @@
 
                         <Label Content="비밀번호" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
-                        <PasswordBox x:Name="password_PwBox" Grid.Column="1" HorizontalContentAlignment="Left" 
+
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.2*"/>
+                                <RowDefinition Height="0.35*"/>
+                                <RowDefinition Height="0.2*"/>
+                            </Grid.RowDefinitions>
+                            <PasswordBox x:Name="password_PwBox" Grid.Row="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Cursor="IBeam"
                              w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding Nurse.Nurse_pw, Mode=TwoWay}"/>
+                            <TextBlock Grid.Row="2" HorizontalAlignment="Left" Margin="15,0,0,0"  TextWrapping="Wrap" Text="문자 + 숫자 조합 6자리 이상" VerticalAlignment="Top" FontSize="10"/>
+                        </Grid>
+                        
                     </Grid>
                     <Grid Grid.Row="4">
                         <Grid.ColumnDefinitions>
@@ -118,6 +156,7 @@
 
                         <Label Content="비밀번호 재입력" Grid.Column="0" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0"/>
+                        <Grid Grid.Column="1"></Grid>
                         <PasswordBox x:Name="rePassword_PwBox" Grid.Column="1" HorizontalContentAlignment="Left" 
                        VerticalContentAlignment="Center" FontSize="13" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" Grid.ColumnSpan="2" 
                                  w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding Nurse_RePw, Mode=TwoWay}"/>
@@ -139,7 +178,7 @@
                         <Button x:Name="rewriteBtn" Content="다시 작성하기" Grid.Column="2" Background="LightGray" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left"  
                        VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="90" Cursor="Hand" Command="{Binding ResetCommand}"/>
                     </Grid>
-                    <TextBlock HorizontalAlignment="Left" Margin="79,54,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top"><Run FontSize="10" Text="최대 4자리, 문자 입력"/><Run FontSize="10" Language="ko-kr" Text=" 가능"/></TextBlock>
+                   
                 </Grid>
             </materialDesign:Card>
 
@@ -165,9 +204,9 @@
 
                 </materialDesign:Snackbar>
             </Grid>
-            <TextBlock HorizontalAlignment="Left" Margin="322,207,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="10"><Run Language="ko-kr" Text="8자리, 숫자만 입력 가능 "/></TextBlock>
-            <TextBlock HorizontalAlignment="Left" Margin="322,278,0,0" TextWrapping="Wrap" Text="문자 + 숫자 조합 6자리 이상" VerticalAlignment="Top" FontSize="10"/>
-            <TextBlock HorizontalAlignment="Left" Margin="479,135,0,0" TextWrapping="Wrap" Text="담당 부서를 선택해주세요." FontSize="10" Foreground="Red" VerticalAlignment="Top"/>
+            
+            
+            
 
 
         </Grid>
