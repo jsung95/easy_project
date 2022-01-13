@@ -64,7 +64,7 @@
 
                     <TextBlock x:Name="id_TxtBox" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="담당자" Grid.Column="1" 
                       FontSize="7" Width="31" Height="19" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"                           
-                             Text="{Binding PSVM.SelectedUser.Nurse_name, Source={StaticResource Locator}}" />
+                             Text="{Binding PSVM.SelectedUser.Nurse_name, Source={StaticResource Locator}}" TextAlignment="Center"  />
                     <TextBlock x:Name="dept_TxtBox" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="부서" Grid.Column="3" 
                     FontSize="7"   Width="31" Height="19" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"   
                              Text="{Binding PSVM.SelectedUser.Dept_name, Source={StaticResource Locator}}"/>
@@ -83,18 +83,18 @@
                         <ColumnDefinition Width="103*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock x:Name="prodcode_TextBlock" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="제품코드" 
-                    FontSize="7" VerticalAlignment="Center" Width="31" Height="19" FontWeight="Bold" HorizontalAlignment="Center" Margin="15,0,0,0"
-                             Text="{Binding PSVM.SelectedProduct.Prod_code, Source={StaticResource Locator}}" />
+                    FontSize="7" VerticalAlignment="Center" Width="53" Height="19" FontWeight="Bold" HorizontalAlignment="Center" 
+                             Text="{Binding PSVM.SelectedProduct.Prod_code, Source={StaticResource Locator}}" TextAlignment="Center"/>
                     <TextBlock x:Name="prodname_textblock" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="제품명" Grid.Column="1" 
-                      FontSize="7" Width="53" Height="19" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"
+                      FontSize="7" Width="53" Height="19" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
                              Text="{Binding PSVM.SelectedProduct.Prod_name, Source={StaticResource Locator}}"/>
                     <TextBlock x:Name="category_TextBlock" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="품목종류" Grid.Column="2" 
-                        FontSize="7" VerticalAlignment="Center"  Width="47" Height="19" FontWeight="Bold" HorizontalAlignment="Center" Margin="10,0,0,0"
+                        FontSize="7" VerticalAlignment="Center"  Width="53" Height="19" FontWeight="Bold" HorizontalAlignment="Center" TextAlignment="Center"
                              Text="{Binding PSVM.SelectedProduct.Category_name, Source={StaticResource Locator}}"/>
                     <TextBlock x:Name="prodprice_TextBlock" Style="{DynamicResource MaterialDesignBody1TextBlock}" Tag ="제품가격" Grid.Column="3" 
-                        FontSize="7" VerticalAlignment="Center" Width="31" Height="19" FontWeight="Bold" HorizontalAlignment="Center" Margin="15,0,0,0"
+                        FontSize="7" VerticalAlignment="Center" Width="53" Height="19" FontWeight="Bold" HorizontalAlignment="Center" TextAlignment="Center"
                              Text="{Binding PSVM.SelectedProduct.Prod_price, Source={StaticResource Locator}}"/>
-                    <TextBox x:Name="prodprice_Textbox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="4" HorizontalAlignment="Center"
+                    <TextBox x:Name="prodprice_Textbox" Style="{DynamicResource WatermarkTextBox}" Tag ="수량" Grid.Column="4" HorizontalAlignment="Center" TextAlignment="Center"
                         FontSize="7" VerticalAlignment="Center" Height="22" FontWeight="Bold" Width="60"/>
                 </Grid>
 
@@ -104,7 +104,7 @@
                         <ColumnDefinition Width="410*"/>
                     </Grid.ColumnDefinitions>
                     <TextBox x:Name="memo_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="내용을 입력해주세요"  HorizontalContentAlignment="Center" Grid.Column="1"
-                                                                    VerticalContentAlignment="Center" FontSize="9" VerticalAlignment="top" Width="250"  Height="60" />
+                                                                    FontSize="9" VerticalAlignment="top" Width="250"  Height="60" TextAlignment="Left"/>
                 </Grid>
             </Grid>
 
