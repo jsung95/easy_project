@@ -169,7 +169,7 @@
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                     <DataGridTextColumn Header=" 이름" Binding="{Binding Nurse_name}" IsReadOnly="True" />
-                                    <DataGridTextColumn Header=" ID" Binding="{Binding Nurse_no}" IsReadOnly="True"/>
+                                    <DataGridTextColumn Header=" 사번" Binding="{Binding Nurse_no}" IsReadOnly="True"/>
                                     <DataGridTextColumn Header=" 부서" Binding="{Binding Dept_name}" IsReadOnly="True"/>
                                 </DataGrid.Columns>
                             </DataGrid>
@@ -272,7 +272,7 @@
                                     </DataGridTemplateColumn>
                                     <!--<DataGridCheckBoxColumn Binding="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>-->
                                     <DataGridTextColumn Header=" 이름"  Binding="{Binding Nurse_name}" IsReadOnly="True" />
-                                    <DataGridTextColumn Header=" ID" Binding="{Binding Nurse_no}" IsReadOnly="True"/>
+                                    <DataGridTextColumn Header=" 사번" Binding="{Binding Nurse_no}" IsReadOnly="True"/>
                                     <DataGridTextColumn Header=" 부서" Binding="{Binding Dept_name}" IsReadOnly="True"/>
                                 </DataGrid.Columns>
                             </DataGrid>
