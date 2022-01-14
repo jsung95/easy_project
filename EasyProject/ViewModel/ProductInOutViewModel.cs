@@ -358,7 +358,7 @@ namespace EasyProject.ViewModel
                     //Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0:#,0}개 ({1:#,0}￦)", item.Prod_out_count, item.Prod_price);
                     SeriesCollection_Pie.Add(new PieSeries
                     {
-                        Title = item.Prod_name+ "  가격:", 
+                        Title = item.Prod_name, 
                         Values = new ChartValues<int> { (int)item.Prod_price },
                        
                     });

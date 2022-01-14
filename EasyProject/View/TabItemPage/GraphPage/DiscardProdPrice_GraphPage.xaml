@@ -129,7 +129,7 @@
 
         <Grid Grid.Row="2">
 
-            <lvc:PieChart LegendLocation="None" Series="{Binding SeriesCollection_Pie}" InnerRadius="30" Grid.ColumnSpan="2" Height="288" Width="300">
+            <lvc:PieChart LegendLocation="Right" Series="{Binding SeriesCollection_Pie}" InnerRadius="30" Grid.ColumnSpan="2" Height="350" Width="300">
                 <!--lvc:PieChart.ChartLegend>
                                     <lvc:DefaultLegend BulletSize="15" TextBlock.FontSize="8"/>
                                 </lvc:PieChart.ChartLegend>
