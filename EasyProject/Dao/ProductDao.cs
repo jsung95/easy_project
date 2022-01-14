@@ -915,7 +915,7 @@ namespace EasyProject.Dao
                                           "INNER JOIN DEPT D " +
                                           "ON N.dept_id = D.dept_id " +
                                           "WHERE I.prod_in_to = :name " +
-                                          "AND I.prod_in_date BETWEEN :start_date AND :end_date + 1 " +
+                                          "AND I.prod_in_date BETWEEN :start_date AND :end_date " +
                                           "ORDER BY I.prod_in_date desc, P.prod_name ";
 
                         cmd.Parameters.Add(new OracleParameter("name", dept_dto.Dept_name));
@@ -1130,7 +1130,7 @@ namespace EasyProject.Dao
                         cmd.Parameters.Add(new OracleParameter("start_date", start));
                         cmd.Parameters.Add(new OracleParameter("end_date", end));
 
-
+                        
                         Console.WriteLine("start : " + start);
                         Console.WriteLine("end : " + end);
                         Console.WriteLine("dept_name : " + dept_dto.Dept_name);
@@ -1598,7 +1598,7 @@ namespace EasyProject.Dao
                                           "INNER JOIN DEPT D " +
                                           "ON N.dept_id = D.dept_id " +
                                           "WHERE O.prod_out_from = :name " +
-                                          "AND O.prod_out_date BETWEEN :start_date AND :end_date + 1 " +
+                                          "AND O.prod_out_date BETWEEN :start_date AND :end_date " +
                                           "ORDER BY O.prod_out_date desc, P.prod_name";
 
 
