@@ -163,7 +163,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
-                                <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요" Grid.Column="5" HorizontalContentAlignment="Left" 
+                                <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색어를 입력해주세요" Grid.Column="5" HorizontalContentAlignment="Left" 
                                      VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" 
                                      Text="{Binding TextForSearch, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
                                     <!--<TextBox.InputBindings>
@@ -245,7 +245,7 @@
                                     </Style>
                                 </DataGridTemplateColumn.CellStyle>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="제품명" Width="1.5*" CanUserSort="false">
+                            <DataGridTemplateColumn Header="제품명" Width="2.0*" CanUserSort="false">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Prod_name}" VerticalAlignment="Center" Margin="10 0"></TextBlock>
@@ -274,7 +274,7 @@
 
                                 <DataGridComboBoxColumn ItemsSource="{Binding PSVM.Categories, Source={StaticResource Locator}}" 
                                                     TextBinding="{Binding Category_name}"
-                                                    DisplayMemberPath="Category_name" Header="품목/종류" Width="1.5*" CanUserSort="false">
+                                                    DisplayMemberPath="Category_name" Header="품목/종류" Width="1.7*" CanUserSort="false">
 
                                     <DataGridComboBoxColumn.CellStyle>
                                     <Style TargetType="DataGridCell">
@@ -304,7 +304,7 @@
                                     </DataGridComboBoxColumn.ElementStyle>
                             </DataGridComboBoxColumn>
 
-                            <DataGridTemplateColumn CanUserSort="true" Header="제품가격" Width="1.8*">
+                            <DataGridTemplateColumn CanUserSort="true" Header="제품가격" Width="1.6*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                             <TextBlock Text="{Binding Prod_price, StringFormat='{}{0:#,0} ￦'}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"></TextBlock>
@@ -330,7 +330,7 @@
                                     </Style>
                                 </DataGridTemplateColumn.CellStyle>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn CanUserSort="true" Header="수량" Width="1.5*">
+                            <DataGridTemplateColumn CanUserSort="true" Header="수량" Width="1.3*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                             <TextBlock Text="{Binding Imp_dept_count, StringFormat='{}{0:#,0} 개'}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"></TextBlock>
@@ -358,7 +358,7 @@
                                 </DataGridTemplateColumn.CellStyle>
                                 
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Binding="{Binding Prod_expire, StringFormat='yyyy-MM-dd'}"  Header="유통기한" Width="2*" CanUserSort="true" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Prod_expire, StringFormat='yyyy-MM-dd'}"  Header="유통기한" Width="2.0*" CanUserSort="true" IsReadOnly="True"/>
 
                             <DataGridTemplateColumn Header="상태" Width="*" CanUserSort="true" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>

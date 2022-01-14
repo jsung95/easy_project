@@ -102,7 +102,7 @@
                                         <ColumnDefinition Width="65*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요"
+                                    <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색어를 입력해주세요"
                                         VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center"  Height="30"  
                                         Text="{Binding SearchKeyword_LogOut_Log, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand" Grid.Column="0">
 

@@ -96,7 +96,7 @@
                                 </ComboBox>
                             </Grid>
                             <Grid Grid.Column="1" >
-                                <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색할 품목을 입력해주세요"  Width="360"
+                                <TextBox x:Name="phone_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="검색어를 입력해주세요"  Width="360"
                                         VerticalContentAlignment="Center" FontSize="12" VerticalAlignment="Center" Margin="5" Height="30"  
                                         Text="{Binding SearchKeyword_In, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
 
@@ -144,10 +144,10 @@
                             IsReadOnly="True" ItemsSource="{Binding Product_in}">
 
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="*" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_code}" Header="제품코드" Width="0.7*" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Prod_name}" Header="제품명" Width="*" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="0.9*" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding Prod_expire, StringFormat='yyyy-MM-dd'}" Header="유통기한" Width="0.8*" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Category_name}" Header="품목/종류" Width="0.8*" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_expire, StringFormat='yyyy-MM-dd'}" Header="유통기한" Width="0.9*" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Prod_in_count, StringFormat='{}{0:#,0} 개'}" Header="수량" Width="0.5*" IsReadOnly="True">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="TextBlock">
@@ -156,7 +156,7 @@
                                     </DataGridTextColumn.ElementStyle>
 
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding Prod_in_date}" Header="입고일" Width="0.8*" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding Prod_in_date, StringFormat='yyyy-MM-dd  HH:mm'}" Header="입고일" Width="1.2*" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding Prod_in_type}" Header="입고유형" Width="0.4*" IsReadOnly="True">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">

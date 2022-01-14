@@ -52,7 +52,7 @@
                     </ComboBox>
                 </Grid>-->
                 <Grid Grid.Column="1">
-                    <Label Content="품목의 총 수량" FontSize="15" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,0,0"></Label>
+                    <Label Content="품목별 총 수량" FontSize="15" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,0,0"></Label>
                 </Grid>
                 <Grid Grid.Column="2">
                     <Button x:Name="rightBtn"  FontSize="12" FontWeight="Bold" HorizontalAlignment="Left"  
