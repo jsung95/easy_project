@@ -54,7 +54,7 @@
                        VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="150" Cursor="Hand"/>
                 <Button x:Name="excelBtn" Content="파일 업로드" Grid.Column="1" Background="LightGray" Foreground="Black" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"  
                        VerticalAlignment="Center" Margin="10,0,0,0" BorderThickness="0" Height="30" Width="150" Cursor="Hand"/>
-                <TextBlock Text="나의 신규등록 재고목록" Grid.Column="2" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13"></TextBlock>
+                <TextBlock Text="내가 등록한 목록" Grid.Column="2" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13"></TextBlock>
 
              <Grid Grid.Column="2">
                     <Grid.ColumnDefinitions>
