@@ -189,14 +189,14 @@ namespace EasyProject.ViewModel
                     if (updateList.Count == 1)
                     {
                         MessageQueue.Enqueue($"{updateList[0].Nurse_name}의 권한을 ADMIN으로 변경하였습니다.", "닫기", (x) => { IsAuthChangeEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                        IsAuthChangeEnabled = true;
+                        IsAuthChangeEnabled = false;
                         updateList.Clear();
 
                     }
                     else
                     {
                         MessageQueue.Enqueue($"{updateList[0].Nurse_name} 외 {updateList.Count - 1}명의 권한을 ADMIN으로 변경하였습니다.", "닫기", (x) => { IsAuthChangeEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
-                        IsAuthChangeEnabled = true;
+                        IsAuthChangeEnabled = false;
                         updateList.Clear();
 
                     }
@@ -204,7 +204,7 @@ namespace EasyProject.ViewModel
                 else // 체크박스 선택을 안했을 경우
                 {
                     updateList.Clear();
-                    MessageQueue.Enqueue("권한을 변경할 사용자를 선택해주세요.", "닫기", (x) => { IsAuthChangeEnabled = false; }, null, false, true, TimeSpan.FromMilliseconds(3000));
+                    MessageQueue.Enqueue("권한을 변경할 사용자를 선택해주세요.", "닫기", (x) => { IsAuthChangeEnabled = true; }, null, false, true, TimeSpan.FromMilliseconds(3000));
                     IsAuthChangeEnabled = true;
                 }
 
