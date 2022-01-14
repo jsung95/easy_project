@@ -35,11 +35,11 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBox x:Name="id_TxtBox" Style="{DynamicResource WatermarkTextBox}" Tag ="사번" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
-                         FontSize="20" VerticalAlignment="Bottom" Margin="75,0,75,21" Height="40" Width="300" Background="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" 
+                         FontSize="15" VerticalAlignment="Bottom" Margin="75,0,75,21" Height="40" Width="300" Background="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" 
                          SelectionBrush="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" 
                          Text="{Binding Nurse.Nurse_no}"/>
                 <PasswordBox x:Name="password_PwBox" HorizontalAlignment="Stretch" Margin="10" Grid.Row="1" VerticalAlignment="Center" 
-                             HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="25" Height="40" Width="300" Grid.Column="1"
+                             HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="15" Height="40" Width="300" Grid.Column="1"
                              w:PasswordHelper.Attach="True" w:PasswordHelper.Password="{Binding Password, Mode=TwoWay}" Cursor="IBeam"
                              KeyDown="password_PwBox_KeyDown"/>
                 
