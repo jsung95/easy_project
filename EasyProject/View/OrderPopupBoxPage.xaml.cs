@@ -47,7 +47,7 @@ namespace EasyProject.View
                 resetBtn.Visibility = Visibility.Hidden;
 
                 //이미지로 저장(스크린 샷)
-                RenderTargetBitmap rtb = new RenderTargetBitmap(900, 1000, 186, 186, PixelFormats.Pbgra32);
+                RenderTargetBitmap rtb = new RenderTargetBitmap(500, 400, 96, 96, PixelFormats.Pbgra32);
                 rtb.Render(PlaceOrder);
                 PngBitmapEncoder png = new PngBitmapEncoder();
                 png.Frames.Add(BitmapFrame.Create(rtb));
@@ -75,7 +75,7 @@ namespace EasyProject.View
 
                 XImage im = XImage.FromFile(@"C:\Users\user\Desktop\" + $"발주신청서{index}.png");
 
-                gfx.DrawImage(im, 0, 100, 700, 800);
+                gfx.DrawImage(im, 60, 100, 600, 500);
 
 
 
@@ -110,8 +110,8 @@ namespace EasyProject.View
         {
             log.Info("resetBtn_Click(object, RoutedEventArgs) invoked.");
             try
-            {     
-                prodprice_Textbox.Text = null;
+            {
+                prodtotal_txtbox.Text = null;
                 memo_TxtBox.Text = null;
             }
             catch(Exception ex)
