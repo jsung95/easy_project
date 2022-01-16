@@ -1,4 +1,4 @@
-# WPF기반 간호사를 위한 재고 관리 프로그램 (공채 14기 인턴 프로젝트)
+# WPF기반 간호사를 위한 재고 관리 프로그램 (공채 14기 프로젝트)
 - 마효리 [hyori100의 공간](https://github.com/hyori100)
 - 이진성 [jsung95의 공간](https://github.com/jsung95)
 - 김하은 [saeloi(kim haeun)의 공간](https://github.com/saeloi)
